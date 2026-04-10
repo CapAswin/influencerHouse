@@ -91,3 +91,120 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Who We Are Section */
+.who-we-are-block {
+  padding: 80px 0 56px;
+}
+.wwa-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: end;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 48px;
+}
+.wwa-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: rgba(97,97,255,0.08);
+  border: 1px solid rgba(97,97,255,0.18);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+.wwa-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+.wwa-title span {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.wwa-hero-right {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 6px;
+}
+.wwa-desc {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0;
+}
+.wwa-vm {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+.wwa-vm-card {
+  padding: 40px 36px;
+  transition: background 0.3s ease;
+}
+.wwa-vm-card:hover {
+  background: rgba(97,97,255,0.03);
+}
+.wwa-vm-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.wwa-vm-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), #4b4bde);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.wwa-vm-tag {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--heading, #0f0f1a);
+}
+.wwa-vm-card p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+.wwa-vm-divider {
+  width: 1px;
+  background: var(--line);
+  margin: 24px 0;
+}
+
+@media (max-width: 860px) {
+  .wwa-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .wwa-vm {
+    grid-template-columns: 1fr;
+  }
+  .wwa-vm-divider {
+    width: auto;
+    height: 1px;
+    margin: 0 24px;
+  }
+}
