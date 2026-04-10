@@ -532,19 +532,10 @@
       background: linear-gradient(180deg, #ff6699, var(--secondary));
     }
 
-    .cards-3,
-    .cards-6 {
-      display: grid;
-      gap: 16px;
-    }
-
     .cards-3 {
+      display: grid;
       grid-template-columns: repeat(3, 1fr);
-    }
-
-    .cards-6 {
-      grid-template-columns: repeat(3, 1fr);
-      margin-top: 16px;
+      gap: 16px;
     }
 
     .panel {
@@ -578,62 +569,285 @@
       font-size: 14px;
     }
 
+    /* Platform Features – Route Map */
+    .roadmap {
+      margin-top: 48px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .roadmap-row {
+      display: grid;
+      grid-template-columns: 1fr 56px 1fr;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* empty cell for alternating sides */
+    .roadmap-empty { }
+
+    /* the centre spine */
+    .roadmap-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .roadmap-spine-line {
+      width: 2px;
+      flex: 1;
+      min-height: 24px;
+      background: linear-gradient(180deg, var(--primary), rgba(97,97,255,0.2));
+    }
+
+    .roadmap-node {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #4b4bde);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 0 6px rgba(97,97,255,0.12), 0 8px 20px rgba(97,97,255,0.3);
+      flex-shrink: 0;
+      z-index: 1;
+      transition: transform var(--ease), box-shadow var(--ease);
+    }
+
+    .roadmap-row:hover .roadmap-node {
+      transform: scale(1.12);
+      box-shadow: 0 0 0 8px rgba(97,97,255,0.18), 0 12px 28px rgba(97,97,255,0.4);
+    }
+
+    /* hide top line on first row, bottom line on last */
+    .roadmap-row:first-child .roadmap-spine-line.top { visibility: hidden; }
+    .roadmap-row:last-child  .roadmap-spine-line.bottom { visibility: hidden; }
+
+    .roadmap-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 24px 26px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--line);
+      margin: 12px 0;
+      transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
+    }
+
+    .roadmap-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: rgba(97,97,255,0.25);
+    }
+
+    .roadmap-card-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .roadmap-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .roadmap-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* right-side card aligns text left, left-side card aligns text right */
+    .roadmap-row.right .roadmap-card { text-align: left; }
+    .roadmap-row.left  .roadmap-card { text-align: right; }
+
+    @media (max-width: 760px) {
+      .roadmap-row {
+        grid-template-columns: 40px 1fr;
+      }
+      .roadmap-empty { display: none; }
+      .roadmap-row.left .roadmap-card,
+      .roadmap-row.right .roadmap-card { text-align: left; }
+      /* swap order so spine is always col-1 */
+      .roadmap-row.left .roadmap-spine  { order: 1; }
+      .roadmap-row.left .roadmap-card   { order: 2; }
+      .roadmap-row.left .roadmap-empty  { display: none; }
+    }
+
     .verify {
       border-radius: var(--radius-xl);
-      background: linear-gradient(130deg, rgba(255, 255, 255, 0.95), rgba(230, 230, 255, 0.65));
-      box-shadow: var(--shadow-soft);
-      padding: 26px;
+      padding: 48px 40px;
+      background: linear-gradient(135deg, #0a0f1e 0%, #171d33 60%, #1e1060 100%);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(97, 97, 255, 0.18);
     }
 
-    .verify-grid {
-      margin-top: 14px;
+    .verify::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(97, 97, 255, 0.15), transparent 70%);
+      top: -180px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .verify h2 {
+      color: #fff;
+      max-width: none;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .verify-subtitle {
+      text-align: center;
+      color: #8c95a8;
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+
+    .verify-cols {
       display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap: 8px;
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
     }
 
-    .verify-grid>div {
+    .verify-tier {
+      border-radius: 24px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .verify-tier.tier-std {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .verify-tier.tier-elite {
+      background: linear-gradient(145deg, rgba(97, 97, 255, 0.18), rgba(255, 3, 96, 0.1));
+      border: 1px solid rgba(97, 97, 255, 0.35);
+    }
+
+    .verify-tier-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .verify-tier-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .tier-std .verify-tier-icon {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .tier-elite .verify-tier-icon {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .verify-tier-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .verify-tier-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-top: 2px;
+    }
+
+    .tier-std .verify-tier-tag {
+      background: rgba(255,255,255,0.08);
+      color: #8c95a8;
+    }
+
+    .tier-elite .verify-tier-tag {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+    }
+
+    .verify-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .verify-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       padding: 12px 14px;
       border-radius: 12px;
+      background: rgba(255,255,255,0.04);
     }
 
-    .verify-grid .head-col {
+    .verify-row-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 12px;
       font-weight: 700;
-      background: rgba(255, 255, 255, 0.65);
     }
 
-    .verify-grid .std,
-    .verify-grid .elite {
-      text-align: center;
+    .tier-std .verify-row-icon {
+      background: rgba(255,255,255,0.08);
+      color: #8c95a8;
+    }
+
+    .tier-elite .verify-row-icon {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+    }
+
+    .verify-row-text {
+      flex: 1;
+    }
+
+    .verify-row-label {
+      font-size: 12px;
+      color: #6a6f84;
+      font-weight: 500;
+    }
+
+    .verify-row-value {
+      font-size: 14px;
       font-weight: 600;
+      color: #e0e6f5;
     }
 
-    .verify-grid .std {
-      background: rgba(255, 255, 255, 0.78);
-    }
-
-    .verify-grid .elite {
-      background: linear-gradient(120deg, #0a0f1e, #1a2238);
-      color: #ffffff;
-    }
-
-    .row-label {
-      background: rgba(255, 255, 255, 0.7);
-      color: #3d3429;
-      font-weight: 600;
-    }
-
-    .ok {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.7);
-    }
-
-    .best {
-      text-align: center;
-      color: #ffffff;
-      background: linear-gradient(120deg, var(--primary), var(--secondary));
-      font-weight: 700;
+    @media (max-width: 760px) {
+      .verify-cols {
+        grid-template-columns: 1fr;
+      }
+      .verify {
+        padding: 30px 20px;
+      }
     }
 
     .value-list {
@@ -1736,10 +1950,6 @@
         gap: 24px;
       }
 
-      .cards-6 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
       .video-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -1805,7 +2015,6 @@
       }
 
       .cards-3,
-      .cards-6,
       .video-grid {
         grid-template-columns: 1fr;
       }
@@ -1829,10 +2038,6 @@
         position: static;
         width: 100% !important;
         margin-bottom: 10px;
-      }
-
-      .verify-grid {
-        grid-template-columns: 1fr;
       }
 
       .cta {
@@ -1883,8 +2088,8 @@
   </div>
 
   <main>
-    <section class="section">
-      <div class="container hero">
+    <section class="section" style="padding-top: 0px;">
+      <div class="container hero" style="padding-top: 20px;">
         <div>
           <span class="eyebrow">Self-Service Influencer Infrastructure • UAE & GCC</span>
           <h1>Transform Influence into Measurable <em>Growth</em></h1>
@@ -2001,60 +2206,232 @@
     </section>
     <section class="section">
       <div class="container">
-        <h2>Platform Features</h2>
-        <div class="cards-6">
-          <article class="panel">
-            <h3>Creator Discovery</h3>
-            <p>Find verified creators by niche, audience quality, and market fit.</p>
-          </article>
-          <article class="panel">
-            <h3>Direct Collaboration</h3>
-            <p>Connect brand and creator directly with transparent communication.</p>
-          </article>
-          <article class="panel">
-            <h3>Campaign Creation</h3>
-            <p>Build campaigns with clear goals, timelines, and deliverables.</p>
-          </article>
-          <article class="panel">
-            <h3>Campaign Management</h3>
-            <p>Track approvals, content milestones, and execution in one place.</p>
-          </article>
-          <article class="panel">
-            <h3>Performance Tracking</h3>
-            <p>Monitor views, engagement, ROI, and conversion impact in real time.</p>
-          </article>
-          <article class="panel">
-            <h3>Scalable Growth Tools</h3>
-            <p>Scale across regions and verticals with repeatable growth systems.</p>
-          </article>
+        <span class="eyebrow">How it works</span>
+        <h2 style="margin-top:12px;">Platform Features</h2>
+        <div class="roadmap">
+
+          <!-- 01 right -->
+          <div class="roadmap-row right">
+            <div class="roadmap-empty"></div>
+            <div class="roadmap-spine">
+              <div class="roadmap-spine-line top"></div>
+              <div class="roadmap-node">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2"/><path d="M16.5 16.5l3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div class="roadmap-spine-line bottom"></div>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-card-num">STEP 01</div>
+              <h3>Creator Discovery</h3>
+              <p>Find verified creators by niche, audience quality, and market fit.</p>
+            </div>
+          </div>
+
+          <!-- 02 left -->
+          <div class="roadmap-row left">
+            <div class="roadmap-card">
+              <div class="roadmap-card-num">STEP 02</div>
+              <h3>Direct Collaboration</h3>
+              <p>Connect brand and creator directly with transparent communication.</p>
+            </div>
+            <div class="roadmap-spine">
+              <div class="roadmap-spine-line top"></div>
+              <div class="roadmap-node">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="roadmap-spine-line bottom"></div>
+            </div>
+            <div class="roadmap-empty"></div>
+          </div>
+
+          <!-- 03 right -->
+          <div class="roadmap-row right">
+            <div class="roadmap-empty"></div>
+            <div class="roadmap-spine">
+              <div class="roadmap-spine-line top"></div>
+              <div class="roadmap-node">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#fff" stroke-width="2"/><path d="M8 2v4M16 2v4M3 10h18" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div class="roadmap-spine-line bottom"></div>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-card-num">STEP 03</div>
+              <h3>Campaign Creation</h3>
+              <p>Build campaigns with clear goals, timelines, and deliverables.</p>
+            </div>
+          </div>
+
+          <!-- 04 left -->
+          <div class="roadmap-row left">
+            <div class="roadmap-card">
+              <div class="roadmap-card-num">STEP 04</div>
+              <h3>Campaign Management</h3>
+              <p>Track approvals, content milestones, and execution in one place.</p>
+            </div>
+            <div class="roadmap-spine">
+              <div class="roadmap-spine-line top"></div>
+              <div class="roadmap-node">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div class="roadmap-spine-line bottom"></div>
+            </div>
+            <div class="roadmap-empty"></div>
+          </div>
+
+          <!-- 05 right -->
+          <div class="roadmap-row right">
+            <div class="roadmap-empty"></div>
+            <div class="roadmap-spine">
+              <div class="roadmap-spine-line top"></div>
+              <div class="roadmap-node">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 17l4-8 4 5 3-3 4 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="roadmap-spine-line bottom"></div>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-card-num">STEP 05</div>
+              <h3>Performance Tracking</h3>
+              <p>Monitor views, engagement, ROI, and conversion impact in real time.</p>
+            </div>
+          </div>
+
+          <!-- 06 left -->
+          <div class="roadmap-row left">
+            <div class="roadmap-card">
+              <div class="roadmap-card-num">STEP 06</div>
+              <h3>Scalable Growth Tools</h3>
+              <p>Scale across regions and verticals with repeatable growth systems.</p>
+            </div>
+            <div class="roadmap-spine">
+              <div class="roadmap-spine-line top"></div>
+              <div class="roadmap-node">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 7h8m0 0v8m0-8-8 8-4-4-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="roadmap-spine-line bottom"></div>
+            </div>
+            <div class="roadmap-empty"></div>
+          </div>
+
         </div>
       </div>
     </section>
     <section class="section">
       <div class="container verify">
         <h2>Verification That Protects Both Sides</h2>
-        <div class="verify-grid">
-          <div class="head-col">Criteria</div>
-          <div class="std">Standard Verified</div>
-          <div class="elite">Elite Verified</div>
-          <div class="row-label">Identity Check</div>
-          <div class="ok">Yes</div>
-          <div class="best">Advanced</div>
-          <div class="row-label">Engagement Scan</div>
-          <div class="ok">Basic</div>
-          <div class="best">Deep Analysis</div>
-          <div class="row-label">Audience Insights</div>
-          <div class="ok">Standard</div>
-          <div class="best">Granular</div>
-          <div class="row-label">Brand Safety</div>
-          <div class="ok">Core</div>
-          <div class="best">Enhanced</div>
-          <div class="row-label">Fraud Detection</div>
-          <div class="ok">Automated</div>
-          <div class="best">Automated + Manual</div>
-          <div class="row-label">Performance Benchmark</div>
-          <div class="ok">Category Avg.</div>
-          <div class="best">Tier-Based Index</div>
+        <p class="verify-subtitle">Every creator goes through a rigorous multi-layer verification process before they can collaborate with brands.</p>
+        <div class="verify-cols">
+          <!-- Standard -->
+          <div class="verify-tier tier-std">
+            <div class="verify-tier-head">
+              <div class="verify-tier-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M12 3l1.5 3 3.5.5-2.5 2.5.5 3.5L12 11l-3 1.5.5-3.5L7 6.5l3.5-.5L12 3z" stroke="#8c95a8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="verify-tier-name">Standard Verified</div>
+                <div class="verify-tier-tag">Entry Level</div>
+              </div>
+            </div>
+            <div class="verify-rows">
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Identity Check</div>
+                  <div class="verify-row-value">Yes</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Engagement Scan</div>
+                  <div class="verify-row-value">Basic</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Audience Insights</div>
+                  <div class="verify-row-value">Standard</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Brand Safety</div>
+                  <div class="verify-row-value">Core</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Fraud Detection</div>
+                  <div class="verify-row-value">Automated</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Performance Benchmark</div>
+                  <div class="verify-row-value">Category Avg.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Elite -->
+          <div class="verify-tier tier-elite">
+            <div class="verify-tier-head">
+              <div class="verify-tier-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.5l-4.9 2.5.9-5.5-4-3.9 5.6-.8L12 2z" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="verify-tier-name">Elite Verified</div>
+                <div class="verify-tier-tag">Premium Tier</div>
+              </div>
+            </div>
+            <div class="verify-rows">
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Identity Check</div>
+                  <div class="verify-row-value">Advanced</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Engagement Scan</div>
+                  <div class="verify-row-value">Deep Analysis</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Audience Insights</div>
+                  <div class="verify-row-value">Granular</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Brand Safety</div>
+                  <div class="verify-row-value">Enhanced</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Fraud Detection</div>
+                  <div class="verify-row-value">Automated + Manual</div>
+                </div>
+              </div>
+              <div class="verify-row">
+                <div class="verify-row-icon">✓</div>
+                <div class="verify-row-text">
+                  <div class="verify-row-label">Performance Benchmark</div>
+                  <div class="verify-row-value">Tier-Based Index</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
