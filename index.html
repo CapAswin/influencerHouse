@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Opulent Influencers House</title>
+  <link rel="icon" type="image/png" href="assets/images/fav.png" />
+  <style>
+    :root {
+      --bg: #f8f3ea;
+      --surface: #ffffff;
+      --ink: #171512;
+      --muted: #70675b;
+      --gold: #e3bf79;
+      --gold-deep: #ba8d3f;
+      --line: rgba(27, 21, 12, 0.08);
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 12px 30px rgba(29, 23, 13, 0.06);
+      --radius-xl: 30px;
+      --ease: 0.3s ease;
+      --container: min(1140px, calc(100% - 42px));
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(circle at 88% 6%, rgba(227, 191, 121, 0.2), transparent 28%), var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; border-radius: inherit; }
+    .container { width: var(--container); margin: 0 auto; }
+    .section { padding: 74px 0; }
+    h2 {
+      font-size: clamp(1.85rem, 3.2vw, 3rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      max-width: 16ch;
+    }
+
+    .nav-wrap { padding: 18px 0 8px; }
+    .navbar {
+      background: rgba(255, 255, 255, 0.76);
+      border-radius: 999px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+      padding: 12px 18px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+    .logo {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+    .nav-links { display: flex; justify-content: center; gap: 24px; font-size: 14px; color: #3b342d; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform var(--ease), box-shadow var(--ease), background var(--ease);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .btn:hover { transform: translateY(-2px) scale(1.01); }
+    .btn-dark { background: #13110f; color: #fff; box-shadow: 0 10px 24px rgba(19, 17, 15, 0.28); }
+    .btn-gold { color: #2f220f; background: linear-gradient(120deg, #f0d69f, var(--gold)); box-shadow: 0 10px 24px rgba(176, 126, 37, 0.3); }
+
+    .hero { display: grid; grid-template-columns: 1.03fr 0.97fr; gap: 46px; align-items: center; padding-top: 34px; }
+    .eyebrow {
+      display: inline-flex; background: rgba(255, 255, 255, 0.75); box-shadow: var(--shadow-soft);
+      border-radius: 999px; padding: 8px 14px; font-size: 13px; color: var(--muted);
+    }
+    h1 {
+      margin: 14px 0 18px; font-size: clamp(2.3rem, 5.2vw, 4.3rem); line-height: 1.04;
+      letter-spacing: -0.04em; max-width: 12ch;
+    }
+    h1 em { color: var(--gold-deep); font-style: italic; font-family: Georgia, "Times New Roman", serif; }
+    .hero p, .copy p { color: var(--muted); max-width: 50ch; }
+    .hero p { margin-bottom: 24px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero-visual { position: relative; min-height: 540px; }
+    .hero-photo { min-height: 540px; height: 100%; object-fit: cover; border-radius: var(--radius-xl); box-shadow: var(--shadow); }
+    .float-card {
+      position: absolute; border-radius: 22px; padding: 16px 18px; box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px);
+      transition: transform var(--ease), box-shadow var(--ease);
+    }
+    .float-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 26px 48px rgba(0, 0, 0, 0.1); }
+    .card-views {
+      left: -28px; top: 44px; z-index: 5; width: 220px;
+      background: linear-gradient(135deg, rgba(245, 252, 250, 0.95), rgba(225, 243, 247, 0.9));
+      display: flex; justify-content: space-between; gap: 10px;
+    }
+    .card-views small { color: #6d807e; font-weight: 600; display: block; margin-bottom: 6px; }
+    .card-views b { font-size: 1.4rem; letter-spacing: -0.03em; display: block; line-height: 1.1; }
+    .card-icon { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; display: grid; place-items: center; background: rgba(255, 255, 255, 0.85); color: #324441; }
+    .card-verified {
+      right: -26px; bottom: 116px; z-index: 6; width: 210px;
+      background: linear-gradient(145deg, rgba(255, 249, 237, 0.96), rgba(242, 226, 191, 0.88));
+      display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center;
+    }
+    .card-verified .badge { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; color: #fdf2de; background: linear-gradient(150deg, #1a1713, #5b4e3d); font-weight: 700; font-size: 13px; }
+    .card-verified small { color: #7a6a4f; font-size: 12px; }
+    .card-roi {
+      left: 54px; bottom: -20px; z-index: 4; width: 212px; transform: rotate(-2deg);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(253, 245, 231, 0.88));
+    }
+    .card-roi small { color: #7e7363; font-size: 12px; display: block; margin-top: 2px; }
+
+    .stats {
+      margin-top: 62px; border-radius: var(--radius-xl);
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.95), rgba(247, 232, 197, 0.68));
+      box-shadow: var(--shadow-soft); display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 10px; padding: 26px 22px; text-align: center;
+    }
+    .stats h3 { font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -0.02em; }
+    .stats p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+    .brand-seal {
+      display: flex;
+      justify-content: center;
+      margin-top: 22px;
+    }
+    .brand-seal-card {
+      width: min(520px, 100%);
+      border-radius: 26px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(247, 233, 203, 0.86));
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-seal-icon-wrap {
+      width: 86px;
+      height: 86px;
+      border-radius: 20px;
+      background: linear-gradient(140deg, #fff7e8, #efd3a0);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 24px rgba(126, 84, 24, 0.2);
+      flex-shrink: 0;
+    }
+    .brand-seal-icon {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+    }
+    .brand-seal-copy strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+    .brand-seal-copy p {
+      color: #6b6257;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .split { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 40px; align-items: center; }
+    .analytics-stage { position: relative; min-height: 360px; }
+    .dash-card {
+      position: absolute; border-radius: 24px; padding: 20px; box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.55); backdrop-filter: blur(10px); transition: transform var(--ease);
+    }
+    .dash-card:hover { transform: translateY(-5px) scale(1.02); }
+    .card-sales { left: 0; top: 0; width: 56%; z-index: 4; background: linear-gradient(140deg, rgba(244, 252, 250, 0.96), rgba(231, 244, 249, 0.88)); }
+    .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .head small { color: #748380; font-weight: 600; display: block; }
+    .head strong { font-size: 1.5rem; letter-spacing: -0.03em; }
+    .pill { border-radius: 999px; background: #13231f; color: #d6f7ef; font-size: 12px; padding: 5px 10px; font-weight: 600; }
+    .bars { margin-top: 14px; height: 90px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; align-items: end; }
+    .bars span { border-radius: 10px 10px 5px 5px; background: linear-gradient(180deg, #8ec6bc, #4f9f8f); }
+    .card-activity { right: 0; top: 40px; width: 46%; z-index: 5; background: rgba(255, 255, 255, 0.93); }
+    .feed { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--line); font-size: 13px; }
+    .avatar { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(145deg, #f8e8c4, #e6bd67); font-size: 11px; font-weight: 700; color: #4f3c19; }
+    .card-order { left: 22%; bottom: 0; width: 42%; z-index: 6; color: #3d2d14; background: linear-gradient(135deg, rgba(255, 247, 229, 0.98), rgba(238, 211, 150, 0.88)); }
+    .card-order small { color: #6d5833; font-size: 12px; }
+    .small-bars { height: 48px; margin-top: 12px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: end; }
+    .small-bars span { border-radius: 8px 8px 4px 4px; background: linear-gradient(180deg, #c99643, #8f6529); }
+
+    .cards-3, .cards-6 { display: grid; gap: 16px; }
+    .cards-3 { grid-template-columns: repeat(3, 1fr); }
+    .cards-6 { grid-template-columns: repeat(3, 1fr); margin-top: 16px; }
+    .panel { background: var(--surface); border-radius: 20px; padding: 20px; box-shadow: var(--shadow-soft); transition: transform var(--ease), box-shadow var(--ease); }
+    .panel:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .icon { width: 40px; height: 40px; border-radius: 12px; margin-bottom: 12px; display: grid; place-items: center; color: #5c4315; background: linear-gradient(135deg, #f9e8c0, #e6bf6c); font-weight: 700; font-size: 14px; }
+    .panel p { color: var(--muted); font-size: 14px; }
+
+    .verify {
+      border-radius: var(--radius-xl); background: linear-gradient(130deg, rgba(255, 255, 255, 0.95), rgba(246, 233, 203, 0.65));
+      box-shadow: var(--shadow-soft); padding: 26px;
+    }
+    .verify-grid { margin-top: 14px; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 8px; align-items: center; }
+    .verify-grid > div { padding: 12px 14px; border-radius: 12px; }
+    .verify-grid .head-col { font-weight: 700; background: rgba(255,255,255,0.65); }
+    .verify-grid .std, .verify-grid .elite { text-align: center; font-weight: 600; }
+    .verify-grid .std { background: rgba(255,255,255,0.78); }
+    .verify-grid .elite { background: linear-gradient(120deg, #1a1713, #3a2d1d); color: #fef3de; }
+    .row-label { background: rgba(255,255,255,0.7); color: #3d3429; font-weight: 600; }
+    .ok { text-align: center; background: rgba(255,255,255,0.7); }
+    .best { text-align: center; color: #2e2312; background: linear-gradient(120deg, #f9e7bf, #eac57a); font-weight: 700; }
+
+    .value-list { margin-top: 10px; display: grid; gap: 10px; }
+    .value-item { padding: 14px 16px; border-radius: 14px; background: #fff; box-shadow: var(--shadow-soft); display: flex; gap: 10px; align-items: center; }
+    .tick { width: 24px; height: 24px; border-radius: 8px; flex-shrink: 0; display: grid; place-items: center; background: linear-gradient(140deg, #f2d69d, #d8a958); font-weight: 700; color: #3b2a12; }
+
+    .video-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .video { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-soft); transition: transform var(--ease), box-shadow var(--ease); }
+    .video:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .video .thumb { height: 150px; object-fit: cover; width: 100%; }
+    .video .meta { padding: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+    .price { border-radius: 999px; padding: 6px 10px; font-weight: 700; background: linear-gradient(120deg, #f7e4ba, #e8c170); color: #4b3817; }
+
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .blog-card { background: #fff; border-radius: 20px; box-shadow: var(--shadow-soft); padding: 20px; }
+    .blog-card time { color: #907b56; font-size: 12px; font-weight: 600; }
+    .blog-card h4 { margin: 8px 0; font-size: 18px; line-height: 1.25; letter-spacing: -0.02em; }
+    .read { color: #342a1c; font-weight: 700; font-size: 14px; }
+
+    /* Testimonial section matched to reference */
+    .testimonials-wrap { text-align: center; }
+    .testimonials-tag {
+      display: inline-flex; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      background: rgba(255, 255, 255, 0.75); color: #7e7363; box-shadow: var(--shadow-soft); margin-bottom: 12px;
+    }
+    .testimonials-wrap h2 { max-width: none; margin-bottom: 34px; }
+    .testimonial-viewport {
+      overflow: hidden;
+      padding: 8px 0 16px;
+      position: relative;
+    }
+    .testimonial-viewport::before,
+    .testimonial-viewport::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 84px;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .testimonial-viewport::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--bg), rgba(248, 243, 234, 0));
+    }
+    .testimonial-viewport::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--bg), rgba(248, 243, 234, 0));
+    }
+    .testimonials {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 22px;
+      width: 118%;
+      margin-left: -9%;
+      min-height: 392px;
+    }
+    .quote-card {
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.58);
+      text-align: left;
+      box-shadow: var(--shadow-soft);
+      color: #6d6458;
+      transition: transform 0.42s ease, opacity 0.42s ease, box-shadow 0.42s ease, filter 0.42s ease, width 0.42s ease;
+      cursor: pointer;
+      user-select: none;
+      padding: 26px;
+      width: 31%;
+      min-height: 338px;
+      opacity: 0.23;
+      transform: scale(0.92);
+      filter: blur(0.6px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .quote-card[data-pos="left"] { order: 1; }
+    .quote-card[data-pos="center"] { order: 2; }
+    .quote-card[data-pos="right"] { order: 3; }
+    .quote-card.is-active {
+      width: 31%;
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 24px 44px rgba(40, 30, 14, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      cursor: default;
+    }
+    .testimonials.is-switching .quote-card {
+      transform: translateY(10px) scale(0.95);
+      opacity: 0.2;
+    }
+    .testimonials.is-switching .quote-card.is-active {
+      transform: translateY(-4px) scale(1.01);
+      opacity: 0.96;
+    }
+    .quote-mark { font-size: 54px; line-height: 1; color: #d8bc83; margin-bottom: 14px; font-family: Georgia, "Times New Roman", serif; }
+    .quote-main-copy {
+      color: #27231d;
+      font-size: 14px;
+      line-height: 1.62;
+      letter-spacing: -0.01em;
+      font-style: italic;
+      max-width: 34ch;
+      display: -webkit-box;
+      -webkit-line-clamp: 6;
+      line-clamp: 6;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .quote-side-copy {
+      font-size: 14px;
+      line-height: 1.62;
+      display: -webkit-box;
+      -webkit-line-clamp: 6;
+      line-clamp: 6;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .quote-author { margin-top: 18px; display: flex; align-items: center; gap: 10px; color: #3d352b; }
+    .quote-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .quote-author strong { font-size: 14px; display: block; }
+    .quote-author span { font-size: 12px; color: #766e63; }
+
+    .cta {
+      border-radius: var(--radius-xl); padding: 44px; color: #fef6e9;
+      background: linear-gradient(120deg, #141210 0%, #2a2016 58%, #6b4d23 140%);
+      box-shadow: var(--shadow); display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: center; overflow: hidden;
+    }
+    .cta p { color: #dccdb3; margin-bottom: 18px; max-width: 42ch; }
+    .cta-shape { justify-self: end; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255,227,170,0.4), transparent 35%), repeating-radial-gradient(circle, rgba(235,189,95,0.5) 0 8px, rgba(255,255,255,0) 8px 22px); }
+
+    .footer {
+      margin-top: 74px;
+      padding: 64px 0 54px;
+      background:
+        radial-gradient(circle at 78% 12%, rgba(227, 191, 121, 0.12), transparent 44%),
+        linear-gradient(130deg, #1d1813 0%, #17130f 100%);
+      color: #f3ece1;
+      border-top: 1px solid rgba(227, 191, 121, 0.15);
+    }
+    .footer-shell {
+      padding: 0;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 30px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+    .footer-note {
+      font-size: 14px;
+      line-height: 1.45;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      max-width: 40ch;
+      color: #d0c5b4;
+    }
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #f2e9dd;
+      font-weight: 600;
+    }
+    .footer-brand .logo-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+    }
+    .footer-nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 34px;
+      flex-wrap: wrap;
+    }
+    .footer-nav a {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #e8ddce;
+      transition: color var(--ease);
+    }
+    .footer-nav a:hover { color: #e3bf79; }
+
+    .footer-wordmark {
+      position: relative;
+      margin-top: 24px;
+      margin-bottom: 50px;
+      min-height: clamp(200px, 30vw, 340px);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      overflow: hidden;
+    }
+    .footer-wordmark-text {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      line-height: 0.88;
+      font-size: clamp(3.5rem, 10.5vw, 9.5rem);
+      text-align: left;
+      opacity: 0.25;
+      pointer-events: none;
+      filter: blur(2.5px);
+    }
+    .footer-wordmark-text span:first-child { color: #f6eee3; }
+    .footer-wordmark-text span:nth-child(2) { color: #e7d6bf; }
+    .footer-wordmark-text span:last-child { color: #dcbc85; }
+    
+    .footer-wordmark-badge {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: min(94%, 440px);
+      height: clamp(140px, 22vw, 190px);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(227, 191, 121, 0.35);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 24px 44px rgba(0, 0, 0, 0.45);
+      display: grid;
+      place-items: center;
+      padding: clamp(14px, 2vw, 24px);
+    }
+    .footer-wordmark-icon {
+      width: 100%;
+      height: 100%;
+      max-width: min(380px, 90%);
+      max-height: min(120px, 80%);
+      object-fit: contain;
+      border-radius: 12px;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+      display: block;
+    }
+
+    .footer-bottom {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1fr;
+      gap: 30px;
+      align-items: end;
+    }
+    .footer-mini-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #f1e7d8;
+      margin-bottom: 8px;
+    }
+    .footer-copy, .footer-meta {
+      color: #cbbfae;
+      font-size: 13px;
+      line-height: 1.55;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1050px) {
+      .hero, .split, .cta { grid-template-columns: 1fr; }
+      .cards-6 { grid-template-columns: repeat(2, 1fr); }
+      .video-grid { grid-template-columns: repeat(2, 1fr); }
+      .blog-grid { grid-template-columns: 1fr; }
+      .footer-top,
+      .footer-bottom { grid-template-columns: 1fr; }
+      .footer-nav { justify-content: flex-start; }
+      .testimonials { width: 100%; margin-left: 0; min-height: 0; flex-direction: column; }
+      .testimonial-viewport::before,
+      .testimonial-viewport::after { display: none; }
+      .quote-card, .quote-card.is-active { width: 100%; opacity: 1; transform: none; filter: none; cursor: default; }
+      .testimonials.is-switching .quote-card, .testimonials.is-switching .quote-card.is-active { transform: none; opacity: 1; }
+      .cta-shape { justify-self: start; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(1140px, calc(100% - 24px)); }
+      .navbar { grid-template-columns: 1fr; border-radius: 20px; gap: 10px; }
+      .nav-links, .nav-actions { justify-content: flex-start; flex-wrap: wrap; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .cards-3, .cards-6, .video-grid { grid-template-columns: 1fr; }
+      .hero-visual, .hero-photo { min-height: 390px; }
+      .float-card { position: static; transform: none !important; margin-top: 10px; }
+      .analytics-stage { min-height: auto; }
+      .dash-card { position: static; width: 100% !important; margin-bottom: 10px; }
+      .verify-grid { grid-template-columns: 1fr; }
+      .cta { padding: 30px 22px; }
+      .cta-shape { width: 150px; height: 150px; }
+      .quote-main-copy { font-size: 1.04rem; }
+      .footer-shell { padding: 24px 18px 24px; }
+      .footer-wordmark { min-height: 150px; }
+      .footer-wordmark-badge { width: min(94%, 360px); min-height: 130px; border-radius: 20px; }
+      .footer-wordmark-text { font-size: clamp(1.1rem, 5vw, 1.6rem); }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-wrap">
+    <div class="container">
+      <nav class="navbar">
+        <a class="logo" href="#">
+          <img class="logo-icon" src="assets/images/fav.png" alt="Opulent icon" />
+          <span>Opulent Influencers House</span>
+        </a>
+        <div class="nav-links">
+          <a href="#">Home</a><a href="#">Platform</a><a href="#">Verification</a><a href="#">Insights</a><a href="#">About</a>
+        </div>
+        <div class="nav-actions">
+          <a href="#">Login</a>
+          <button class="btn btn-gold">Get Started</button>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <main>
+    <section class="section">
+      <div class="container hero">
+        <div>
+          <span class="eyebrow">Self-Service Influencer Infrastructure • UAE & GCC</span>
+          <h1>Transform Influence into Measurable <em>Growth</em></h1>
+          <p>A premium infrastructure platform connecting verified creators and brands across UAE & GCC with full control, transparency, and performance tracking.</p>
+          <div class="hero-actions">
+            <button class="btn btn-dark">I'm a Brand</button>
+            <button class="btn btn-gold">I'm an Influencer</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img class="hero-photo" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80" alt="Influencer portrait" />
+          <div class="float-card card-views"><div><small>16M Views Reel</small><b>16,048,221</b><small>Organic performance</small></div><div class="card-icon">▶</div></div>
+          <div class="float-card card-verified"><div class="badge">✓</div><div><strong>Verified Creator</strong><small>Identity + Audience cleared</small></div></div>
+          <div class="float-card card-roi"><strong>ROI +32%</strong><small>Campaign profitability this month</small></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="stats">
+          <div><h3>2,500+</h3><p>Verified Creators</p></div>
+          <div><h3>340+</h3><p>Brand Partners</p></div>
+          <div><h3>91%</h3><p>Client Retention</p></div>
+          <div><h3>6</h3><p>GCC Markets</p></div>
+        </div>
+        <div class="brand-seal">
+          <div class="brand-seal-card">
+            <div class="brand-seal-icon-wrap">
+              <img class="brand-seal-icon" src="assets/images/favicon.png" alt="Opulent seal" />
+            </div>
+            <div class="brand-seal-copy">
+              <strong>Opulent Signature Seal</strong>
+              <p>Verified platform identity for premium creator collaboration across UAE and GCC markets.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div class="copy">
+          <h2>More Than an Agency. An Influencer Institution.</h2>
+          <p>Opulent Influencers House was built to professionalise the influencer economy across UAE & GCC. It operates as an infrastructure partner delivering verified talent, structured operations, and full performance accountability.</p>
+        </div>
+        <div class="analytics-stage">
+          <div class="dash-card card-sales"><div class="head"><div><small>Total Sales</small><strong>258</strong></div><span class="pill">+12%</span></div><div class="bars"><span style="height:30%"></span><span style="height:48%"></span><span style="height:64%"></span><span style="height:56%"></span><span style="height:82%"></span><span style="height:92%"></span></div></div>
+          <div class="dash-card card-activity"><strong>Recent Activity</strong><div class="feed"><span class="avatar">AL</span><span>Avery launched campaign</span><strong>$4.2k</strong></div><div class="feed"><span class="avatar">MV</span><span>Maya added creators</span><strong>+18%</strong></div><div class="feed"><span class="avatar">NB</span><span>Noah optimized targeting</span><strong>$1.7k</strong></div></div>
+          <div class="dash-card card-order"><small>Today's Order</small><h3>$150</h3><small>Live conversion pulse</small><div class="small-bars"><span style="height:28%"></span><span style="height:45%"></span><span style="height:62%"></span><span style="height:52%"></span><span style="height:78%"></span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section"><div class="container"><h2>Industries We Serve</h2><div class="cards-3"><article class="panel"><div class="icon">01</div><h3>Luxury & Lifestyle</h3><p>Premium creator campaigns tailored for aspirational audiences.</p></article><article class="panel"><div class="icon">02</div><h3>Real Estate & Hospitality</h3><p>Trusted influence strategies that accelerate demand and bookings.</p></article><article class="panel"><div class="icon">03</div><h3>Beauty & Technology</h3><p>Data-led storytelling for product launches and sustained growth.</p></article></div></div></section>
+    <section class="section"><div class="container"><h2>Platform Features</h2><div class="cards-6"><article class="panel"><h3>Creator Discovery</h3><p>Find verified creators by niche, audience quality, and market fit.</p></article><article class="panel"><h3>Direct Collaboration</h3><p>Connect brand and creator directly with transparent communication.</p></article><article class="panel"><h3>Campaign Creation</h3><p>Build campaigns with clear goals, timelines, and deliverables.</p></article><article class="panel"><h3>Campaign Management</h3><p>Track approvals, content milestones, and execution in one place.</p></article><article class="panel"><h3>Performance Tracking</h3><p>Monitor views, engagement, ROI, and conversion impact in real time.</p></article><article class="panel"><h3>Scalable Growth Tools</h3><p>Scale across regions and verticals with repeatable growth systems.</p></article></div></div></section>
+    <section class="section"><div class="container verify"><h2>Verification That Protects Both Sides</h2><div class="verify-grid"><div class="head-col">Criteria</div><div class="std">Standard Verified</div><div class="elite">Elite Verified</div><div class="row-label">Identity Check</div><div class="ok">Yes</div><div class="best">Advanced</div><div class="row-label">Engagement Scan</div><div class="ok">Basic</div><div class="best">Deep Analysis</div><div class="row-label">Audience Insights</div><div class="ok">Standard</div><div class="best">Granular</div><div class="row-label">Brand Safety</div><div class="ok">Core</div><div class="best">Enhanced</div><div class="row-label">Fraud Detection</div><div class="ok">Automated</div><div class="best">Automated + Manual</div><div class="row-label">Performance Benchmark</div><div class="ok">Category Avg.</div><div class="best">Tier-Based Index</div></div></div></section>
+    <section class="section"><div class="container split"><div class="copy"><h2>I Don't Just Create Content - I Build Influence That Converts</h2><p>Creator positioning rooted in measurable business outcomes across premium categories.</p></div><div class="value-list"><div class="value-item"><span class="tick">✓</span><span>Position brands as trusted authorities</span></div><div class="value-item"><span class="tick">✓</span><span>Drive real engagement and ROI</span></div><div class="value-item"><span class="tick">✓</span><span>Connect with authentic audiences</span></div><div class="value-item"><span class="tick">✓</span><span>Scale visibility and profits</span></div></div></div></section>
+    <section class="section"><div class="container"><h2>Video Content</h2><div class="video-grid"><article class="video"><img class="thumb" src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80" alt="Video thumbnail" /><div class="meta"><span>16M views</span><span class="price">$5.00</span></div></article><article class="video"><img class="thumb" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=80" alt="Video thumbnail" /><div class="meta"><span>2.4M views</span><span class="price">Free</span></div></article><article class="video"><img class="thumb" src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80" alt="Video thumbnail" /><div class="meta"><span>8.1M views</span><span class="price">$5.00</span></div></article><article class="video"><img class="thumb" src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1200&q=80" alt="Video thumbnail" /><div class="meta"><span>1.9M views</span><span class="price">Free</span></div></article></div></div></section>
+    <section class="section"><div class="container"><h2>Insights</h2><div class="blog-grid"><article class="blog-card"><time>Apr 09, 2026</time><h4>Why Verified Creators Make Campaigns Safer and Smarter</h4><a class="read" href="#">Read More →</a></article><article class="blog-card"><time>Apr 04, 2026</time><h4>Campaign Preparation Checklist for UAE and GCC Brand Teams</h4><a class="read" href="#">Read More →</a></article><article class="blog-card"><time>Mar 27, 2026</time><h4>How to Optimize Creator Profiles for Better Match and ROI</h4><a class="read" href="#">Read More →</a></article></div></div></section>
+
+    <section class="section testimonials-wrap">
+      <div class="container">
+        <span class="testimonials-tag">Testimonials</span>
+        <h2>What our community says</h2>
+        <div class="testimonial-viewport">
+          <div class="testimonials" id="testimonialsCarousel">
+            <article class="quote-card" data-pos="left" tabindex="0" role="button" aria-label="Show Elena review">
+              <div class="quote-mark">“</div>
+              <p class="quote-side-copy">"Working with Opulent Influencers House was a game-changer for my portfolio. Campaign contracts and creative briefs have never been smoother. Truly premium experience."</p>
+              <div class="quote-author"><img class="quote-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="Elena avatar" /><div><strong>Elena Rostova</strong><span>Fashion Creator</span></div></div>
+            </article>
+            <article class="quote-card is-active" data-pos="center" tabindex="0" role="button" aria-label="Show Marcus review">
+              <div class="quote-mark">“</div>
+              <p class="quote-main-copy">"Opulent Influencers House entirely elevated my personal brand. The analytics dashboard combined with their direct-to-brand networking allowed me to double my campaign revenue in just under three months."</p>
+              <div class="quote-author"><img class="quote-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Marcus avatar" /><div><strong>Marcus Sterling</strong><span>Lifestyle & Travel Influencer</span></div></div>
+            </article>
+            <article class="quote-card" data-pos="right" tabindex="0" role="button" aria-label="Show Sarah review">
+              <div class="quote-mark">“</div>
+              <p class="quote-side-copy">"The best luxury influencer network out there. The design, the support, and the caliber of brands are unmatched."</p>
+              <div class="quote-author"><img class="quote-avatar" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=120&q=80" alt="Sarah avatar" /><div><strong>Sarah Jenkins</strong><span>Beauty Vlogger</span></div></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container cta">
+        <div><h2>Ready to Transform Your Influence Strategy?</h2><p>Launch your next creator campaign with verified talent, direct collaboration, and measurable growth infrastructure.</p><div class="hero-actions"><button class="btn btn-gold">I'm a Brand</button><button class="btn btn-dark">I'm an Influencer</button></div></div>
+        <div class="cta-shape" aria-hidden="true"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-shell">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">
+            <img class="logo-icon" src="assets/images/fav.png" alt="Opulent icon" />
+            <span>Opulent Influencers House</span>
+          </div>
+          <p class="footer-note">Digital influencer infrastructure that helps brands and creators scale campaigns with verified trust and measurable outcomes.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#">About</a>
+          <a href="#">Service</a>
+          <a href="#">Article</a>
+          <a href="#">About Us</a>
+        </nav>
+      </div>
+
+      <div class="footer-wordmark">
+        <div class="footer-wordmark-text" aria-hidden="true">
+          <span>Opulent</span>
+          <span>Influencers</span>
+          <span>House</span>
+        </div>
+        <div class="footer-wordmark-badge">
+          <img class="footer-wordmark-icon" src="assets/images/favicon.png" alt="Opulent Influencers House" />
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <div class="footer-copy">© 2026 - COPYRIGHT<br />ALL RIGHTS RESERVED</div>
+        </div>
+        <div>
+          <div class="footer-mini-title">Contact Us</div>
+          <div class="footer-meta">+971 55 617 3798<br />INFO@ULEGENDARYDIGITAL.COM</div>
+        </div>
+        <div>
+          <div class="footer-mini-title">Location</div>
+          <div class="footer-meta">DUBAI, UAE<br />BUSINESS BAY, OFFICE 4</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const track = document.getElementById("testimonialsCarousel");
+      if (!track) return;
+      const cards = Array.from(track.querySelectorAll(".quote-card"));
+      let active = cards.findIndex((card) => card.classList.contains("is-active"));
+      if (active < 0) active = 1;
+
+      function render(index) {
+        active = index;
+        const left = (active - 1 + cards.length) % cards.length;
+        const right = (active + 1) % cards.length;
+        cards.forEach((card, i) => {
+          card.classList.toggle("is-active", i === active);
+          card.dataset.pos = i === left ? "left" : i === active ? "center" : "right";
+        });
+      }
+
+      function switchTo(index) {
+        if (index === active || window.matchMedia("(max-width: 1050px)").matches) return;
+        track.classList.add("is-switching");
+        window.setTimeout(() => {
+          render(index);
+          window.setTimeout(() => track.classList.remove("is-switching"), 60);
+        }, 180);
+      }
+
+      cards.forEach((card, index) => {
+        card.addEventListener("click", () => switchTo(index));
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            switchTo(index);
+          }
+        });
+      });
+
+      render(active);
+    })();
+  </script>
+</body>
+</html>
