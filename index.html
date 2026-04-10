@@ -103,6 +103,36 @@
       color: #3b342d;
     }
 
+    .nav-links a {
+      position: relative;
+      font-weight: 500;
+      color: #3b342d;
+      transition: color var(--ease);
+      padding: 4px 0;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width var(--ease);
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -1264,7 +1294,7 @@
           <img class="logo-icon" src="assets/images/favicon.png" alt="Opulent icon" />
         </a>
         <div class="nav-links">
-          <a href="index.html">Home</a>
+          <a href="index.html" class="active">Home</a>
           <a href="about.html">About Us</a>
           <a href="for-brands.html">For Brands</a>
           <a href="for-influencers.html">For Influencers</a>
