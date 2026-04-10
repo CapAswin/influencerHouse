@@ -1,3064 +1,1173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Opulent Influencers House</title>
-  <link rel="icon" type="image/png" href="assets/images/fav.png" />
-  <style>
-    :root {
-      --bg: #f4f6ff;
-      --surface: #ffffff;
-      --ink: #0a0f1e;
-      --muted: #5e667b;
-      --primary: #6161ff;
-      --secondary: #ff0360;
-      --line: rgba(10, 15, 30, 0.08);
-      --shadow: 0 20px 40px rgba(10, 15, 30, 0.08);
-      --shadow-soft: 0 12px 30px rgba(10, 15, 30, 0.06);
-      --radius-xl: 30px;
-      --ease: 0.3s ease;
-      --container: min(1140px, calc(100% - 42px));
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Inter, "Segoe UI", system-ui, sans-serif;
-      background: radial-gradient(circle at 88% 6%, rgba(97, 97, 255, 0.12), transparent 28%), var(--bg);
-      color: var(--ink);
-      line-height: 1.5;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-      border-radius: inherit;
-    }
-
-    .container {
-      width: var(--container);
-      margin: 0 auto;
-    }
-
-    .section {
-      padding: 44px 0;
-    }
-
-    h2 {
-      font-size: clamp(1.85rem, 3.2vw, 3rem);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      margin-bottom: 14px;
-      max-width: 16ch;
-    }
-
-    .nav-wrap {
-      padding: 18px 0 8px;
-    }
-
-    .navbar {
-      background: rgba(255, 255, 255, 0.76);
-      border-radius: 999px;
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(10px);
-      padding: 12px 18px;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .logo {
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      font-size: 15px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-icon {
-      width: auto;
-      height: 36px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .nav-links {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      font-size: 14px;
-      color: #3b342d;
-    }
-
-    .nav-links a {
-      position: relative;
-      font-weight: 500;
-      color: #3b342d;
-      transition: color var(--ease);
-      padding: 4px 0;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--primary);
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: width var(--ease);
-      border-radius: 2px;
-    }
-
-    .nav-links a:hover::after,
-    .nav-links a.active::after {
-      width: 100%;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 14px;
-    }
-
-    .btn {
-      border: 0;
-      border-radius: 999px;
-      padding: 12px 20px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform var(--ease), box-shadow var(--ease), background var(--ease);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 14px;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px) scale(1.01);
-    }
-
-    .btn-dark {
-      background: #0a0f1e;
-      color: #fff;
-      box-shadow: 0 10px 24px rgba(10, 15, 30, 0.28);
-    }
-
-    .btn-gold {
-      color: #ffffff;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      box-shadow: 0 10px 24px rgba(97, 97, 255, 0.3);
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.03fr 0.97fr;
-      gap: 46px;
-      align-items: center;
-      padding-top: 34px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      background: rgba(255, 255, 255, 0.75);
-      box-shadow: var(--shadow-soft);
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    h1 {
-      margin: 14px 0 18px;
-      font-size: clamp(2.3rem, 5.2vw, 4.3rem);
-      line-height: 1.04;
-      letter-spacing: -0.04em;
-      max-width: 12ch;
-    }
-
-    h1 em {
-      color: var(--primary);
-      font-style: italic;
-      font-family: Georgia, "Times New Roman", serif;
-    }
-
-    .hero p,
-    .copy p {
-      color: var(--muted);
-      max-width: 50ch;
-    }
-
-    .hero p {
-      margin-bottom: 24px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .hero-visual {
-      position: relative;
-      min-height: 540px;
-    }
-
-    .hero-photo {
-      min-height: 540px;
-      height: 100%;
-      object-fit: cover;
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-    }
-
-    .float-card {
-      position: absolute;
-      border-radius: 22px;
-      padding: 16px 18px;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(10px);
-      transition: transform var(--ease), box-shadow var(--ease);
-    }
-
-    .float-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 26px 48px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-views {
-      left: -28px;
-      top: 44px;
-      z-index: 5;
-      width: 220px;
-      background: linear-gradient(135deg, rgba(245, 252, 250, 0.95), rgba(225, 243, 247, 0.9));
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .card-views small {
-      color: #6d807e;
-      font-weight: 600;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .card-views b {
-      font-size: 1.4rem;
-      letter-spacing: -0.03em;
-      display: block;
-      line-height: 1.1;
-    }
-
-    .card-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      flex-shrink: 0;
-      display: grid;
-      place-items: center;
-      background: rgba(255, 255, 255, 0.85);
-      color: #324441;
-    }
-
-    .card-verified {
-      right: -26px;
-      bottom: 116px;
-      z-index: 6;
-      width: 210px;
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(245, 245, 255, 0.88));
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .card-verified .badge {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      background: linear-gradient(150deg, var(--primary), #4b4bde);
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .card-verified small {
-      color: #6a6f84;
-      font-size: 12px;
-    }
-
-    .card-roi {
-      left: 54px;
-      bottom: -20px;
-      z-index: 4;
-      width: 212px;
-      transform: rotate(-2deg);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 248, 255, 0.88));
-    }
-
-    .card-roi small {
-      color: #6a6f84;
-      font-size: 12px;
-      display: block;
-      margin-top: 2px;
-    }
-
-    .stats {
-      margin-top: 62px;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(120deg, rgba(255, 255, 255, 0.95), rgba(230, 230, 255, 0.68));
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      padding: 26px 22px;
-      text-align: center;
-    }
-
-    .stats h3 {
-      font-size: clamp(1.35rem, 2vw, 2rem);
-      letter-spacing: -0.02em;
-    }
-
-    .stats p {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
-    }
-
-    .brand-seal {
-      display: flex;
-      justify-content: center;
-      margin-top: 22px;
-    }
-
-    .brand-seal-card {
-      width: min(520px, 100%);
-      border-radius: 26px;
-      padding: 20px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(240, 240, 255, 0.86));
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .brand-seal-icon-wrap {
-      width: 86px;
-      height: 86px;
-      border-radius: 20px;
-      background: linear-gradient(140deg, #f5f5ff, #d4d4ff);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 12px 24px rgba(97, 97, 255, 0.15);
-      flex-shrink: 0;
-    }
-
-    .brand-seal-icon {
-      width: 62px;
-      height: 62px;
-      object-fit: contain;
-    }
-
-    .brand-seal-copy strong {
-      display: block;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-      margin-bottom: 2px;
-    }
-
-    .brand-seal-copy p {
-      color: #6b6257;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .analytics-stage {
-      position: relative;
-      min-height: 360px;
-    }
-
-    .dash-card {
-      position: absolute;
-      border-radius: 24px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(10px);
-      transition: transform var(--ease);
-    }
-
-    .dash-card:hover {
-      transform: translateY(-5px) scale(1.02);
-    }
-
-    .card-sales {
-      left: 0;
-      top: 0;
-      width: 56%;
-      z-index: 4;
-      background: linear-gradient(140deg, rgba(244, 252, 250, 0.96), rgba(231, 244, 249, 0.88));
-    }
-
-    .head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .head small {
-      color: #748380;
-      font-weight: 600;
-      display: block;
-    }
-
-    .head strong {
-      font-size: 1.5rem;
-      letter-spacing: -0.03em;
-    }
-
-    .pill {
-      border-radius: 999px;
-      background: #13231f;
-      color: #d6f7ef;
-      font-size: 12px;
-      padding: 5px 10px;
-      font-weight: 600;
-    }
-
-    .bars {
-      margin-top: 14px;
-      height: 90px;
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-      align-items: end;
-    }
-
-    .bars span {
-      border-radius: 10px 10px 5px 5px;
-      background: linear-gradient(180deg, #9999ff, var(--primary));
-    }
-
-    .card-activity {
-      right: 0;
-      top: 40px;
-      width: 46%;
-      z-index: 5;
-      background: rgba(255, 255, 255, 0.93);
-    }
-
-    .feed {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 10px;
-      align-items: center;
-      padding-top: 12px;
-      margin-top: 12px;
-      border-top: 1px solid var(--line);
-      font-size: 13px;
-    }
-
-    .avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(145deg, #e0e0ff, #b3b3ff);
-      font-size: 11px;
-      font-weight: 700;
-      color: #0a0f1e;
-    }
-
-    .card-order {
-      left: 22%;
-      bottom: 0;
-      width: 42%;
-      z-index: 6;
-      color: #0a0f1e;
-      background: linear-gradient(135deg, rgba(255, 245, 248, 0.98), rgba(255, 219, 229, 0.88));
-    }
-
-    .card-order small {
-      color: #6d5833;
-      font-size: 12px;
-    }
-
-    .small-bars {
-      height: 48px;
-      margin-top: 12px;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-      align-items: end;
-    }
-
-    .small-bars span {
-      border-radius: 8px 8px 4px 4px;
-      background: linear-gradient(180deg, #ff6699, var(--secondary));
-    }
-
-    .cards-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .panel {
-      background: var(--surface);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: var(--shadow-soft);
-      transition: transform var(--ease), box-shadow var(--ease);
-    }
-
-    .panel:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-
-    .icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      background: linear-gradient(135deg, var(--primary), #4b4bde);
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .panel p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* Platform Features – Route Map */
-    .roadmap {
-      margin-top: 48px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .roadmap-row {
-      display: grid;
-      grid-template-columns: 1fr 56px 1fr;
-      align-items: center;
-      gap: 0;
-    }
-
-    /* empty cell for alternating sides */
-    .roadmap-empty { }
-
-    /* the centre spine */
-    .roadmap-spine {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-    }
-
-    .roadmap-spine-line {
-      width: 2px;
-      flex: 1;
-      min-height: 24px;
-      background: linear-gradient(180deg, var(--primary), rgba(97,97,255,0.2));
-    }
-
-    .roadmap-node {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), #4b4bde);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 0 0 6px rgba(97,97,255,0.12), 0 8px 20px rgba(97,97,255,0.3);
-      flex-shrink: 0;
-      z-index: 1;
-      transition: transform var(--ease), box-shadow var(--ease);
-    }
-
-    .roadmap-row:hover .roadmap-node {
-      transform: scale(1.12);
-      box-shadow: 0 0 0 8px rgba(97,97,255,0.18), 0 12px 28px rgba(97,97,255,0.4);
-    }
-
-    /* hide top line on first row, bottom line on last */
-    .roadmap-row:first-child .roadmap-spine-line.top { visibility: hidden; }
-    .roadmap-row:last-child  .roadmap-spine-line.bottom { visibility: hidden; }
-
-    .roadmap-card {
-      background: var(--surface);
-      border-radius: 20px;
-      padding: 24px 26px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid var(--line);
-      margin: 12px 0;
-      transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
-    }
-
-    .roadmap-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-      border-color: rgba(97,97,255,0.25);
-    }
-
-    .roadmap-card-num {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-    }
-
-    .roadmap-card h3 {
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-
-    .roadmap-card p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    /* right-side card aligns text left, left-side card aligns text right */
-    .roadmap-row.right .roadmap-card { text-align: left; }
-    .roadmap-row.left  .roadmap-card { text-align: right; }
-
-    @media (max-width: 760px) {
-      .roadmap-row {
-        grid-template-columns: 40px 1fr;
-      }
-      .roadmap-empty { display: none; }
-      .roadmap-row.left .roadmap-card,
-      .roadmap-row.right .roadmap-card { text-align: left; }
-      /* swap order so spine is always col-1 */
-      .roadmap-row.left .roadmap-spine  { order: 1; }
-      .roadmap-row.left .roadmap-card   { order: 2; }
-      .roadmap-row.left .roadmap-empty  { display: none; }
-    }
-
-    .verify {
-      border-radius: var(--radius-xl);
-      padding: 48px 40px;
-      background: linear-gradient(135deg, #0a0f1e 0%, #171d33 60%, #1e1060 100%);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(97, 97, 255, 0.18);
-    }
-
-    .verify::before {
-      content: '';
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(97, 97, 255, 0.15), transparent 70%);
-      top: -180px;
-      right: -100px;
-      pointer-events: none;
-    }
-
-    .verify h2 {
-      color: #fff;
-      max-width: none;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    .verify-subtitle {
-      text-align: center;
-      color: #8c95a8;
-      font-size: 15px;
-      margin-bottom: 40px;
-    }
-
-    .verify-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .verify-tier {
-      border-radius: 24px;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .verify-tier.tier-std {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .verify-tier.tier-elite {
-      background: linear-gradient(145deg, rgba(97, 97, 255, 0.18), rgba(255, 3, 96, 0.1));
-      border: 1px solid rgba(97, 97, 255, 0.35);
-    }
-
-    .verify-tier-head {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .verify-tier-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-    }
-
-    .tier-std .verify-tier-icon {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .tier-elite .verify-tier-icon {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-    }
-
-    .verify-tier-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .verify-tier-tag {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin-top: 2px;
-    }
-
-    .tier-std .verify-tier-tag {
-      background: rgba(255,255,255,0.08);
-      color: #8c95a8;
-    }
-
-    .tier-elite .verify-tier-tag {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
-    }
-
-    .verify-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .verify-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .verify-row-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .tier-std .verify-row-icon {
-      background: rgba(255,255,255,0.08);
-      color: #8c95a8;
-    }
-
-    .tier-elite .verify-row-icon {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
-    }
-
-    .verify-row-text {
-      flex: 1;
-    }
-
-    .verify-row-label {
-      font-size: 12px;
-      color: #6a6f84;
-      font-weight: 500;
-    }
-
-    .verify-row-value {
-      font-size: 14px;
-      font-weight: 600;
-      color: #e0e6f5;
-    }
-
-    @media (max-width: 760px) {
-      .verify-cols {
-        grid-template-columns: 1fr;
-      }
-      .verify {
-        padding: 30px 20px;
-      }
-    }
-
-    .value-list {
-      margin-top: 10px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .value-item {
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: #fff;
-      box-shadow: var(--shadow-soft);
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .tick {
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
-      flex-shrink: 0;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(140deg, var(--primary), #4b4bde);
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .video {
-      background: #fff;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      transition: transform var(--ease), box-shadow var(--ease);
-    }
-
-    .video:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-
-    .video .thumb {
-      height: 150px;
-      object-fit: cover;
-      width: 100%;
-    }
-
-    .video .meta {
-      padding: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-    }
-
-    .price {
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-weight: 700;
-      background: linear-gradient(120deg, #e6e6ff, #ccccff);
-      color: #2a2a8c;
-    }
-
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .blog-card {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: var(--shadow-soft);
-      padding: 20px;
-    }
-
-    .blog-card time {
-      color: var(--primary);
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .blog-card h4 {
-      margin: 8px 0;
-      font-size: 18px;
-      line-height: 1.25;
-      letter-spacing: -0.02em;
-    }
-
-    .read {
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    /* Testimonial section matched to reference */
-    .testimonials-wrap {
-      text-align: center;
-    }
-
-    .testimonials-tag {
-      display: inline-flex;
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      background: rgba(255, 255, 255, 0.75);
-      color: #7e7363;
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 12px;
-    }
-
-    .testimonials-wrap h2 {
-      max-width: none;
-      margin-bottom: 34px;
-    }
-
-    .tc-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 22px;
-    }
-
-    .tc-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1.5px solid var(--line);
-      background: var(--surface);
-      box-shadow: var(--shadow-soft);
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      color: var(--ink);
-      transition: background var(--ease), border-color var(--ease), transform var(--ease), box-shadow var(--ease);
-      flex-shrink: 0;
-    }
-
-    .tc-btn:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #fff;
-      transform: scale(1.08);
-      box-shadow: 0 8px 20px rgba(97, 97, 255, 0.3);
-    }
-
-    .tc-dots {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .tc-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(10, 15, 30, 0.15);
-      cursor: pointer;
-      transition: background 0.3s ease, width 0.3s ease;
-      border: none;
-      padding: 0;
-    }
-
-    .tc-dot.tc-dot-active {
-      background: var(--primary);
-      width: 22px;
-      border-radius: 999px;
-    }
-
-    .testimonial-viewport {
-      overflow: hidden;
-      padding: 8px 0 16px;
-      position: relative;
-    }
-
-    .testimonial-viewport::before,
-    .testimonial-viewport::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 84px;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .testimonial-viewport::before {
-      left: 0;
-      background: linear-gradient(90deg, var(--bg), rgba(248, 243, 234, 0));
-    }
-
-    .testimonial-viewport::after {
-      right: 0;
-      background: linear-gradient(270deg, var(--bg), rgba(248, 243, 234, 0));
-    }
-
-    .testimonials {
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      gap: 22px;
-      width: 118%;
-      margin-left: -9%;
-      min-height: 392px;
-    }
-
-    .quote-card {
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.58);
-      text-align: left;
-      box-shadow: var(--shadow-soft);
-      color: #6d6458;
-      transition: transform 0.42s ease, opacity 0.42s ease, box-shadow 0.42s ease, filter 0.42s ease, width 0.42s ease;
-      cursor: pointer;
-      user-select: none;
-      padding: 26px;
-      width: 31%;
-      min-height: 338px;
-      opacity: 0.23;
-      transform: scale(0.92);
-      filter: blur(0.6px);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .quote-card[data-pos="left"] {
-      order: 1;
-    }
-
-    .quote-card[data-pos="center"] {
-      order: 2;
-    }
-
-    .quote-card[data-pos="right"] {
-      order: 3;
-    }
-
-    .quote-card.is-active {
-      width: 31%;
-      opacity: 1;
-      transform: scale(1);
-      filter: blur(0);
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 24px 44px rgba(40, 30, 14, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.84);
-      cursor: default;
-    }
-
-    .testimonials.is-switching .quote-card {
-      transform: translateY(10px) scale(0.95);
-      opacity: 0.2;
-    }
-
-    .testimonials.is-switching .quote-card.is-active {
-      transform: translateY(-4px) scale(1.01);
-      opacity: 0.96;
-    }
-
-    .quote-mark {
-      font-size: 54px;
-      line-height: 1;
-      color: var(--primary);
-      margin-bottom: 14px;
-      font-family: Georgia, "Times New Roman", serif;
-    }
-
-    .quote-main-copy {
-      color: #27231d;
-      font-size: 14px;
-      line-height: 1.62;
-      letter-spacing: -0.01em;
-      font-style: italic;
-      max-width: 34ch;
-      display: -webkit-box;
-      -webkit-line-clamp: 6;
-      line-clamp: 6;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .quote-side-copy {
-      font-size: 14px;
-      line-height: 1.62;
-      display: -webkit-box;
-      -webkit-line-clamp: 6;
-      line-clamp: 6;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .quote-author {
-      margin-top: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #3d352b;
-    }
-
-    .quote-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .quote-author strong {
-      font-size: 14px;
-      display: block;
-    }
-
-    .quote-author span {
-      font-size: 12px;
-      color: #766e63;
-    }
-
-    .cta {
-      border-radius: var(--radius-xl);
-      padding: 64px 60px;
-      color: #ffffff;
-      background: linear-gradient(135deg, #0a0f1e 0%, #171d33 60%, #1e1060 100%);
-      box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(97, 97, 255, 0.18);
-    }
-
-    .cta-blob {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .cta-blob-1 {
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, rgba(97, 97, 255, 0.18), transparent 70%);
-      top: -120px;
-      right: -80px;
-    }
-
-    .cta-blob-2 {
-      width: 280px;
-      height: 280px;
-      background: radial-gradient(circle, rgba(255, 3, 96, 0.12), transparent 70%);
-      bottom: -80px;
-      left: 30%;
-    }
-
-    .cta-offer-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 3, 96, 0.12);
-      color: #ff6699;
-      border: 1px solid rgba(255, 3, 96, 0.3);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 16px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .cta h2 {
-      margin-bottom: 14px;
-      max-width: none;
-      font-size: clamp(2rem, 3.2vw, 2.8rem);
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: #fff;
-    }
-
-    .cta p {
-      color: #8c95a8;
-      margin-bottom: 24px;
-      max-width: 46ch;
-      font-size: 15px;
-      line-height: 1.65;
-    }
-
-    .cta-perks {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
-    }
-
-    .cta-perk {
-      font-size: 13px;
-      font-weight: 600;
-      color: #a0e8c8;
-    }
-
-    .cta-actions {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .cta-link {
-      color: #8c95a8;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      transition: color var(--ease);
-    }
-
-    .cta-link:hover {
-      color: #fff;
-    }
-
-    .btn-cta {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      box-shadow: 0 10px 28px rgba(97, 97, 255, 0.4);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 700;
-      padding: 16px 34px;
-      border-radius: 999px;
-      border: 0;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: transform var(--ease), box-shadow var(--ease);
-      white-space: nowrap;
-    }
-
-    .btn-cta:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 36px rgba(97, 97, 255, 0.5);
-    }
-
-    .cta-visual {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .cta-main-card {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 24px;
-      backdrop-filter: blur(10px);
-    }
-
-    .cta-card-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-
-    .cta-avatar-stack {
-      display: flex;
-    }
-
-    .cta-avatar-stack img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2px solid #171d33;
-      margin-left: -10px;
-      object-fit: cover;
-    }
-
-    .cta-avatar-stack img:first-child {
-      margin-left: 0;
-    }
-
-    .cta-avatar-more {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2px solid #171d33;
-      margin-left: -10px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      display: grid;
-      place-items: center;
-    }
-
-    .cta-card-label strong {
-      display: block;
-      font-size: 14px;
-      color: #fff;
-    }
-
-    .cta-card-label span {
-      font-size: 12px;
-      color: #6a6f84;
-    }
-
-    .cta-card-stat {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
-      gap: 0;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 14px;
-      padding: 16px 10px;
-    }
-
-    .cta-card-stat b {
-      display: block;
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #fff;
-    }
-
-    .cta-card-stat small {
-      font-size: 11px;
-      color: #6a6f84;
-      margin-top: 2px;
-      display: block;
-    }
-
-    .cta-stat-divider {
-      width: 1px;
-      background: rgba(255, 255, 255, 0.08);
-      margin: 4px 0;
-    }
-
-    .cta-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 999px;
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #e0e6f5;
-      align-self: flex-start;
-    }
-
-    .cta-chip-2 {
-      align-self: flex-end;
-    }
-
-    .cta-chip-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #4ade80;
-      box-shadow: 0 0 6px #4ade80;
-      animation: pulse-dot 1.8s ease-in-out infinite;
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-
-    @media (max-width: 1050px) {
-      .cta {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 48px 40px;
-      }
-    }
-
-    .pricing-wrap {
-      text-align: center;
-    }
-
-    .pricing-tabs {
-      display: inline-flex;
-      background: rgba(255, 255, 255, 0.75);
-      box-shadow: var(--shadow-soft);
-      border-radius: 999px;
-      padding: 5px;
-      gap: 4px;
-      margin-bottom: 48px;
-    }
-
-    .pricing-tab {
-      border: none;
-      background: transparent;
-      border-radius: 999px;
-      padding: 10px 28px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--muted);
-      transition: background var(--ease), color var(--ease), box-shadow var(--ease);
-    }
-
-    .pricing-tab.active {
-      background: #0a0f1e;
-      color: #fff;
-      box-shadow: 0 6px 18px rgba(10, 15, 30, 0.22);
-    }
-
-    .pricing-panel {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      opacity: 0;
-      transform: translateY(16px);
-      pointer-events: none;
-      position: absolute;
-      width: 100%;
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    .pricing-panel.active {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-      position: relative;
-    }
-
-    .pricing-card {
-      background: var(--surface);
-      border-radius: 24px;
-      padding: 32px 28px;
-      box-shadow: var(--shadow-soft);
-      text-align: left;
-      position: relative;
-      transition: transform var(--ease), box-shadow var(--ease);
-      border: 1px solid transparent;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pricing-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow);
-    }
-
-    .pricing-card.featured {
-      background: linear-gradient(145deg, #0a0f1e, #171d33);
-      color: #e0e6f5;
-      border-color: rgba(97, 97, 255, 0.3);
-    }
-
-    .pricing-badge {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 16px;
-      border-radius: 999px;
-      white-space: nowrap;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .pricing-tier {
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--primary);
-      margin-bottom: 10px;
-    }
-
-    .pricing-card.featured .pricing-tier {
-      color: #9999ff;
-    }
-
-    .pricing-card h3 {
-      font-size: 1.4rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-
-    .pricing-card.featured h3 {
-      color: #fff;
-    }
-
-    .pricing-desc {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-
-    .pricing-card.featured .pricing-desc {
-      color: #8c95a8;
-    }
-
-    .pricing-amount {
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-      margin-bottom: 28px;
-    }
-
-    .pricing-currency {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--muted);
-    }
-
-    .pricing-card.featured .pricing-currency {
-      color: #8c95a8;
-    }
-
-    .pricing-num {
-      font-size: clamp(2rem, 3.5vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--ink);
-      line-height: 1;
-    }
-
-    .pricing-card.featured .pricing-num {
-      color: #fff;
-    }
-
-    .pricing-period {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .pricing-card.featured .pricing-period {
-      color: #8c95a8;
-    }
-
-    .pricing-features {
-      list-style: none;
-      display: grid;
-      gap: 12px;
-      margin-bottom: 28px;
-      flex: 1;
-    }
-
-    .pricing-features li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .pricing-card.featured .pricing-features li {
-      color: #b0b8c9;
-    }
-
-    .pricing-features li::before {
-      content: "✓";
-      width: 20px;
-      height: 20px;
-      border-radius: 6px;
-      background: linear-gradient(140deg, var(--primary), #4b4bde);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-    }
-
-    .pricing-card.featured .pricing-features li::before {
-      background: linear-gradient(140deg, #6161ff, var(--secondary));
-    }
-
-    .pricing-divider {
-      height: 1px;
-      background: var(--line);
-      margin-bottom: 24px;
-    }
-
-    .pricing-card.featured .pricing-divider {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .btn-pricing {
-      width: 100%;
-      padding: 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      border: 2px solid var(--line);
-      background: transparent;
-      color: var(--ink);
-      transition: background var(--ease), color var(--ease), border-color var(--ease), transform var(--ease);
-    }
-
-    .btn-pricing:hover {
-      background: var(--ink);
-      color: #fff;
-      border-color: var(--ink);
-      transform: translateY(-2px);
-    }
-
-    .btn-pricing-featured {
-      width: 100%;
-      padding: 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
-      box-shadow: 0 10px 24px rgba(97, 97, 255, 0.35);
-      transition: transform var(--ease), box-shadow var(--ease);
-    }
-
-    .btn-pricing-featured:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 32px rgba(97, 97, 255, 0.45);
-    }
-
-    .pricing-panels-wrap {
-      position: relative;
-    }
-
-    @media (max-width: 760px) {
-      .pricing-panel {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .footer {
-      position: relative;
-      margin-top: 74px;
-      color: #e0e6f5;
-      border-top: 1px solid rgba(97, 97, 255, 0.15);
-      background:
-        radial-gradient(circle at 78% 12%, rgba(97, 97, 255, 0.12), transparent 44%),
-        linear-gradient(130deg, #0a0f1e 0%, #050810 100%);
-      overflow: hidden;
-      perspective: 1200px;
-    }
-
-    .footer-orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      will-change: transform;
-    }
-
-    .footer-orb-1 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(97, 97, 255, 0.14), transparent 70%);
-      top: -160px;
-      left: -100px;
-    }
-
-    .footer-orb-2 {
-      width: 360px;
-      height: 360px;
-      background: radial-gradient(circle, rgba(255, 3, 96, 0.1), transparent 70%);
-      bottom: -80px;
-      right: 10%;
-    }
-
-    .footer-grid > * {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .footer-grid > *.footer-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .footer-wordmark-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      padding-bottom: 60px;
-      line-height: 0.85;
-      font-size: clamp(4rem, 15vw, 12rem);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #ffffff;
-      opacity: 0.07;
-      pointer-events: none;
-      user-select: none;
-      z-index: 0;
-      will-change: transform;
-    }
-
-    .footer-content-wrap {
-      position: relative;
-      z-index: 2;
-      padding: 63px 0 0;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
-      gap: 39px;
-      padding-bottom: 49px;
-    }
-
-    .footer-brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 20px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 24px;
-    }
-
-    .footer-brand .footer-main-logo {
-      max-width: 200px;
-      height: auto;
-      display: block;
-    }
-
-    .footer-socials {
-      display: flex;
-      gap: 12px;
-    }
-
-    .footer-socials a {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 600;
-      transition: background var(--ease), transform var(--ease);
-    }
-
-    .footer-socials a:hover {
-      background: var(--primary);
-      transform: translateY(-2px);
-      border-color: var(--primary);
-    }
-
-    .footer-nav-col strong,
-    .footer-newsletter strong {
-      display: block;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .footer-nav-col nav {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .footer-nav-col a {
-      color: #8c95a8;
-      font-size: 14px;
-      transition: color var(--ease);
-      width: fit-content;
-    }
-
-    .footer-nav-col a:hover {
-      color: var(--primary);
-    }
-
-    .footer-newsletter p {
-      color: #8c95a8;
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
-
-    .newsletter-form {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .newsletter-form input {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 16px 48px 16px 20px;
-      border-radius: 999px;
-      color: #ffffff;
-      font-size: 14px;
-      outline: none;
-      transition: border-color var(--ease), background var(--ease);
-    }
-
-    .newsletter-form input::placeholder {
-      color: #6a6f84;
-    }
-
-    .newsletter-form input:focus {
-      border-color: var(--primary);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .newsletter-form button {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: transparent;
-      border: none;
-      color: var(--primary);
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      transition: transform var(--ease);
-    }
-
-    .newsletter-form button:hover {
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    .footer-divider {
-      height: 1px;
-      background: rgba(255, 255, 255, 0.08);
-      width: 100%;
-    }
-
-    .footer-base {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 29px 0;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .footer-copy {
-      color: #8c95a8;
-      font-size: 13px;
-    }
-
-    .footer-legal {
-      display: flex;
-      gap: 30px;
-    }
-
-    .footer-legal a {
-      color: #8c95a8;
-      font-size: 13px;
-      font-weight: 500;
-      transition: color var(--ease);
-    }
-
-    .footer-legal a:hover {
-      color: var(--primary);
-    }
-
-    @media (max-width: 1050px) {
-
-      .hero,
-      .split {
-        grid-template-columns: 1fr;
-      }
-
-      .cta {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-      }
-
-      .video-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .blog-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-      }
-
-      .testimonials {
-        width: 100%;
-        margin-left: 0;
-        min-height: 0;
-        flex-direction: column;
-      }
-
-      .testimonial-viewport::before,
-      .testimonial-viewport::after {
-        display: none;
-      }
-
-      .quote-card,
-      .quote-card.is-active {
-        width: 100%;
-        opacity: 1;
-        transform: none;
-        filter: none;
-        cursor: default;
-      }
-
-      .testimonials.is-switching .quote-card,
-      .testimonials.is-switching .quote-card.is-active {
-        transform: none;
-        opacity: 1;
-      }
-
-
-    }
-
-    @media (max-width: 760px) {
-      .container {
-        width: min(1140px, calc(100% - 24px));
-      }
-
-      .navbar {
-        grid-template-columns: 1fr;
-        border-radius: 20px;
-        gap: 10px;
-      }
-
-      .nav-links,
-      .nav-actions {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .cards-3,
-      .video-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-visual,
-      .hero-photo {
-        min-height: 390px;
-      }
-
-      .float-card {
-        position: static;
-        transform: none !important;
-        margin-top: 10px;
-      }
-
-      .analytics-stage {
-        min-height: auto;
-      }
-
-      .dash-card {
-        position: static;
-        width: 100% !important;
-        margin-bottom: 10px;
-      }
-
-      .cta {
-        padding: 30px 22px;
-        grid-template-columns: 1fr;
-      }
-
-
-
-      .quote-main-copy {
-        font-size: 1.04rem;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .footer-base {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="nav-wrap">
-    <div class="container">
-      <nav class="navbar">
-        <a class="logo" href="index.html">
-          <img class="logo-icon" src="assets/images/favicon.png" alt="Opulent icon" />
-        </a>
-        <div class="nav-links">
-          <a href="index.html" class="active">Home</a>
-          <a href="about.html">About Us</a>
-          <a href="for-brands.html">For Brands</a>
-          <a href="for-influencers.html">For Influencers</a>
-          <a href="service.html">Services</a>
-          <a href="blog.html">Blogs</a>
-          <a href="contact.html">Contact</a>
-        </div>
-        <div class="nav-actions">
-          <a href="signup.html" class="btn btn-gold">Sign Up</a>
-        </div>
-      </nav>
-    </div>
-  </div>
-
-  <main>
-    <section class="section" style="padding-top: 0px;">
-      <div class="container hero" style="padding-top: 20px;">
-        <div>
-          <span class="eyebrow">Self-Service Influencer Infrastructure • UAE & GCC</span>
-          <h1>Transform Influence into Measurable <em>Growth</em></h1>
-          <p>A premium infrastructure platform connecting verified creators and brands across UAE & GCC with full
-            control, transparency, and performance tracking.</p>
-          <div class="hero-actions">
-            <button class="btn btn-dark">I'm a Brand</button>
-            <button class="btn btn-gold">I'm an Influencer</button>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <img class="hero-photo"
-            src="assets/images/jo1.jpg"
-            alt="Influencer portrait" />
-          <div class="float-card card-views">
-            <div><small>16M Views Reel</small><b>16,048,221</b><small>Organic performance</small></div>
-            <div class="card-icon">▶</div>
-          </div>
-          <div class="float-card card-verified">
-            <div class="badge">✓</div>
-            <div><strong>Verified Creator</strong><small> Identity + Audience cleared</small></div>
-          </div>
-          <div class="float-card card-roi"><strong>ROI +32%</strong><small>Campaign profitability this month</small>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="stats">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opulent Influencers House</title>
+    <link rel="icon" type="image/png" href="assets/images/fav.png" />
+    <link rel="stylesheet" href="assets/styles/global.css" />
+  </head>
+
+  <body>
+    <div id="site-header"></div>
+
+    <main>
+      <section class="section" style="padding-top: 0px">
+        <div class="container hero" style="padding-top: 20px">
           <div>
-            <h3>2,500+</h3>
-            <p>Verified Creators</p>
-          </div>
-          <div>
-            <h3>340+</h3>
-            <p>Brand Partners</p>
-          </div>
-          <div>
-            <h3>91%</h3>
-            <p>Client Retention</p>
-          </div>
-          <div>
-            <h3>6</h3>
-            <p>GCC Markets</p>
-          </div>
-        </div>
-        <div class="brand-seal">
-          <div class="brand-seal-card">
-            <div class="brand-seal-icon-wrap">
-              <img class="brand-seal-icon" src="assets/images/favicon.png" alt="Opulent seal" />
-            </div>
-            <div class="brand-seal-copy">
-              <strong>Opulent Signature Seal</strong>
-              <p>Verified platform identity for premium creator collaboration across UAE and GCC markets.</p>
+            <span class="eyebrow"
+              >Self-Service Influencer Infrastructure • UAE & GCC</span
+            >
+            <h1>Transform Influence into Measurable <em>Growth</em></h1>
+            <p>
+              A premium infrastructure platform connecting verified creators and
+              brands across UAE & GCC with full control, transparency, and
+              performance tracking.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-dark">I'm a Brand</button>
+              <button class="btn btn-gold">I'm an Influencer</button>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container split">
-        <div class="copy">
-          <h2>More Than an Agency. An Influencer Institution.</h2>
-          <p>Opulent Influencers House was built to professionalise the influencer economy across UAE & GCC. It operates
-            as an infrastructure partner delivering verified talent, structured operations, and full performance
-            accountability.</p>
-        </div>
-        <div class="analytics-stage">
-          <div class="dash-card card-sales">
-            <div class="head">
-              <div><small>Total Sales</small><strong>258</strong></div><span class="pill">+12%</span>
-            </div>
-            <div class="bars"><span style="height:30%"></span><span style="height:48%"></span><span
-                style="height:64%"></span><span style="height:56%"></span><span style="height:82%"></span><span
-                style="height:92%"></span></div>
-          </div>
-          <div class="dash-card card-activity"><strong>Recent Activity</strong>
-            <div class="feed"><span class="avatar">AL</span><span>Avery launched campaign</span><strong>$4.2k</strong>
-            </div>
-            <div class="feed"><span class="avatar">MV</span><span>Maya added creators</span><strong>+18%</strong></div>
-            <div class="feed"><span class="avatar">NB</span><span>Noah optimized targeting</span><strong>$1.7k</strong>
-            </div>
-          </div>
-          <div class="dash-card card-order"><small>Today's Order</small>
-            <h3>$150</h3><small>Live conversion pulse</small>
-            <div class="small-bars"><span style="height:28%"></span><span style="height:45%"></span><span
-                style="height:62%"></span><span style="height:52%"></span><span style="height:78%"></span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <h2>Industries We Serve</h2>
-        <div class="cards-3">
-          <article class="panel">
-            <div class="icon">01</div>
-            <h3>Luxury & Lifestyle</h3>
-            <p>Premium creator campaigns tailored for aspirational audiences.</p>
-          </article>
-          <article class="panel">
-            <div class="icon">02</div>
-            <h3>Real Estate & Hospitality</h3>
-            <p>Trusted influence strategies that accelerate demand and bookings.</p>
-          </article>
-          <article class="panel">
-            <div class="icon">03</div>
-            <h3>Beauty & Technology</h3>
-            <p>Data-led storytelling for product launches and sustained growth.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <span class="eyebrow">How it works</span>
-        <h2 style="margin-top:12px;">Platform Features</h2>
-        <div class="roadmap">
-
-          <!-- 01 right -->
-          <div class="roadmap-row right">
-            <div class="roadmap-empty"></div>
-            <div class="roadmap-spine">
-              <div class="roadmap-spine-line top"></div>
-              <div class="roadmap-node">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2"/><path d="M16.5 16.5l3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-              </div>
-              <div class="roadmap-spine-line bottom"></div>
-            </div>
-            <div class="roadmap-card">
-              <div class="roadmap-card-num">STEP 01</div>
-              <h3>Creator Discovery</h3>
-              <p>Find verified creators by niche, audience quality, and market fit.</p>
-            </div>
-          </div>
-
-          <!-- 02 left -->
-          <div class="roadmap-row left">
-            <div class="roadmap-card">
-              <div class="roadmap-card-num">STEP 02</div>
-              <h3>Direct Collaboration</h3>
-              <p>Connect brand and creator directly with transparent communication.</p>
-            </div>
-            <div class="roadmap-spine">
-              <div class="roadmap-spine-line top"></div>
-              <div class="roadmap-node">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="roadmap-spine-line bottom"></div>
-            </div>
-            <div class="roadmap-empty"></div>
-          </div>
-
-          <!-- 03 right -->
-          <div class="roadmap-row right">
-            <div class="roadmap-empty"></div>
-            <div class="roadmap-spine">
-              <div class="roadmap-spine-line top"></div>
-              <div class="roadmap-node">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#fff" stroke-width="2"/><path d="M8 2v4M16 2v4M3 10h18" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-              </div>
-              <div class="roadmap-spine-line bottom"></div>
-            </div>
-            <div class="roadmap-card">
-              <div class="roadmap-card-num">STEP 03</div>
-              <h3>Campaign Creation</h3>
-              <p>Build campaigns with clear goals, timelines, and deliverables.</p>
-            </div>
-          </div>
-
-          <!-- 04 left -->
-          <div class="roadmap-row left">
-            <div class="roadmap-card">
-              <div class="roadmap-card-num">STEP 04</div>
-              <h3>Campaign Management</h3>
-              <p>Track approvals, content milestones, and execution in one place.</p>
-            </div>
-            <div class="roadmap-spine">
-              <div class="roadmap-spine-line top"></div>
-              <div class="roadmap-node">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-              </div>
-              <div class="roadmap-spine-line bottom"></div>
-            </div>
-            <div class="roadmap-empty"></div>
-          </div>
-
-          <!-- 05 right -->
-          <div class="roadmap-row right">
-            <div class="roadmap-empty"></div>
-            <div class="roadmap-spine">
-              <div class="roadmap-spine-line top"></div>
-              <div class="roadmap-node">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 17l4-8 4 5 3-3 4 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="roadmap-spine-line bottom"></div>
-            </div>
-            <div class="roadmap-card">
-              <div class="roadmap-card-num">STEP 05</div>
-              <h3>Performance Tracking</h3>
-              <p>Monitor views, engagement, ROI, and conversion impact in real time.</p>
-            </div>
-          </div>
-
-          <!-- 06 left -->
-          <div class="roadmap-row left">
-            <div class="roadmap-card">
-              <div class="roadmap-card-num">STEP 06</div>
-              <h3>Scalable Growth Tools</h3>
-              <p>Scale across regions and verticals with repeatable growth systems.</p>
-            </div>
-            <div class="roadmap-spine">
-              <div class="roadmap-spine-line top"></div>
-              <div class="roadmap-node">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 7h8m0 0v8m0-8-8 8-4-4-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="roadmap-spine-line bottom"></div>
-            </div>
-            <div class="roadmap-empty"></div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container verify">
-        <h2>Verification That Protects Both Sides</h2>
-        <p class="verify-subtitle">Every creator goes through a rigorous multi-layer verification process before they can collaborate with brands.</p>
-        <div class="verify-cols">
-          <!-- Standard -->
-          <div class="verify-tier tier-std">
-            <div class="verify-tier-head">
-              <div class="verify-tier-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M12 3l1.5 3 3.5.5-2.5 2.5.5 3.5L12 11l-3 1.5.5-3.5L7 6.5l3.5-.5L12 3z" stroke="#8c95a8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div>
-                <div class="verify-tier-name">Standard Verified</div>
-                <div class="verify-tier-tag">Entry Level</div>
-              </div>
-            </div>
-            <div class="verify-rows">
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Identity Check</div>
-                  <div class="verify-row-value">Yes</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Engagement Scan</div>
-                  <div class="verify-row-value">Basic</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Audience Insights</div>
-                  <div class="verify-row-value">Standard</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Brand Safety</div>
-                  <div class="verify-row-value">Core</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Fraud Detection</div>
-                  <div class="verify-row-value">Automated</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Performance Benchmark</div>
-                  <div class="verify-row-value">Category Avg.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Elite -->
-          <div class="verify-tier tier-elite">
-            <div class="verify-tier-head">
-              <div class="verify-tier-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.5l-4.9 2.5.9-5.5-4-3.9 5.6-.8L12 2z" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>
-              </div>
-              <div>
-                <div class="verify-tier-name">Elite Verified</div>
-                <div class="verify-tier-tag">Premium Tier</div>
-              </div>
-            </div>
-            <div class="verify-rows">
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Identity Check</div>
-                  <div class="verify-row-value">Advanced</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Engagement Scan</div>
-                  <div class="verify-row-value">Deep Analysis</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Audience Insights</div>
-                  <div class="verify-row-value">Granular</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Brand Safety</div>
-                  <div class="verify-row-value">Enhanced</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Fraud Detection</div>
-                  <div class="verify-row-value">Automated + Manual</div>
-                </div>
-              </div>
-              <div class="verify-row">
-                <div class="verify-row-icon">✓</div>
-                <div class="verify-row-text">
-                  <div class="verify-row-label">Performance Benchmark</div>
-                  <div class="verify-row-value">Tier-Based Index</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container split">
-        <div class="copy">
-          <h2>I Don't Just Create Content - I Build Influence That Converts</h2>
-          <p>Creator positioning rooted in measurable business outcomes across premium categories.</p>
-        </div>
-        <div class="value-list">
-          <div class="value-item"><span class="tick">✓</span><span>Position brands as trusted authorities</span></div>
-          <div class="value-item"><span class="tick">✓</span><span>Drive real engagement and ROI</span></div>
-          <div class="value-item"><span class="tick">✓</span><span>Connect with authentic audiences</span></div>
-          <div class="value-item"><span class="tick">✓</span><span>Scale visibility and profits</span></div>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h2>Video Content</h2>
-        <div class="video-grid">
-          <article class="video"><img class="thumb"
-              src="assets/images/jo-video-3.jpg"
-              alt="Video thumbnail" />
-            <div class="meta"><span>16M views</span><span class="price">$5.00</span></div>
-          </article>
-          <article class="video"><img class="thumb"
+          <div class="hero-visual">
+            <img
+              class="hero-photo"
               src="assets/images/jo1.jpg"
-              alt="Video thumbnail" />
-            <div class="meta"><span>2.4M views</span><span class="price">Free</span></div>
-          </article>
-          <article class="video"><img class="thumb"
-              src="assets/images/jo2.jpg"
-              alt="Video thumbnail" />
-            <div class="meta"><span>8.1M views</span><span class="price">$5.00</span></div>
-          </article>
-          <article class="video"><img class="thumb"
-              src="assets/images/jo4.jpg"
-              alt="Video thumbnail" />
-            <div class="meta"><span>1.9M views</span><span class="price">Free</span></div>
-          </article>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h2>Insights</h2>
-        <div class="blog-grid">
-          <article class="blog-card"><time>Apr 09, 2026</time>
-            <h4>Why Verified Creators Make Campaigns Safer and Smarter</h4><a class="read" href="#">Read More →</a>
-          </article>
-          <article class="blog-card"><time>Apr 04, 2026</time>
-            <h4>Campaign Preparation Checklist for UAE and GCC Brand Teams</h4><a class="read" href="#">Read More →</a>
-          </article>
-          <article class="blog-card"><time>Mar 27, 2026</time>
-            <h4>How to Optimize Creator Profiles for Better Match and ROI</h4><a class="read" href="#">Read More →</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section testimonials-wrap">
-      <div class="container">
-        <span class="testimonials-tag">Testimonials</span>
-        <h2>What our community says</h2>
-        <div class="testimonial-viewport">
-          <div class="testimonials" id="testimonialsCarousel">
-            <article class="quote-card" data-pos="left" tabindex="0" role="button" aria-label="Show Elena review">
-              <div class="quote-mark">“</div>
-              <p class="quote-side-copy">"Working with Opulent Influencers House was a game-changer for my portfolio.
-                Campaign contracts and creative briefs have never been smoother. Truly premium experience."</p>
-              <div class="quote-author"><img class="quote-avatar"
-                  src="assets/images/jo1.jpg"
-                  alt="Elena avatar" />
-                <div><strong>Elena Rostova</strong><span>Fashion Creator</span></div>
+              alt="Influencer portrait"
+            />
+            <div class="float-card card-views">
+              <div>
+                <small>16M Views Reel</small><b>16,048,221</b
+                ><small>Organic performance</small>
               </div>
-            </article>
-            <article class="quote-card is-active" data-pos="center" tabindex="0" role="button"
-              aria-label="Show Marcus review">
-              <div class="quote-mark">“</div>
-              <p class="quote-main-copy">"Opulent Influencers House entirely elevated my personal brand. The analytics
-                dashboard combined with their direct-to-brand networking allowed me to double my campaign revenue in
-                just under three months."</p>
-              <div class="quote-author"><img class="quote-avatar"
-                  src="assets/images/jo2.jpg"
-                  alt="Marcus avatar" />
-                <div><strong>Marcus Sterling</strong><span>Lifestyle & Travel Influencer</span></div>
+              <div class="card-icon">▶</div>
+            </div>
+            <div class="float-card card-verified">
+              <div class="badge">✓</div>
+              <div>
+                <strong>Verified Creator</strong
+                ><small> Identity + Audience cleared</small>
               </div>
-            </article>
-            <article class="quote-card" data-pos="right" tabindex="0" role="button" aria-label="Show Sarah review">
-              <div class="quote-mark">“</div>
-              <p class="quote-side-copy">"The best luxury influencer network out there. The design, the support, and the
-                caliber of brands are unmatched."</p>
-              <div class="quote-author"><img class="quote-avatar"
-                  src="assets/images/jo4.jpg"
-                  alt="Sarah avatar" />
-                <div><strong>Sarah Jenkins</strong><span>Beauty Vlogger</span></div>
+            </div>
+            <div class="float-card card-roi">
+              <strong>ROI +32%</strong
+              ><small>Campaign profitability this month</small>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="stats">
+            <div>
+              <h3>2,500+</h3>
+              <p>Verified Creators</p>
+            </div>
+            <div>
+              <h3>340+</h3>
+              <p>Brand Partners</p>
+            </div>
+            <div>
+              <h3>91%</h3>
+              <p>Client Retention</p>
+            </div>
+            <div>
+              <h3>6</h3>
+              <p>GCC Markets</p>
+            </div>
+          </div>
+          <div class="brand-seal">
+            <div class="brand-seal-card">
+              <div class="brand-seal-icon-wrap">
+                <img
+                  class="brand-seal-icon"
+                  src="assets/images/favicon.png"
+                  alt="Opulent seal"
+                />
               </div>
+              <div class="brand-seal-copy">
+                <strong>Opulent Signature Seal</strong>
+                <p>
+                  Verified platform identity for premium creator collaboration
+                  across UAE and GCC markets.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container split">
+          <div class="copy">
+            <h2>More Than an Agency. An Influencer Institution.</h2>
+            <p>
+              Opulent Influencers House was built to professionalise the
+              influencer economy across UAE & GCC. It operates as an
+              infrastructure partner delivering verified talent, structured
+              operations, and full performance accountability.
+            </p>
+          </div>
+          <div class="analytics-stage">
+            <div class="dash-card card-sales">
+              <div class="head">
+                <div><small>Total Sales</small><strong>258</strong></div>
+                <span class="pill">+12%</span>
+              </div>
+              <div class="bars">
+                <span style="height: 30%"></span
+                ><span style="height: 48%"></span
+                ><span style="height: 64%"></span
+                ><span style="height: 56%"></span
+                ><span style="height: 82%"></span
+                ><span style="height: 92%"></span>
+              </div>
+            </div>
+            <div class="dash-card card-activity">
+              <strong>Recent Activity</strong>
+              <div class="feed">
+                <span class="avatar">AL</span
+                ><span>Avery launched campaign</span><strong>$4.2k</strong>
+              </div>
+              <div class="feed">
+                <span class="avatar">MV</span><span>Maya added creators</span
+                ><strong>+18%</strong>
+              </div>
+              <div class="feed">
+                <span class="avatar">NB</span
+                ><span>Noah optimized targeting</span><strong>$1.7k</strong>
+              </div>
+            </div>
+            <div class="dash-card card-order">
+              <small>Today's Order</small>
+              <h3>$150</h3>
+              <small>Live conversion pulse</small>
+              <div class="small-bars">
+                <span style="height: 28%"></span
+                ><span style="height: 45%"></span
+                ><span style="height: 62%"></span
+                ><span style="height: 52%"></span
+                ><span style="height: 78%"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <h2>Industries We Serve</h2>
+          <div class="cards-3">
+            <article class="panel">
+              <div class="icon">01</div>
+              <h3>Luxury & Lifestyle</h3>
+              <p>
+                Premium creator campaigns tailored for aspirational audiences.
+              </p>
+            </article>
+            <article class="panel">
+              <div class="icon">02</div>
+              <h3>Real Estate & Hospitality</h3>
+              <p>
+                Trusted influence strategies that accelerate demand and
+                bookings.
+              </p>
+            </article>
+            <article class="panel">
+              <div class="icon">03</div>
+              <h3>Beauty & Technology</h3>
+              <p>
+                Data-led storytelling for product launches and sustained growth.
+              </p>
             </article>
           </div>
         </div>
-        <div class="tc-controls">
-          <button class="tc-btn" id="tcPrev" aria-label="Previous">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="tc-dots" id="tcDots"></div>
-          <button class="tc-btn" id="tcNext" aria-label="Next">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section pricing-wrap">
-      <div class="container">
-        <span class="eyebrow" style="margin-bottom:14px;">Transparent Pricing</span>
-        <h2 style="max-width:none; margin-top:14px;">Simple, Scalable Plans</h2>
-        <p style="color:var(--muted); margin-bottom:36px;">Choose the plan that fits your goals — no hidden fees, no lock-ins.</p>
-        <div class="pricing-tabs">
-          <button class="pricing-tab active" data-tab="brands">For Brands</button>
-          <button class="pricing-tab" data-tab="influencers">For Influencers</button>
-        </div>
-
-        <!-- Brands -->
-        <div class="pricing-panels-wrap">
-        <div class="pricing-panel active" id="tab-brands">
-          <div class="pricing-card">
-            <div class="pricing-tier">Starter</div>
-            <h3>Brand Starter</h3>
-            <p class="pricing-desc">Perfect for small brands testing influencer marketing for the first time.</p>
-            <div class="pricing-amount">
-              <span class="pricing-currency">AED</span>
-              <span class="pricing-num">1,500</span>
-              <span class="pricing-period">/mo</span>
-            </div>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-features">
-              <li>Up to 3 creator collaborations</li>
-              <li>Basic campaign dashboard</li>
-              <li>Standard creator verification</li>
-              <li>Email support</li>
-              <li>Monthly performance report</li>
-            </ul>
-            <button class="btn-pricing">Get Started</button>
-          </div>
-
-          <div class="pricing-card featured">
-            <div class="pricing-badge">Most Popular</div>
-            <div class="pricing-tier">Growth</div>
-            <h3>Brand Growth</h3>
-            <p class="pricing-desc">For growing brands ready to scale campaigns across UAE & GCC markets.</p>
-            <div class="pricing-amount">
-              <span class="pricing-currency">AED</span>
-              <span class="pricing-num">3,500</span>
-              <span class="pricing-period">/mo</span>
-            </div>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-features">
-              <li>Up to 10 creator collaborations</li>
-              <li>Advanced analytics dashboard</li>
-              <li>Elite creator verification access</li>
-              <li>Dedicated account manager</li>
-              <li>Weekly performance reports</li>
-              <li>Multi-platform campaign tracking</li>
-            </ul>
-            <button class="btn-pricing-featured">Get Started</button>
-          </div>
-
-          <div class="pricing-card">
-            <div class="pricing-tier" style="display:flex;align-items:center;gap:6px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round" fill="rgba(251,191,36,0.15)"/></svg>
-              Elite
-            </div>
-            <h3>Brand Elite</h3>
-            <p class="pricing-desc">Full-scale influencer infrastructure for enterprise brands and agencies.</p>
-            <div class="pricing-amount">
-              <span class="pricing-currency">AED</span>
-              <span class="pricing-num">7,000</span>
-              <span class="pricing-period">/mo</span>
-            </div>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-features">
-              <li>Unlimited creator collaborations</li>
-              <li>Full analytics & ROI tracking</li>
-              <li>Priority elite creator matching</li>
-              <li>Dedicated strategy team</li>
-              <li>Real-time campaign reporting</li>
-              <li>Custom contract management</li>
-              <li>GCC multi-market campaigns</li>
-            </ul>
-            <button class="btn-pricing">Get Started</button>
-          </div>
-        </div>
-
-        <!-- Influencers -->
-        <div class="pricing-panel" id="tab-influencers">
-          <div class="pricing-card">
-            <div class="pricing-tier">Basic</div>
-            <h3>Creator Basic</h3>
-            <p class="pricing-desc">Start building your profile and get discovered by brands — completely free.</p>
-            <div class="pricing-amount">
-              <span class="pricing-num" style="font-size:2.4rem;">Free</span>
-              <span style="font-size:11px;font-weight:600;color:#4ade80;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);border-radius:999px;padding:2px 8px;margin-left:6px;">No card</span>
-            </div>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-features">
-              <li>Public creator profile</li>
-              <li>Basic brand discovery</li>
-              <li>Standard listing visibility</li>
-              <li>Community access</li>
-              <li>Self-service campaign apply</li>
-            </ul>
-            <button class="btn-pricing">Join Free</button>
-          </div>
-
-          <div class="pricing-card featured">
-            <div class="pricing-badge">Most Popular</div>
-            <div class="pricing-tier">Verified</div>
-            <h3>Verified Creator</h3>
-            <p class="pricing-desc">Get verified, boost visibility, and unlock direct brand collaboration tools.</p>
-            <div class="pricing-amount">
-              <span class="pricing-currency">AED</span>
-              <span class="pricing-num">299</span>
-              <span class="pricing-period">/mo</span>
-            </div>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-features">
-              <li>Verified creator badge</li>
-              <li>Priority brand matching</li>
-              <li>Advanced profile analytics</li>
-              <li>Direct brand messaging</li>
-              <li>Campaign performance insights</li>
-              <li>Featured in brand searches</li>
-            </ul>
-            <button class="btn-pricing-featured">Get Verified</button>
-          </div>
-
-          <div class="pricing-card">
-            <div class="pricing-tier" style="display:flex;align-items:center;gap:6px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round" fill="rgba(251,191,36,0.15)"/></svg>
-              Elite Creator
-            </div>
-            <h3>Elite Creator</h3>
-            <p class="pricing-desc">For top-tier creators who want maximum exposure and premium brand deals.</p>
-            <div class="pricing-amount">
-              <span class="pricing-currency">AED</span>
-              <span class="pricing-num">599</span>
-              <span class="pricing-period">/mo</span>
-            </div>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-features">
-              <li>Elite verified badge</li>
-              <li>Top placement in all searches</li>
-              <li>Dedicated talent manager</li>
-              <li>Exclusive brand deal access</li>
-              <li>Full ROI & audience reporting</li>
-              <li>Contract & negotiation support</li>
-              <li>Multi-platform campaign tools</li>
-            </ul>
-            <button class="btn-pricing">Go Elite</button>
-          </div>
-        </div>
-        </div><!-- /.pricing-panels-wrap -->
-      </div>
-    </section>
-          
-    <section class="section">
-      <div class="container">
-        <div class="cta">
-          <div class="cta-blob cta-blob-1"></div>
-          <div class="cta-blob cta-blob-2"></div>
-          <div class="cta-content">
-            <span class="cta-offer-tag">⚡ Limited Time Offer</span>
-            <h2>Free Listing for a <em style="font-style:italic; font-family:Georgia,serif; color:#a78bff;">Limited Time</em></h2>
-            <p>Join our platform today and get your profile listed for free. Start connecting with brands and grow your influence across UAE &amp; GCC.</p>
-            <div class="cta-perks">
-              <span class="cta-perk">✓ No credit card</span>
-              <span class="cta-perk">✓ Instant access</span>
-              <span class="cta-perk">✓ Cancel anytime</span>
-            </div>
-            <div class="cta-actions">
-              <button class="btn-cta">Get Started Free &rarr;</button>
-              <a href="#" class="cta-link">See how it works</a>
-            </div>
-          </div>
-          <div class="cta-visual">
-            <div class="cta-chip cta-chip-1">
-              <span class="cta-chip-dot"></span>
-              <span>2,500+ Creators Listed</span>
-            </div>
-            <div class="cta-main-card">
-              <div class="cta-card-top">
-                <div class="cta-avatar-stack">
-                  <img src="assets/images/jo1.jpg" alt="" />
-                  <img src="assets/images/jo2.jpg" alt="" />
-                  <img src="assets/images/jo4.jpg" alt="" />
-                  <div class="cta-avatar-more">+340</div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <span class="eyebrow">How it works</span>
+          <h2 style="margin-top: 12px">Platform Features</h2>
+          <div class="roadmap">
+            <!-- 01 right -->
+            <div class="roadmap-row right">
+              <div class="roadmap-empty"></div>
+              <div class="roadmap-spine">
+                <div class="roadmap-spine-line top"></div>
+                <div class="roadmap-node">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle
+                      cx="11"
+                      cy="11"
+                      r="7"
+                      stroke="#fff"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M16.5 16.5l3.5 3.5"
+                      stroke="#fff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
                 </div>
-                <div class="cta-card-label">
-                  <strong>Brands &amp; Creators</strong>
-                  <span>Active this month</span>
-                </div>
+                <div class="roadmap-spine-line bottom"></div>
               </div>
-              <div class="cta-card-stat">
-                <div><b>91%</b><small>Retention Rate</small></div>
-                <div class="cta-stat-divider"></div>
-                <div><b>6</b><small>GCC Markets</small></div>
-                <div class="cta-stat-divider"></div>
-                <div><b>Free</b><small>To List Now</small></div>
+              <div class="roadmap-card">
+                <div class="roadmap-card-num">STEP 01</div>
+                <h3>Creator Discovery</h3>
+                <p>
+                  Find verified creators by niche, audience quality, and market
+                  fit.
+                </p>
               </div>
             </div>
-            <div class="cta-chip cta-chip-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fbbf24"/></svg>
-              <span>Rated #1 in UAE</span>
+
+            <!-- 02 left -->
+            <div class="roadmap-row left">
+              <div class="roadmap-card">
+                <div class="roadmap-card-num">STEP 02</div>
+                <h3>Direct Collaboration</h3>
+                <p>
+                  Connect brand and creator directly with transparent
+                  communication.
+                </p>
+              </div>
+              <div class="roadmap-spine">
+                <div class="roadmap-spine-line top"></div>
+                <div class="roadmap-node">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                      stroke="#fff"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="roadmap-spine-line bottom"></div>
+              </div>
+              <div class="roadmap-empty"></div>
+            </div>
+
+            <!-- 03 right -->
+            <div class="roadmap-row right">
+              <div class="roadmap-empty"></div>
+              <div class="roadmap-spine">
+                <div class="roadmap-spine-line top"></div>
+                <div class="roadmap-node">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="3"
+                      y="4"
+                      width="18"
+                      height="16"
+                      rx="2"
+                      stroke="#fff"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M8 2v4M16 2v4M3 10h18"
+                      stroke="#fff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <div class="roadmap-spine-line bottom"></div>
+              </div>
+              <div class="roadmap-card">
+                <div class="roadmap-card-num">STEP 03</div>
+                <h3>Campaign Creation</h3>
+                <p>
+                  Build campaigns with clear goals, timelines, and deliverables.
+                </p>
+              </div>
+            </div>
+
+            <!-- 04 left -->
+            <div class="roadmap-row left">
+              <div class="roadmap-card">
+                <div class="roadmap-card-num">STEP 04</div>
+                <h3>Campaign Management</h3>
+                <p>
+                  Track approvals, content milestones, and execution in one
+                  place.
+                </p>
+              </div>
+              <div class="roadmap-spine">
+                <div class="roadmap-spine-line top"></div>
+                <div class="roadmap-node">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M9 11l3 3L22 4"
+                      stroke="#fff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+                      stroke="#fff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <div class="roadmap-spine-line bottom"></div>
+              </div>
+              <div class="roadmap-empty"></div>
+            </div>
+
+            <!-- 05 right -->
+            <div class="roadmap-row right">
+              <div class="roadmap-empty"></div>
+              <div class="roadmap-spine">
+                <div class="roadmap-spine-line top"></div>
+                <div class="roadmap-node">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M3 17l4-8 4 5 3-3 4 6"
+                      stroke="#fff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="roadmap-spine-line bottom"></div>
+              </div>
+              <div class="roadmap-card">
+                <div class="roadmap-card-num">STEP 05</div>
+                <h3>Performance Tracking</h3>
+                <p>
+                  Monitor views, engagement, ROI, and conversion impact in real
+                  time.
+                </p>
+              </div>
+            </div>
+
+            <!-- 06 left -->
+            <div class="roadmap-row left">
+              <div class="roadmap-card">
+                <div class="roadmap-card-num">STEP 06</div>
+                <h3>Scalable Growth Tools</h3>
+                <p>
+                  Scale across regions and verticals with repeatable growth
+                  systems.
+                </p>
+              </div>
+              <div class="roadmap-spine">
+                <div class="roadmap-spine-line top"></div>
+                <div class="roadmap-node">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M13 7h8m0 0v8m0-8-8 8-4-4-6 6"
+                      stroke="#fff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="roadmap-spine-line bottom"></div>
+              </div>
+              <div class="roadmap-empty"></div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <footer class="footer">
-    <div class="footer-orb footer-orb-1" aria-hidden="true"></div>
-    <div class="footer-orb footer-orb-2" aria-hidden="true"></div>
-    <div class="footer-wordmark-bg" aria-hidden="true">
-      <span>Opulent</span>
-      <span>Influencers</span>
-      <span>House</span>
-    </div>
-
-    <div class="container footer-content-wrap">
-      <div class="footer-grid">
-        <div class="footer-brand-col">
-          <div class="footer-brand">
-            <a href="index.html" aria-label="Go to homepage">
-              <img class="footer-main-logo" src='assets/images/white_favIcon.png' alt="Opulent Logo" />
-            </a>
-          </div>
-          <p class="footer-note" style="color: #6a6f84; font-size: 13px; line-height: 1.5; margin-bottom: 20px;">
-            Digital influencer infrastructure that helps brands and creators scale campaigns.
+      <!-- hiding -->
+      <section class="section" style="display: none">
+        <div class="container verify">
+          <h2>Verification That Protects Both Sides</h2>
+          <p class="verify-subtitle">
+            Every creator goes through a rigorous multi-layer verification
+            process before they can collaborate with brands.
           </p>
-          <div class="footer-socials">
-            <!-- TikTok -->
-            <a href="https://www.tiktok.com/@opulentinfluencershouse" target="_blank" rel="noopener noreferrer"
-              aria-label="TikTok">
-              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
-                <path
-                  d="M448,209.9a210.1,210.1,0,0,1-122.8-39.3V349.4A162.6,162.6,0,1,1,185,188.3V278.2a74.6,74.6,0,1,0,52.2,71.2V0l88,0a121.2,121.2,0,0,0,1.9,22.2h0A122.2,122.2,0,0,0,381,102.4a121.4,121.4,0,0,0,67,20.1Z" />
-              </svg>
-            </a>
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/profile.php?id=61585214585761" target="_blank" rel="noopener noreferrer"
-              aria-label="Facebook">
-              <svg viewBox="0 0 320 512" width="16" height="16" fill="currentColor">
-                <path
-                  d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-              </svg>
-            </a>
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/opulentinfluencershouse/" target="_blank" rel="noopener noreferrer"
-              aria-label="Instagram">
-              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
-                <path
-                  d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
-              </svg>
-            </a>
-            <!-- Snapchat -->
-            <a href="https://snapchat.com/t/r6Pjgsw3" target="_blank" rel="noopener noreferrer" aria-label="Snapchat">
-              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
-                <path
-                  d="M424.3 325.2c-5.7-3.9-10.4-8-12.7-10.1-4.7-4.2-10-8.9-13.7-13.6-7.1-9-8.4-14.8-1.5-27 10-18.2 24.3-39 23-55.9-1.3-15.6-13.4-19-21.6-19.6-12.7-1-29.6 5.8-54.7 17.5-12 5.5-23 10.6-32.5 14-8.8 3.1-15.8 2.6-21.7-1.4-1.2-.8-21.4-14.4-65.7-14.4s-64.6 13.6-65.7 14.4c-5.9 4-12.8 4.6-21.7 1.4-9.5-3.4-20.5-8.5-32.5-14-25.1-11.7-42-18.4-54.7-17.5-8.2.6-20.4 4-21.6 19.6-1.3 16.9 13.1 37.7 23.1 55.9 6.8 12.2 5.6 18-1.5 27-3.6 4.6-9 9.4-13.6 13.6-2.4 2.1-7 6.2-12.8 10.1C18 342.3.8 358 1 371.3c.4 12.5 13.9 14.8 15.6 15 13 1.9 29.8 1.4 46.5-.4 10.5-1.2 21.2-2.5 32-3 22-1 46.4 11.2 56 16.4 20.8 11.3 49 11.5 72.8 0 9.6-5.2 34-17.4 56-16.4 10.8.5 21.5 1.8 32 3 16.8 1.8 33.6 2.3 46.5.4 1.7-.2 15.2-2.5 15.6-15 .2-13.3-17-29.1-49.7-46.1zM223.8 16c-38.3 0-82.6 19.1-105.8 69.1-10.9 23.4-16.1 48-15.2 71.9 1 25.5 8 50.8 10.6 62.5 3.3 14.8 9.5 22.8 15.6 28 8.1 7.1 19 8.2 23.4 8.7 1.2.2 2 .5 2.5 1 .7.8 1 2 1 3.5 0 2.2-.6 4.9-1.9 8-1.5 3.7-3.8 8.3-6.1 13.5-3.7 8.2-7.8 17.5-7.8 24.3 0 5 2.1 10.4 9 16.9 7.8 7.4 19.4 11.4 34.2 12 18.2.7 34.3-5.2 41.2-8a9.4 9.4 0 0 1 12 5.5l1.3 3.5c1.4-1 6.5-4.4 16.9-4.4 10.4 0 15.5 3.4 16.9 4.4l1.3-3.6a9.5 9.5 0 0 1 12-5.4c6.9 2.8 22.9 8.6 41.1 8 14.8-.6 26.4-4.6 34.2-12 6.9-6.5 9-11.9 9-16.9 0-6.8-4-16.1-7.8-24.3-2.3-5.2-4.6-9.8-6.1-13.5-1.3-3-1.9-5.8-1.9-8 0-1.5.3-2.7 1-3.5.5-.6 1.3-1 2.5-1 4.5-.4 15.3-1.6 23.4-8.7 6.1-5.3 12.3-13.2 15.6-28 2.6-11.7 9.6-37 10.6-62.5.9-23.9-4.3-48.4-15.2-71.9C306.4 35.1 262.1 16 223.8 16z" />
-              </svg>
-            </a>
+          <div class="verify-cols">
+            <!-- Standard -->
+            <div class="verify-tier tier-std">
+              <div class="verify-tier-head">
+                <div class="verify-tier-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M9 12l2 2 4-4M12 3l1.5 3 3.5.5-2.5 2.5.5 3.5L12 11l-3 1.5.5-3.5L7 6.5l3.5-.5L12 3z"
+                      stroke="#8c95a8"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div class="verify-tier-name">Standard Verified</div>
+                  <div class="verify-tier-tag">Entry Level</div>
+                </div>
+              </div>
+              <div class="verify-rows">
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Identity Check</div>
+                    <div class="verify-row-value">Yes</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Engagement Scan</div>
+                    <div class="verify-row-value">Basic</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Audience Insights</div>
+                    <div class="verify-row-value">Standard</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Brand Safety</div>
+                    <div class="verify-row-value">Core</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Fraud Detection</div>
+                    <div class="verify-row-value">Automated</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Performance Benchmark</div>
+                    <div class="verify-row-value">Category Avg.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Elite -->
+            <div class="verify-tier tier-elite">
+              <div class="verify-tier-head">
+                <div class="verify-tier-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 2l2.4 4.8 5.6.8-4 3.9.9 5.5L12 14.5l-4.9 2.5.9-5.5-4-3.9 5.6-.8L12 2z"
+                      fill="#fff"
+                      stroke="#fff"
+                      stroke-width="1.2"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div class="verify-tier-name">Elite Verified</div>
+                  <div class="verify-tier-tag">Premium Tier</div>
+                </div>
+              </div>
+              <div class="verify-rows">
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Identity Check</div>
+                    <div class="verify-row-value">Advanced</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Engagement Scan</div>
+                    <div class="verify-row-value">Deep Analysis</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Audience Insights</div>
+                    <div class="verify-row-value">Granular</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Brand Safety</div>
+                    <div class="verify-row-value">Enhanced</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Fraud Detection</div>
+                    <div class="verify-row-value">Automated + Manual</div>
+                  </div>
+                </div>
+                <div class="verify-row">
+                  <div class="verify-row-icon">✓</div>
+                  <div class="verify-row-text">
+                    <div class="verify-row-label">Performance Benchmark</div>
+                    <div class="verify-row-value">Tier-Based Index</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="footer-nav-col">
-          <strong>Browse Categories</strong>
-          <nav aria-label="Category navigation">
-            <a href="#">About Us</a>
-            <a href="#">For Brands</a>
-            <a href="#">For Influencers</a>
-            <a href="#">Services</a>
-            <a href="#">Blogs</a>
-            <a href="#">Contact Us</a>
-          </nav>
-        </div>
-
-        <div class="footer-contact-details" style="display:flex; flex-direction:column; gap:16px;">
-          <strong style="display:block; color:#ffffff; font-size:16px; font-weight:600;">Get in Touch</strong>
-
-          <div class="contact-item" style="display:flex; gap:10px; align-items:flex-start;">
-            <svg width="16" height="16" fill="var(--primary)" viewBox="0 0 512 512" style="margin-top:2px;">
-              <path
-                d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-            </svg>
-            <a href="mailto:info@ulegendarydigital.com"
-              style="color: #8c95a8; font-size:13px; text-decoration:none;">info@ulegendarydigital.com</a>
+      <section class="section">
+        <div class="container split">
+          <div class="copy">
+            <h2>
+              I Don't Just Create Content - I Build Influence That Converts
+            </h2>
+            <p>
+              Creator positioning rooted in measurable business outcomes across
+              premium categories.
+            </p>
           </div>
-
-          <div class="contact-item" style="display:flex; gap:10px; align-items:flex-start;">
-            <svg width="16" height="16" fill="var(--primary)" viewBox="0 0 512 512" style="margin-top:2px;">
-              <path
-                d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
-            </svg>
-            <a href="tel:971556173798" style="color: #8c95a8; font-size:13px; text-decoration:none;">+971 55 617
-              3798</a>
-          </div>
-
-          <div class="contact-item" style="display:flex; gap:10px; align-items:flex-start;">
-            <svg width="16" height="16" fill="var(--primary)" viewBox="0 0 384 512"
-              style="margin-top:2px; flex-shrink:0;">
-              <path
-                d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-            </svg>
-            <span style="color: #8c95a8; font-size:13px; line-height:1.5;">Office # 803 - 8th Floor, White Swan
-              Building, Trade Centre District, Sheikh Zayed Road, Dubai, UAE.</span>
+          <div class="value-list">
+            <div class="value-item">
+              <span class="tick">✓</span
+              ><span>Position brands as trusted authorities</span>
+            </div>
+            <div class="value-item">
+              <span class="tick">✓</span
+              ><span>Drive real engagement and ROI</span>
+            </div>
+            <div class="value-item">
+              <span class="tick">✓</span
+              ><span>Connect with authentic audiences</span>
+            </div>
+            <div class="value-item">
+              <span class="tick">✓</span
+              ><span>Scale visibility and profits</span>
+            </div>
           </div>
         </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2>Video Content</h2>
+          <div class="video-grid">
+            <article class="video">
+              <img
+                class="thumb"
+                src="assets/images/jo-video-3.jpg"
+                alt="Video thumbnail"
+              />
+              <div class="meta">
+                <span>16M views</span><span class="price">$5.00</span>
+              </div>
+            </article>
+            <article class="video">
+              <img
+                class="thumb"
+                src="assets/images/jo1.jpg"
+                alt="Video thumbnail"
+              />
+              <div class="meta">
+                <span>2.4M views</span><span class="price">Free</span>
+              </div>
+            </article>
+            <article class="video">
+              <img
+                class="thumb"
+                src="assets/images/jo2.jpg"
+                alt="Video thumbnail"
+              />
+              <div class="meta">
+                <span>8.1M views</span><span class="price">$5.00</span>
+              </div>
+            </article>
+            <article class="video">
+              <img
+                class="thumb"
+                src="assets/images/jo4.jpg"
+                alt="Video thumbnail"
+              />
+              <div class="meta">
+                <span>1.9M views</span><span class="price">Free</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2>Insights</h2>
+          <div class="blog-grid">
+            <article class="blog-card">
+              <time>Apr 09, 2026</time>
+              <h4>Why Verified Creators Make Campaigns Safer and Smarter</h4>
+              <a class="read" href="#">Read More →</a>
+            </article>
+            <article class="blog-card">
+              <time>Apr 04, 2026</time>
+              <h4>
+                Campaign Preparation Checklist for UAE and GCC Brand Teams
+              </h4>
+              <a class="read" href="#">Read More →</a>
+            </article>
+            <article class="blog-card">
+              <time>Mar 27, 2026</time>
+              <h4>How to Optimize Creator Profiles for Better Match and ROI</h4>
+              <a class="read" href="#">Read More →</a>
+            </article>
+          </div>
+        </div>
+      </section>
 
-        <div class="footer-newsletter">
-          <strong>Newsletter</strong>
-          <form class="newsletter-form" action="#" aria-label="Newsletter form" style="margin-bottom: 24px;">
-            <input type="email" placeholder="Email Address" required />
-            <button type="submit" aria-label="Subscribe">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" />
+      <section class="section testimonials-wrap">
+        <div class="container">
+          <span class="testimonials-tag">Testimonials</span>
+          <h2>What our community says</h2>
+          <div class="testimonial-viewport">
+            <div class="testimonials" id="testimonialsCarousel">
+              <article
+                class="quote-card"
+                data-pos="left"
+                tabindex="0"
+                role="button"
+                aria-label="Show Elena review"
+              >
+                <div class="quote-mark">“</div>
+                <p class="quote-side-copy">
+                  "Working with Opulent Influencers House was a game-changer for
+                  my portfolio. Campaign contracts and creative briefs have
+                  never been smoother. Truly premium experience."
+                </p>
+                <div class="quote-author">
+                  <img
+                    class="quote-avatar"
+                    src="assets/images/jo1.jpg"
+                    alt="Elena avatar"
+                  />
+                  <div>
+                    <strong>Elena Rostova</strong><span>Fashion Creator</span>
+                  </div>
+                </div>
+              </article>
+              <article
+                class="quote-card is-active"
+                data-pos="center"
+                tabindex="0"
+                role="button"
+                aria-label="Show Marcus review"
+              >
+                <div class="quote-mark">“</div>
+                <p class="quote-main-copy">
+                  "Opulent Influencers House entirely elevated my personal
+                  brand. The analytics dashboard combined with their
+                  direct-to-brand networking allowed me to double my campaign
+                  revenue in just under three months."
+                </p>
+                <div class="quote-author">
+                  <img
+                    class="quote-avatar"
+                    src="assets/images/jo2.jpg"
+                    alt="Marcus avatar"
+                  />
+                  <div>
+                    <strong>Marcus Sterling</strong
+                    ><span>Lifestyle & Travel Influencer</span>
+                  </div>
+                </div>
+              </article>
+              <article
+                class="quote-card"
+                data-pos="right"
+                tabindex="0"
+                role="button"
+                aria-label="Show Sarah review"
+              >
+                <div class="quote-mark">“</div>
+                <p class="quote-side-copy">
+                  "The best luxury influencer network out there. The design, the
+                  support, and the caliber of brands are unmatched."
+                </p>
+                <div class="quote-author">
+                  <img
+                    class="quote-avatar"
+                    src="assets/images/jo4.jpg"
+                    alt="Sarah avatar"
+                  />
+                  <div>
+                    <strong>Sarah Jenkins</strong><span>Beauty Vlogger</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="tc-controls">
+            <button class="tc-btn" id="tcPrev" aria-label="Previous">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M15 18l-6-6 6-6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </button>
-          </form>
-
+            <div class="tc-dots" id="tcDots"></div>
+            <button class="tc-btn" id="tcNext" aria-label="Next">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M9 18l6-6-6-6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="footer-divider"></div>
+      <section class="section pricing-wrap">
+        <div class="container">
+          <span class="eyebrow" style="margin-bottom: 14px"
+            >Transparent Pricing</span
+          >
+          <h2 style="max-width: none; margin-top: 14px">
+            Simple, Scalable Plans
+          </h2>
+          <p style="color: var(--muted); margin-bottom: 36px">
+            Choose the plan that fits your goals — no hidden fees, no lock-ins.
+          </p>
+          <div class="pricing-tabs">
+            <button class="pricing-tab active" data-tab="brands">
+              For Brands
+            </button>
+            <button class="pricing-tab" data-tab="influencers">
+              For Influencers
+            </button>
+          </div>
 
-      <div class="footer-base">
-        <div class="footer-copy">Copyright ©2026 Developed by Ulegendary Digital</div>
-        <div class="footer-legal">
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Privacy Policy</a>
+          <!-- Brands -->
+          <div class="pricing-panels-wrap">
+            <div class="pricing-panel active" id="tab-brands">
+              <div class="pricing-card">
+                <div class="pricing-tier">Starter</div>
+                <h3>Brand Starter</h3>
+                <p class="pricing-desc">
+                  Perfect for small brands testing influencer marketing for the
+                  first time.
+                </p>
+                <div class="pricing-amount">
+                  <span class="pricing-currency">AED</span>
+                  <span class="pricing-num">1,500</span>
+                  <span class="pricing-period">/mo</span>
+                </div>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-features">
+                  <li>Up to 3 creator collaborations</li>
+                  <li>Basic campaign dashboard</li>
+                  <li>Standard creator verification</li>
+                  <li>Email support</li>
+                  <li>Monthly performance report</li>
+                </ul>
+                <button class="btn-pricing">Get Started</button>
+              </div>
+
+              <div class="pricing-card featured">
+                <div class="pricing-badge">Most Popular</div>
+                <div class="pricing-tier">Growth</div>
+                <h3>Brand Growth</h3>
+                <p class="pricing-desc">
+                  For growing brands ready to scale campaigns across UAE & GCC
+                  markets.
+                </p>
+                <div class="pricing-amount">
+                  <span class="pricing-currency">AED</span>
+                  <span class="pricing-num">3,500</span>
+                  <span class="pricing-period">/mo</span>
+                </div>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-features">
+                  <li>Up to 10 creator collaborations</li>
+                  <li>Advanced analytics dashboard</li>
+                  <li>Elite creator verification access</li>
+                  <li>Dedicated account manager</li>
+                  <li>Weekly performance reports</li>
+                  <li>Multi-platform campaign tracking</li>
+                </ul>
+                <button class="btn-pricing-featured">Get Started</button>
+              </div>
+
+              <div class="pricing-card">
+                <div
+                  class="pricing-tier"
+                  style="display: flex; align-items: center; gap: 6px"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z"
+                      stroke="#fbbf24"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                      fill="rgba(251,191,36,0.15)"
+                    />
+                  </svg>
+                  Elite
+                </div>
+                <h3>Brand Elite</h3>
+                <p class="pricing-desc">
+                  Full-scale influencer infrastructure for enterprise brands and
+                  agencies.
+                </p>
+                <div class="pricing-amount">
+                  <span class="pricing-currency">AED</span>
+                  <span class="pricing-num">7,000</span>
+                  <span class="pricing-period">/mo</span>
+                </div>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-features">
+                  <li>Unlimited creator collaborations</li>
+                  <li>Full analytics & ROI tracking</li>
+                  <li>Priority elite creator matching</li>
+                  <li>Dedicated strategy team</li>
+                  <li>Real-time campaign reporting</li>
+                  <li>Custom contract management</li>
+                  <li>GCC multi-market campaigns</li>
+                </ul>
+                <button class="btn-pricing">Get Started</button>
+              </div>
+            </div>
+
+            <!-- Influencers -->
+            <div class="pricing-panel" id="tab-influencers">
+              <div class="pricing-card">
+                <div class="pricing-tier">Basic</div>
+                <h3>Creator Basic</h3>
+                <p class="pricing-desc">
+                  Start building your profile and get discovered by brands —
+                  completely free.
+                </p>
+                <div class="pricing-amount">
+                  <span class="pricing-num" style="font-size: 2.4rem"
+                    >Free</span
+                  >
+                  <span
+                    style="
+                      font-size: 11px;
+                      font-weight: 600;
+                      color: #4ade80;
+                      background: rgba(74, 222, 128, 0.12);
+                      border: 1px solid rgba(74, 222, 128, 0.3);
+                      border-radius: 999px;
+                      padding: 2px 8px;
+                      margin-left: 6px;
+                    "
+                    >No card</span
+                  >
+                </div>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-features">
+                  <li>Public creator profile</li>
+                  <li>Basic brand discovery</li>
+                  <li>Standard listing visibility</li>
+                  <li>Community access</li>
+                  <li>Self-service campaign apply</li>
+                </ul>
+                <button class="btn-pricing">Join Free</button>
+              </div>
+
+              <div class="pricing-card featured">
+                <div class="pricing-badge">Most Popular</div>
+                <div class="pricing-tier">Verified</div>
+                <h3>Verified Creator</h3>
+                <p class="pricing-desc">
+                  Get verified, boost visibility, and unlock direct brand
+                  collaboration tools.
+                </p>
+                <div class="pricing-amount">
+                  <span class="pricing-currency">AED</span>
+                  <span class="pricing-num">299</span>
+                  <span class="pricing-period">/mo</span>
+                </div>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-features">
+                  <li>Verified creator badge</li>
+                  <li>Priority brand matching</li>
+                  <li>Advanced profile analytics</li>
+                  <li>Direct brand messaging</li>
+                  <li>Campaign performance insights</li>
+                  <li>Featured in brand searches</li>
+                </ul>
+                <button class="btn-pricing-featured">Get Verified</button>
+              </div>
+
+              <div class="pricing-card">
+                <div
+                  class="pricing-tier"
+                  style="display: flex; align-items: center; gap: 6px"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z"
+                      stroke="#fbbf24"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                      fill="rgba(251,191,36,0.15)"
+                    />
+                  </svg>
+                  Elite Creator
+                </div>
+                <h3>Elite Creator</h3>
+                <p class="pricing-desc">
+                  For top-tier creators who want maximum exposure and premium
+                  brand deals.
+                </p>
+                <div class="pricing-amount">
+                  <span class="pricing-currency">AED</span>
+                  <span class="pricing-num">599</span>
+                  <span class="pricing-period">/mo</span>
+                </div>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-features">
+                  <li>Elite verified badge</li>
+                  <li>Top placement in all searches</li>
+                  <li>Dedicated talent manager</li>
+                  <li>Exclusive brand deal access</li>
+                  <li>Full ROI & audience reporting</li>
+                  <li>Contract & negotiation support</li>
+                  <li>Multi-platform campaign tools</li>
+                </ul>
+                <button class="btn-pricing">Go Elite</button>
+              </div>
+            </div>
+          </div>
+          <!-- /.pricing-panels-wrap -->
         </div>
-      </div>
-    </div>
-  </footer>
+      </section>
 
-  <script>
-    (function () {
-      const tabs = document.querySelectorAll('.pricing-tab');
-      let current = document.querySelector('.pricing-panel.active');
+      <section class="section">
+        <div class="container">
+          <div class="cta">
+            <div class="cta-blob cta-blob-1"></div>
+            <div class="cta-blob cta-blob-2"></div>
+            <div class="cta-content">
+              <span class="cta-offer-tag">⚡ Limited Time Offer</span>
+              <h2>
+                Free Listing for a
+                <em
+                  style="
+                    font-style: italic;
+                    font-family: Georgia, serif;
+                    color: #a78bff;
+                  "
+                  >Limited Time</em
+                >
+              </h2>
+              <p>
+                Join our platform today and get your profile listed for free.
+                Start connecting with brands and grow your influence across UAE
+                &amp; GCC.
+              </p>
+              <div class="cta-perks">
+                <span class="cta-perk">✓ No credit card</span>
+                <span class="cta-perk">✓ Instant access</span>
+                <span class="cta-perk">✓ Cancel anytime</span>
+              </div>
+              <div class="cta-actions">
+                <button class="btn-cta">Get Started Free &rarr;</button>
+                <a href="#" class="cta-link">See how it works</a>
+              </div>
+            </div>
+            <div class="cta-visual">
+              <div class="cta-chip cta-chip-1">
+                <span class="cta-chip-dot"></span>
+                <span>2,500+ Creators Listed</span>
+              </div>
+              <div class="cta-main-card">
+                <div class="cta-card-top">
+                  <div class="cta-avatar-stack">
+                    <img src="assets/images/jo1.jpg" alt="" />
+                    <img src="assets/images/jo2.jpg" alt="" />
+                    <img src="assets/images/jo4.jpg" alt="" />
+                    <div class="cta-avatar-more">+340</div>
+                  </div>
+                  <div class="cta-card-label">
+                    <strong>Brands &amp; Creators</strong>
+                    <span>Active this month</span>
+                  </div>
+                </div>
+                <div class="cta-card-stat">
+                  <div><b>91%</b><small>Retention Rate</small></div>
+                  <div class="cta-stat-divider"></div>
+                  <div><b>6</b><small>GCC Markets</small></div>
+                  <div class="cta-stat-divider"></div>
+                  <div><b>Free</b><small>To List Now</small></div>
+                </div>
+              </div>
+              <div class="cta-chip cta-chip-2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    fill="#fbbf24"
+                  />
+                </svg>
+                <span>Rated #1 in UAE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const next = document.getElementById('tab-' + tab.dataset.tab);
-          if (next === current) return;
+    <div id="site-footer"></div>
 
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
+    <script src="assets/shared.js"></script>
+    <script>
+      (function () {
+        const tabs = document.querySelectorAll(".pricing-tab");
+        let current = document.querySelector(".pricing-panel.active");
 
-          // animate out
-          current.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-          current.style.opacity = '0';
-          current.style.transform = 'translateY(-12px)';
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const next = document.getElementById("tab-" + tab.dataset.tab);
+            if (next === current) return;
 
-          setTimeout(() => {
-            current.classList.remove('active');
-            current.style.transition = '';
-            current.style.opacity = '';
-            current.style.transform = '';
+            tabs.forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
 
-            // animate in
-            next.style.opacity = '0';
-            next.style.transform = 'translateY(16px)';
-            next.classList.add('active');
-            requestAnimationFrame(() => {
+            // animate out
+            current.style.transition = "opacity 0.2s ease, transform 0.2s ease";
+            current.style.opacity = "0";
+            current.style.transform = "translateY(-12px)";
+
+            setTimeout(() => {
+              current.classList.remove("active");
+              current.style.transition = "";
+              current.style.opacity = "";
+              current.style.transform = "";
+
+              // animate in
+              next.style.opacity = "0";
+              next.style.transform = "translateY(16px)";
+              next.classList.add("active");
               requestAnimationFrame(() => {
-                next.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-                next.style.opacity = '1';
-                next.style.transform = 'translateY(0)';
-                setTimeout(() => {
-                  next.style.transition = '';
-                  next.style.opacity = '';
-                  next.style.transform = '';
-                }, 360);
+                requestAnimationFrame(() => {
+                  next.style.transition =
+                    "opacity 0.35s ease, transform 0.35s ease";
+                  next.style.opacity = "1";
+                  next.style.transform = "translateY(0)";
+                  setTimeout(() => {
+                    next.style.transition = "";
+                    next.style.opacity = "";
+                    next.style.transform = "";
+                  }, 360);
+                });
               });
-            });
-            current = next;
-          }, 200);
+              current = next;
+            }, 200);
+          });
         });
-      });
-    })();
+      })();
 
-    (function () {
-      const footer = document.querySelector('.footer');
-      const wordmark = document.querySelector('.footer-wordmark-bg');
-      const orb1 = document.querySelector('.footer-orb-1');
-      const orb2 = document.querySelector('.footer-orb-2');
-      const content = document.querySelector('.footer-content-wrap');
-      const cols = document.querySelectorAll('.footer-grid > *');
-      if (!footer || !wordmark) return;
+      (function () {
+        const track = document.getElementById("testimonialsCarousel");
+        if (!track) return;
+        const cards = Array.from(track.querySelectorAll(".quote-card"));
+        let active = cards.findIndex((card) =>
+          card.classList.contains("is-active"),
+        );
+        if (active < 0) active = 1;
 
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-      /* --- scroll parallax --- */
-      function onScroll() {
-        if (reduced.matches) return;
-        const rect = footer.getBoundingClientRect();
-        const scrolled = window.innerHeight - rect.top;
-        if (scrolled > 0) {
-          wordmark.style.transform = `translateY(${scrolled * 0.38}px)`;
-          if (orb1) orb1.style.transform = `translateY(${scrolled * 0.18}px)`;
-          if (orb2) orb2.style.transform = `translateY(${scrolled * -0.12}px)`;
+        function render(index) {
+          active = index;
+          const left = (active - 1 + cards.length) % cards.length;
+          const right = (active + 1) % cards.length;
+          cards.forEach((card, i) => {
+            card.classList.toggle("is-active", i === active);
+            card.dataset.pos =
+              i === left ? "left" : i === active ? "center" : "right";
+          });
         }
-      }
 
-      /* --- staggered column reveal --- */
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            cols.forEach((col, i) => {
-              setTimeout(() => col.classList.add('footer-visible'), i * 110);
-            });
-            io.disconnect();
-          }
-        });
-      }, { threshold: 0.15 });
-      if (cols.length) io.observe(footer);
-
-      /* --- mouse-move tilt --- */
-      footer.addEventListener('mousemove', (e) => {
-        if (reduced.matches || !content) return;
-        const r = footer.getBoundingClientRect();
-        const cx = (e.clientX - r.left) / r.width - 0.5;
-        const cy = (e.clientY - r.top) / r.height - 0.5;
-        content.style.transform = `rotateY(${cx * 2.5}deg) rotateX(${-cy * 1.5}deg)`;
-        content.style.transition = 'transform 0.1s ease';
-        if (orb1) orb1.style.transform = `translate(${cx * 22}px, ${cy * 14}px)`;
-        if (orb2) orb2.style.transform = `translate(${cx * -18}px, ${cy * -10}px)`;
-      });
-
-      footer.addEventListener('mouseleave', () => {
-        if (content) {
-          content.style.transition = 'transform 0.6s ease';
-          content.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        function switchTo(index) {
+          if (
+            index === active ||
+            window.matchMedia("(max-width: 1050px)").matches
+          )
+            return;
+          track.classList.add("is-switching");
+          window.setTimeout(() => {
+            render(index);
+            window.setTimeout(() => track.classList.remove("is-switching"), 60);
+          }, 180);
         }
-        if (orb1) orb1.style.transform = '';
-        if (orb2) orb2.style.transform = '';
-      });
 
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    })();
-
-    (function () {
-      const track = document.getElementById("testimonialsCarousel");
-      if (!track) return;
-      const cards = Array.from(track.querySelectorAll(".quote-card"));
-      let active = cards.findIndex((card) => card.classList.contains("is-active"));
-      if (active < 0) active = 1;
-
-      function render(index) {
-        active = index;
-        const left = (active - 1 + cards.length) % cards.length;
-        const right = (active + 1) % cards.length;
-        cards.forEach((card, i) => {
-          card.classList.toggle("is-active", i === active);
-          card.dataset.pos = i === left ? "left" : i === active ? "center" : "right";
+        cards.forEach((card, index) => {
+          card.addEventListener("click", () => switchTo(index));
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              switchTo(index);
+            }
+          });
         });
-      }
 
-      function switchTo(index) {
-        if (index === active || window.matchMedia("(max-width: 1050px)").matches) return;
-        track.classList.add("is-switching");
-        window.setTimeout(() => {
-          render(index);
-          window.setTimeout(() => track.classList.remove("is-switching"), 60);
-        }, 180);
-      }
+        render(active);
 
-      cards.forEach((card, index) => {
-        card.addEventListener("click", () => switchTo(index));
-        card.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            switchTo(index);
-          }
-        });
-      });
+        /* --- carousel controls --- */
+        const dotsWrap = document.getElementById("tcDots");
+        if (dotsWrap) {
+          cards.forEach((_, i) => {
+            const d = document.createElement("button");
+            d.className = "tc-dot" + (i === active ? " tc-dot-active" : "");
+            d.setAttribute("aria-label", "Go to slide " + (i + 1));
+            d.addEventListener("click", () => switchTo(i));
+            dotsWrap.appendChild(d);
+          });
+        }
 
-      render(active);
+        function updateDots() {
+          if (!dotsWrap) return;
+          Array.from(dotsWrap.children).forEach((d, i) => {
+            d.classList.toggle("tc-dot-active", i === active);
+          });
+        }
 
-      /* --- carousel controls --- */
-      const dotsWrap = document.getElementById('tcDots');
-      if (dotsWrap) {
-        cards.forEach((_, i) => {
-          const d = document.createElement('button');
-          d.className = 'tc-dot' + (i === active ? ' tc-dot-active' : '');
-          d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-          d.addEventListener('click', () => switchTo(i));
-          dotsWrap.appendChild(d);
-        });
-      }
+        const origSwitchTo = switchTo;
+        function switchToWithDots(index) {
+          origSwitchTo(index);
+          setTimeout(updateDots, 200);
+        }
 
-      function updateDots() {
-        if (!dotsWrap) return;
-        Array.from(dotsWrap.children).forEach((d, i) => {
-          d.classList.toggle('tc-dot-active', i === active);
-        });
-      }
+        const prevBtn = document.getElementById("tcPrev");
+        const nextBtn = document.getElementById("tcNext");
+        if (prevBtn)
+          prevBtn.addEventListener("click", () =>
+            switchToWithDots((active - 1 + cards.length) % cards.length),
+          );
+        if (nextBtn)
+          nextBtn.addEventListener("click", () =>
+            switchToWithDots((active + 1) % cards.length),
+          );
 
-      const origSwitchTo = switchTo;
-      function switchToWithDots(index) {
-        origSwitchTo(index);
-        setTimeout(updateDots, 200);
-      }
-
-      const prevBtn = document.getElementById('tcPrev');
-      const nextBtn = document.getElementById('tcNext');
-      if (prevBtn) prevBtn.addEventListener('click', () => switchToWithDots((active - 1 + cards.length) % cards.length));
-      if (nextBtn) nextBtn.addEventListener('click', () => switchToWithDots((active + 1) % cards.length));
-
-      /* auto-play */
-      let autoTimer = setInterval(() => switchToWithDots((active + 1) % cards.length), 4500);
-      [prevBtn, nextBtn].forEach(b => b && b.addEventListener('click', () => { clearInterval(autoTimer); autoTimer = setInterval(() => switchToWithDots((active + 1) % cards.length), 4500); }));
-    })();
-  </script>
-</body>
-
+        /* auto-play */
+        let autoTimer = setInterval(
+          () => switchToWithDots((active + 1) % cards.length),
+          4500,
+        );
+        [prevBtn, nextBtn].forEach(
+          (b) =>
+            b &&
+            b.addEventListener("click", () => {
+              clearInterval(autoTimer);
+              autoTimer = setInterval(
+                () => switchToWithDots((active + 1) % cards.length),
+                4500,
+              );
+            }),
+        );
+      })();
+    </script>
+  </body>
 </html>

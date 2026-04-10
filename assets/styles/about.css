@@ -1,0 +1,93 @@
+/* Existence Section */
+.existence-block {
+  padding: 64px 0;
+}
+.existence-shell {
+  width: var(--container);
+  margin: 0 auto;
+}
+.existence-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.existence-title {
+  font-size: clamp(1.85rem, 3.2vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+}
+.existence-title span {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.existence-desc {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 60ch;
+  margin: 0 auto;
+}
+.existence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+.existence-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--line);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+.existence-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: rgba(97, 97, 255, 0.25);
+}
+.existence-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), #4b4bde);
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.existence-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.existence-card p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.mt-5 {
+  margin-top: 48px;
+}
+.text-center {
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .existence-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 1050px) and (min-width: 761px) {
+  .existence-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
