@@ -52,7 +52,7 @@
     }
 
     .section {
-      padding: 74px 0;
+      padding: 44px 0;
     }
 
     h2 {
@@ -759,6 +759,60 @@
       margin-bottom: 34px;
     }
 
+    .tc-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .tc-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      transition: background var(--ease), border-color var(--ease), transform var(--ease), box-shadow var(--ease);
+      flex-shrink: 0;
+    }
+
+    .tc-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      transform: scale(1.08);
+      box-shadow: 0 8px 20px rgba(97, 97, 255, 0.3);
+    }
+
+    .tc-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .tc-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(10, 15, 30, 0.15);
+      cursor: pointer;
+      transition: background 0.3s ease, width 0.3s ease;
+      border: none;
+      padding: 0;
+    }
+
+    .tc-dot.tc-dot-active {
+      background: var(--primary);
+      width: 22px;
+      border-radius: 999px;
+    }
+
     .testimonial-viewport {
       overflow: hidden;
       padding: 8px 0 16px;
@@ -909,55 +963,114 @@
 
     .cta {
       border-radius: var(--radius-xl);
-      padding: 56px 64px;
+      padding: 64px 60px;
       color: #ffffff;
-      background: linear-gradient(135deg, #0a0f1e 0%, #171d33 60%, var(--primary) 160%);
+      background: linear-gradient(135deg, #0a0f1e 0%, #171d33 60%, #1e1060 100%);
       box-shadow: var(--shadow);
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       align-items: center;
-      gap: 40px;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(97, 97, 255, 0.15);
+      border: 1px solid rgba(97, 97, 255, 0.18);
+    }
+
+    .cta-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .cta-blob-1 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(97, 97, 255, 0.18), transparent 70%);
+      top: -120px;
+      right: -80px;
+    }
+
+    .cta-blob-2 {
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255, 3, 96, 0.12), transparent 70%);
+      bottom: -80px;
+      left: 30%;
     }
 
     .cta-offer-tag {
       display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background: rgba(255, 3, 96, 0.12);
-      color: var(--secondary);
+      color: #ff6699;
       border: 1px solid rgba(255, 3, 96, 0.3);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       padding: 6px 16px;
       border-radius: 999px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
     }
 
     .cta h2 {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       max-width: none;
-      font-size: clamp(2.2rem, 3.5vw, 3rem);
-      letter-spacing: -0.02em;
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #fff;
     }
 
     .cta p {
-      color: #b0b8c9;
-      margin-bottom: 0;
-      max-width: 54ch;
-      font-size: 16px;
-      line-height: 1.6;
+      color: #8c95a8;
+      margin-bottom: 24px;
+      max-width: 46ch;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .cta-perks {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .cta-perk {
+      font-size: 13px;
+      font-weight: 600;
+      color: #a0e8c8;
+    }
+
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-link {
+      color: #8c95a8;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color var(--ease);
+    }
+
+    .cta-link:hover {
+      color: #fff;
     }
 
     .btn-cta {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
-      box-shadow: 0 10px 24px rgba(255, 3, 96, 0.3);
+      box-shadow: 0 10px 28px rgba(97, 97, 255, 0.4);
       color: #fff;
-      font-size: 16px;
-      font-weight: 600;
-      padding: 16px 32px;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px 34px;
       border-radius: 999px;
       border: 0;
       cursor: pointer;
@@ -966,58 +1079,491 @@
       gap: 10px;
       transition: transform var(--ease), box-shadow var(--ease);
       white-space: nowrap;
-      flex-shrink: 0;
     }
 
     .btn-cta:hover {
       transform: translateY(-3px);
-      box-shadow: 0 14px 32px rgba(255, 3, 96, 0.4);
+      box-shadow: 0 16px 36px rgba(97, 97, 255, 0.5);
+    }
+
+    .cta-visual {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .cta-main-card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+    }
+
+    .cta-card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .cta-avatar-stack {
+      display: flex;
+    }
+
+    .cta-avatar-stack img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #171d33;
+      margin-left: -10px;
+      object-fit: cover;
+    }
+
+    .cta-avatar-stack img:first-child {
+      margin-left: 0;
+    }
+
+    .cta-avatar-more {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #171d33;
+      margin-left: -10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+
+    .cta-card-label strong {
+      display: block;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .cta-card-label span {
+      font-size: 12px;
+      color: #6a6f84;
+    }
+
+    .cta-card-stat {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 0;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      padding: 16px 10px;
+    }
+
+    .cta-card-stat b {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+
+    .cta-card-stat small {
+      font-size: 11px;
+      color: #6a6f84;
+      margin-top: 2px;
+      display: block;
+    }
+
+    .cta-stat-divider {
+      width: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 4px 0;
+    }
+
+    .cta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #e0e6f5;
+      align-self: flex-start;
+    }
+
+    .cta-chip-2 {
+      align-self: flex-end;
+    }
+
+    .cta-chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px #4ade80;
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    @media (max-width: 1050px) {
+      .cta {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 48px 40px;
+      }
+    }
+
+    .pricing-wrap {
+      text-align: center;
+    }
+
+    .pricing-tabs {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.75);
+      box-shadow: var(--shadow-soft);
+      border-radius: 999px;
+      padding: 5px;
+      gap: 4px;
+      margin-bottom: 48px;
+    }
+
+    .pricing-tab {
+      border: none;
+      background: transparent;
+      border-radius: 999px;
+      padding: 10px 28px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--muted);
+      transition: background var(--ease), color var(--ease), box-shadow var(--ease);
+    }
+
+    .pricing-tab.active {
+      background: #0a0f1e;
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(10, 15, 30, 0.22);
+    }
+
+    .pricing-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .pricing-panel.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      position: relative;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 32px 28px;
+      box-shadow: var(--shadow-soft);
+      text-align: left;
+      position: relative;
+      transition: transform var(--ease), box-shadow var(--ease);
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .pricing-card.featured {
+      background: linear-gradient(145deg, #0a0f1e, #171d33);
+      color: #e0e6f5;
+      border-color: rgba(97, 97, 255, 0.3);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 16px;
+      border-radius: 999px;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pricing-tier {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .pricing-card.featured .pricing-tier {
+      color: #9999ff;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .pricing-card.featured h3 {
+      color: #fff;
+    }
+
+    .pricing-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .pricing-card.featured .pricing-desc {
+      color: #8c95a8;
+    }
+
+    .pricing-amount {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+
+    .pricing-currency {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .pricing-card.featured .pricing-currency {
+      color: #8c95a8;
+    }
+
+    .pricing-num {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .pricing-card.featured .pricing-num {
+      color: #fff;
+    }
+
+    .pricing-period {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pricing-card.featured .pricing-period {
+      color: #8c95a8;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .pricing-card.featured .pricing-features li {
+      color: #b0b8c9;
+    }
+
+    .pricing-features li::before {
+      content: "✓";
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: linear-gradient(140deg, var(--primary), #4b4bde);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .pricing-card.featured .pricing-features li::before {
+      background: linear-gradient(140deg, #6161ff, var(--secondary));
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: var(--line);
+      margin-bottom: 24px;
+    }
+
+    .pricing-card.featured .pricing-divider {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-pricing {
+      width: 100%;
+      padding: 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      transition: background var(--ease), color var(--ease), border-color var(--ease), transform var(--ease);
+    }
+
+    .btn-pricing:hover {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .btn-pricing-featured {
+      width: 100%;
+      padding: 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(97, 97, 255, 0.35);
+      transition: transform var(--ease), box-shadow var(--ease);
+    }
+
+    .btn-pricing-featured:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(97, 97, 255, 0.45);
+    }
+
+    .pricing-panels-wrap {
+      position: relative;
+    }
+
+    @media (max-width: 760px) {
+      .pricing-panel {
+        grid-template-columns: 1fr;
+      }
     }
 
     .footer {
       position: relative;
       margin-top: 74px;
-      padding: 64px 0 0;
+      color: #e0e6f5;
+      border-top: 1px solid rgba(97, 97, 255, 0.15);
       background:
         radial-gradient(circle at 78% 12%, rgba(97, 97, 255, 0.12), transparent 44%),
         linear-gradient(130deg, #0a0f1e 0%, #050810 100%);
-      color: #e0e6f5;
-      border-top: 1px solid rgba(97, 97, 255, 0.15);
       overflow: hidden;
+      perspective: 1200px;
+    }
+
+    .footer-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .footer-orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(97, 97, 255, 0.14), transparent 70%);
+      top: -160px;
+      left: -100px;
+    }
+
+    .footer-orb-2 {
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(255, 3, 96, 0.1), transparent 70%);
+      bottom: -80px;
+      right: 10%;
+    }
+
+    .footer-grid > * {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .footer-grid > *.footer-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .footer-wordmark-bg {
       position: absolute;
-      bottom: -6%;
+      top: 0;
       left: 0;
       width: 100%;
-      text-align: center;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
+      padding-bottom: 60px;
       line-height: 0.85;
       font-size: clamp(4rem, 15vw, 12rem);
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      opacity: 0.03;
+      color: #ffffff;
+      opacity: 0.07;
       pointer-events: none;
       user-select: none;
-      color: #ffffff;
       z-index: 0;
+      will-change: transform;
     }
 
     .footer-content-wrap {
       position: relative;
       z-index: 2;
+      padding: 63px 0 0;
     }
 
     .footer-grid {
       display: grid;
       grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
-      gap: 40px;
-      padding-bottom: 50px;
+      gap: 39px;
+      padding-bottom: 49px;
     }
 
     .footer-brand {
@@ -1151,9 +1697,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 30px 0;
+      padding: 29px 0;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 15px;
     }
 
     .footer-copy {
@@ -1291,6 +1837,7 @@
 
       .cta {
         padding: 30px 22px;
+        grid-template-columns: 1fr;
       }
 
 
@@ -1350,7 +1897,7 @@
         </div>
         <div class="hero-visual">
           <img class="hero-photo"
-            src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80"
+            src="assets/images/jo1.jpg"
             alt="Influencer portrait" />
           <div class="float-card card-views">
             <div><small>16M Views Reel</small><b>16,048,221</b><small>Organic performance</small></div>
@@ -1358,7 +1905,7 @@
           </div>
           <div class="float-card card-verified">
             <div class="badge">✓</div>
-            <div><strong>Verified Creator</strong><small>Identity + Audience cleared</small></div>
+            <div><strong>Verified Creator</strong><small> Identity + Audience cleared</small></div>
           </div>
           <div class="float-card card-roi"><strong>ROI +32%</strong><small>Campaign profitability this month</small>
           </div>
@@ -1530,22 +2077,22 @@
         <h2>Video Content</h2>
         <div class="video-grid">
           <article class="video"><img class="thumb"
-              src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80"
+              src="assets/images/jo-video-3.jpg"
               alt="Video thumbnail" />
             <div class="meta"><span>16M views</span><span class="price">$5.00</span></div>
           </article>
           <article class="video"><img class="thumb"
-              src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=80"
+              src="assets/images/jo1.jpg"
               alt="Video thumbnail" />
             <div class="meta"><span>2.4M views</span><span class="price">Free</span></div>
           </article>
           <article class="video"><img class="thumb"
-              src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80"
+              src="assets/images/jo2.jpg"
               alt="Video thumbnail" />
             <div class="meta"><span>8.1M views</span><span class="price">$5.00</span></div>
           </article>
           <article class="video"><img class="thumb"
-              src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1200&q=80"
+              src="assets/images/jo4.jpg"
               alt="Video thumbnail" />
             <div class="meta"><span>1.9M views</span><span class="price">Free</span></div>
           </article>
@@ -1580,7 +2127,7 @@
               <p class="quote-side-copy">"Working with Opulent Influencers House was a game-changer for my portfolio.
                 Campaign contracts and creative briefs have never been smoother. Truly premium experience."</p>
               <div class="quote-author"><img class="quote-avatar"
-                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80"
+                  src="assets/images/jo1.jpg"
                   alt="Elena avatar" />
                 <div><strong>Elena Rostova</strong><span>Fashion Creator</span></div>
               </div>
@@ -1592,7 +2139,7 @@
                 dashboard combined with their direct-to-brand networking allowed me to double my campaign revenue in
                 just under three months."</p>
               <div class="quote-author"><img class="quote-avatar"
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"
+                  src="assets/images/jo2.jpg"
                   alt="Marcus avatar" />
                 <div><strong>Marcus Sterling</strong><span>Lifestyle & Travel Influencer</span></div>
               </div>
@@ -1602,32 +2149,236 @@
               <p class="quote-side-copy">"The best luxury influencer network out there. The design, the support, and the
                 caliber of brands are unmatched."</p>
               <div class="quote-author"><img class="quote-avatar"
-                  src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=120&q=80"
+                  src="assets/images/jo4.jpg"
                   alt="Sarah avatar" />
                 <div><strong>Sarah Jenkins</strong><span>Beauty Vlogger</span></div>
               </div>
             </article>
           </div>
         </div>
+        <div class="tc-controls">
+          <button class="tc-btn" id="tcPrev" aria-label="Previous">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="tc-dots" id="tcDots"></div>
+          <button class="tc-btn" id="tcNext" aria-label="Next">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container cta">
-        <div class="cta-content">
-          <span class="cta-offer-tag">Limited Time Offer</span>
-          <h2>Free Listing for a Limited Time</h2>
-          <p>Join our platform today and get your profile listed for free. Start connecting with brands and grow your
-            influence.</p>
+    <section class="section pricing-wrap">
+      <div class="container">
+        <span class="eyebrow" style="margin-bottom:14px;">Transparent Pricing</span>
+        <h2 style="max-width:none; margin-top:14px;">Simple, Scalable Plans</h2>
+        <p style="color:var(--muted); margin-bottom:36px;">Choose the plan that fits your goals — no hidden fees, no lock-ins.</p>
+        <div class="pricing-tabs">
+          <button class="pricing-tab active" data-tab="brands">For Brands</button>
+          <button class="pricing-tab" data-tab="influencers">For Influencers</button>
         </div>
-        <div>
-          <button class="btn-cta">Get Started Free &rarr;</button>
+
+        <!-- Brands -->
+        <div class="pricing-panels-wrap">
+        <div class="pricing-panel active" id="tab-brands">
+          <div class="pricing-card">
+            <div class="pricing-tier">Starter</div>
+            <h3>Brand Starter</h3>
+            <p class="pricing-desc">Perfect for small brands testing influencer marketing for the first time.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">1,500</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Up to 3 creator collaborations</li>
+              <li>Basic campaign dashboard</li>
+              <li>Standard creator verification</li>
+              <li>Email support</li>
+              <li>Monthly performance report</li>
+            </ul>
+            <button class="btn-pricing">Get Started</button>
+          </div>
+
+          <div class="pricing-card featured">
+            <div class="pricing-badge">Most Popular</div>
+            <div class="pricing-tier">Growth</div>
+            <h3>Brand Growth</h3>
+            <p class="pricing-desc">For growing brands ready to scale campaigns across UAE & GCC markets.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">3,500</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Up to 10 creator collaborations</li>
+              <li>Advanced analytics dashboard</li>
+              <li>Elite creator verification access</li>
+              <li>Dedicated account manager</li>
+              <li>Weekly performance reports</li>
+              <li>Multi-platform campaign tracking</li>
+            </ul>
+            <button class="btn-pricing-featured">Get Started</button>
+          </div>
+
+          <div class="pricing-card">
+            <div class="pricing-tier" style="display:flex;align-items:center;gap:6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round" fill="rgba(251,191,36,0.15)"/></svg>
+              Elite
+            </div>
+            <h3>Brand Elite</h3>
+            <p class="pricing-desc">Full-scale influencer infrastructure for enterprise brands and agencies.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">7,000</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Unlimited creator collaborations</li>
+              <li>Full analytics & ROI tracking</li>
+              <li>Priority elite creator matching</li>
+              <li>Dedicated strategy team</li>
+              <li>Real-time campaign reporting</li>
+              <li>Custom contract management</li>
+              <li>GCC multi-market campaigns</li>
+            </ul>
+            <button class="btn-pricing">Get Started</button>
+          </div>
+        </div>
+
+        <!-- Influencers -->
+        <div class="pricing-panel" id="tab-influencers">
+          <div class="pricing-card">
+            <div class="pricing-tier">Basic</div>
+            <h3>Creator Basic</h3>
+            <p class="pricing-desc">Start building your profile and get discovered by brands — completely free.</p>
+            <div class="pricing-amount">
+              <span class="pricing-num" style="font-size:2.4rem;">Free</span>
+              <span style="font-size:11px;font-weight:600;color:#4ade80;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);border-radius:999px;padding:2px 8px;margin-left:6px;">No card</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Public creator profile</li>
+              <li>Basic brand discovery</li>
+              <li>Standard listing visibility</li>
+              <li>Community access</li>
+              <li>Self-service campaign apply</li>
+            </ul>
+            <button class="btn-pricing">Join Free</button>
+          </div>
+
+          <div class="pricing-card featured">
+            <div class="pricing-badge">Most Popular</div>
+            <div class="pricing-tier">Verified</div>
+            <h3>Verified Creator</h3>
+            <p class="pricing-desc">Get verified, boost visibility, and unlock direct brand collaboration tools.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">299</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Verified creator badge</li>
+              <li>Priority brand matching</li>
+              <li>Advanced profile analytics</li>
+              <li>Direct brand messaging</li>
+              <li>Campaign performance insights</li>
+              <li>Featured in brand searches</li>
+            </ul>
+            <button class="btn-pricing-featured">Get Verified</button>
+          </div>
+
+          <div class="pricing-card">
+            <div class="pricing-tier" style="display:flex;align-items:center;gap:6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round" fill="rgba(251,191,36,0.15)"/></svg>
+              Elite Creator
+            </div>
+            <h3>Elite Creator</h3>
+            <p class="pricing-desc">For top-tier creators who want maximum exposure and premium brand deals.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">599</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Elite verified badge</li>
+              <li>Top placement in all searches</li>
+              <li>Dedicated talent manager</li>
+              <li>Exclusive brand deal access</li>
+              <li>Full ROI & audience reporting</li>
+              <li>Contract & negotiation support</li>
+              <li>Multi-platform campaign tools</li>
+            </ul>
+            <button class="btn-pricing">Go Elite</button>
+          </div>
+        </div>
+        </div><!-- /.pricing-panels-wrap -->
+      </div>
+    </section>
+          
+    <section class="section">
+      <div class="container">
+        <div class="cta">
+          <div class="cta-blob cta-blob-1"></div>
+          <div class="cta-blob cta-blob-2"></div>
+          <div class="cta-content">
+            <span class="cta-offer-tag">⚡ Limited Time Offer</span>
+            <h2>Free Listing for a <em style="font-style:italic; font-family:Georgia,serif; color:#a78bff;">Limited Time</em></h2>
+            <p>Join our platform today and get your profile listed for free. Start connecting with brands and grow your influence across UAE &amp; GCC.</p>
+            <div class="cta-perks">
+              <span class="cta-perk">✓ No credit card</span>
+              <span class="cta-perk">✓ Instant access</span>
+              <span class="cta-perk">✓ Cancel anytime</span>
+            </div>
+            <div class="cta-actions">
+              <button class="btn-cta">Get Started Free &rarr;</button>
+              <a href="#" class="cta-link">See how it works</a>
+            </div>
+          </div>
+          <div class="cta-visual">
+            <div class="cta-chip cta-chip-1">
+              <span class="cta-chip-dot"></span>
+              <span>2,500+ Creators Listed</span>
+            </div>
+            <div class="cta-main-card">
+              <div class="cta-card-top">
+                <div class="cta-avatar-stack">
+                  <img src="assets/images/jo1.jpg" alt="" />
+                  <img src="assets/images/jo2.jpg" alt="" />
+                  <img src="assets/images/jo4.jpg" alt="" />
+                  <div class="cta-avatar-more">+340</div>
+                </div>
+                <div class="cta-card-label">
+                  <strong>Brands &amp; Creators</strong>
+                  <span>Active this month</span>
+                </div>
+              </div>
+              <div class="cta-card-stat">
+                <div><b>91%</b><small>Retention Rate</small></div>
+                <div class="cta-stat-divider"></div>
+                <div><b>6</b><small>GCC Markets</small></div>
+                <div class="cta-stat-divider"></div>
+                <div><b>Free</b><small>To List Now</small></div>
+              </div>
+            </div>
+            <div class="cta-chip cta-chip-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fbbf24"/></svg>
+              <span>Rated #1 in UAE</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
+    <div class="footer-orb footer-orb-1" aria-hidden="true"></div>
+    <div class="footer-orb footer-orb-2" aria-hidden="true"></div>
     <div class="footer-wordmark-bg" aria-hidden="true">
       <span>Opulent</span>
       <span>Influencers</span>
@@ -1753,6 +2504,112 @@
 
   <script>
     (function () {
+      const tabs = document.querySelectorAll('.pricing-tab');
+      let current = document.querySelector('.pricing-panel.active');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const next = document.getElementById('tab-' + tab.dataset.tab);
+          if (next === current) return;
+
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          // animate out
+          current.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+          current.style.opacity = '0';
+          current.style.transform = 'translateY(-12px)';
+
+          setTimeout(() => {
+            current.classList.remove('active');
+            current.style.transition = '';
+            current.style.opacity = '';
+            current.style.transform = '';
+
+            // animate in
+            next.style.opacity = '0';
+            next.style.transform = 'translateY(16px)';
+            next.classList.add('active');
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                next.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+                next.style.opacity = '1';
+                next.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                  next.style.transition = '';
+                  next.style.opacity = '';
+                  next.style.transform = '';
+                }, 360);
+              });
+            });
+            current = next;
+          }, 200);
+        });
+      });
+    })();
+
+    (function () {
+      const footer = document.querySelector('.footer');
+      const wordmark = document.querySelector('.footer-wordmark-bg');
+      const orb1 = document.querySelector('.footer-orb-1');
+      const orb2 = document.querySelector('.footer-orb-2');
+      const content = document.querySelector('.footer-content-wrap');
+      const cols = document.querySelectorAll('.footer-grid > *');
+      if (!footer || !wordmark) return;
+
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      /* --- scroll parallax --- */
+      function onScroll() {
+        if (reduced.matches) return;
+        const rect = footer.getBoundingClientRect();
+        const scrolled = window.innerHeight - rect.top;
+        if (scrolled > 0) {
+          wordmark.style.transform = `translateY(${scrolled * 0.38}px)`;
+          if (orb1) orb1.style.transform = `translateY(${scrolled * 0.18}px)`;
+          if (orb2) orb2.style.transform = `translateY(${scrolled * -0.12}px)`;
+        }
+      }
+
+      /* --- staggered column reveal --- */
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            cols.forEach((col, i) => {
+              setTimeout(() => col.classList.add('footer-visible'), i * 110);
+            });
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.15 });
+      if (cols.length) io.observe(footer);
+
+      /* --- mouse-move tilt --- */
+      footer.addEventListener('mousemove', (e) => {
+        if (reduced.matches || !content) return;
+        const r = footer.getBoundingClientRect();
+        const cx = (e.clientX - r.left) / r.width - 0.5;
+        const cy = (e.clientY - r.top) / r.height - 0.5;
+        content.style.transform = `rotateY(${cx * 2.5}deg) rotateX(${-cy * 1.5}deg)`;
+        content.style.transition = 'transform 0.1s ease';
+        if (orb1) orb1.style.transform = `translate(${cx * 22}px, ${cy * 14}px)`;
+        if (orb2) orb2.style.transform = `translate(${cx * -18}px, ${cy * -10}px)`;
+      });
+
+      footer.addEventListener('mouseleave', () => {
+        if (content) {
+          content.style.transition = 'transform 0.6s ease';
+          content.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        }
+        if (orb1) orb1.style.transform = '';
+        if (orb2) orb2.style.transform = '';
+      });
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    (function () {
       const track = document.getElementById("testimonialsCarousel");
       if (!track) return;
       const cards = Array.from(track.querySelectorAll(".quote-card"));
@@ -1789,6 +2646,40 @@
       });
 
       render(active);
+
+      /* --- carousel controls --- */
+      const dotsWrap = document.getElementById('tcDots');
+      if (dotsWrap) {
+        cards.forEach((_, i) => {
+          const d = document.createElement('button');
+          d.className = 'tc-dot' + (i === active ? ' tc-dot-active' : '');
+          d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          d.addEventListener('click', () => switchTo(i));
+          dotsWrap.appendChild(d);
+        });
+      }
+
+      function updateDots() {
+        if (!dotsWrap) return;
+        Array.from(dotsWrap.children).forEach((d, i) => {
+          d.classList.toggle('tc-dot-active', i === active);
+        });
+      }
+
+      const origSwitchTo = switchTo;
+      function switchToWithDots(index) {
+        origSwitchTo(index);
+        setTimeout(updateDots, 200);
+      }
+
+      const prevBtn = document.getElementById('tcPrev');
+      const nextBtn = document.getElementById('tcNext');
+      if (prevBtn) prevBtn.addEventListener('click', () => switchToWithDots((active - 1 + cards.length) % cards.length));
+      if (nextBtn) nextBtn.addEventListener('click', () => switchToWithDots((active + 1) % cards.length));
+
+      /* auto-play */
+      let autoTimer = setInterval(() => switchToWithDots((active + 1) % cards.length), 4500);
+      [prevBtn, nextBtn].forEach(b => b && b.addEventListener('click', () => { clearInterval(autoTimer); autoTimer = setInterval(() => switchToWithDots((active + 1) % cards.length), 4500); }));
     })();
   </script>
 </body>
