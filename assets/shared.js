@@ -16,7 +16,7 @@
           <a href="contact.html">Contact</a>
         </div>
         <div class="nav-actions">
-          <a href="signup.html" class="btn btn-gold">Sign Up</a>
+          <a href="signUp.html" class="btn btn-gold">Sign Up</a>
         </div>
       </nav>
     </div>
