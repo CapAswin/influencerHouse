@@ -1611,7 +1611,8 @@
     .signup-panel h1 {
       font-size: clamp(1.45rem, 2.8vw, 2.05rem);
       line-height: 1.12;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      margin-top: 8px !important;
       max-width: 20ch;
       letter-spacing: -0.02em;
     }
@@ -1627,7 +1628,7 @@
     .signup-copy {
       color: var(--muted);
       font-size: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
       max-width: 44ch;
       line-height: 1.65;
     }
@@ -1668,7 +1669,7 @@
 
     .signup-form {
       display: grid;
-      gap: 14px;
+      gap: 8px;
     }
 
     .input-row {
