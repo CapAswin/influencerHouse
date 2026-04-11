@@ -1595,6 +1595,19 @@
       text-transform: uppercase;
     }
 
+    .signup-logo {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 10px;
+      transition: transform var(--ease);
+    }
+
+    .signup-logo img {
+      width: auto;
+      height: 32px;
+      object-fit: contain;
+    }
+
     .signup-panel h1 {
       font-size: clamp(1.45rem, 2.8vw, 2.05rem);
       line-height: 1.12;
@@ -1661,7 +1674,7 @@
     .input-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 8px;
     }
 
     .signup-form label {
