@@ -7,13 +7,107 @@
   <link rel="icon" type="image/png" href="assets/images/fav.png" />
   <link rel="stylesheet" href="assets/styles/global.css" />
 </head>
-<body>
-  <div id="site-header"></div>
-
+<body class="signup-page">
   <main>
+    <section class="signup-block">
+      <div class="container signup-shell">
+        <div class="signup-grid">
+
+          <!-- LEFT: form panel -->
+          <div class="signup-panel">
+            <span class="signup-eyebrow">Join Opulent Influencers House</span>
+            <h1>Where Influence Meets <em>Measurable Growth.</em></h1>
+            <p class="signup-copy">Connect with 2,500+ verified creators and 340+ brand partners across UAE &amp; GCC. The region's most trusted influencer infrastructure platform.</p>
+
+            <div class="signup-toggle" role="tablist" aria-label="Choose account type">
+              <button class="toggle-item active" type="button">I'm a Creator</button>
+              <button class="toggle-item" type="button">I'm a Brand</button>
+            </div>
+
+            <form class="signup-form" action="#" method="post" aria-label="Create account form">
+              <div class="input-row">
+                <label>
+                  <span>First Name</span>
+                  <input type="text" placeholder="Muhammad" required />
+                </label>
+                <label>
+                  <span>Last Name</span>
+                  <input type="text" placeholder="Asif" required />
+                </label>
+              </div>
+
+              <label>
+                <span>Email</span>
+                <input type="email" placeholder="you@example.com" required />
+              </label>
+
+              <div class="input-row">
+                <label>
+                  <span>Password</span>
+                  <input type="password" placeholder="••••••••" required />
+                </label>
+                <label>
+                  <span>Confirm Password</span>
+                  <input type="password" placeholder="••••••••" required />
+                </label>
+              </div>
+
+              <button class="btn btn-gold btn-signup" type="submit">Get Started Free &rarr;</button>
+            </form>
+
+          </div>
+
+          <!-- RIGHT: shaped visual -->
+          <div class="signup-visual">
+            <div class="signup-card-wrap">
+
+              <!-- notch card — sits OUTSIDE the clipped image in the empty cut corner -->
+              <div class="signup-notch-card">
+                <div class="snc-header">
+                  <div class="snc-dot"></div>
+                  <span>Live Platform</span>
+                </div>
+                <div class="snc-stats">
+                  <div class="snc-stat">
+                    <strong>2.5K+</strong>
+                    <span>Creators</span>
+                  </div>
+                  <div class="snc-divider"></div>
+                  <div class="snc-stat">
+                    <strong>340+</strong>
+                    <span>Brands</span>
+                  </div>
+                  <div class="snc-divider"></div>
+                  <div class="snc-stat">
+                    <strong>91%</strong>
+                    <span>Retention</span>
+                  </div>
+                </div>
+                <div class="snc-footer">Opulent Influencers House</div>
+              </div>
+
+              <!-- clipped image card -->
+              <div class="signup-card">
+                <img class="signup-image" src="assets/images/jo1.jpg" alt="Verified creator on Opulent Influencers House" />
+                <div class="signup-overlay">
+                  <strong>Verified. Trusted. Opulent.</strong>
+                  <p>Premium influencer infrastructure connecting creators and brands across UAE &amp; GCC markets.</p>
+                  <div class="signup-tags">
+                    <span>#UAE_Creators</span>
+                    <span>#GCC_Brands</span>
+                    <span>#Opulent</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
   </main>
 
-  <div id="site-footer"></div>
   <script src="assets/shared.js"></script>
 </body>
 </html>
