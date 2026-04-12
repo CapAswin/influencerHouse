@@ -25,6 +25,13 @@ html.lenis.lenis-smooth {
   --shadow-hover-strong: 0 26px 56px rgba(10, 15, 30, 0.13),
     0 0 40px rgba(97, 97, 255, 0.1);
   --container: min(1140px, calc(100% - 42px));
+  /* Full-page background: soft violet glow + base (use for body / signup shell) */
+  --page-bg: radial-gradient(
+      circle at 88% 6%,
+      rgba(97, 97, 255, 0.12),
+      transparent 28%
+    ),
+    var(--bg);
 }
 
 * {
@@ -33,13 +40,20 @@ html.lenis.lenis-smooth {
   padding: 0;
 }
 
+html {
+  background-color: var(--bg);
+}
+
 body {
   font-family: Inter, "Segoe UI", system-ui, sans-serif;
-  background:
-    radial-gradient(circle at 88% 6%, rgba(97, 97, 255, 0.12), transparent 28%),
-    var(--bg);
+  background: var(--page-bg);
   color: var(--ink);
   line-height: 1.5;
+}
+
+/* Let the global body gradient show through (avoid opaque main wrappers) */
+main {
+  background: transparent;
 }
 
 a {
@@ -1670,7 +1684,7 @@ h1 em {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background: var(--page-bg);
 }
 
 @supports (height: 100svh) {

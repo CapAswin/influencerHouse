@@ -1,8 +1,6 @@
 /* —— About page layout + scroll reveal (about-page.js) —— */
 .about-ui {
   overflow-x: clip;
-  /* Use the same canvas as the rest of the site (see global.css body) */
-  background-color: var(--bg);
 }
 
 .about-ui h2 {
@@ -13,20 +11,10 @@
   scroll-margin-top: 96px;
 }
 
-/* Intro hero */
+/* Intro hero — no extra ::before overlay so bg matches header + body (global radial) */
 .about-hero {
   position: relative;
   padding: 28px 0 40px;
-}
-
-.about-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 15% 0%, rgba(97, 97, 255, 0.12), transparent 55%),
-    radial-gradient(ellipse 50% 45% at 100% 30%, rgba(255, 3, 96, 0.06), transparent 50%);
-  pointer-events: none;
 }
 
 .about-hero-shell {
@@ -469,10 +457,10 @@
   }
 }
 
-/* Key Platform Capabilities */
+/* Key Platform Capabilities — let global body canvas show through (matches index) */
 .kpc-block {
   padding: 72px 0;
-  background: linear-gradient(180deg, #f0f2fb 0%, #f8f8fc 100%);
+  background: transparent;
 }
 
 .kpc-split {
@@ -663,7 +651,7 @@
 /* Inner About / Founder Section */
 .inner-about-block {
   padding: 48px 0 56px;
-  background: linear-gradient(180deg, transparent 0%, rgba(97, 97, 255, 0.03) 40%, transparent 100%);
+  background: transparent;
 }
 
 .inner-about-split {
@@ -785,9 +773,14 @@
   line-height: 1.5;
   margin-top: 56px;
   padding: 32px 40px;
-  background: #f8f8fc;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(230, 230, 255, 0.68)
+  );
   border-radius: 20px;
   border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
 }
 
 .tagline-gold {
