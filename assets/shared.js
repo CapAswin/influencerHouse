@@ -2,21 +2,28 @@
   const headerHTML = `
   <div class="nav-wrap">
     <div class="container">
-      <nav class="navbar">
+      <nav class="navbar" aria-label="Primary navigation">
         <a class="logo" href="index.html">
           <img class="logo-icon" src="assets/images/favicon.png" alt="Opulent icon" />
         </a>
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="about.html">About Us</a>
-          <a href="for-brands.html">For Brands</a>
-          <a href="for-influencers.html">For Influencers</a>
-          <a href="service.html">Services</a>
-          <a href="blog.html">Blogs</a>
-          <a href="contact.html">Contact</a>
-        </div>
-        <div class="nav-actions">
-          <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+        <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+        <div class="nav-panel" id="primary-navigation">
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="for-brands.html">For Brands</a>
+            <a href="for-influencers.html">For Influencers</a>
+            <a href="service.html">Services</a>
+            <a href="blog.html">Blogs</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-actions">
+            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+          </div>
         </div>
       </nav>
     </div>
@@ -122,6 +129,45 @@
   document.querySelectorAll('.nav-links a').forEach(a => {
     a.classList.toggle('active', a.getAttribute('href') === page);
   });
+
+  (function initMobileNav() {
+    const nav = document.querySelector('.navbar');
+    const btn = document.querySelector('.nav-toggle');
+    const panel = document.getElementById('primary-navigation');
+    if (!nav || !btn || !panel) return;
+
+    function setOpen(open) {
+      nav.classList.toggle('nav-is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', open);
+    }
+
+    btn.addEventListener('click', function () {
+      setOpen(!nav.classList.contains('nav-is-open'));
+    });
+
+    panel.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        setOpen(false);
+      });
+    });
+
+    var mq = window.matchMedia('(min-width: 901px)');
+    function onMq() {
+      if (mq.matches) setOpen(false);
+    }
+    if (typeof mq.addEventListener === 'function') {
+      mq.addEventListener('change', onMq);
+    } else if (typeof mq.addListener === 'function') {
+      mq.addListener(onMq);
+    }
+    window.addEventListener('resize', onMq);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  })();
 
   // Footer animations
   (function () {

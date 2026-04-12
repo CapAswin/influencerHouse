@@ -525,6 +525,8 @@
 
   .blog-detail-page main {
     padding-top: 64px;
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    padding-right: max(0px, env(safe-area-inset-right, 0px));
   }
 
   .blog-detail-body {
@@ -533,5 +535,9 @@
 
   .blog-detail-meta span {
     font-size: 12px;
+  }
+
+  .blog-hero-text h1 {
+    max-width: none;
   }
 }
