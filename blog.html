@@ -3,19 +3,205 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blogs – Opulent Influencers House</title>
+    <title>Blog Details | Opulent Influencer House</title>
     <link rel="icon" type="image/png" href="assets/images/fav.png" />
     <link rel="stylesheet" href="assets/styles/global.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/styles/blog.css" />
   </head>
-  <body>
+  <body class="blog-detail-page">
     <div id="site-header"></div>
-    
-    <main style="min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 100px;">
-      <section class="section">
+
+    <main>
+      <section class="section blog-detail-hero">
         <div class="container">
-          <span class="eyebrow">Blogs</span>
-          <h1>Working on something <em>Amazing</em></h1>
-          <p>This page is currently under construction. Please check back later.</p>
+          <div class="blog-hero-split">
+            <div class="blog-hero-text">
+              <span class="wwa-eyebrow">Brand Strategy</span>
+              <h1>How to prepare campaigns that attract better creator responses.</h1>
+              <p>
+                Better briefs, cleaner expectations, and stronger review workflows make
+                creator campaigns easier to launch and easier to scale.
+              </p>
+              <div class="blog-detail-meta">
+                <span><i class="fa-regular fa-calendar"></i> April 5, 2026</span>
+                <span><i class="fa-regular fa-user"></i> Opulent Editorial Team</span>
+                <span><i class="fa-solid fa-book-open"></i> 6 min read</span>
+              </div>
+            </div>
+            <figure class="blog-hero-thumb">
+              <img src="assets/images/jo1.jpg" alt="Campaign planning" />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="blog-detail-main section">
+        <div class="container">
+          <div class="blog-detail-layout">
+            <article class="blog-detail-article">
+              <div class="blog-detail-body">
+                <h2>Simple preparation creates better campaign momentum.</h2>
+                <p class="blog-detail-copy">
+                  When brands come in with a clear offer, sharper targeting, and
+                  realistic timelines, creators respond faster and the overall campaign
+                  process feels lighter from the start. The goal is not a longer brief.
+                  The goal is a clearer one.
+                </p>
+                <p class="blog-detail-copy">
+                  A simplified setup helps internal teams align faster too. Marketing,
+                  approvals, and talent communication all move more smoothly when
+                  expectations are obvious before outreach begins.
+                </p>
+                <h3>Start with what matters most</h3>
+                <ul>
+                  <li>Define the campaign objective in one sentence.</li>
+                  <li>Clarify the audience, timeline, and core deliverables.</li>
+                  <li>State what flexibility creators have in the final output.</li>
+                </ul>
+                <div class="blog-detail-gallery">
+                  <img src="assets/images/jo2.jpg" alt="Creator review" />
+                  <img src="assets/images/jo4.jpg" alt="Campaign workflow" />
+                </div>
+                <p class="blog-detail-copy">
+                  The strongest briefs remove uncertainty without removing creativity.
+                  That balance is usually what separates a clean collaboration process
+                  from weeks of revisions and unclear expectations.
+                </p>
+                <blockquote>
+                  Clear expectations reduce friction before launch, during review, and
+                  after content goes live.
+                </blockquote>
+                <p class="blog-detail-copy">
+                  If the campaign includes verification, legal screening, or
+                  payment-specific requirements, surface those early. It saves time for
+                  both sides and avoids avoidable drop-off once conversations begin.
+                </p>
+                <div class="blog-detail-actions">
+                  <div class="blog-detail-tag-list">
+                    <span class="blog-detail-tag">Brand Strategy</span>
+                    <span class="blog-detail-tag">Campaign Setup</span>
+                    <span class="blog-detail-tag">Verification</span>
+                  </div>
+                  <div class="blog-detail-share" aria-label="Share article">
+                    <a
+                      href="https://www.facebook.com/profile.php?id=61585214585761"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Facebook"
+                      ><i class="fa-brands fa-facebook-f"></i
+                    ></a>
+                    <a
+                      href="https://www.tiktok.com/@opulentinfluencershouse"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="TikTok"
+                      ><i class="fa-brands fa-tiktok"></i
+                    ></a>
+                    <a
+                      href="https://www.instagram.com/opulentinfluencershouse/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                      ><i class="fa-brands fa-instagram"></i
+                    ></a>
+                    <a
+                      href="https://www.tiktok.com/@opulentinfluencershouse"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="YouTube"
+                      ><i class="fa-brands fa-youtube"></i
+                    ></a>
+                  </div>
+                </div>
+                <div class="blog-detail-form">
+                  <h3>Leave a Comment</h3>
+                  <form action="#">
+                    <div class="blog-detail-form-grid">
+                      <div>
+                        <label for="jo-blog-comment-name">Your Name*</label>
+                        <input
+                          type="text"
+                          name="name"
+                          id="jo-blog-comment-name"
+                          placeholder="Your Name"
+                        />
+                      </div>
+                      <div>
+                        <label for="jo-blog-comment-email">Your Email*</label>
+                        <input
+                          type="email"
+                          name="email"
+                          id="jo-blog-comment-email"
+                          placeholder="Your Email"
+                        />
+                      </div>
+                      <div class="blog-detail-form-full">
+                        <label for="jo-blog-comment-comment">Write Comment*</label>
+                        <textarea
+                          name="comment"
+                          id="jo-blog-comment-comment"
+                          placeholder="Write Comment"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-gold">Post Comment</button>
+                  </form>
+                </div>
+              </div>
+            </article>
+
+            <aside class="blog-aside-rail" aria-label="Categories and related posts">
+              <div class="blog-side-panel">
+                <div class="blog-side-block">
+                  <h3 class="blog-side-title">Categories</h3>
+                  <nav class="blog-cat-list" aria-label="Blog categories">
+                    <a class="blog-cat-pill" href="blog.html"
+                      >Brand Campaign Setup <span>08</span></a
+                    >
+                    <a class="blog-cat-pill" href="blog.html"
+                      >Creator Verification <span>11</span></a
+                    >
+                    <a class="blog-cat-pill" href="blog.html"
+                      >Audience Insights <span>07</span></a
+                    >
+                    <a class="blog-cat-pill" href="blog.html"
+                      >Platform Growth <span>05</span></a
+                    >
+                  </nav>
+                </div>
+                <div class="blog-side-block blog-side-block--posts">
+                  <h3 class="blog-side-title">More to read</h3>
+                  <div class="blog-detail-post-list">
+                    <a class="blog-detail-post" href="blog.html">
+                      <strong
+                        >How verified creators help brands launch safer, faster
+                        campaigns.</strong
+                      >
+                      <time datetime="2026-03-28">March 28, 2026</time>
+                    </a>
+                    <a class="blog-detail-post" href="blog.html">
+                      <strong
+                        >What makes a creator profile stand out in a competitive
+                        marketplace.</strong
+                      >
+                      <time datetime="2026-03-26">March 26, 2026</time>
+                    </a>
+                    <a class="blog-detail-post" href="blog.html">
+                      <strong
+                        >How to reduce approval delays in creator campaigns without losing
+                        control.</strong
+                      >
+                      <time datetime="2026-03-19">March 19, 2026</time>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
     </main>
