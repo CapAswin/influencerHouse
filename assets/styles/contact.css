@@ -729,6 +729,7 @@
   height: 38px;
   border-radius: 12px;
   margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--primary), #4b4bde);
   box-shadow: 0 10px 18px rgba(97, 97, 255, 0.32);
 }
 
@@ -851,6 +852,11 @@
   width: 52px;
   height: 52px;
   box-shadow: 0 10px 20px rgba(97, 97, 255, 0.28);
+  background: linear-gradient(135deg, var(--primary), #4b4bde);
+}
+
+#site-footer .footer {
+  margin-top: 24px;
 }
 
 .contact-card h3 {
@@ -933,7 +939,7 @@
   height: 32px;
   margin-bottom: 12px;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--primary), #4b4bde);
   color: #ffffff;
   font-size: 14px;
 }
