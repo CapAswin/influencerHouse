@@ -32,63 +32,121 @@
   z-index: 1;
 }
 
+/* Sticky sub-nav — same language as site navbar: frosted pill + underline tabs */
 .about-jump {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin: 0 0 28px;
-  padding: 12px 4px 14px;
+  margin: 0 0 30px;
+  padding: 14px 0 18px;
   position: sticky;
   top: 0;
   z-index: 20;
   background: linear-gradient(
-    to bottom,
-    rgba(244, 246, 255, 0.97) 0%,
-    rgba(244, 246, 255, 0.92) 70%,
+    180deg,
+    rgba(244, 246, 255, 0.98) 0%,
+    rgba(244, 246, 255, 0.88) 55%,
     rgba(244, 246, 255, 0) 100%
   );
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-.about-jump-link {
-  flex: 0 0 auto;
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 8px 14px;
+.about-jump-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px 8px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px 16px;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--muted);
-  text-decoration: none;
-  transition:
-    background 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.about-jump-link:hover {
-  color: var(--ink);
-  border-color: rgba(97, 97, 255, 0.42);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(97, 97, 255, 0.12);
-  background: rgba(255, 255, 255, 0.98);
+.about-jump-link {
+  position: relative;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #5e667b;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.about-jump-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--primary), #7c7cff);
+  transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-jump-link:hover:not(.is-active) {
+  color: var(--primary);
+  transform: translateY(-1px);
+  background: rgba(97, 97, 255, 0.06);
+}
+
+.about-jump-link:hover::after,
+.about-jump-link.is-active::after {
+  width: calc(100% - 24px);
+}
+
+.about-jump-link.is-active {
+  color: var(--primary);
+  background: rgba(97, 97, 255, 0.09);
+}
+
+.about-jump-link.is-active:hover {
+  transform: translateY(-1px);
+  background: rgba(97, 97, 255, 0.12);
 }
 
 .about-jump-link:focus-visible {
   outline: 2px solid var(--primary);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 999px;
 }
 
-.about-jump-link.is-active {
-  background: linear-gradient(135deg, var(--primary), #4b4bde);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 8px 20px rgba(97, 97, 255, 0.35);
+@media (max-width: 520px) {
+  .about-jump-inner {
+    gap: 2px 4px;
+    padding: 8px 12px;
+  }
+
+  .about-jump-link {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-jump-link {
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+
+  .about-jump-link:hover {
+    transform: none;
+  }
+
+  .about-jump-link::after {
+    transition: none;
+  }
 }
 
 .about-hero-title {
@@ -162,22 +220,7 @@
   }
 
   .about-jump {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 14px;
-    margin-bottom: 20px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-  }
-
-  .about-jump::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  .about-jump::-webkit-scrollbar-thumb {
-    background: rgba(97, 97, 255, 0.35);
-    border-radius: 4px;
+    margin-bottom: 22px;
   }
 }
 

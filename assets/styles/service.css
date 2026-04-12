@@ -290,7 +290,12 @@
 }
 
 .service-faq {
-  padding-bottom: 56px;
+  padding-bottom: 28px;
+}
+
+/* Tighten space before site footer (global .footer has margin-top: 74px) */
+main.service-page + .footer {
+  margin-top: 28px;
 }
 
 .service-faq-inner {
