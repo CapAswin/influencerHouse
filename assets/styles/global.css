@@ -2398,10 +2398,15 @@ h1 em {
 
 .pricing-card > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
-/* Large background index — Quickit-style watermark */
+/* Mesh/gradient layer sits under the index numeral */
+.pricing-panel .pricing-card::after {
+  z-index: 0;
+}
+
+/* Large background index — above mesh, below copy */
 .pricing-panel .pricing-card::before {
   content: "";
   position: absolute;
@@ -2411,14 +2416,14 @@ h1 em {
   font-weight: 800;
   line-height: 1;
   color: rgba(10, 15, 30, 0.06);
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   letter-spacing: -0.06em;
 }
 
 .pricing-panel .pricing-card:nth-child(1)::before {
   content: "1";
-  color: rgba(37, 99, 235, 0.055);
+  color: rgba(37, 99, 235, 0.14);
 }
 
 /* Card 1 — white + pale blue only (subtle top mist) */
@@ -2444,12 +2449,12 @@ h1 em {
 
 .pricing-panel .pricing-card:nth-child(2)::before {
   content: "2";
-  color: rgba(37, 99, 235, 0.09);
+  color: rgba(29, 78, 216, 0.15);
 }
 
 .pricing-panel .pricing-card:nth-child(3)::before {
   content: "3";
-  color: rgba(219, 39, 119, 0.075);
+  color: rgba(157, 23, 77, 0.16);
 }
 
 /*
@@ -2587,7 +2592,7 @@ h1 em {
   white-space: nowrap;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  z-index: 2;
+  z-index: 3;
   box-shadow: 0 4px 12px rgba(43, 100, 241, 0.35);
 }
 
