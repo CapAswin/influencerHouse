@@ -11,7 +11,7 @@
   scroll-margin-top: 96px;
 }
 
-/* Intro hero — layered panel + breadcrumb + stats */
+/* Intro hero — layered panel + stats */
 .about-hero {
   position: relative;
   padding: 20px 0 36px;
@@ -32,36 +32,6 @@
 .about-hero-shell {
   position: relative;
   z-index: 1;
-}
-
-.about-breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 22px;
-}
-
-.about-breadcrumb a {
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.about-breadcrumb a:hover {
-  color: var(--primary);
-}
-
-.about-breadcrumb-sep {
-  opacity: 0.45;
-  user-select: none;
-}
-
-.about-breadcrumb-current {
-  color: var(--ink);
-  font-weight: 600;
 }
 
 .about-hero-layout {
