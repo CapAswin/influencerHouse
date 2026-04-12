@@ -134,15 +134,22 @@
     const cols = footer.querySelectorAll('.footer-grid > *');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+    let footerScrollRaf = null;
     function onScroll() {
       if (reduced.matches || !wordmark) return;
-      const rect = footer.getBoundingClientRect();
-      const scrolled = window.innerHeight - rect.top;
-      if (scrolled > 0) {
-        wordmark.style.transform = `translateY(${scrolled * 0.38}px)`;
-        if (orb1) orb1.style.transform = `translateY(${scrolled * 0.18}px)`;
-        if (orb2) orb2.style.transform = `translateY(${scrolled * -0.12}px)`;
-      }
+      if (footerScrollRaf !== null) return;
+      footerScrollRaf = requestAnimationFrame(() => {
+        footerScrollRaf = null;
+        const rect = footer.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (rect.top > vh + 120 || rect.bottom < -120) return;
+        const scrolled = vh - rect.top;
+        if (scrolled > 0) {
+          wordmark.style.transform = `translateY(${scrolled * 0.38}px)`;
+          if (orb1) orb1.style.transform = `translateY(${scrolled * 0.18}px)`;
+          if (orb2) orb2.style.transform = `translateY(${scrolled * -0.12}px)`;
+        }
+      });
     }
 
     const io = new IntersectionObserver((entries) => {
@@ -172,8 +179,11 @@
       if (orb2) orb2.style.transform = '';
     });
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    // Blog: skip footer parallax on scroll — no layout reads while reading the article
+    if (!document.body.classList.contains('blog-detail-page')) {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
   })();
 
   // Premium smooth scrolling (Lenis) — disabled when user prefers reduced motion
@@ -181,6 +191,10 @@
     if (typeof Lenis === 'undefined') return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (reduced.matches) return;
+
+    // Blog article: native scroll — Lenis + sticky sidebar often causes initial wheel lag
+    // and jank; long-form reading matches OS scrolling better.
+    if (document.body.classList.contains('blog-detail-page')) return;
 
     const lenis = new Lenis({
       autoRaf: true,
