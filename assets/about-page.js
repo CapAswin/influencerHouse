@@ -30,42 +30,8 @@
     });
   }
 
-  function jumpNavSpy() {
-    var links = document.querySelectorAll(".about-jump-link[href^='#']");
-    var items = [];
-    links.forEach(function (a) {
-      var id = a.getAttribute("href").slice(1);
-      var el = document.getElementById(id);
-      if (el) items.push({ link: a, el: el });
-    });
-    if (!items.length) return;
-
-    function tick() {
-      var pad = Math.min(160, Math.round(window.innerHeight * 0.12));
-      var pos = window.scrollY + pad;
-      var active = items[0];
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].el.offsetTop <= pos) active = items[i];
-      }
-      items.forEach(function (item) {
-        item.link.classList.toggle("is-active", item === active);
-      });
-    }
-
-    tick();
-    window.addEventListener(
-      "scroll",
-      function () {
-        window.requestAnimationFrame(tick);
-      },
-      { passive: true }
-    );
-    window.addEventListener("resize", tick);
-  }
-
   function boot() {
     revealOnScroll();
-    jumpNavSpy();
   }
 
   if (document.readyState === "loading") {
