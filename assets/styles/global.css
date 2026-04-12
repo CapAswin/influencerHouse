@@ -1,3 +1,11 @@
+/* Lenis smooth scroll — height auto so momentum scroll measures correctly */
+html.lenis {
+  height: auto;
+}
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
 :root {
   --bg: #f4f6ff;
   --surface: #ffffff;

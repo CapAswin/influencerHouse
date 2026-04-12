@@ -175,4 +175,48 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   })();
+
+  // Premium smooth scrolling (Lenis) — disabled when user prefers reduced motion
+  (function initSmoothScroll() {
+    if (typeof Lenis === 'undefined') return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduced.matches) return;
+
+    const lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.078,
+      wheelMultiplier: 0.88,
+      touchMultiplier: 1.05,
+      smoothWheel: true,
+      syncTouch: true,
+      syncTouchLerp: 0.075,
+    });
+    window.lenis = lenis;
+
+    function anchorOffset() {
+      const nav = document.querySelector('.navbar');
+      return nav ? Math.round(nav.getBoundingClientRect().height + 20) : 96;
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      const href = a.getAttribute('href');
+      if (!href || href === '#' || href.length < 2) return;
+      const id = href.slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -anchorOffset() });
+      });
+    });
+
+    if (location.hash && location.hash.length > 1) {
+      const deep = document.getElementById(location.hash.slice(1));
+      if (deep) {
+        requestAnimationFrame(() => {
+          lenis.scrollTo(deep, { offset: -anchorOffset(), immediate: true });
+        });
+      }
+    }
+  })();
 })();

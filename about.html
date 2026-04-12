@@ -5,75 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us – Opulent Influencers House</title>
     <link rel="icon" type="image/png" href="assets/images/fav.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/styles/global.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <link rel="stylesheet" href="assets/styles/about.css" />
+    <noscript
+      ><style>
+        .about-reveal {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style></noscript
+    >
   </head>
   <body>
     <div id="site-header"></div>
 
-    <section class="inner-about-block">
-      <div class="existence-shell">
-        <div class="inner-about-split">
-          <div class="inner-about-left">
-            <div class="inner-about-img-wrap">
-              <img src="assets/images/ceo.webp" alt="Muhammad Asif Pervaiz" />
-              <div class="inner-about-follower-tag">85.5M Followers</div>
-            </div>
-            <h2 class="inner-about-name">Muhammad Asif Pervaiz</h2>
-            <a href="contact.html" class="btn btn-gold" style="display:inline-block;margin-top:4px;">Get in Touch</a>
-            <p class="inner-about-response">Typically responds within 24 hours</p>
-          </div>
-          <div class="inner-about-right">
-            <h2 class="inner-about-title">I'm a Marketing Influencer &amp; Digital Growth Leader</h2>
-            <p class="inner-about-desc">I help brands dominate the digital space by turning visibility into authority and engagement into revenue. With a deep understanding of audience behavior, content strategy, and brand psychology, I create influence that doesn't fade — it converts. My work is focused on real growth, not vanity metrics. Every collaboration is built to elevate brand perception, strengthen trust, and deliver measurable business impact.</p>
-            <div class="value-list" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;">
-              <div class="value-item"><span class="tick">✓</span><span>Authority-Driven Brand Positioning</span></div>
-              <div class="value-item"><span class="tick">✓</span><span>High-Impact Influencer Marketing</span></div>
-              <div class="value-item"><span class="tick">✓</span><span>Trust-Based Audience Engagement</span></div>
-              <div class="value-item"><span class="tick">✓</span><span>Revenue-Focused Digital Strategies</span></div>
-            </div>
+    <main class="about-ui" id="about-top">
+      <section
+        class="about-hero about-reveal is-inview"
+        id="about-intro"
+        aria-labelledby="about-hero-heading"
+      >
+        <div class="existence-shell about-hero-shell">
+          <nav class="about-jump" aria-label="On this page">
+            <a href="#about-intro" class="about-jump-link is-active">Overview</a>
+            <a href="#about-story" class="about-jump-link">Our story</a>
+            <a href="#about-leadership" class="about-jump-link">Leadership</a>
+            <a href="#about-platform" class="about-jump-link">Platform</a>
+            <a href="#about-pillars" class="about-jump-link">Pillars</a>
+          </nav>
+          <h1 id="about-hero-heading" class="about-hero-title">
+            About <span class="about-hero-accent">Opulent</span>
+          </h1>
+          <p class="about-hero-lead">
+            Global self-service infrastructure connecting brands with verified
+            creators—structured, transparent, and built to scale with your team.
+          </p>
+          <div class="about-hero-actions">
+            <a href="contact.html" class="btn btn-gold">Contact us</a>
+            <a href="for-brands.html" class="btn btn-dark">For brands</a>
           </div>
         </div>
-        <p class="inner-about-tagline">Opulent helps agencies like yours operate at a much larger scale <span class="tagline-gold">with a vital </span><span class="tagline-purple">Platform to Effectively Manage</span> and grow your network</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="who-we-are-block">
-      <div class="existence-shell">
-        <div class="wwa-hero">
-          <div class="wwa-hero-left">
-            <span class="wwa-eyebrow">Who We Are</span>
-            <h1 class="wwa-title">A Platform Built<br>for <span>Accountability</span></h1>
+      <section class="who-we-are-block about-reveal" id="about-story">
+        <div class="existence-shell">
+          <div class="wwa-hero">
+            <div class="wwa-hero-left">
+              <span class="wwa-eyebrow">Who we are</span>
+              <h2 class="wwa-title">
+                A platform built<br />for <span>accountability</span>
+              </h2>
+            </div>
+            <div class="wwa-hero-right">
+              <p class="wwa-desc">
+                Opulent Influencers House is a global self-service platform
+                designed to connect brands with verified creators, influencers,
+                and premium talent—including celebrities and sports
+                personalities—through a structured, data-driven ecosystem.
+              </p>
+            </div>
           </div>
-          <div class="wwa-hero-right">
-            <p class="wwa-desc">Opulent Influencers House is a global self-service platform designed to connect brands with verified creators, influencers, and premium talent including celebrities and sports personalities through a structured, data-driven ecosystem.</p>
+          <div class="wwa-vm">
+            <div class="wwa-vm-card wwa-vision" tabindex="0">
+              <div class="wwa-vm-top">
+                <div class="wwa-vm-icon"><i class="fa-solid fa-eye"></i></div>
+                <span class="wwa-vm-tag">Our vision</span>
+              </div>
+              <p>
+                To become the world's most trusted and scalable influencer
+                platform powered by data, transparency, and direct collaboration.
+              </p>
+            </div>
+            <div class="wwa-vm-divider" aria-hidden="true"></div>
+            <div class="wwa-vm-card wwa-mission" tabindex="0">
+              <div class="wwa-vm-top">
+                <div class="wwa-vm-icon">
+                  <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <span class="wwa-vm-tag">Our mission</span>
+              </div>
+              <p>
+                To build a data-driven infrastructure that enables brands and
+                talent to connect, collaborate, and scale globally without
+                unnecessary intermediaries.
+              </p>
+            </div>
           </div>
         </div>
-        <div class="wwa-vm">
-          <div class="wwa-vm-card wwa-vision">
-            <div class="wwa-vm-top">
-              <div class="wwa-vm-icon"><i class="fa-solid fa-eye"></i></div>
-              <span class="wwa-vm-tag">Our Vision</span>
-            </div>
-            <p>To become the world's most trusted and scalable influencer platform powered by data, transparency, and direct collaboration.</p>
-          </div>
-          <div class="wwa-vm-divider"></div>
-          <div class="wwa-vm-card wwa-mission">
-            <div class="wwa-vm-top">
-              <div class="wwa-vm-icon"><i class="fa-solid fa-bullseye"></i></div>
-              <span class="wwa-vm-tag">Our Mission</span>
-            </div>
-            <p>To build a data-driven infrastructure that enables brands and talent to connect, collaborate, and scale globally without intermediaries.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="kpc-block">
+      <section class="inner-about-block about-reveal" id="about-leadership">
+        <div class="existence-shell">
+          <div class="inner-about-split">
+            <div class="inner-about-left">
+              <div class="inner-about-img-wrap">
+                <img src="assets/images/ceo.webp" alt="Muhammad Asif Pervaiz" />
+                <div class="inner-about-follower-tag">85.5M Followers</div>
+              </div>
+              <h2 class="inner-about-name">Muhammad Asif Pervaiz</h2>
+              <a href="contact.html" class="btn btn-gold inner-about-cta"
+                >Get in touch</a
+              >
+              <p class="inner-about-response">
+                Typically responds within 24 hours
+              </p>
+            </div>
+            <div class="inner-about-right">
+              <h2 class="inner-about-title">
+                I'm a marketing influencer &amp; digital growth leader
+              </h2>
+              <p class="inner-about-desc">
+                I help brands dominate the digital space by turning visibility
+                into authority and engagement into revenue. With a deep
+                understanding of audience behavior, content strategy, and brand
+                psychology, I create influence that doesn't fade—it converts. My
+                work is focused on real growth, not vanity metrics. Every
+                collaboration is built to elevate brand perception, strengthen
+                trust, and deliver measurable business impact.
+              </p>
+              <div class="value-list about-value-grid">
+                <div class="value-item">
+                  <span class="tick">✓</span>
+                  <span>Authority-driven brand positioning</span>
+                </div>
+                <div class="value-item">
+                  <span class="tick">✓</span>
+                  <span>High-impact influencer marketing</span>
+                </div>
+                <div class="value-item">
+                  <span class="tick">✓</span>
+                  <span>Trust-based audience engagement</span>
+                </div>
+                <div class="value-item">
+                  <span class="tick">✓</span>
+                  <span>Revenue-focused digital strategies</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <section class="kpc-block about-reveal" id="about-platform">
       <div class="existence-shell">
         <div class="kpc-split">
           <!-- LEFT: image stack -->
@@ -125,10 +208,10 @@
       </div>
     </section>
 
-    <section class="existence-block">
+    <section class="existence-block about-reveal" id="about-pillars">
       <div class="existence-shell">
         <div class="existence-header">
-          <h2 class="existence-title">Why <span>We Exist</span></h2>
+          <h2 class="existence-title">Why <span>we exist</span></h2>
           <p class="existence-desc">
             The influencer ecosystem lacks transparency, pricing clarity, and
             accountability. Opulent exists to solve this through technology,
@@ -176,12 +259,34 @@
           </div>
         </div>
 
-        <p class="existence-desc text-center mt-5">
+        <p class="existence-desc text-center mt-5 existence-outro">
           Not an agency. Not talent management. A global platform built for
           direct, scalable influencer collaboration.
         </p>
       </div>
     </section>
+
+      <section class="about-bottom-cta about-reveal" id="about-cta" aria-labelledby="about-cta-heading">
+        <div class="existence-shell about-bottom-cta-inner">
+          <h2 id="about-cta-heading" class="about-bottom-cta-title">
+            Opulent helps agencies operate at scale—with a platform to
+            <span class="about-bottom-cta-highlight">manage and grow</span>
+            your network.
+          </h2>
+          <p class="about-bottom-cta-note">
+            <span class="tagline-gold">A vital</span>
+            <span class="tagline-purple"> platform</span>
+            for teams that need clarity, not chaos.
+          </p>
+          <div class="about-bottom-cta-actions">
+            <a href="contact.html" class="btn btn-gold">Get in touch</a>
+            <a href="for-influencers.html" class="btn btn-dark about-bottom-cta-alt"
+              >I'm a creator</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
 
     <div id="site-footer"></div>
     <footer class="footer" style="display:none">
@@ -429,6 +534,8 @@
       </div>
     </footer>
 
+    <script src="assets/vendor/lenis.min.js"></script>
     <script src="assets/shared.js"></script>
+    <script src="assets/about-page.js" defer></script>
   </body>
 </html>
