@@ -5,17 +5,399 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Services – Opulent Influencers House</title>
     <link rel="icon" type="image/png" href="assets/images/fav.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/styles/global.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/styles/service.css" />
   </head>
   <body>
     <div id="site-header"></div>
-    
-    <main style="min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 100px;">
-      <section class="section">
+
+    <main class="service-page">
+      <section class="section service-hero" aria-labelledby="service-hero-title">
         <div class="container">
-          <span class="eyebrow">Services</span>
-          <h1>Working on something <em>Amazing</em></h1>
-          <p>This page is currently under construction. Please check back later.</p>
+          <nav class="service-breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span aria-hidden="true">/</span>
+            <span class="current">Platform Capabilities</span>
+          </nav>
+          <h1 id="service-hero-title" class="service-hero-title">
+            Platform Capabilities
+          </h1>
+        </div>
+      </section>
+
+      <section class="section service-intro" aria-labelledby="service-intro-title">
+        <div class="container service-intro-inner">
+          <h2 id="service-intro-title" class="service-section-heading">
+            Platform <span class="service-accent">Capabilities</span>
+          </h2>
+          <p class="service-intro-lead">
+            Powerful tools designed to help brands and creators connect,
+            collaborate, and scale independently.
+          </p>
+        </div>
+      </section>
+
+      <section class="section service-cards-section" aria-label="Platform features">
+        <div class="container">
+          <div class="service-grid">
+            <article class="service-card">
+              <div class="service-card-media">
+                <img
+                  src="assets/images/jo1.jpg"
+                  alt="Creator discovery on the platform"
+                />
+              </div>
+              <div class="service-card-body">
+                <p class="service-card-tag">Platform Feature</p>
+                <h3 class="service-card-title">Creator Discovery</h3>
+                <p class="service-card-desc">
+                  Find the right creators using advanced filters, audience
+                  insights, and category targeting.
+                </p>
+                <a href="contact.html" class="btn btn-gold service-card-btn"
+                  >View Details</a
+                >
+              </div>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-media">
+                <img
+                  src="assets/images/jo2.jpg"
+                  alt="Campaign creation workflow"
+                />
+              </div>
+              <div class="service-card-body">
+                <p class="service-card-tag">Platform Feature</p>
+                <h3 class="service-card-title">Campaign Creation</h3>
+                <p class="service-card-desc">
+                  Launch campaigns, define deliverables, and invite creators
+                  directly from the platform.
+                </p>
+                <a href="contact.html" class="btn btn-gold service-card-btn"
+                  >View Details</a
+                >
+              </div>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-media">
+                <img
+                  src="assets/images/jo4.jpg"
+                  alt="Direct collaboration between brands and creators"
+                />
+              </div>
+              <div class="service-card-body">
+                <p class="service-card-tag">Platform Feature</p>
+                <h3 class="service-card-title">Direct Collaboration</h3>
+                <p class="service-card-desc">
+                  Chat, negotiate, and finalize partnerships without
+                  intermediaries.
+                </p>
+                <a href="contact.html" class="btn btn-gold service-card-btn"
+                  >View Details</a
+                >
+              </div>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-media">
+                <img
+                  src="assets/images/jo-video-3.jpg"
+                  alt="Content activation across social platforms"
+                />
+              </div>
+              <div class="service-card-body">
+                <p class="service-card-tag">Platform Feature</p>
+                <h3 class="service-card-title">Content Activation</h3>
+                <p class="service-card-desc">
+                  Execute campaigns seamlessly across social platforms with full
+                  visibility and control.
+                </p>
+                <a href="contact.html" class="btn btn-gold service-card-btn"
+                  >View Details</a
+                >
+              </div>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-media">
+                <img
+                  src="assets/images/brandImg.png"
+                  alt="Campaign management dashboard concept"
+                />
+              </div>
+              <div class="service-card-body">
+                <p class="service-card-tag">Platform Feature</p>
+                <h3 class="service-card-title">Campaign Management</h3>
+                <p class="service-card-desc">
+                  Track progress, approvals, deliverables, and communication in
+                  one place.
+                </p>
+                <a href="contact.html" class="btn btn-gold service-card-btn"
+                  >View Details</a
+                >
+              </div>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-media">
+                <img
+                  src="assets/images/creatorImg.png"
+                  alt="Performance analytics and reporting"
+                />
+              </div>
+              <div class="service-card-body">
+                <p class="service-card-tag">Platform Feature</p>
+                <h3 class="service-card-title">Performance Analytics</h3>
+                <p class="service-card-desc">
+                  Monitor campaign results, engagement, and ROI with real-time
+                  insights.
+                </p>
+                <a href="contact.html" class="btn btn-gold service-card-btn"
+                  >View Details</a
+                >
+              </div>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-media">
+                <img
+                  src="assets/images/contact_img.png"
+                  alt="Scaling brand and creator collaborations"
+                />
+              </div>
+              <div class="service-card-body">
+                <p class="service-card-tag">Platform Feature</p>
+                <h3 class="service-card-title">Scalable Growth</h3>
+                <p class="service-card-desc">
+                  Manage multiple campaigns, creators, and collaborations as
+                  your brand grows.
+                </p>
+                <a href="contact.html" class="btn btn-gold service-card-btn"
+                  >View Details</a
+                >
+              </div>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-media">
+                <img
+                  src="assets/images/jo1.jpg"
+                  alt="Creator monetization and deal management"
+                />
+              </div>
+              <div class="service-card-body">
+                <p class="service-card-tag">Platform Feature</p>
+                <h3 class="service-card-title">Creator Monetization Tools</h3>
+                <p class="service-card-desc">
+                  Enable creators to manage collaborations, pricing, and brand
+                  deals independently.
+                </p>
+                <a href="contact.html" class="btn btn-gold service-card-btn"
+                  >View Details</a
+                >
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section service-picture-section"
+        aria-labelledby="service-picture-title"
+      >
+        <div class="container">
+          <div class="service-split">
+            <div class="service-split-media">
+              <img
+                src="assets/images/jo2.jpg"
+                alt="Creators and brands collaborating through the Opulent platform"
+              />
+            </div>
+            <div class="service-split-content">
+              <span class="wwa-eyebrow service-picture-kicker"
+                >Platform Experience</span
+              >
+              <h2 id="service-picture-title" class="service-section-heading">
+                A Clearer Picture of How Collaboration Happens
+              </h2>
+              <p class="service-split-lead">
+                Our service model is built to remove guesswork. Brands can
+                discover, shortlist, and activate creators, while influencers
+                manage visibility, pricing, and opportunities from one
+                structured platform.
+              </p>
+              <div class="service-picture-points">
+                <div class="service-picture-point">
+                  <strong>For Brands</strong>
+                  <p>
+                    Move from creator discovery to campaign activation with
+                    stronger control, speed, and transparency.
+                  </p>
+                </div>
+                <div class="service-picture-point">
+                  <strong>For Influencers</strong>
+                  <p>
+                    Present a polished profile, receive direct opportunities,
+                    and manage collaborations more professionally.
+                  </p>
+                </div>
+                <div class="service-picture-point">
+                  <strong>For Both Sides</strong>
+                  <p>
+                    Work inside a verification-aware environment built around
+                    compliance, visibility, and measurable outcomes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section service-features-strip" aria-label="Capability highlights">
+        <div class="container">
+          <div class="service-features-grid">
+            <div class="service-feature">
+              <div class="service-feature-icon" aria-hidden="true">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+              <h3 class="service-feature-title">Creator Discovery</h3>
+            </div>
+            <div class="service-feature">
+              <div class="service-feature-icon" aria-hidden="true">
+                <i class="fa-solid fa-handshake"></i>
+              </div>
+              <h3 class="service-feature-title">Direct Collaboration</h3>
+            </div>
+            <div class="service-feature">
+              <div class="service-feature-icon" aria-hidden="true">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+              <h3 class="service-feature-title">Campaign Management</h3>
+            </div>
+            <div class="service-feature">
+              <div class="service-feature-icon" aria-hidden="true">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+              <h3 class="service-feature-title">Performance Analytics</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section service-faq" aria-labelledby="service-faq-title">
+        <div class="container service-faq-inner">
+          <h2 id="service-faq-title" class="service-faq-heading">
+            Frequently Asked Questions
+          </h2>
+          <div class="service-faq-list">
+            <details class="service-faq-item" open>
+              <summary>
+                <span class="service-faq-num">01</span>
+                <span class="service-faq-q"
+                  >What does the platform help brands do?</span
+                >
+                <span class="service-faq-chevron" aria-hidden="true"
+                  ><i class="fa-solid fa-chevron-down"></i
+                ></span>
+              </summary>
+              <div class="service-faq-a">
+                <p>
+                  Brands can discover creators, launch campaigns, manage
+                  approvals, track deliverables, and monitor campaign
+                  performance from one place.
+                </p>
+              </div>
+            </details>
+
+            <details class="service-faq-item">
+              <summary>
+                <span class="service-faq-num">02</span>
+                <span class="service-faq-q"
+                  >How do creators benefit from the service?</span
+                >
+                <span class="service-faq-chevron" aria-hidden="true"
+                  ><i class="fa-solid fa-chevron-down"></i
+                ></span>
+              </summary>
+              <div class="service-faq-a">
+                <p>
+                  Creators gain direct visibility to brands, manage
+                  collaborations more independently, and present a stronger
+                  professional profile for paid opportunities.
+                </p>
+              </div>
+            </details>
+
+            <details class="service-faq-item">
+              <summary>
+                <span class="service-faq-num">03</span>
+                <span class="service-faq-q"
+                  >Is the platform self-service or agency-managed?</span
+                >
+                <span class="service-faq-chevron" aria-hidden="true"
+                  ><i class="fa-solid fa-chevron-down"></i
+                ></span>
+              </summary>
+              <div class="service-faq-a">
+                <p>
+                  The platform is designed as a self-service environment, giving
+                  both brands and creators more direct control over
+                  collaboration, communication, and execution.
+                </p>
+              </div>
+            </details>
+
+            <details class="service-faq-item">
+              <summary>
+                <span class="service-faq-num">04</span>
+                <span class="service-faq-q"
+                  >Does verification play a role in the service?</span
+                >
+                <span class="service-faq-chevron" aria-hidden="true"
+                  ><i class="fa-solid fa-chevron-down"></i
+                ></span>
+              </summary>
+              <div class="service-faq-a">
+                <p>
+                  Yes. Verification supports trust, improves quality control,
+                  and helps the platform maintain safer, more credible
+                  collaboration opportunities.
+                </p>
+              </div>
+            </details>
+
+            <details class="service-faq-item">
+              <summary>
+                <span class="service-faq-num">05</span>
+                <span class="service-faq-q"
+                  >Can the platform support growth over time?</span
+                >
+                <span class="service-faq-chevron" aria-hidden="true"
+                  ><i class="fa-solid fa-chevron-down"></i
+                ></span>
+              </summary>
+              <div class="service-faq-a">
+                <p>
+                  Yes. The service is built for ongoing growth, whether a brand
+                  is managing more campaigns or a creator is scaling visibility
+                  and monetization opportunities.
+                </p>
+              </div>
+            </details>
+          </div>
         </div>
       </section>
     </main>
