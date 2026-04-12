@@ -18,6 +18,12 @@ html.lenis.lenis-smooth {
   --shadow-soft: 0 12px 30px rgba(10, 15, 30, 0.06);
   --radius-xl: 30px;
   --ease: 0.3s ease;
+  /* Smoother motion for lifts, scales, and layered shadows */
+  --ease-smooth: 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-hover: 0 22px 48px rgba(10, 15, 30, 0.11),
+    0 0 0 1px rgba(97, 97, 255, 0.07);
+  --shadow-hover-strong: 0 26px 56px rgba(10, 15, 30, 0.13),
+    0 0 40px rgba(97, 97, 255, 0.1);
   --container: min(1140px, calc(100% - 42px));
 }
 
@@ -108,13 +114,19 @@ h2 {
   position: relative;
   font-weight: 500;
   color: #3b342d;
-  transition: color var(--ease);
+  transition:
+    color var(--ease),
+    transform var(--ease-smooth);
   padding: 4px 0;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--primary);
+}
+
+.nav-links a:hover {
+  transform: translateY(-1px);
 }
 
 .nav-links a::after {
@@ -148,8 +160,9 @@ h2 {
   font-weight: 600;
   cursor: pointer;
   transition:
-    transform var(--ease),
-    box-shadow var(--ease),
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    filter var(--ease-smooth),
     background var(--ease);
   display: inline-flex;
   align-items: center;
@@ -159,7 +172,7 @@ h2 {
 }
 
 .btn:hover {
-  transform: translateY(-2px) scale(1.01);
+  transform: translateY(-3px) scale(1.02);
 }
 
 .btn-dark {
@@ -168,10 +181,20 @@ h2 {
   box-shadow: 0 10px 24px rgba(10, 15, 30, 0.28);
 }
 
+.btn-dark:hover {
+  box-shadow: 0 16px 36px rgba(10, 15, 30, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  filter: brightness(1.06);
+}
+
 .btn-gold {
   color: #ffffff;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   box-shadow: 0 10px 24px rgba(97, 97, 255, 0.3);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 18px 40px rgba(97, 97, 255, 0.42), 0 8px 24px rgba(255, 3, 96, 0.18);
+  filter: saturate(1.05) brightness(1.03);
 }
 
 .hero {
@@ -247,13 +270,15 @@ h1 em {
   border: 1px solid rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   transition:
-    transform var(--ease),
-    box-shadow var(--ease);
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    border-color var(--ease-smooth);
 }
 
 .float-card:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 26px 48px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-hover-strong);
+  border-color: rgba(97, 97, 255, 0.22);
 }
 
 .card-views {
@@ -447,11 +472,16 @@ h1 em {
   box-shadow: var(--shadow);
   border: 1px solid rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(10px);
-  transition: transform var(--ease);
+  transition:
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    border-color var(--ease-smooth);
 }
 
 .dash-card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-hover-strong);
+  border-color: rgba(97, 97, 255, 0.2);
 }
 
 .card-sales {
@@ -581,14 +611,17 @@ h1 em {
   border-radius: 20px;
   padding: 20px;
   box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(10, 15, 30, 0.04);
   transition:
-    transform var(--ease),
-    box-shadow var(--ease);
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    border-color var(--ease-smooth);
 }
 
 .panel:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(97, 97, 255, 0.14);
 }
 
 .icon {
@@ -602,6 +635,14 @@ h1 em {
   background: linear-gradient(135deg, var(--primary), #4b4bde);
   font-weight: 700;
   font-size: 14px;
+  line-height: 0;
+}
+
+.icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .panel p {
@@ -656,16 +697,23 @@ h1 em {
     0 8px 20px rgba(97, 97, 255, 0.3);
   flex-shrink: 0;
   z-index: 1;
+  line-height: 0;
   transition:
-    transform var(--ease),
-    box-shadow var(--ease);
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth);
+}
+
+.roadmap-node svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 .roadmap-row:hover .roadmap-node {
-  transform: scale(1.12);
+  transform: scale(1.14);
   box-shadow:
-    0 0 0 8px rgba(97, 97, 255, 0.18),
-    0 12px 28px rgba(97, 97, 255, 0.4);
+    0 0 0 10px rgba(97, 97, 255, 0.16),
+    0 0 28px rgba(97, 97, 255, 0.35),
+    0 14px 32px rgba(97, 97, 255, 0.45);
 }
 
 /* hide top line on first row, bottom line on last */
@@ -684,15 +732,15 @@ h1 em {
   border: 1px solid var(--line);
   margin: 12px 0;
   transition:
-    transform var(--ease),
-    box-shadow var(--ease),
-    border-color var(--ease);
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    border-color var(--ease-smooth);
 }
 
 .roadmap-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-  border-color: rgba(97, 97, 255, 0.25);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(97, 97, 255, 0.32);
 }
 
 .roadmap-card-num {
@@ -827,6 +875,12 @@ h1 em {
   display: grid;
   place-items: center;
   flex-shrink: 0;
+  line-height: 0;
+}
+
+.verify-tier-icon svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 .tier-std .verify-tier-icon {
@@ -947,6 +1001,8 @@ h1 em {
   place-items: center;
   background: linear-gradient(140deg, var(--primary), #4b4bde);
   font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
   color: #ffffff;
 }
 
@@ -961,14 +1017,17 @@ h1 em {
   border-radius: 20px;
   overflow: hidden;
   box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(10, 15, 30, 0.05);
   transition:
-    transform var(--ease),
-    box-shadow var(--ease);
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    border-color var(--ease-smooth);
 }
 
 .video:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(97, 97, 255, 0.12);
 }
 
 .video .thumb {
@@ -1078,8 +1137,10 @@ h1 em {
   background: var(--primary);
   border-color: var(--primary);
   color: #fff;
-  transform: scale(1.08);
-  box-shadow: 0 8px 20px rgba(97, 97, 255, 0.3);
+  transform: scale(1.1);
+  box-shadow:
+    0 10px 26px rgba(97, 97, 255, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset;
 }
 
 .tc-dots {
@@ -1356,11 +1417,16 @@ h1 em {
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 3px;
-  transition: color var(--ease);
+  transition:
+    color var(--ease),
+    text-underline-offset var(--ease-smooth),
+    text-decoration-color var(--ease);
 }
 
 .cta-link:hover {
   color: #fff;
+  text-underline-offset: 5px;
+  text-decoration-color: rgba(255, 255, 255, 0.65);
 }
 
 .btn-cta {
@@ -1377,14 +1443,18 @@ h1 em {
   align-items: center;
   gap: 10px;
   transition:
-    transform var(--ease),
-    box-shadow var(--ease);
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    filter var(--ease-smooth);
   white-space: nowrap;
 }
 
 .btn-cta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(97, 97, 255, 0.5);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 20px 44px rgba(97, 97, 255, 0.52),
+    0 12px 32px rgba(255, 3, 96, 0.2);
+  filter: brightness(1.05) saturate(1.05);
 }
 
 .cta-visual {
@@ -1631,11 +1701,14 @@ h1 em {
   font-size: 14px;
   font-weight: 600;
   color: var(--muted);
-  transition: color var(--ease);
+  transition:
+    color var(--ease),
+    transform var(--ease-smooth);
 }
 
 .signup-back:hover {
   color: var(--primary);
+  transform: translateX(-3px);
 }
 
 .signup-back-icon {
@@ -1836,7 +1909,8 @@ h1 em {
 
 .signup-form input:hover {
   background: #fff;
-  border-color: rgba(10, 15, 30, 0.14);
+  border-color: rgba(97, 97, 255, 0.22);
+  box-shadow: 0 2px 12px rgba(97, 97, 255, 0.06);
 }
 
 .signup-form input:focus {
@@ -1871,10 +1945,14 @@ h1 em {
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
+  transition:
+    color var(--ease),
+    text-underline-offset var(--ease-smooth);
 }
 
 .signup-terms a:hover {
   color: var(--secondary);
+  text-underline-offset: 5px;
 }
 
 .btn-signup {
@@ -1896,10 +1974,15 @@ h1 em {
 .signup-footer a {
   color: var(--primary);
   font-weight: 700;
+  transition:
+    color var(--ease),
+    transform var(--ease-smooth);
+  display: inline-block;
 }
 
 .signup-footer a:hover {
   color: var(--secondary);
+  transform: translateY(-1px);
 }
 
 .signup-visual {
@@ -2396,8 +2479,9 @@ h1 em {
   position: relative;
   overflow: hidden;
   transition:
-    transform var(--ease),
-    box-shadow var(--ease);
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    border-color var(--ease-smooth);
   border: 1px solid rgba(10, 15, 30, 0.06);
   display: flex;
   flex-direction: column;
@@ -2565,15 +2649,17 @@ h1 em {
 }
 
 .pricing-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(10, 15, 30, 0.09);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(97, 97, 255, 0.12);
 }
 
 .pricing-panel .pricing-card:nth-child(3):hover {
   box-shadow:
-    0 16px 40px rgba(10, 15, 30, 0.09),
-    0 6px 22px rgba(59, 130, 246, 0.1),
-    0 4px 18px rgba(236, 72, 153, 0.09);
+    var(--shadow-hover),
+    0 8px 28px rgba(59, 130, 246, 0.12),
+    0 6px 24px rgba(236, 72, 153, 0.1);
+  border-color: rgba(59, 130, 246, 0.18);
 }
 
 /* Featured = middle plan: white card + mesh, not dark slab */
@@ -2784,7 +2870,8 @@ h1 em {
 .pricing-panel .pricing-card:nth-child(1) .btn-pricing:hover {
   background: #e2e6ec;
   border-color: rgba(10, 15, 30, 0.1);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(10, 15, 30, 0.08);
 }
 
 .btn-pricing-featured {
@@ -2805,9 +2892,10 @@ h1 em {
 }
 
 .btn-pricing-featured:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(43, 100, 241, 0.42);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 16px 36px rgba(43, 100, 241, 0.48);
   background: #1f56e0;
+  filter: brightness(1.04);
 }
 
 /* Tier 3 — same electric-blue CTA as featured (Pro Max–style on white) */
@@ -2820,8 +2908,9 @@ h1 em {
 
 .pricing-panel .pricing-card:nth-child(3) .btn-pricing:hover {
   background: #1f56e0;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(43, 100, 241, 0.42);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 16px 36px rgba(43, 100, 241, 0.48);
+  filter: brightness(1.04);
 }
 
 .pricing-panels-wrap {
@@ -2956,14 +3045,17 @@ h1 em {
   font-size: 13px;
   font-weight: 600;
   transition:
-    background var(--ease),
-    transform var(--ease);
+    background var(--ease-smooth),
+    transform var(--ease-smooth),
+    border-color var(--ease-smooth),
+    box-shadow var(--ease-smooth);
 }
 
 .footer-socials a:hover {
   background: var(--primary);
-  transform: translateY(-2px);
-  border-color: var(--primary);
+  transform: translateY(-3px) scale(1.06);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 28px rgba(97, 97, 255, 0.45);
 }
 
 .footer-nav-col strong,
@@ -2984,12 +3076,15 @@ h1 em {
 .footer-nav-col a {
   color: #8c95a8;
   font-size: 14px;
-  transition: color var(--ease);
+  transition:
+    color var(--ease),
+    transform var(--ease-smooth);
   width: fit-content;
 }
 
 .footer-nav-col a:hover {
   color: var(--primary);
+  transform: translateX(4px);
 }
 
 .footer-newsletter p {
@@ -3041,11 +3136,16 @@ h1 em {
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: transform var(--ease);
+  transition:
+    transform var(--ease-smooth),
+    color var(--ease),
+    filter var(--ease-smooth);
 }
 
 .newsletter-form button:hover {
-  transform: translateY(-50%) scale(1.1);
+  transform: translateY(-50%) scale(1.12);
+  color: #8a8aff;
+  filter: drop-shadow(0 2px 8px rgba(97, 97, 255, 0.5));
 }
 
 .footer-divider {
@@ -3077,11 +3177,14 @@ h1 em {
   color: #8c95a8;
   font-size: 13px;
   font-weight: 500;
-  transition: color var(--ease);
+  transition:
+    color var(--ease),
+    transform var(--ease-smooth);
 }
 
 .footer-legal a:hover {
   color: var(--primary);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 1050px) {
