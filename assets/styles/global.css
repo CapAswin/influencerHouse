@@ -42,6 +42,8 @@ html.lenis.lenis-smooth {
 
 html {
   background-color: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -49,6 +51,17 @@ body {
   background: var(--page-bg);
   color: var(--ink);
   line-height: 1.5;
+  overflow-x: clip;
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+@media (min-width: 901px) {
+  body.nav-open {
+    overflow: visible;
+  }
 }
 
 /* Let the global body gradient show through (avoid opaque main wrappers) */
@@ -86,6 +99,8 @@ h2 {
 
 .nav-wrap {
   padding: 18px 0 8px;
+  padding-left: max(0px, env(safe-area-inset-left));
+  padding-right: max(0px, env(safe-area-inset-right));
 }
 
 .navbar {
@@ -94,10 +109,69 @@ h2 {
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
   padding: 12px 18px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 12px 16px;
+}
+
+.nav-toggle {
+  display: none;
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(10, 15, 30, 0.06);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  transition:
+    background var(--ease),
+    transform var(--ease-smooth);
+}
+
+.nav-toggle:hover {
+  background: rgba(97, 97, 255, 0.12);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.navbar.nav-is-open .nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.navbar.nav-is-open .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar.nav-is-open .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-panel {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 20px;
+  min-width: 0;
 }
 
 .logo {
@@ -119,9 +193,12 @@ h2 {
 .nav-links {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 8px 20px;
   font-size: 14px;
   color: #3b342d;
+  min-width: 0;
 }
 
 .nav-links a {
@@ -165,6 +242,54 @@ h2 {
   align-items: center;
   gap: 12px;
   font-size: 14px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-panel {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 1px solid var(--line);
+  }
+
+  .navbar.nav-is-open .nav-panel {
+    display: flex;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    flex: none;
+    gap: 4px;
+  }
+
+  .nav-links a {
+    padding: 10px 4px;
+    width: 100%;
+  }
+
+  .nav-actions {
+    width: 100%;
+  }
+
+  .nav-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navbar {
+    border-radius: 22px;
+    padding: 10px 14px;
+  }
 }
 
 .btn {
@@ -219,7 +344,8 @@ h2 {
   padding-top: 34px;
 }
 
-.wwa-eyebrow {
+.wwa-eyebrow,
+.eyebrow {
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
@@ -682,6 +808,7 @@ h1 em {
 
 /* empty cell for alternating sides */
 .roadmap-empty {
+  min-height: 0;
 }
 
 /* the centre spine */
@@ -3272,18 +3399,6 @@ h1 em {
     width: min(1140px, calc(100% - 24px));
   }
 
-  .navbar {
-    grid-template-columns: 1fr;
-    border-radius: 20px;
-    gap: 10px;
-  }
-
-  .nav-links,
-  .nav-actions {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -3332,4 +3447,32 @@ h1 em {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Under-construction / minimal pages (for-brands, for-influencers) */
+.page-placeholder-main {
+  min-height: min(72vh, 720px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(72px, 20vw, 120px) max(16px, env(safe-area-inset-right)) 48px
+    max(16px, env(safe-area-inset-left));
+  box-sizing: border-box;
+}
+
+.page-placeholder-main .section {
+  width: 100%;
+}
+
+.page-placeholder-main h1 {
+  max-width: 20ch;
+  margin-left: auto;
+  margin-right: auto;
 }

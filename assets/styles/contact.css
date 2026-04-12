@@ -1095,3 +1095,20 @@
     max-width: none;
   }
 }
+
+@media (max-width: 480px) {
+  .contact-page {
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    padding-right: max(0px, env(safe-area-inset-right, 0px));
+  }
+
+  .contact-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact-hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

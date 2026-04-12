@@ -2,21 +2,28 @@
   const headerHTML = `
   <div class="nav-wrap">
     <div class="container">
-      <nav class="navbar">
+      <nav class="navbar" aria-label="Primary navigation">
         <a class="logo" href="index.html">
           <img class="logo-icon" src="assets/images/favicon.png" alt="Opulent icon" />
         </a>
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="about.html">About Us</a>
-          <a href="for-brands.html">For Brands</a>
-          <a href="for-influencers.html">For Influencers</a>
-          <a href="service.html">Services</a>
-          <a href="blog.html">Blogs</a>
-          <a href="contact.html">Contact</a>
-        </div>
-        <div class="nav-actions">
-          <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+        <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+        <div class="nav-panel" id="primary-navigation">
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="for-brands.html">For Brands</a>
+            <a href="for-influencers.html">For Influencers</a>
+            <a href="service.html">Services</a>
+            <a href="blog.html">Blogs</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-actions">
+            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+          </div>
         </div>
       </nav>
     </div>
@@ -123,6 +130,45 @@
     a.classList.toggle('active', a.getAttribute('href') === page);
   });
 
+  (function initMobileNav() {
+    const nav = document.querySelector('.navbar');
+    const btn = document.querySelector('.nav-toggle');
+    const panel = document.getElementById('primary-navigation');
+    if (!nav || !btn || !panel) return;
+
+    function setOpen(open) {
+      nav.classList.toggle('nav-is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', open);
+    }
+
+    btn.addEventListener('click', function () {
+      setOpen(!nav.classList.contains('nav-is-open'));
+    });
+
+    panel.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        setOpen(false);
+      });
+    });
+
+    var mq = window.matchMedia('(min-width: 901px)');
+    function onMq() {
+      if (mq.matches) setOpen(false);
+    }
+    if (typeof mq.addEventListener === 'function') {
+      mq.addEventListener('change', onMq);
+    } else if (typeof mq.addListener === 'function') {
+      mq.addListener(onMq);
+    }
+    window.addEventListener('resize', onMq);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  })();
+
   // Footer animations
   (function () {
     const footer = document.querySelector('.footer');
@@ -134,15 +180,22 @@
     const cols = footer.querySelectorAll('.footer-grid > *');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+    let footerScrollRaf = null;
     function onScroll() {
       if (reduced.matches || !wordmark) return;
-      const rect = footer.getBoundingClientRect();
-      const scrolled = window.innerHeight - rect.top;
-      if (scrolled > 0) {
-        wordmark.style.transform = `translateY(${scrolled * 0.38}px)`;
-        if (orb1) orb1.style.transform = `translateY(${scrolled * 0.18}px)`;
-        if (orb2) orb2.style.transform = `translateY(${scrolled * -0.12}px)`;
-      }
+      if (footerScrollRaf !== null) return;
+      footerScrollRaf = requestAnimationFrame(() => {
+        footerScrollRaf = null;
+        const rect = footer.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (rect.top > vh + 120 || rect.bottom < -120) return;
+        const scrolled = vh - rect.top;
+        if (scrolled > 0) {
+          wordmark.style.transform = `translateY(${scrolled * 0.38}px)`;
+          if (orb1) orb1.style.transform = `translateY(${scrolled * 0.18}px)`;
+          if (orb2) orb2.style.transform = `translateY(${scrolled * -0.12}px)`;
+        }
+      });
     }
 
     const io = new IntersectionObserver((entries) => {
@@ -172,8 +225,11 @@
       if (orb2) orb2.style.transform = '';
     });
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    // Blog: skip footer parallax on scroll — no layout reads while reading the article
+    if (!document.body.classList.contains('blog-detail-page')) {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
   })();
 
   // Premium smooth scrolling (Lenis) — disabled when user prefers reduced motion
@@ -181,6 +237,10 @@
     if (typeof Lenis === 'undefined') return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (reduced.matches) return;
+
+    // Blog article: native scroll — Lenis + sticky sidebar often causes initial wheel lag
+    // and jank; long-form reading matches OS scrolling better.
+    if (document.body.classList.contains('blog-detail-page')) return;
 
     const lenis = new Lenis({
       autoRaf: true,

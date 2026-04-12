@@ -77,9 +77,10 @@
   gap: 8px;
   padding: 8px 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  /* Solid fill — backdrop-filter repaints heavily while scrolling */
+  background: var(--surface);
   border: 1px solid var(--line);
-  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-soft);
 }
 
 .blog-detail-meta i {
@@ -112,11 +113,10 @@
 }
 
 .blog-side-panel {
-  background: rgba(255, 255, 255, 0.88);
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(12px);
   padding: 22px 18px 20px;
   display: flex;
   flex-direction: column;
@@ -185,11 +185,10 @@
 
 /* Article surface */
 .blog-detail-article {
-  background: rgba(255, 255, 255, 0.88);
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(12px);
   padding: 0;
   overflow: hidden;
 }
@@ -526,6 +525,8 @@
 
   .blog-detail-page main {
     padding-top: 64px;
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    padding-right: max(0px, env(safe-area-inset-right, 0px));
   }
 
   .blog-detail-body {
@@ -534,5 +535,9 @@
 
   .blog-detail-meta span {
     font-size: 12px;
+  }
+
+  .blog-hero-text h1 {
+    max-width: none;
   }
 }
