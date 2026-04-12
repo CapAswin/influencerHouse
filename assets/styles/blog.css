@@ -1,8 +1,4 @@
-/* Blog — site tokens; left rail + wide article */
-
-.blog-detail-page {
-  background: transparent;
-}
+/* Blog — site tokens; left rail + wide article (page canvas = global body --page-bg) */
 
 .blog-detail-page main {
   padding-top: 18px;

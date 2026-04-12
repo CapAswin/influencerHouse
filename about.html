@@ -36,21 +36,53 @@
         aria-labelledby="about-hero-heading"
       >
         <div class="existence-shell about-hero-shell">
-          <h1 id="about-hero-heading" class="about-hero-title">
-            About <span class="about-hero-accent">Opulent</span>
-          </h1>
-          <p class="about-hero-lead">
-            Global self-service infrastructure connecting brands with verified
-            creators—structured, transparent, and built to scale with your team.
-          </p>
-          <div class="about-hero-actions">
-            <a href="contact.html" class="btn btn-gold">Contact us</a>
-            <a href="for-brands.html" class="btn btn-dark">For brands</a>
+          <nav class="about-breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="about-breadcrumb-sep" aria-hidden="true">/</span>
+            <span class="about-breadcrumb-current">About</span>
+          </nav>
+          <div class="about-hero-layout">
+            <div class="about-hero-main">
+              <h1 id="about-hero-heading" class="about-hero-title">
+                About <span class="about-hero-accent">Opulent</span>
+              </h1>
+              <p class="about-hero-lead">
+                Global self-service infrastructure connecting brands with verified
+                creators—structured, transparent, and built to scale with your team.
+              </p>
+              <div class="about-hero-actions">
+                <a href="contact.html" class="btn btn-gold">Contact us</a>
+                <a href="for-brands.html" class="btn btn-dark">For brands</a>
+              </div>
+            </div>
+            <aside class="about-hero-aside" aria-label="Platform highlights">
+              <ul class="about-hero-stats">
+                <li>
+                  <span class="about-hero-stat-value">120+</span>
+                  <span class="about-hero-stat-label">Active collaborations</span>
+                </li>
+                <li>
+                  <span class="about-hero-stat-value">85.5M</span>
+                  <span class="about-hero-stat-label">Reach in network</span>
+                </li>
+                <li>
+                  <span class="about-hero-stat-value">Global</span>
+                  <span class="about-hero-stat-label">Self-service platform</span>
+                </li>
+              </ul>
+            </aside>
           </div>
+          <nav class="about-quick-nav" aria-label="On this page">
+            <a href="#about-story">Story</a>
+            <a href="#about-leadership">Leadership</a>
+            <a href="#about-platform">Platform</a>
+            <a href="#about-pillars">Pillars</a>
+            <a href="#about-cta">Get started</a>
+          </nav>
         </div>
       </section>
 
-      <section class="who-we-are-block about-reveal" id="about-story">
+      <section class="who-we-are-block about-band about-reveal" id="about-story">
         <div class="existence-shell">
           <div class="wwa-hero">
             <div class="wwa-hero-left">
@@ -101,17 +133,22 @@
         <div class="existence-shell">
           <div class="inner-about-split">
             <div class="inner-about-left">
-              <div class="inner-about-img-wrap">
-                <img src="assets/images/ceo.webp" alt="Muhammad Asif Pervaiz" />
-                <div class="inner-about-follower-tag">85.5M Followers</div>
+              <div class="inner-about-card">
+                <div class="inner-about-img-wrap">
+                  <img src="assets/images/ceo.webp" alt="Muhammad Asif Pervaiz" />
+                  <div class="inner-about-follower-tag">85.5M Followers</div>
+                </div>
+                <div class="inner-about-card-body">
+                  <p class="inner-about-role">Founder &amp; CEO</p>
+                  <h2 class="inner-about-name">Muhammad Asif Pervaiz</h2>
+                  <a href="contact.html" class="btn btn-gold inner-about-cta"
+                    >Get in touch</a
+                  >
+                  <p class="inner-about-response">
+                    Typically responds within 24 hours
+                  </p>
+                </div>
               </div>
-              <h2 class="inner-about-name">Muhammad Asif Pervaiz</h2>
-              <a href="contact.html" class="btn btn-gold inner-about-cta"
-                >Get in touch</a
-              >
-              <p class="inner-about-response">
-                Typically responds within 24 hours
-              </p>
             </div>
             <div class="inner-about-right">
               <h2 class="inner-about-title">
@@ -126,22 +163,22 @@
                 collaboration is built to elevate brand perception, strengthen
                 trust, and deliver measurable business impact.
               </p>
-              <div class="value-list about-value-grid">
+              <div class="value-list value-list--cols-2">
                 <div class="value-item">
-                  <span class="tick">✓</span>
-                  <span>Authority-driven brand positioning</span>
+                  <span class="tick">✓</span
+                  ><span>Authority-driven brand positioning</span>
                 </div>
                 <div class="value-item">
-                  <span class="tick">✓</span>
-                  <span>High-impact influencer marketing</span>
+                  <span class="tick">✓</span
+                  ><span>High-impact influencer marketing</span>
                 </div>
                 <div class="value-item">
-                  <span class="tick">✓</span>
-                  <span>Trust-based audience engagement</span>
+                  <span class="tick">✓</span
+                  ><span>Trust-based audience engagement</span>
                 </div>
                 <div class="value-item">
-                  <span class="tick">✓</span>
-                  <span>Revenue-focused digital strategies</span>
+                  <span class="tick">✓</span
+                  ><span>Revenue-focused digital strategies</span>
                 </div>
               </div>
             </div>
@@ -149,7 +186,7 @@
         </div>
       </section>
 
-    <section class="kpc-block about-reveal" id="about-platform">
+    <section class="kpc-block about-band about-reveal" id="about-platform">
       <div class="existence-shell">
         <div class="kpc-split">
           <!-- LEFT: image stack -->
@@ -203,22 +240,26 @@
 
     <section class="existence-block about-reveal" id="about-pillars">
       <div class="existence-shell">
-        <div class="existence-header">
-          <h2 class="existence-title">Why <span>we exist</span></h2>
-          <p class="existence-desc">
-            The influencer ecosystem lacks transparency, pricing clarity, and
-            accountability. Opulent exists to solve this through technology,
-            verification systems, and direct access, eliminating inefficiencies
-            and building trust at a global scale.
-          </p>
-        </div>
-
-        <div class="existence-header mt-5">
-          <h2 class="existence-title">Core Platform <span>Pillars</span></h2>
-          <p class="existence-desc">
-            A seamless, self-service platform designed to bring structure,
-            transparency, and accountability to the global influencer ecosystem.
-          </p>
+        <div class="existence-dual-intro">
+          <div class="existence-dual-card">
+            <span class="existence-dual-label">Our purpose</span>
+            <h2 class="existence-dual-title">Why <span>we exist</span></h2>
+            <p class="existence-dual-text">
+              The influencer ecosystem lacks transparency, pricing clarity, and
+              accountability. Opulent exists to solve this through technology,
+              verification systems, and direct access—eliminating inefficiencies
+              and building trust at a global scale.
+            </p>
+          </div>
+          <div class="existence-dual-card">
+            <span class="existence-dual-label">What we build</span>
+            <h2 class="existence-dual-title">Core platform <span>pillars</span></h2>
+            <p class="existence-dual-text">
+              A seamless, self-service experience that brings structure,
+              transparency, and accountability to the global influencer ecosystem—so
+              teams can move fast without losing clarity.
+            </p>
+          </div>
         </div>
 
         <div class="existence-grid">
