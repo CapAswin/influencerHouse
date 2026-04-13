@@ -54,6 +54,17 @@ body {
   overflow-x: clip;
 }
 
+#site-header {
+  display: block;
+  min-height: 90px;
+}
+
+@media (max-width: 900px) {
+  #site-header {
+    min-height: 78px;
+  }
+}
+
 body.nav-open {
   overflow: hidden;
 }

@@ -4,7 +4,7 @@
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
         <a class="logo" href="index.html">
-          <img class="logo-icon" src="assets/images/favicon.png" alt="Opulent icon" />
+          <img class="logo-icon" src="assets/images/favicon.png" alt="Opulent icon" width="36" height="36" />
         </a>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -43,7 +43,7 @@
         <div class="footer-brand-col">
           <div class="footer-brand">
             <a href="index.html" aria-label="Go to homepage">
-              <img class="footer-main-logo" src="assets/images/white_favIcon.png" alt="Opulent Logo" />
+              <img class="footer-main-logo" src="assets/images/white_favIcon.png" alt="Opulent Logo" width="200" height="52" loading="lazy" decoding="async" />
             </a>
           </div>
           <p class="footer-note" style="color:#6a6f84;font-size:13px;line-height:1.5;margin-bottom:20px;">
@@ -116,13 +116,23 @@
     </div>
   </footer>`;
 
-  // Inject header
+  // Inject header early to avoid nav flash/layout shift
   const headerEl = document.getElementById('site-header');
   if (headerEl) headerEl.outerHTML = headerHTML;
 
-  // Inject footer
+  // Inject footer when the browser is idle (below-the-fold, non-critical for first paint)
   const footerEl = document.getElementById('site-footer');
-  if (footerEl) footerEl.outerHTML = footerHTML;
+  function injectFooter() {
+    if (!footerEl) return;
+    footerEl.outerHTML = footerHTML;
+  }
+  if (footerEl) {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(injectFooter, { timeout: 1200 });
+    } else {
+      setTimeout(injectFooter, 400);
+    }
+  }
 
   // Set active nav link based on current page
   const page = location.pathname.split('/').pop() || 'index.html';
@@ -274,6 +284,9 @@
     if (typeof Lenis === 'undefined') return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (reduced.matches) return;
+    // Skip on lower-powered devices to reduce Total Blocking Time.
+    if ((navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+        (navigator.deviceMemory && navigator.deviceMemory <= 4)) return;
 
     // Blog article: native scroll — Lenis + sticky sidebar often causes initial wheel lag
     // and jank; long-form reading matches OS scrolling better.
