@@ -106,6 +106,9 @@
   grid-area: rail;
   position: sticky;
   top: 76px;
+  /* Own compositor layer — sticky + large shadows repaint less of the document while scrolling. */
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .blog-detail-article {
