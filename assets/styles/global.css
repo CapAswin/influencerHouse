@@ -424,7 +424,11 @@ h1 {
 }
 
 h1 em {
-  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
   font-style: italic;
   font-family: Georgia, "Times New Roman", serif;
 }
@@ -1575,16 +1579,27 @@ h1 em {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 3, 96, 0.12);
-  color: #ff6699;
-  border: 1px solid rgba(255, 3, 96, 0.3);
   font-size: 12px;
   font-weight: 700;
-  padding: 6px 16px;
-  border-radius: 999px;
   margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+}
+
+.cta-offer-icon {
+  color: #ffd166;
+  line-height: 1;
+}
+
+.cta-offer-text {
+  line-height: 1;
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .cta h2 {
@@ -1594,6 +1609,16 @@ h1 em {
   letter-spacing: -0.03em;
   line-height: 1.1;
   color: #fff;
+}
+
+.cta h2 em {
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .cta p {
@@ -2030,10 +2055,12 @@ h1 em {
 }
 
 .signup-panel h1 em {
-  font-style: normal;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 
