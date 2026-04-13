@@ -25,13 +25,13 @@ html.lenis.lenis-smooth {
   --shadow-hover-strong: 0 26px 56px rgba(10, 15, 30, 0.13),
     0 0 40px rgba(97, 97, 255, 0.1);
   --container: min(1140px, calc(100% - 42px));
-  /* Full-page background: soft violet glow + base (use for body / signup shell) */
+  /* Full-page background gradient used by all pages */
   --page-bg: radial-gradient(
       circle at 88% 6%,
       rgba(97, 97, 255, 0.12),
       transparent 28%
     ),
-    var(--bg);
+    linear-gradient(135deg, #eef1ff 0%, #e8ebff 40%, #f4f6ff 100%);
 }
 
 * {
@@ -42,6 +42,7 @@ html.lenis.lenis-smooth {
 
 html {
   background-color: var(--bg);
+  min-height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -49,9 +50,25 @@ html {
 body {
   font-family: Inter, "Segoe UI", system-ui, sans-serif;
   background: var(--page-bg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
   color: var(--ink);
   line-height: 1.5;
   overflow-x: clip;
+}
+
+body.signup-page,
+body.blog-detail-page {
+  background: var(--page-bg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@supports (height: 100svh) {
+  body {
+    min-height: 100svh;
+  }
 }
 
 #site-header {
@@ -1578,12 +1595,21 @@ h1 em {
 .cta-offer-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 8px;
+  font-size: 11px;
   font-weight: 700;
   margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 10px 26px rgba(10, 15, 30, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .cta-offer-icon {
@@ -1593,13 +1619,9 @@ h1 em {
 
 .cta-offer-text {
   line-height: 1;
-  font-style: italic;
-  font-family: Georgia, "Times New Roman", serif;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #ffffff;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  font-style: normal;
 }
 
 .cta h2 {
@@ -1908,7 +1930,7 @@ h1 em {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--page-bg);
+  background: transparent;
 }
 
 @supports (height: 100svh) {
@@ -1991,10 +2013,6 @@ h1 em {
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(circle at 88% 8%, rgba(97, 97, 255, 0.1), transparent 32%),
-    radial-gradient(circle at 12% 92%, rgba(255, 3, 96, 0.06), transparent 28%),
-    var(--bg);
 }
 
 .signup-shell {
