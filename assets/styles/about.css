@@ -517,7 +517,7 @@
   transition: transform 0.35s ease;
 }
 
-.existence-icon i {
+.existence-icon svg {
   line-height: 1;
   display: block;
 }
@@ -670,7 +670,7 @@
   box-shadow: 0 8px 18px rgba(97, 97, 255, 0.22);
 }
 
-.wwa-vm-icon i {
+.wwa-vm-icon svg {
   line-height: 1;
   display: block;
 }

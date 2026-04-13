@@ -310,6 +310,10 @@
   font-size: 1.25rem;
 }
 
+.service-feature-icon svg {
+  display: block;
+}
+
 .service-feature-title {
   font-size: 1.05rem;
   font-weight: 700;
@@ -391,6 +395,10 @@ main.service-page + .footer {
 .service-faq-chevron {
   color: var(--muted);
   transition: transform 0.25s ease;
+}
+
+.service-faq-chevron svg {
+  display: block;
 }
 
 .service-faq-item[open] .service-faq-chevron {

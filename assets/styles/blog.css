@@ -83,9 +83,11 @@
   box-shadow: var(--shadow-soft);
 }
 
-.blog-detail-meta i {
+.blog-detail-meta svg {
   color: var(--primary);
-  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 
 /* ── Main: left rail + article (grid areas keep article on top on mobile) ── */
@@ -338,7 +340,7 @@
   filter: brightness(1.06);
 }
 
-.blog-detail-share a i {
+.blog-detail-share a svg {
   line-height: 1;
   display: block;
 }
