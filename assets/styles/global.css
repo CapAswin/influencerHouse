@@ -1578,12 +1578,21 @@ h1 em {
 .cta-offer-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 8px;
+  font-size: 11px;
   font-weight: 700;
   margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 10px 26px rgba(10, 15, 30, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .cta-offer-icon {
@@ -1593,13 +1602,9 @@ h1 em {
 
 .cta-offer-text {
   line-height: 1;
-  font-style: italic;
-  font-family: Georgia, "Times New Roman", serif;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #ffffff;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  font-style: normal;
 }
 
 .cta h2 {
