@@ -3200,7 +3200,7 @@ h1 em {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding-bottom: 60px;
+  padding-bottom: 78px;
   line-height: 0.85;
   font-size: clamp(4rem, 15vw, 12rem);
   font-weight: 800;
@@ -3558,7 +3558,7 @@ h1 em {
   height: min(48vw, 520px);
   right: -140px;
   top: 120px;
-  background: radial-gradient(circle, rgba(97, 97, 255, 0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(255, 3, 96, 0.22), transparent 70%);
 }
 
 .fi-page::after {
@@ -3566,7 +3566,7 @@ h1 em {
   height: min(38vw, 420px);
   left: -140px;
   top: 620px;
-  background: radial-gradient(circle, rgba(255, 3, 96, 0.14), transparent 72%);
+  background: radial-gradient(circle, rgba(97, 97, 255, 0.1), transparent 72%);
 }
 
 .fi-hero .container {
@@ -3576,13 +3576,13 @@ h1 em {
   border-radius: 30px;
   background:
     radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.86), transparent 52%),
-    radial-gradient(circle at 82% 82%, rgba(97, 97, 255, 0.1), transparent 48%),
-    radial-gradient(circle at 72% 76%, rgba(255, 3, 96, 0.08), transparent 44%),
+    radial-gradient(circle at 82% 82%, rgba(255, 3, 96, 0.14), transparent 48%),
+    radial-gradient(circle at 72% 76%, rgba(97, 97, 255, 0.06), transparent 44%),
     linear-gradient(138deg, rgba(255, 255, 255, 0.76), rgba(252, 245, 249, 0.6));
   border: 1px solid rgba(255, 255, 255, 0.82);
   box-shadow:
     0 24px 48px rgba(8, 20, 60, 0.14),
-    0 0 0 1px rgba(100, 115, 255, 0.08);
+    0 0 0 1px rgba(255, 3, 96, 0.1);
   backdrop-filter: blur(10px) saturate(130%);
   -webkit-backdrop-filter: blur(10px) saturate(130%);
 }
@@ -3594,7 +3594,7 @@ h1 em {
   width: 360px;
   height: 360px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 3, 96, 0.1), transparent 66%);
+  background: radial-gradient(circle, rgba(255, 3, 96, 0.16), transparent 66%);
 }
 
 .fi-breadcrumb {
@@ -3644,9 +3644,9 @@ h1 em {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.8);
   background:
-    radial-gradient(circle at 86% -14%, rgba(97, 97, 255, 0.08), transparent 50%),
-    radial-gradient(circle at 24% -22%, rgba(255, 3, 96, 0.06), transparent 48%),
-    linear-gradient(155deg, rgba(255, 255, 255, 0.88), rgba(249, 246, 255, 0.78));
+    radial-gradient(circle at 86% -14%, rgba(255, 3, 96, 0.12), transparent 50%),
+    radial-gradient(circle at 24% -22%, rgba(97, 97, 255, 0.05), transparent 48%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.88), rgba(253, 245, 250, 0.8));
   box-shadow:
     0 10px 24px rgba(10, 18, 40, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -3670,7 +3670,7 @@ h1 em {
   transform: translateY(-3px);
   box-shadow:
     0 18px 34px rgba(10, 18, 40, 0.13),
-    0 0 0 1px rgba(97, 97, 255, 0.12),
+    0 0 0 1px rgba(255, 3, 96, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
@@ -3718,12 +3718,13 @@ h1 em {
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
-  color: #fff;
+  color: var(--primary);
   font-size: 0.84rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  box-shadow: 0 8px 16px rgba(97, 97, 255, 0.24);
+  background: #ffffff;
+  border: 1px solid rgba(97, 97, 255, 0.22);
+  box-shadow: 0 8px 18px rgba(97, 97, 255, 0.18);
   counter-increment: fi-benefit;
 }
 
@@ -3745,7 +3746,7 @@ h1 em {
   transform: translateY(-4px);
   box-shadow:
     0 18px 30px rgba(12, 18, 44, 0.12),
-    0 0 0 1px rgba(97, 97, 255, 0.11);
+    0 0 0 1px rgba(255, 3, 96, 0.11);
 }
 
 .fi-cta {
@@ -3754,12 +3755,12 @@ h1 em {
   border-radius: 22px;
   text-align: center;
   background:
-    radial-gradient(circle at 16% 18%, rgba(97, 97, 255, 0.2), transparent 45%),
-    radial-gradient(circle at 84% 22%, rgba(255, 3, 96, 0.14), transparent 40%),
-    linear-gradient(135deg, #0a0f1e 0%, #171d33 58%, #1e1060 100%);
+    radial-gradient(circle at 16% 18%, rgba(255, 3, 96, 0.24), transparent 45%),
+    radial-gradient(circle at 84% 22%, rgba(97, 97, 255, 0.12), transparent 40%),
+    linear-gradient(135deg, #0a0f1e 0%, #32152f 58%, #1b235a 100%);
   color: #fff;
   box-shadow: 0 20px 40px rgba(18, 28, 72, 0.33);
-  border: 1px solid rgba(97, 97, 255, 0.22);
+  border: 1px solid rgba(255, 3, 96, 0.22);
 }
 
 .fi-cta p {
