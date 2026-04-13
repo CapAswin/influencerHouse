@@ -65,6 +65,14 @@
   margin-bottom: 14px;
 }
 
+.fb-gradient {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 .fb-hero-text {
   max-width: 56ch;
   margin: 0;
