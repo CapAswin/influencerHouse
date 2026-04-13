@@ -11,6 +11,12 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="preload"
+      as="image"
+      href="assets/images/jo1.jpg"
+      fetchpriority="high"
+    />
     <link rel="stylesheet" href="assets/styles/global.css" />
   </head>
 
@@ -40,6 +46,11 @@
               class="hero-photo"
               src="assets/images/jo1.jpg"
               alt="Influencer portrait"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="900"
+              height="1200"
             />
             <div class="float-card card-views">
               <div>
@@ -87,6 +98,8 @@
                   class="brand-seal-icon"
                   src="assets/images/favicon.png"
                   alt="Opulent seal"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div class="brand-seal-copy">
@@ -593,6 +606,8 @@
                 class="thumb"
                 src="assets/images/jo-video-3.jpg"
                 alt="Video thumbnail"
+                loading="lazy"
+                decoding="async"
               />
               <div class="meta">
                 <span>16M views</span><span class="price">$5.00</span>
@@ -603,6 +618,8 @@
                 class="thumb"
                 src="assets/images/jo1.jpg"
                 alt="Video thumbnail"
+                loading="lazy"
+                decoding="async"
               />
               <div class="meta">
                 <span>2.4M views</span><span class="price">Free</span>
@@ -613,6 +630,8 @@
                 class="thumb"
                 src="assets/images/jo2.jpg"
                 alt="Video thumbnail"
+                loading="lazy"
+                decoding="async"
               />
               <div class="meta">
                 <span>8.1M views</span><span class="price">$5.00</span>
@@ -623,6 +642,8 @@
                 class="thumb"
                 src="assets/images/jo4.jpg"
                 alt="Video thumbnail"
+                loading="lazy"
+                decoding="async"
               />
               <div class="meta">
                 <span>1.9M views</span><span class="price">Free</span>
@@ -680,6 +701,8 @@
                     class="quote-avatar"
                     src="assets/images/jo1.jpg"
                     alt="Elena avatar"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div>
                     <strong>Elena Rostova</strong><span>Fashion Creator</span>
@@ -705,6 +728,8 @@
                     class="quote-avatar"
                     src="assets/images/jo2.jpg"
                     alt="Marcus avatar"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div>
                     <strong>Marcus Sterling</strong
@@ -729,6 +754,8 @@
                     class="quote-avatar"
                     src="assets/images/jo4.jpg"
                     alt="Sarah avatar"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div>
                     <strong>Sarah Jenkins</strong><span>Beauty Vlogger</span>
@@ -1025,8 +1052,18 @@
                 <div class="cta-card-top">
                   <div class="cta-avatar-stack">
                     <img src="assets/images/jo1.jpg" alt="" />
-                    <img src="assets/images/jo2.jpg" alt="" />
-                    <img src="assets/images/jo4.jpg" alt="" />
+                    <img
+                      src="assets/images/jo2.jpg"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <img
+                      src="assets/images/jo4.jpg"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
                     <div class="cta-avatar-more">+340</div>
                   </div>
                   <div class="cta-card-label">
