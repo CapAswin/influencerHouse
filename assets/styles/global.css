@@ -1334,6 +1334,7 @@ h1 em {
   overflow: hidden;
   padding: 8px 0 16px;
   position: relative;
+  border-radius: 28px;
 }
 
 .testimonial-viewport::before,
@@ -1374,19 +1375,19 @@ h1 em {
   box-shadow: var(--shadow-soft);
   color: #6d6458;
   transition:
-    transform 0.42s ease,
-    opacity 0.42s ease,
-    box-shadow 0.42s ease,
-    filter 0.42s ease,
-    width 0.42s ease;
+    transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.52s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
   user-select: none;
   padding: 26px;
   width: 31%;
   min-height: 338px;
-  opacity: 0.23;
-  transform: scale(0.92);
-  filter: blur(0.6px);
+  opacity: 0.3;
+  transform: translateY(4px) scale(0.94);
+  filter: blur(0.4px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1411,19 +1412,21 @@ h1 em {
   transform: scale(1);
   filter: blur(0);
   background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 24px 44px rgba(40, 30, 14, 0.12);
+  box-shadow: 0 28px 54px rgba(40, 30, 14, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.84);
   cursor: default;
 }
 
 .testimonials.is-switching .quote-card {
-  transform: translateY(10px) scale(0.95);
-  opacity: 0.2;
+  transform: translateY(14px) scale(0.92);
+  opacity: 0.14;
+  filter: blur(0.8px);
 }
 
 .testimonials.is-switching .quote-card.is-active {
-  transform: translateY(-4px) scale(1.01);
-  opacity: 0.96;
+  transform: translateY(-10px) scale(1.02);
+  opacity: 0.92;
+  filter: blur(0.2px);
 }
 
 .quote-mark {

@@ -1128,28 +1128,28 @@
           });
         }
 
+        const SWITCH_DURATION = 360;
+        const SWITCH_SETTLE = 140;
+        let isSwitching = false;
+        const isCompact = () => window.matchMedia("(max-width: 1050px)").matches;
+
         function switchTo(index) {
           if (
             index === active ||
-            window.matchMedia("(max-width: 1050px)").matches
+            isCompact() ||
+            isSwitching
           )
             return;
+          isSwitching = true;
           track.classList.add("is-switching");
           window.setTimeout(() => {
             render(index);
-            window.setTimeout(() => track.classList.remove("is-switching"), 60);
-          }, 180);
+            window.setTimeout(() => {
+              track.classList.remove("is-switching");
+              isSwitching = false;
+            }, SWITCH_SETTLE);
+          }, SWITCH_DURATION);
         }
-
-        cards.forEach((card, index) => {
-          card.addEventListener("click", () => switchTo(index));
-          card.addEventListener("keydown", (event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              switchTo(index);
-            }
-          });
-        });
 
         render(active);
 
@@ -1160,7 +1160,7 @@
             const d = document.createElement("button");
             d.className = "tc-dot" + (i === active ? " tc-dot-active" : "");
             d.setAttribute("aria-label", "Go to slide " + (i + 1));
-            d.addEventListener("click", () => switchTo(i));
+            d.addEventListener("click", () => manualSwitch(i));
             dotsWrap.appendChild(d);
           });
         }
@@ -1175,7 +1175,7 @@
         const origSwitchTo = switchTo;
         function switchToWithDots(index) {
           origSwitchTo(index);
-          setTimeout(updateDots, 200);
+          setTimeout(updateDots, SWITCH_DURATION);
         }
 
         const prevBtn = document.getElementById("tcPrev");
@@ -1189,22 +1189,43 @@
             switchToWithDots((active + 1) % cards.length),
           );
 
-        /* auto-play */
-        let autoTimer = setInterval(
-          () => switchToWithDots((active + 1) % cards.length),
-          4500,
-        );
+        /* auto-play (keeps running, including on hover) */
+        const AUTO_DELAY = 4500;
+        let autoTimer;
+
+        function startAutoPlay() {
+          clearInterval(autoTimer);
+          autoTimer = setInterval(
+            () => switchToWithDots((active + 1) % cards.length),
+            AUTO_DELAY,
+          );
+        }
+
+        function manualSwitch(index) {
+          switchToWithDots(index);
+          startAutoPlay();
+        }
+
+        startAutoPlay();
+
         [prevBtn, nextBtn].forEach(
           (b) =>
             b &&
             b.addEventListener("click", () => {
-              clearInterval(autoTimer);
-              autoTimer = setInterval(
-                () => switchToWithDots((active + 1) % cards.length),
-                4500,
-              );
+              startAutoPlay();
             }),
         );
+
+        cards.forEach((card, index) => {
+          card.addEventListener("click", () => manualSwitch(index));
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              manualSwitch(index);
+            }
+          });
+        });
+
       })();
     </script>
   </body>
