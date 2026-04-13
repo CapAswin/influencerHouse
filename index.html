@@ -1227,7 +1227,8 @@
           );
 
         /* auto-play (keeps running, including on hover) */
-        const AUTO_DELAY = 4500;
+        const AUTO_DELAY = 8000;
+        const AUTO_START_DELAY = 6500;
         let autoTimer;
 
         function startAutoPlay() {
@@ -1243,7 +1244,7 @@
           startAutoPlay();
         }
 
-        startAutoPlay();
+        setTimeout(startAutoPlay, AUTO_START_DELAY);
 
         [prevBtn, nextBtn].forEach(
           (b) =>
