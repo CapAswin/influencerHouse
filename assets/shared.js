@@ -211,9 +211,6 @@
     const orb2 = footer.querySelector('.footer-orb-2');
     const content = footer.querySelector('.footer-content-wrap');
     const cols = footer.querySelectorAll('.footer-grid > *');
-    const textParallaxTargets = footer.querySelectorAll(
-      '.footer-note, .footer-nav-col strong, .footer-nav-col a, .footer-contact-details strong, .footer-contact-details a, .footer-contact-details span, .footer-newsletter strong, .footer-copy, .footer-legal a'
-    );
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     let footerScrollRaf = null;
@@ -230,10 +227,6 @@
           wordmark.style.transform = `translate3d(0, ${scrolled * 0.38}px, 0)`;
           if (orb1) orb1.style.transform = `translate3d(0, ${scrolled * 0.18}px, 0)`;
           if (orb2) orb2.style.transform = `translate3d(0, ${scrolled * -0.12}px, 0)`;
-          textParallaxTargets.forEach((node, index) => {
-            const speed = 0.05 + (index % 4) * 0.01;
-            node.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
-          });
         }
       });
     }
@@ -242,9 +235,6 @@
       if (wordmark) wordmark.style.transform = '';
       if (orb1) orb1.style.transform = '';
       if (orb2) orb2.style.transform = '';
-      textParallaxTargets.forEach((node) => {
-        node.style.transform = '';
-      });
     }
 
     const io = new IntersectionObserver((entries) => {
