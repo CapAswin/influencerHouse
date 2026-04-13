@@ -130,6 +130,25 @@
     a.classList.toggle('active', a.getAttribute('href') === page);
   });
 
+  (function initStickyNavState() {
+    const navWrap = document.querySelector('.nav-wrap');
+    if (!navWrap) return;
+
+    let stickyRaf = null;
+    function updateStickyState() {
+      stickyRaf = null;
+      navWrap.classList.toggle('is-scrolled', window.scrollY > 12);
+    }
+
+    function onScroll() {
+      if (stickyRaf !== null) return;
+      stickyRaf = requestAnimationFrame(updateStickyState);
+    }
+
+    updateStickyState();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
   (function initMobileNav() {
     const nav = document.querySelector('.navbar');
     const btn = document.querySelector('.nav-toggle');

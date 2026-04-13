@@ -98,28 +98,60 @@ h2 {
 }
 
 .nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
   padding: 18px 0 8px;
   padding-left: max(0px, env(safe-area-inset-left));
   padding-right: max(0px, env(safe-area-inset-right));
+  transition:
+    padding var(--ease-smooth),
+    transform var(--ease-smooth);
+}
+
+.nav-wrap.is-scrolled {
+  padding-top: 10px;
+  padding-bottom: 6px;
 }
 
 .navbar {
-  /* Opaque bar on touch / coarse pointers — backdrop-filter is a common scroll jank source. */
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.44);
+  border: 1px solid rgba(255, 255, 255, 0.48);
   border-radius: 999px;
-  box-shadow: var(--shadow-soft);
+  box-shadow:
+    0 16px 34px rgba(10, 15, 30, 0.14),
+    0 0 0 1px rgba(97, 97, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(12px) saturate(145%);
+  -webkit-backdrop-filter: blur(12px) saturate(145%);
   padding: 12px 18px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 16px;
+  transition:
+    background var(--ease-smooth),
+    border-color var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    transform var(--ease-smooth);
+}
+
+.nav-wrap.is-scrolled .navbar {
+  background: rgba(255, 255, 255, 0.56);
+  border-color: rgba(255, 255, 255, 0.62);
+  box-shadow:
+    0 18px 42px rgba(10, 15, 30, 0.18),
+    0 0 0 1px rgba(97, 97, 255, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .navbar {
-    background: rgba(255, 255, 255, 0.76);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  .navbar:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 20px 46px rgba(10, 15, 30, 0.2),
+      0 0 0 1px rgba(97, 97, 255, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.66);
   }
 }
 
@@ -205,18 +237,21 @@ h2 {
   flex-wrap: wrap;
   gap: 8px 20px;
   font-size: 14px;
-  color: #3b342d;
+  color: rgba(10, 15, 30, 0.82);
   min-width: 0;
 }
 
 .nav-links a {
   position: relative;
   font-weight: 500;
-  color: #3b342d;
+  color: rgba(10, 15, 30, 0.82);
+  border-radius: 999px;
   transition:
     color var(--ease),
-    transform var(--ease-smooth);
-  padding: 4px 0;
+    transform var(--ease-smooth),
+    background var(--ease-smooth),
+    box-shadow var(--ease-smooth);
+  padding: 6px 10px;
 }
 
 .nav-links a:hover,
@@ -226,13 +261,15 @@ h2 {
 
 .nav-links a:hover {
   transform: translateY(-1px);
+  background: rgba(97, 97, 255, 0.1);
+  box-shadow: 0 6px 16px rgba(97, 97, 255, 0.14);
 }
 
 .nav-links a::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -2px;
+  bottom: 2px;
   width: 0;
   height: 2px;
   background: var(--primary);
@@ -242,7 +279,7 @@ h2 {
 
 .nav-links a:hover::after,
 .nav-links a.active::after {
-  width: 100%;
+  width: calc(100% - 20px);
 }
 
 .nav-actions {
@@ -2835,28 +2872,30 @@ h1 em {
   box-shadow:
     0 8px 32px rgba(43, 100, 241, 0.1),
     0 2px 8px rgba(10, 15, 30, 0.04);
+  overflow: visible;
 }
 
 .pricing-badge {
   position: absolute;
-  top: 16px;
+  top: 0;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   background: var(--pricing-blue);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: 999px;
   white-space: nowrap;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  z-index: 3;
-  box-shadow: 0 4px 12px rgba(43, 100, 241, 0.35);
+  z-index: 5;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 8px 16px rgba(43, 100, 241, 0.28);
 }
 
 .pricing-card.featured .pricing-tier {
-  margin-top: 28px;
+  margin-top: 16px;
 }
 
 .pricing-tier {
