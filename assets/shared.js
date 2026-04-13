@@ -191,11 +191,17 @@
         if (rect.top > vh + 120 || rect.bottom < -120) return;
         const scrolled = vh - rect.top;
         if (scrolled > 0) {
-          wordmark.style.transform = `translateY(${scrolled * 0.38}px)`;
-          if (orb1) orb1.style.transform = `translateY(${scrolled * 0.18}px)`;
-          if (orb2) orb2.style.transform = `translateY(${scrolled * -0.12}px)`;
+          wordmark.style.transform = `translate3d(0, ${scrolled * 0.38}px, 0)`;
+          if (orb1) orb1.style.transform = `translate3d(0, ${scrolled * 0.18}px, 0)`;
+          if (orb2) orb2.style.transform = `translate3d(0, ${scrolled * -0.12}px, 0)`;
         }
       });
+    }
+
+    function resetFooterParallaxTransforms() {
+      if (wordmark) wordmark.style.transform = '';
+      if (orb1) orb1.style.transform = '';
+      if (orb2) orb2.style.transform = '';
     }
 
     const io = new IntersectionObserver((entries) => {
@@ -225,10 +231,41 @@
       if (orb2) orb2.style.transform = '';
     });
 
-    // Blog: skip footer parallax on scroll — no layout reads while reading the article
+    // Blog: skip footer parallax. Other pages: only listen while the footer is near the
+    // viewport so scrolling long pages does not schedule RAF + getBoundingClientRect.
     if (!document.body.classList.contains('blog-detail-page')) {
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
+      if ('IntersectionObserver' in window) {
+        let parallaxScrollAttached = false;
+        function attachParallaxScroll() {
+          if (parallaxScrollAttached) return;
+          parallaxScrollAttached = true;
+          window.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        }
+        function detachParallaxScroll() {
+          if (!parallaxScrollAttached) return;
+          parallaxScrollAttached = false;
+          window.removeEventListener('scroll', onScroll);
+          if (footerScrollRaf !== null) {
+            cancelAnimationFrame(footerScrollRaf);
+            footerScrollRaf = null;
+          }
+          resetFooterParallaxTransforms();
+        }
+        const parallaxNearIo = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) attachParallaxScroll();
+              else detachParallaxScroll();
+            });
+          },
+          { root: null, rootMargin: '0px 0px 45% 0px', threshold: 0 }
+        );
+        parallaxNearIo.observe(footer);
+      } else {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
     }
   })();
 
@@ -244,11 +281,13 @@
 
     const lenis = new Lenis({
       autoRaf: true,
-      lerp: 0.078,
-      wheelMultiplier: 0.88,
-      touchMultiplier: 1.05,
+      // Slightly higher lerp converges in fewer frames — less main-thread churn on long scrolls.
+      lerp: 0.1,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1,
       smoothWheel: true,
-      syncTouch: true,
+      // Native touch momentum avoids Lenis fighting the browser (common source of scroll jank).
+      syncTouch: false,
       syncTouchLerp: 0.075,
     });
     window.lenis = lenis;
