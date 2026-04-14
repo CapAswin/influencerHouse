@@ -16,6 +16,9 @@
   var brandDetailsModal = document.getElementById('brand-details-modal');
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
+  var welcomeAccessModal = document.getElementById('welcome-access-modal');
+  var welcomeAccessCloseBtn = document.getElementById('welcome-access-close-btn');
+  var welcomeAccessDismissBtn = document.getElementById('welcome-access-dismiss-btn');
   var signupSnackbarStack = document.getElementById('signup-snackbar-stack');
   var brandPhoneField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_phone"]') : null;
   var brandCountryField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_country"]') : null;
@@ -335,6 +338,20 @@
     if (!brandDetailsModal) return;
     brandDetailsModal.classList.remove('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  function openWelcomeAccessModal() {
+    if (!welcomeAccessModal) return;
+    welcomeAccessModal.classList.add('is-open');
+    welcomeAccessModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeWelcomeAccessModal() {
+    if (!welcomeAccessModal) return;
+    welcomeAccessModal.classList.remove('is-open');
+    welcomeAccessModal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
   }
 
@@ -685,6 +702,10 @@
     if (event.key === 'Escape' && otpModal && otpModal.classList.contains('is-open')) {
       event.preventDefault();
     }
+    if (event.key === 'Escape' && welcomeAccessModal && welcomeAccessModal.classList.contains('is-open')) {
+      event.preventDefault();
+      closeWelcomeAccessModal();
+    }
   });
 
   if (otpInput) {
@@ -768,6 +789,22 @@
     brandDetailsCloseBtn.addEventListener('click', closeBrandDetailsModal);
   }
 
+  if (welcomeAccessCloseBtn) {
+    welcomeAccessCloseBtn.addEventListener('click', closeWelcomeAccessModal);
+  }
+
+  if (welcomeAccessDismissBtn) {
+    welcomeAccessDismissBtn.addEventListener('click', closeWelcomeAccessModal);
+  }
+
+  if (welcomeAccessModal) {
+    welcomeAccessModal.addEventListener('click', function (event) {
+      if (event.target && event.target.getAttribute('data-welcome-close') === 'true') {
+        closeWelcomeAccessModal();
+      }
+    });
+  }
+
   if (brandDetailsForm) {
     if (brandPhoneField) {
       brandPhoneField.addEventListener('input', function () {
@@ -798,6 +835,7 @@
         return;
       }
       closeBrandDetailsModal();
+      openWelcomeAccessModal();
       showSignupSnackbar({
         type: 'success',
         message: 'Brand profile submitted successfully.',

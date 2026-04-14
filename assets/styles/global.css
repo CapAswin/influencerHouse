@@ -2923,6 +2923,206 @@ body.modal-open {
   margin-top: 6px;
 }
 
+.welcome-access-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1380;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.welcome-access-modal.is-open {
+  display: flex;
+}
+
+.welcome-access-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 18, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.welcome-access-card {
+  position: relative;
+  width: min(640px, calc(100% - 22px));
+  margin: 0;
+  text-align: center;
+  border-radius: 22px;
+  padding: clamp(28px, 4vw, 46px);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(255, 255, 255, 0.34),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 88% 82%,
+      rgba(255, 255, 255, 0.22),
+      transparent 46%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.08)
+    );
+  box-shadow:
+    0 28px 70px rgba(15, 16, 42, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
+  z-index: 1;
+  animation: welcome-access-reveal 0.7s cubic-bezier(0.2, 0.75, 0.3, 1) both;
+}
+
+.welcome-access-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.welcome-access-close:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.welcome-access-particles span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  animation: welcome-access-particle 6.5s linear infinite;
+}
+
+.welcome-access-particles span:nth-child(1) { top: 72%; left: 8%; }
+.welcome-access-particles span:nth-child(2) { top: 74%; left: 18%; animation-delay: 1.2s; }
+.welcome-access-particles span:nth-child(3) { top: 76%; left: 34%; animation-delay: 2.2s; }
+.welcome-access-particles span:nth-child(4) { top: 74%; right: 24%; animation-delay: 0.8s; }
+.welcome-access-particles span:nth-child(5) { top: 76%; right: 13%; animation-delay: 1.8s; }
+.welcome-access-particles span:nth-child(6) { top: 79%; right: 8%; animation-delay: 2.8s; }
+
+.welcome-access-icon-wrap {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 16px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.14));
+  box-shadow: 0 14px 30px rgba(23, 17, 52, 0.34);
+}
+
+.welcome-access-icon {
+  width: 52px;
+  height: 52px;
+}
+
+.welcome-access-icon circle,
+.welcome-access-icon path {
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.welcome-access-eyebrow {
+  margin: 0;
+  font-size: 0.83rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.welcome-access-card h2 {
+  margin: 12px 0 14px;
+  max-width: none;
+  font-size: clamp(2rem, 4.8vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+.welcome-access-copy {
+  margin: 0;
+  font-size: clamp(1rem, 2.1vw, 1.12rem);
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.welcome-access-subcopy {
+  margin: 14px auto 0;
+  max-width: 520px;
+  font-size: 0.98rem;
+  line-height: 1.58;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.welcome-access-actions {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.welcome-access-btn {
+  min-width: 172px;
+}
+
+.welcome-access-link {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.welcome-access-link:hover {
+  opacity: 0.8;
+}
+
+@keyframes welcome-access-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes welcome-access-particle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  15%, 80% {
+    opacity: 0.82;
+  }
+  100% {
+    transform: translateY(-220px) scale(0.34);
+    opacity: 0;
+  }
+}
+
 .signup-footer {
   margin-top: 4px;
   text-align: center;
@@ -3429,6 +3629,11 @@ body.modal-open {
     width: min(440px, calc(100% - 8px));
     border-radius: 16px;
     padding: 22px 14px 14px;
+  }
+  .welcome-access-card {
+    width: min(440px, calc(100% - 8px));
+    border-radius: 16px;
+    padding: 24px 18px;
   }
   .brand-details-card h2 {
     font-size: 1.65rem;
