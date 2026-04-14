@@ -34,6 +34,37 @@
   var codeSearchTimer = null;
   var lastValidCountryCode = '';
   var lastValidCountryDisplay = '';
+  var isSnackbarStackExpanded = false;
+  var MAX_SNACKBARS = 3;
+  var SNACKBAR_EXIT_MS = 320;
+  var SNACKBAR_OVERFLOW_EXIT_MS = 380;
+
+  function updateSnackbarStackState() {
+    if (!signupSnackbarStack) return;
+    var snackbars = signupSnackbarStack.querySelectorAll('.signup-snackbar');
+    snackbars.forEach(function (snackbar, index) {
+      snackbar.classList.remove(
+        'stack-top',
+        'stack-second',
+        'stack-third',
+        'stack-hidden',
+        'stack-expanded'
+      );
+      if (isSnackbarStackExpanded) {
+        snackbar.classList.add('stack-expanded');
+        return;
+      }
+      if (index === 0) {
+        snackbar.classList.add('stack-top');
+      } else if (index === 1) {
+        snackbar.classList.add('stack-second');
+      } else if (index === 2) {
+        snackbar.classList.add('stack-third');
+      } else {
+        snackbar.classList.add('stack-hidden');
+      }
+    });
+  }
 
   function setMode(isBrand) {
     if (visual) {
@@ -61,6 +92,7 @@
 
     var snackbar = document.createElement('article');
     snackbar.className = 'signup-snackbar signup-snackbar--' + type;
+    snackbar.classList.add('is-new');
     snackbar.setAttribute('role', 'status');
 
     var icon = document.createElement('span');
@@ -83,13 +115,17 @@
     closeButton.textContent = '×';
 
     var removed = false;
-    function removeSnackbar() {
+    function removeSnackbar(mode) {
       if (removed) return;
       removed = true;
-      snackbar.classList.add('is-exit');
+      snackbar.classList.remove('is-visible');
+      snackbar.classList.add(mode === 'overflow' ? 'is-overflow-exit' : 'is-exit');
       setTimeout(function () {
-        if (snackbar.parentNode) snackbar.parentNode.removeChild(snackbar);
-      }, 180);
+        if (snackbar.parentNode) {
+          snackbar.parentNode.removeChild(snackbar);
+          updateSnackbarStackState();
+        }
+      }, mode === 'overflow' ? SNACKBAR_OVERFLOW_EXIT_MS : SNACKBAR_EXIT_MS);
     }
 
     actionButton.addEventListener('click', function () {
@@ -102,8 +138,23 @@
     snackbar.appendChild(text);
     snackbar.appendChild(actionButton);
     snackbar.appendChild(closeButton);
-    signupSnackbarStack.appendChild(snackbar);
+    signupSnackbarStack.prepend(snackbar);
+    updateSnackbarStackState();
+    requestAnimationFrame(function () {
+      snackbar.classList.add('is-visible');
+      snackbar.classList.remove('is-new');
+      updateSnackbarStackState();
+    });
 
+    var activeSnackbars = signupSnackbarStack.querySelectorAll('.signup-snackbar:not(.is-exit):not(.is-overflow-exit)');
+    if (activeSnackbars.length > MAX_SNACKBARS) {
+      var oldest = activeSnackbars[activeSnackbars.length - 1];
+      if (oldest && typeof oldest._removeSnackbar === 'function') {
+        oldest._removeSnackbar('overflow');
+      }
+    }
+
+    snackbar._removeSnackbar = removeSnackbar;
     setTimeout(removeSnackbar, duration);
   }
 
@@ -240,6 +291,18 @@
 
   bindLiveFieldValidation(signupForm);
   bindLiveFieldValidation(brandDetailsForm);
+  if (signupSnackbarStack) {
+    signupSnackbarStack.addEventListener('mouseenter', function () {
+      isSnackbarStackExpanded = true;
+      signupSnackbarStack.classList.add('is-expanded');
+      updateSnackbarStackState();
+    });
+    signupSnackbarStack.addEventListener('mouseleave', function () {
+      isSnackbarStackExpanded = false;
+      signupSnackbarStack.classList.remove('is-expanded');
+      updateSnackbarStackState();
+    });
+  }
 
   function openOtpModal() {
     if (!otpModal) return;

@@ -2319,14 +2319,19 @@ h1 em {
   bottom: 28px;
   transform: translateX(-50%);
   z-index: 1420;
-  display: grid;
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: min(420px, calc(100% - 28px));
   pointer-events: none;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .signup-snackbar {
   --snack-accent: #60a5fa;
+  --snackbar-enter-ease: cubic-bezier(0.2, 0.82, 0.2, 1);
+  --snackbar-shift-ease: cubic-bezier(0.22, 1.08, 0.3, 1);
+  --snackbar-exit-ease: cubic-bezier(0.4, 0, 0.2, 1);
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   align-items: center;
@@ -2342,12 +2347,111 @@ h1 em {
   -webkit-backdrop-filter: blur(18px);
   pointer-events: auto;
   opacity: 0;
-  transform: translateY(8px);
-  animation: signupSnackIn 220ms ease forwards;
+  transform: translateY(-16px) scale(0.985);
+  max-height: 80px;
+  overflow: hidden;
+  transition:
+    transform 440ms var(--snackbar-shift-ease),
+    opacity 340ms var(--snackbar-enter-ease),
+    max-height 360ms var(--snackbar-enter-ease),
+    padding 280ms ease-in-out,
+    border-width 240ms ease-in-out,
+    filter 260ms ease-in-out;
+  will-change: transform, opacity, max-height;
+}
+
+.signup-snackbar.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.signup-snackbar.is-new {
+  opacity: 0;
+  transform: translateY(-24px) scale(0.97);
+  filter: blur(2px) saturate(0.95);
 }
 
 .signup-snackbar.is-exit {
-  animation: signupSnackOut 180ms ease forwards;
+  opacity: 0 !important;
+  transform: translateY(18px) scale(0.982) !important;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  filter: saturate(0.88);
+  pointer-events: none;
+  transition:
+    transform 340ms var(--snackbar-exit-ease),
+    opacity 300ms var(--snackbar-exit-ease),
+    max-height 340ms var(--snackbar-exit-ease),
+    padding 260ms var(--snackbar-exit-ease),
+    border-width 220ms var(--snackbar-exit-ease),
+    filter 220ms var(--snackbar-exit-ease);
+}
+
+.signup-snackbar.is-overflow-exit {
+  opacity: 0 !important;
+  transform: translateY(24px) scale(0.975) !important;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  filter: blur(2px) saturate(0.82);
+  pointer-events: none;
+  transition:
+    transform 380ms var(--snackbar-exit-ease),
+    opacity 340ms var(--snackbar-exit-ease),
+    max-height 360ms var(--snackbar-exit-ease),
+    padding 280ms var(--snackbar-exit-ease),
+    border-width 240ms var(--snackbar-exit-ease),
+    filter 260ms var(--snackbar-exit-ease);
+}
+
+.signup-snackbar-stack:hover {
+  pointer-events: auto;
+}
+
+.signup-snackbar.stack-hidden {
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+.signup-snackbar.stack-top {
+  z-index: 3;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: none;
+}
+
+.signup-snackbar.stack-second {
+  z-index: 2;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: none;
+}
+
+.signup-snackbar.stack-third {
+  z-index: 1;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: none;
+}
+
+.signup-snackbar.stack-expanded {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  max-height: 80px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-width: 1px;
+  filter: none;
+  pointer-events: auto;
 }
 
 .signup-snackbar-icon {
@@ -2403,28 +2507,6 @@ h1 em {
 
 .signup-snackbar--error {
   --snack-accent: #fb7185;
-}
-
-@keyframes signupSnackIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes signupSnackOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(8px);
-  }
 }
 
 body.modal-open {
