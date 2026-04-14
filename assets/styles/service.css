@@ -254,19 +254,60 @@
 }
 
 .service-features-strip {
-  padding-top: 20px;
-  padding-bottom: 36px;
+  padding-top: 24px;
+  padding-bottom: 38px;
+}
+
+.service-flow-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 24px;
+}
+
+.service-flow-head .wwa-eyebrow {
+  margin-bottom: 12px;
+}
+
+.service-flow-title {
+  margin: 0 0 10px;
+  max-width: none;
+}
+
+.service-flow-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .service-features-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
   gap: 18px;
+  position: relative;
+}
+
+.service-features-grid::before {
+  content: "";
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 58px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(97, 97, 255, 0.25), rgba(97, 97, 255, 0.1));
+  z-index: 0;
 }
 
 @media (max-width: 900px) {
   .service-features-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .service-features-grid::before {
+    display: none;
   }
 }
 
@@ -277,14 +318,16 @@
 }
 
 .service-feature {
+  flex: 1 1 0;
+  min-width: 0;
   text-align: center;
-  padding: 26px 18px;
-  background: rgba(255, 255, 255, 0.88);
+  padding: 20px 16px 18px;
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(10, 15, 30, 0.08);
-  border-radius: 22px;
+  border-radius: 20px;
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 1;
   transition:
     transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.3s ease,
@@ -297,11 +340,29 @@
   box-shadow: var(--shadow-hover);
 }
 
+.service-feature-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  background: rgba(97, 97, 255, 0.1);
+  border: 1px solid rgba(97, 97, 255, 0.2);
+  font-variant-numeric: tabular-nums;
+}
+
 /* Match index roadmap-node + about .existence-icon: blue gradient, white glyphs */
 .service-feature-icon {
   width: 52px;
   height: 52px;
-  margin: 0 auto 14px;
+  margin: 0 auto 12px;
   border-radius: 14px;
   display: grid;
   place-items: center;
@@ -325,11 +386,12 @@
 }
 
 .service-feature-title {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   font-weight: 700;
   margin: 0;
   letter-spacing: -0.02em;
   color: #0a0f1e;
+  line-height: 1.32;
 }
 
 .service-faq {
