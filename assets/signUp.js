@@ -103,6 +103,19 @@
     return digitsOnly.replace(/^0+/, '');
   }
 
+  function getNormalizedPassword(value) {
+    return (value || '').trim();
+  }
+
+  function validatePasswordMatch() {
+    if (!passwordField || !passwordConfirmField) return true;
+    var passwordValue = getNormalizedPassword(passwordField.value);
+    var confirmValue = getNormalizedPassword(passwordConfirmField.value);
+    var isMatch = passwordValue === confirmValue;
+    passwordConfirmField.setCustomValidity(isMatch ? '' : 'Passwords do not match');
+    return isMatch;
+  }
+
   function detectCountryCodeFromRegion() {
     var codeByRegion = {
       AE: '+971',
@@ -378,23 +391,20 @@
         signupForm.reportValidity();
         return;
       }
-      if (passwordField && passwordConfirmField && passwordField.value !== passwordConfirmField.value) {
-        passwordConfirmField.setCustomValidity('Passwords do not match');
+      if (!validatePasswordMatch()) {
         passwordConfirmField.reportValidity();
         return;
-      }
-      if (passwordConfirmField) {
-        passwordConfirmField.setCustomValidity('');
       }
       openOtpModal();
     });
   }
 
   if (passwordField && passwordConfirmField) {
+    passwordField.addEventListener('input', function () {
+      validatePasswordMatch();
+    });
     passwordConfirmField.addEventListener('input', function () {
-      if (passwordField.value === passwordConfirmField.value) {
-        passwordConfirmField.setCustomValidity('');
-      }
+      validatePasswordMatch();
     });
   }
 
