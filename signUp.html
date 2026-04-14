@@ -299,6 +299,41 @@
     </section>
   </div>
 
+  <div id="welcome-access-modal" class="welcome-access-modal" aria-hidden="true">
+    <div class="welcome-access-backdrop" data-welcome-close="true"></div>
+    <section class="welcome-access-card" role="dialog" aria-modal="true" aria-labelledby="welcome-access-title">
+      <button type="button" class="welcome-access-close" id="welcome-access-close-btn" aria-label="Close welcome modal">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"></path>
+        </svg>
+      </button>
+
+      <div class="welcome-access-particles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="welcome-access-icon-wrap" aria-hidden="true">
+        <svg class="welcome-access-icon" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30"></circle>
+          <path d="M20 33L28.4 41L45 24.5"></path>
+        </svg>
+      </div>
+
+      <p class="welcome-access-eyebrow">Early Access Confirmed</p>
+      <h2 id="welcome-access-title">You&apos;re In 🎉</h2>
+      <p class="welcome-access-copy">
+        Our platform is currently in development. We&apos;re building something powerful for creators and brands.
+        You&apos;ll be the first to know when we launch.
+      </p>
+      <p class="welcome-access-subcopy">Stay tuned &mdash; we&apos;ll notify you as soon as we go live.</p>
+
+      <div class="welcome-access-actions">
+        <a class="btn btn-gold welcome-access-btn" href="index.html">Explore More</a>
+        <button type="button" class="welcome-access-link" id="welcome-access-dismiss-btn">Go Back</button>
+      </div>
+    </section>
+  </div>
+
   <div id="signup-snackbar-stack" class="signup-snackbar-stack" aria-live="polite" aria-atomic="true"></div>
 
   <script src="assets/vendor/lenis.min.js"></script>
