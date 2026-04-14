@@ -742,8 +742,8 @@
         actionLabel: 'Done'
       });
       setTimeout(function () {
-        var isBrandAccount = field && field.value === 'brand';
-        if (isBrandAccount) {
+        var isCreatorAccount = field && field.value === 'creator';
+        if (isCreatorAccount) {
           closeOtpModal(true);
           openBrandDetailsModal();
           return;
