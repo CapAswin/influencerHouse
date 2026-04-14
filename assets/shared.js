@@ -31,7 +31,7 @@
   </div>`;
 
   const footerHTML = `
-  <footer class="footer">
+  <footer class="footer" data-shared-footer="true">
     <div class="footer-orb footer-orb-1" aria-hidden="true"></div>
     <div class="footer-orb footer-orb-2" aria-hidden="true"></div>
     <div class="footer-wordmark-bg" aria-hidden="true">
@@ -211,7 +211,7 @@
   // Footer animations
   function initFooterAnimations() {
     if (footerAnimationsInitialized) return;
-    const footer = document.querySelector('.footer');
+    const footer = document.querySelector('[data-shared-footer="true"]');
     if (!footer) return;
     footerAnimationsInitialized = true;
     const wordmark = footer.querySelector('.footer-wordmark-bg');
