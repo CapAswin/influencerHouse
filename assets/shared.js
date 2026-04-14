@@ -1,6 +1,7 @@
 (function () {
   const headerHTML = `
   <div class="nav-wrap">
+    <div class="nav-backdrop" aria-hidden="true"></div>
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
         <a class="logo" href="index.html">
@@ -165,6 +166,7 @@
     const nav = document.querySelector('.navbar');
     const btn = document.querySelector('.nav-toggle');
     const panel = document.getElementById('primary-navigation');
+    const backdrop = document.querySelector('.nav-backdrop');
     if (!nav || !btn || !panel) return;
 
     function setOpen(open) {
@@ -177,6 +179,12 @@
     btn.addEventListener('click', function () {
       setOpen(!nav.classList.contains('nav-is-open'));
     });
+
+    if (backdrop) {
+      backdrop.addEventListener('click', function () {
+        setOpen(false);
+      });
+    }
 
     panel.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {

@@ -137,6 +137,10 @@ h2 {
     transform var(--ease-smooth);
 }
 
+.nav-backdrop {
+  display: none;
+}
+
 .nav-wrap.is-scrolled {
   padding-top: 10px;
   padding-bottom: 6px;
@@ -319,19 +323,63 @@ h2 {
 }
 
 @media (max-width: 900px) {
+  .nav-wrap {
+    z-index: 1300;
+  }
+
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    background: rgba(10, 15, 30, 0.22);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--ease-smooth);
+    display: block;
+  }
+
+  body.nav-open .nav-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-wrap .container {
+    position: relative;
+    z-index: 1301;
+  }
+
   .nav-toggle {
     display: inline-flex;
   }
 
   .nav-panel {
     display: none;
-    width: 100%;
+    position: fixed;
+    top: 84px;
+    right: 12px;
+    left: auto;
+    z-index: 1302;
+    width: min(320px, calc(100% - 24px));
     flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-    padding-top: 8px;
-    margin-top: 4px;
-    border-top: 1px solid var(--line);
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    margin-top: 0;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.72), transparent 42%),
+      linear-gradient(145deg, rgba(234, 239, 255, 0.88), rgba(220, 229, 255, 0.76));
+    box-shadow:
+      0 22px 48px rgba(10, 15, 30, 0.26),
+      0 0 0 1px rgba(97, 97, 255, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.58);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    max-height: min(420px, calc(100svh - 104px));
+    overflow-y: auto;
   }
 
   .navbar.nav-is-open .nav-panel {
@@ -343,11 +391,36 @@ h2 {
     align-items: flex-start;
     flex: none;
     gap: 4px;
+    width: 100%;
   }
 
   .nav-links a {
-    padding: 10px 4px;
+    padding: 10px 12px;
     width: 100%;
+    border-radius: 12px;
+    color: rgba(15, 22, 40, 0.9);
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.56), rgba(235, 241, 255, 0.42));
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 8px 16px rgba(10, 15, 30, 0.09),
+      inset 0 1px 0 rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(10px) saturate(132%);
+    -webkit-backdrop-filter: blur(10px) saturate(132%);
+    text-align: center;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: #3e48df;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.82), rgba(232, 238, 255, 0.72));
+    border-color: rgba(97, 97, 255, 0.4);
+    box-shadow:
+      0 12px 24px rgba(97, 97, 255, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  }
+
+  .nav-links a::after {
+    display: none;
   }
 
   .nav-actions {
@@ -357,6 +430,8 @@ h2 {
   .nav-actions .btn {
     width: 100%;
     justify-content: center;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(97, 97, 255, 0.3);
   }
 
   .navbar {
