@@ -35,7 +35,7 @@
               <button class="toggle-item" type="button" role="tab" id="tab-brand" aria-selected="false" aria-controls="signup-form-panel">I'm a Brand</button>
             </div>
 
-            <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form">
+            <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate>
               <input type="hidden" name="account_type" id="account-type-field" value="creator" />
 
               <div class="input-row">
@@ -298,6 +298,8 @@
       </form>
     </section>
   </div>
+
+  <div id="signup-snackbar-stack" class="signup-snackbar-stack" aria-live="polite" aria-atomic="true"></div>
 
   <script src="assets/vendor/lenis.min.js"></script>
   <script src="assets/shared.js"></script>

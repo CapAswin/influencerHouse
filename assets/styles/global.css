@@ -2253,6 +2253,22 @@ h1 em {
   box-shadow: 0 0 0 3px rgba(97, 97, 255, 0.12);
 }
 
+.signup-form input.is-field-error,
+.brand-details-form input.is-field-error,
+.brand-details-form select.is-field-error {
+  border-color: #e11d48 !important;
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.16);
+}
+
+.signup-terms.has-error {
+  color: #be123c;
+}
+
+.signup-terms input[type="checkbox"].is-field-error {
+  outline: 2px solid rgba(225, 29, 72, 0.42);
+  outline-offset: 2px;
+}
+
 .signup-terms {
   display: flex;
   align-items: flex-start;
@@ -2295,6 +2311,120 @@ h1 em {
   font-size: 15px;
   font-weight: 700;
   border-radius: 14px;
+}
+
+.signup-snackbar-stack {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 1420;
+  display: grid;
+  gap: 12px;
+  width: min(420px, calc(100% - 28px));
+  pointer-events: none;
+}
+
+.signup-snackbar {
+  --snack-accent: #60a5fa;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: rgba(244, 246, 255, 0.95);
+  background: rgba(10, 10, 14, 0.56);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: signupSnackIn 220ms ease forwards;
+}
+
+.signup-snackbar.is-exit {
+  animation: signupSnackOut 180ms ease forwards;
+}
+
+.signup-snackbar-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--snack-accent);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.24) inset;
+}
+
+.signup-snackbar-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.signup-snackbar-action,
+.signup-snackbar-close {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.signup-snackbar-action {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 4px;
+}
+
+.signup-snackbar-close {
+  width: 24px;
+  height: 24px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 19px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.signup-snackbar--info {
+  --snack-accent: #a1a1aa;
+}
+
+.signup-snackbar--success {
+  --snack-accent: #4ade80;
+}
+
+.signup-snackbar--warning {
+  --snack-accent: #facc15;
+}
+
+.signup-snackbar--error {
+  --snack-accent: #fb7185;
+}
+
+@keyframes signupSnackIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes signupSnackOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 body.modal-open {
