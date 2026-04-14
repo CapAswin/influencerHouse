@@ -105,7 +105,7 @@
 .blog-aside-rail {
   grid-area: rail;
   position: sticky;
-  top: 76px;
+  top: 96px;
   /* Own compositor layer — sticky + large shadows repaint less of the document while scrolling. */
   backface-visibility: hidden;
   transform: translateZ(0);
