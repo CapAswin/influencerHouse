@@ -996,6 +996,10 @@
 .contact-form-shell {
   position: relative;
   overflow: hidden;
+  position: sticky;
+  top: 92px;
+  align-self: start;
+  z-index: 2;
 }
 
 .contact-form-shell::before {
@@ -1062,6 +1066,11 @@
   .contact-form-layout,
   .contact-hero {
     grid-template-columns: 1fr;
+  }
+
+  .contact-form-shell {
+    position: relative;
+    top: auto;
   }
 }
 
