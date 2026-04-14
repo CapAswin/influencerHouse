@@ -1981,8 +1981,13 @@ h1 em {
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(10, 15, 30, 0.06);
   box-shadow: var(--shadow-soft);
-  font-size: 16px;
-  line-height: 1;
+  color: #344054;
+}
+
+.icon-svg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .signup-logo {
@@ -2168,6 +2173,69 @@ h1 em {
     background var(--ease);
 }
 
+.password-field-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field-wrap input {
+  width: 100%;
+  padding-right: 46px;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  line-height: 1;
+  color: #6b7280;
+  padding: 0;
+}
+
+.password-toggle-btn .icon-svg {
+  width: 17px;
+  height: 17px;
+}
+
+.password-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-icon--hide {
+  display: none;
+}
+
+.password-toggle-btn.is-visible .password-icon--show {
+  display: none;
+}
+
+.password-toggle-btn.is-visible .password-icon--hide {
+  display: inline-flex;
+}
+
+.password-toggle-btn:hover {
+  background: rgba(97, 97, 255, 0.1);
+  color: var(--primary);
+}
+
+.password-toggle-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
 .signup-form input::placeholder {
   color: #9aa3b2;
 }
@@ -2227,6 +2295,143 @@ h1 em {
   font-size: 15px;
   font-weight: 700;
   border-radius: 14px;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.otp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.otp-modal.is-open {
+  display: flex;
+}
+
+.otp-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 18, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.otp-modal-card {
+  position: relative;
+  width: min(460px, calc(100% - 28px));
+  margin: 0;
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px 20px 20px;
+  border: 1px solid rgba(10, 15, 30, 0.08);
+  box-shadow:
+    0 26px 60px rgba(4, 8, 24, 0.26),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  z-index: 1;
+}
+
+.otp-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(10, 15, 30, 0.07);
+  color: #1f2937;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.otp-modal-eyebrow {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.otp-modal-card h2 {
+  margin: 0;
+  font-size: 1.45rem;
+  line-height: 1.15;
+}
+
+.otp-modal-copy {
+  margin: 10px 0 16px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.otp-form {
+  display: grid;
+  gap: 10px;
+}
+
+.otp-form label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3f4652;
+}
+
+.otp-form input {
+  border: 1px solid rgba(10, 15, 30, 0.12);
+  border-radius: 12px;
+  min-height: 46px;
+  padding: 11px 12px;
+  font-size: 22px;
+  letter-spacing: 0.35em;
+  text-align: center;
+  font-weight: 700;
+}
+
+.otp-form input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(97, 97, 255, 0.12);
+}
+
+.otp-feedback {
+  min-height: 18px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.otp-feedback--error {
+  color: #b91c1c;
+}
+
+.otp-feedback--ok {
+  color: #15803d;
+}
+
+.otp-verify-btn {
+  width: 100%;
+}
+
+.otp-resend-btn {
+  margin-top: 8px;
+  border: none;
+  background: transparent;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .signup-footer {
@@ -2721,6 +2926,15 @@ h1 em {
     bottom: 18px;
     left: 18px;
     right: 18px;
+  }
+  .otp-modal-card {
+    width: min(440px, calc(100% - 8px));
+    border-radius: 16px;
+    padding: 20px 16px 16px;
+  }
+  .otp-form input {
+    font-size: 20px;
+    letter-spacing: 0.24em;
   }
 }
 

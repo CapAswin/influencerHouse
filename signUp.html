@@ -17,7 +17,11 @@
           <div class="signup-panel">
             <div class="signup-panel-top">
               <a class="signup-back" href="index.html" aria-label="Go back to homepage">
-                <span class="signup-back-icon" aria-hidden="true">←</span>
+                <span class="signup-back-icon" aria-hidden="true">
+                  <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
               </a>
               <a class="signup-logo" href="index.html" aria-label="Go to homepage">
                 <img src="assets/images/favicon.png" alt="Opulent Influencers House" />
@@ -53,11 +57,45 @@
               <div class="input-row">
                 <label>
                   <span>Password</span>
-                  <input type="password" name="password" autocomplete="new-password" placeholder="8+ characters" minlength="8" required />
+                  <div class="password-field-wrap">
+                    <input id="password-field" type="password" name="password" autocomplete="new-password" placeholder="8+ characters" minlength="8" required />
+                    <button type="button" class="password-toggle-btn" data-password-toggle="password-field" aria-label="Show password" aria-pressed="false">
+                      <span class="password-icon password-icon--show" aria-hidden="true">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                          <path d="M2.25 12C3.84 8.53 7.49 6.25 12 6.25C16.51 6.25 20.16 8.53 21.75 12C20.16 15.47 16.51 17.75 12 17.75C7.49 17.75 3.84 15.47 2.25 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                          <circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.8"></circle>
+                        </svg>
+                      </span>
+                      <span class="password-icon password-icon--hide" aria-hidden="true">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                          <path d="M3 4L21 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                          <path d="M10.58 10.58C10.21 10.95 10 11.46 10 12C10 13.1 10.9 14 12 14C12.54 14 13.05 13.79 13.42 13.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                          <path d="M6.71 7.16C5.01 8.2 3.69 9.86 2.92 12C4.49 16.35 8.84 18.96 13.28 17.91M17.13 15.99C19.05 14.95 20.56 13.27 21.75 12C20.16 8.53 16.51 6.25 12 6.25C11.36 6.25 10.73 6.3 10.12 6.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
                 </label>
                 <label>
                   <span>Confirm password</span>
-                  <input type="password" name="password_confirm" autocomplete="new-password" placeholder="Repeat password" minlength="8" required />
+                  <div class="password-field-wrap">
+                    <input id="password-confirm-field" type="password" name="password_confirm" autocomplete="new-password" placeholder="Repeat password" minlength="8" required />
+                    <button type="button" class="password-toggle-btn" data-password-toggle="password-confirm-field" aria-label="Show password" aria-pressed="false">
+                      <span class="password-icon password-icon--show" aria-hidden="true">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                          <path d="M2.25 12C3.84 8.53 7.49 6.25 12 6.25C16.51 6.25 20.16 8.53 21.75 12C20.16 15.47 16.51 17.75 12 17.75C7.49 17.75 3.84 15.47 2.25 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                          <circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.8"></circle>
+                        </svg>
+                      </span>
+                      <span class="password-icon password-icon--hide" aria-hidden="true">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                          <path d="M3 4L21 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                          <path d="M10.58 10.58C10.21 10.95 10 11.46 10 12C10 13.1 10.9 14 12 14C12.54 14 13.05 13.79 13.42 13.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                          <path d="M6.71 7.16C5.01 8.2 3.69 9.86 2.92 12C4.49 16.35 8.84 18.96 13.28 17.91M17.13 15.99C19.05 14.95 20.56 13.27 21.75 12C20.16 8.53 16.51 6.25 12 6.25C11.36 6.25 10.73 6.3 10.12 6.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
                 </label>
               </div>
 
@@ -169,6 +207,29 @@
     </section>
   </main>
 
+  <div id="otp-modal" class="otp-modal" aria-hidden="true">
+    <div class="otp-modal-backdrop" data-otp-close="true"></div>
+    <section class="otp-modal-card" role="dialog" aria-modal="true" aria-labelledby="otp-modal-title">
+      <button type="button" class="otp-modal-close" id="otp-close-btn" aria-label="Close verification modal">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <p class="otp-modal-eyebrow">Signup Verification</p>
+      <h2 id="otp-modal-title">Enter OTP code</h2>
+      <p class="otp-modal-copy">We sent a 6-digit code to your email. Enter it below to verify your account.</p>
+
+      <form id="otp-form" class="otp-form" novalidate>
+        <label for="otp-input">Verification code</label>
+        <input id="otp-input" name="otp_code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000" autocomplete="one-time-code" required />
+        <p id="otp-feedback" class="otp-feedback" aria-live="polite"></p>
+        <button type="submit" class="btn btn-gold otp-verify-btn">Verify &amp; continue</button>
+      </form>
+
+      <button type="button" id="otp-resend-btn" class="otp-resend-btn">Resend code</button>
+    </section>
+  </div>
+
   <script src="assets/vendor/lenis.min.js"></script>
   <script src="assets/shared.js"></script>
   <script>
@@ -178,6 +239,16 @@
       var visual = document.getElementById('signup-visual-card');
       var faceCreator = document.querySelector('.signup-flip-face--creator');
       var faceBrand = document.querySelector('.signup-flip-face--brand');
+      var signupForm = document.getElementById('signup-form-panel');
+      var passwordField = document.getElementById('password-field');
+      var passwordConfirmField = document.getElementById('password-confirm-field');
+      var otpModal = document.getElementById('otp-modal');
+      var otpCloseBtn = document.getElementById('otp-close-btn');
+      var otpForm = document.getElementById('otp-form');
+      var otpInput = document.getElementById('otp-input');
+      var otpFeedback = document.getElementById('otp-feedback');
+      var otpResendBtn = document.getElementById('otp-resend-btn');
+      var passwordToggleButtons = document.querySelectorAll('[data-password-toggle]');
 
       function setMode(isBrand) {
         if (visual) {
@@ -208,6 +279,113 @@
           setMode(isBrand);
         });
       });
+
+      function openOtpModal() {
+        if (!otpModal) return;
+        otpModal.classList.add('is-open');
+        otpModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        if (otpInput) otpInput.focus();
+      }
+
+      function closeOtpModal() {
+        if (!otpModal) return;
+        otpModal.classList.remove('is-open');
+        otpModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        if (otpFeedback) otpFeedback.textContent = '';
+      }
+
+      if (signupForm) {
+        signupForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          if (!signupForm.checkValidity()) {
+            signupForm.reportValidity();
+            return;
+          }
+          if (passwordField && passwordConfirmField && passwordField.value !== passwordConfirmField.value) {
+            passwordConfirmField.setCustomValidity('Passwords do not match');
+            passwordConfirmField.reportValidity();
+            return;
+          }
+          if (passwordConfirmField) {
+            passwordConfirmField.setCustomValidity('');
+          }
+          openOtpModal();
+        });
+      }
+
+      if (passwordField && passwordConfirmField) {
+        passwordConfirmField.addEventListener('input', function () {
+          if (passwordField.value === passwordConfirmField.value) {
+            passwordConfirmField.setCustomValidity('');
+          }
+        });
+      }
+
+      if (otpModal) {
+        otpModal.addEventListener('click', function (event) {
+          if (event.target && event.target.getAttribute('data-otp-close') === 'true') {
+            closeOtpModal();
+          }
+        });
+      }
+
+      if (otpCloseBtn) {
+        otpCloseBtn.addEventListener('click', closeOtpModal);
+      }
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && otpModal && otpModal.classList.contains('is-open')) {
+          closeOtpModal();
+        }
+      });
+
+      if (otpInput) {
+        otpInput.addEventListener('input', function () {
+          otpInput.value = otpInput.value.replace(/\D/g, '').slice(0, 6);
+        });
+      }
+
+      if (otpForm) {
+        otpForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          if (!otpInput || !otpFeedback) return;
+          if (otpInput.value.length !== 6) {
+            otpFeedback.textContent = 'Please enter the 6-digit OTP.';
+            otpFeedback.classList.remove('otp-feedback--ok');
+            otpFeedback.classList.add('otp-feedback--error');
+            otpInput.focus();
+            return;
+          }
+          otpFeedback.textContent = 'OTP verified successfully.';
+          otpFeedback.classList.remove('otp-feedback--error');
+          otpFeedback.classList.add('otp-feedback--ok');
+        });
+      }
+
+      if (otpResendBtn && otpFeedback) {
+        otpResendBtn.addEventListener('click', function () {
+          otpFeedback.textContent = 'A new OTP has been sent.';
+          otpFeedback.classList.remove('otp-feedback--error');
+          otpFeedback.classList.add('otp-feedback--ok');
+        });
+      }
+
+      if (passwordToggleButtons.length) {
+        passwordToggleButtons.forEach(function (toggleBtn) {
+          toggleBtn.addEventListener('click', function () {
+            var inputId = toggleBtn.getAttribute('data-password-toggle');
+            var targetField = inputId ? document.getElementById(inputId) : null;
+            if (!targetField) return;
+            var showPassword = targetField.type === 'password';
+            targetField.type = showPassword ? 'text' : 'password';
+            toggleBtn.setAttribute('aria-pressed', showPassword ? 'true' : 'false');
+            toggleBtn.setAttribute('aria-label', showPassword ? 'Hide password' : 'Show password');
+            toggleBtn.classList.toggle('is-visible', showPassword);
+          });
+        });
+      }
     })();
   </script>
 </body>
