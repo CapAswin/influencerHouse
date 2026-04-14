@@ -16,6 +16,7 @@
   var brandDetailsModal = document.getElementById('brand-details-modal');
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
+  var signupSnackbarStack = document.getElementById('signup-snackbar-stack');
   var brandPhoneField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_phone"]') : null;
   var brandCountryField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_country"]') : null;
   var brandCountryCodeField = document.getElementById('brand-country-code');
@@ -33,6 +34,37 @@
   var codeSearchTimer = null;
   var lastValidCountryCode = '';
   var lastValidCountryDisplay = '';
+  var isSnackbarStackExpanded = false;
+  var MAX_SNACKBARS = 3;
+  var SNACKBAR_EXIT_MS = 320;
+  var SNACKBAR_OVERFLOW_EXIT_MS = 380;
+
+  function updateSnackbarStackState() {
+    if (!signupSnackbarStack) return;
+    var snackbars = signupSnackbarStack.querySelectorAll('.signup-snackbar');
+    snackbars.forEach(function (snackbar, index) {
+      snackbar.classList.remove(
+        'stack-top',
+        'stack-second',
+        'stack-third',
+        'stack-hidden',
+        'stack-expanded'
+      );
+      if (isSnackbarStackExpanded) {
+        snackbar.classList.add('stack-expanded');
+        return;
+      }
+      if (index === 0) {
+        snackbar.classList.add('stack-top');
+      } else if (index === 1) {
+        snackbar.classList.add('stack-second');
+      } else if (index === 2) {
+        snackbar.classList.add('stack-third');
+      } else {
+        snackbar.classList.add('stack-hidden');
+      }
+    });
+  }
 
   function setMode(isBrand) {
     if (visual) {
@@ -49,6 +81,199 @@
     }
   }
 
+  function showSignupSnackbar(options) {
+    if (!signupSnackbarStack) return;
+    var data = options || {};
+    var type = data.type || 'info';
+    var message = data.message || 'Message';
+    var actionLabel = data.actionLabel || 'Action';
+    var duration = typeof data.duration === 'number' ? data.duration : 4200;
+    var onAction = typeof data.onAction === 'function' ? data.onAction : null;
+
+    var snackbar = document.createElement('article');
+    snackbar.className = 'signup-snackbar signup-snackbar--' + type;
+    snackbar.classList.add('is-new');
+    snackbar.setAttribute('role', 'status');
+
+    var icon = document.createElement('span');
+    icon.className = 'signup-snackbar-icon';
+    icon.setAttribute('aria-hidden', 'true');
+
+    var text = document.createElement('p');
+    text.className = 'signup-snackbar-text';
+    text.textContent = message;
+
+    var actionButton = document.createElement('button');
+    actionButton.type = 'button';
+    actionButton.className = 'signup-snackbar-action';
+    actionButton.textContent = actionLabel;
+
+    var closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'signup-snackbar-close';
+    closeButton.setAttribute('aria-label', 'Dismiss message');
+    closeButton.textContent = '×';
+
+    var removed = false;
+    function removeSnackbar(mode) {
+      if (removed) return;
+      removed = true;
+      snackbar.classList.remove('is-visible');
+      snackbar.classList.add(mode === 'overflow' ? 'is-overflow-exit' : 'is-exit');
+      setTimeout(function () {
+        if (snackbar.parentNode) {
+          snackbar.parentNode.removeChild(snackbar);
+          updateSnackbarStackState();
+        }
+      }, mode === 'overflow' ? SNACKBAR_OVERFLOW_EXIT_MS : SNACKBAR_EXIT_MS);
+    }
+
+    actionButton.addEventListener('click', function () {
+      if (onAction) onAction();
+      removeSnackbar();
+    });
+    closeButton.addEventListener('click', removeSnackbar);
+
+    snackbar.appendChild(icon);
+    snackbar.appendChild(text);
+    snackbar.appendChild(actionButton);
+    snackbar.appendChild(closeButton);
+    signupSnackbarStack.prepend(snackbar);
+    updateSnackbarStackState();
+    requestAnimationFrame(function () {
+      snackbar.classList.add('is-visible');
+      snackbar.classList.remove('is-new');
+      updateSnackbarStackState();
+    });
+
+    var activeSnackbars = signupSnackbarStack.querySelectorAll('.signup-snackbar:not(.is-exit):not(.is-overflow-exit)');
+    if (activeSnackbars.length > MAX_SNACKBARS) {
+      var oldest = activeSnackbars[activeSnackbars.length - 1];
+      if (oldest && typeof oldest._removeSnackbar === 'function') {
+        oldest._removeSnackbar('overflow');
+      }
+    }
+
+    snackbar._removeSnackbar = removeSnackbar;
+    setTimeout(removeSnackbar, duration);
+  }
+
+  function setFieldErrorState(field, isInvalid) {
+    if (!field) return;
+    field.classList.toggle('is-field-error', !!isInvalid);
+    if (field.type === 'checkbox') {
+      var termsRow = field.closest('.signup-terms');
+      if (termsRow) termsRow.classList.toggle('has-error', !!isInvalid);
+    }
+  }
+
+  function validateFormFields(form) {
+    if (!form) return;
+    var controls = form.querySelectorAll('input, select, textarea');
+    var firstInvalid = null;
+    var invalidFields = [];
+    controls.forEach(function (control) {
+      if (!control || control.disabled) return;
+      var type = (control.type || '').toLowerCase();
+      if (type === 'hidden' || type === 'button' || type === 'submit' || type === 'reset') return;
+      var isInvalid = !control.checkValidity();
+      setFieldErrorState(control, isInvalid);
+      if (isInvalid) {
+        invalidFields.push(control);
+        if (!firstInvalid) firstInvalid = control;
+      }
+    });
+    return {
+      isValid: !firstInvalid,
+      firstInvalid: firstInvalid,
+      invalidFields: invalidFields
+    };
+  }
+
+  function getFieldLabel(field) {
+    if (!field) return 'This field';
+    if (field.type === 'checkbox' && field.name === 'terms') return 'Terms and Privacy Policy';
+    var label = field.closest('label');
+    if (label) {
+      var titleNode = label.querySelector('span');
+      if (titleNode && titleNode.textContent) return titleNode.textContent.trim();
+      var text = label.textContent.replace(/\s+/g, ' ').trim();
+      if (text) return text;
+    }
+    if (field.placeholder) return field.placeholder.trim();
+    if (field.name) return field.name.replace(/_/g, ' ').trim();
+    return 'This field';
+  }
+
+  function getSingleFieldErrorMessage(field) {
+    if (!field) return 'Please check the required field.';
+    var label = getFieldLabel(field);
+    var validity = field.validity || {};
+    if (validity.valueMissing) {
+      if (field.type === 'checkbox') return 'Please accept ' + label + '.';
+      return label + ' is required.';
+    }
+    if (validity.typeMismatch && field.type === 'email') {
+      return 'Please enter a valid email address.';
+    }
+    if (validity.tooShort && field.minLength > 0) {
+      return label + ' must be at least ' + field.minLength + ' characters.';
+    }
+    if (validity.patternMismatch) {
+      return 'Please enter a valid ' + label.toLowerCase() + '.';
+    }
+    if (validity.customError && field.validationMessage) {
+      return field.validationMessage;
+    }
+    if (field.validationMessage) return field.validationMessage;
+    return 'Please check ' + label + '.';
+  }
+
+  function getValidationSnackbarMessage(validation, fallbackMultiMessage) {
+    var invalidFields = validation && validation.invalidFields ? validation.invalidFields : [];
+    if (invalidFields.length === 1) {
+      return getSingleFieldErrorMessage(invalidFields[0]);
+    }
+    if (invalidFields.length > 1) {
+      return invalidFields.length + ' fields need attention.';
+    }
+    return fallbackMultiMessage || 'Please check the form fields.';
+  }
+
+  function getValidationSeverity(validation) {
+    var invalidFields = validation && validation.invalidFields ? validation.invalidFields : [];
+    if (!invalidFields.length) return 'info';
+    var hasStrictError = invalidFields.some(function (field) {
+      if (!field || !field.validity) return false;
+      var v = field.validity;
+      return !!(v.customError || v.typeMismatch || v.patternMismatch || v.tooShort || v.tooLong || v.rangeOverflow || v.rangeUnderflow || v.stepMismatch || v.badInput);
+    });
+    return hasStrictError ? 'error' : 'warning';
+  }
+
+  function getValidationSnackbarState(validation, fallbackMultiMessage) {
+    return {
+      type: getValidationSeverity(validation),
+      message: getValidationSnackbarMessage(validation, fallbackMultiMessage)
+    };
+  }
+
+  function bindLiveFieldValidation(form) {
+    if (!form) return;
+    var controls = form.querySelectorAll('input, select, textarea');
+    controls.forEach(function (control) {
+      if (!control || control.disabled) return;
+      var type = (control.type || '').toLowerCase();
+      if (type === 'hidden' || type === 'button' || type === 'submit' || type === 'reset') return;
+      function updateState() {
+        setFieldErrorState(control, !control.checkValidity());
+      }
+      control.addEventListener('input', updateState);
+      control.addEventListener('change', updateState);
+      control.addEventListener('blur', updateState);
+    });
+  }
+
   if (!tabs.length) return;
   tabs.forEach(function (btn, i) {
     btn.addEventListener('click', function () {
@@ -63,6 +288,21 @@
       setMode(isBrand);
     });
   });
+
+  bindLiveFieldValidation(signupForm);
+  bindLiveFieldValidation(brandDetailsForm);
+  if (signupSnackbarStack) {
+    signupSnackbarStack.addEventListener('mouseenter', function () {
+      isSnackbarStackExpanded = true;
+      signupSnackbarStack.classList.add('is-expanded');
+      updateSnackbarStackState();
+    });
+    signupSnackbarStack.addEventListener('mouseleave', function () {
+      isSnackbarStackExpanded = false;
+      signupSnackbarStack.classList.remove('is-expanded');
+      updateSnackbarStackState();
+    });
+  }
 
   function openOtpModal() {
     if (!otpModal) return;
@@ -387,14 +627,33 @@
   if (signupForm) {
     signupForm.addEventListener('submit', function (event) {
       event.preventDefault();
-      if (!signupForm.checkValidity()) {
-        signupForm.reportValidity();
+      validatePasswordMatch();
+      var signupValidation = validateFormFields(signupForm);
+      if (!signupValidation.isValid) {
+        var signupSnack = getValidationSnackbarState(signupValidation, 'Please fill all required fields before continuing.');
+        showSignupSnackbar({
+          type: signupSnack.type,
+          message: signupSnack.message,
+          actionLabel: 'Fix',
+          onAction: function () {
+            if (signupValidation.firstInvalid && typeof signupValidation.firstInvalid.focus === 'function') {
+              signupValidation.firstInvalid.focus();
+            }
+          }
+        });
+        if (signupValidation.firstInvalid && typeof signupValidation.firstInvalid.focus === 'function') {
+          signupValidation.firstInvalid.focus();
+        }
         return;
       }
-      if (!validatePasswordMatch()) {
-        passwordConfirmField.reportValidity();
-        return;
-      }
+      showSignupSnackbar({
+        type: 'success',
+        message: 'Signup details accepted. Enter OTP to continue.',
+        actionLabel: 'Continue',
+        onAction: function () {
+          if (otpInput) otpInput.focus();
+        }
+      });
       openOtpModal();
     });
   }
@@ -402,9 +661,11 @@
   if (passwordField && passwordConfirmField) {
     passwordField.addEventListener('input', function () {
       validatePasswordMatch();
+      setFieldErrorState(passwordConfirmField, !passwordConfirmField.checkValidity());
     });
     passwordConfirmField.addEventListener('input', function () {
       validatePasswordMatch();
+      setFieldErrorState(passwordConfirmField, !passwordConfirmField.checkValidity());
     });
   }
 
@@ -437,6 +698,14 @@
       event.preventDefault();
       if (!otpInput || !otpFeedback) return;
       if (otpInput.value.length !== 6) {
+        showSignupSnackbar({
+          type: 'error',
+          message: 'Please enter the 6-digit OTP code.',
+          actionLabel: 'Retry',
+          onAction: function () {
+            otpInput.focus();
+          }
+        });
         otpFeedback.textContent = 'Please enter the 6-digit OTP.';
         otpFeedback.classList.remove('otp-feedback--ok');
         otpFeedback.classList.add('otp-feedback--error');
@@ -446,6 +715,11 @@
       otpFeedback.textContent = 'OTP verified successfully.';
       otpFeedback.classList.remove('otp-feedback--error');
       otpFeedback.classList.add('otp-feedback--ok');
+      showSignupSnackbar({
+        type: 'success',
+        message: 'OTP verified successfully.',
+        actionLabel: 'Done'
+      });
       setTimeout(function () {
         var isBrandAccount = field && field.value === 'brand';
         if (isBrandAccount) {
@@ -467,6 +741,11 @@
       otpFeedback.textContent = 'A new OTP has been sent.';
       otpFeedback.classList.remove('otp-feedback--error');
       otpFeedback.classList.add('otp-feedback--ok');
+      showSignupSnackbar({
+        type: 'info',
+        message: 'A new OTP has been sent to your email.',
+        actionLabel: 'OK'
+      });
     });
   }
 
@@ -500,11 +779,30 @@
       if (brandPhoneField) {
         brandPhoneField.value = sanitizePhoneNumberInput(brandPhoneField.value);
       }
-      if (!brandDetailsForm.checkValidity()) {
-        brandDetailsForm.reportValidity();
+      var brandValidation = validateFormFields(brandDetailsForm);
+      if (!brandValidation.isValid) {
+        var brandSnack = getValidationSnackbarState(brandValidation, 'Please complete all brand details.');
+        showSignupSnackbar({
+          type: brandSnack.type,
+          message: brandSnack.message,
+          actionLabel: 'Fix',
+          onAction: function () {
+            if (brandValidation.firstInvalid && typeof brandValidation.firstInvalid.focus === 'function') {
+              brandValidation.firstInvalid.focus();
+            }
+          }
+        });
+        if (brandValidation.firstInvalid && typeof brandValidation.firstInvalid.focus === 'function') {
+          brandValidation.firstInvalid.focus();
+        }
         return;
       }
       closeBrandDetailsModal();
+      showSignupSnackbar({
+        type: 'success',
+        message: 'Brand profile submitted successfully.',
+        actionLabel: 'Great'
+      });
     });
   }
 
