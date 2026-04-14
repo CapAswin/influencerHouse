@@ -2646,6 +2646,16 @@ body.modal-open {
   background: #fff;
 }
 
+#brand-country-code-search {
+  padding: 0 2px;
+  min-height: 24px;
+  font-size: 10px;
+}
+
+#brand-country-code-search::placeholder {
+  font-size: 10px;
+}
+
 .brand-code-search-input:focus {
   outline: none;
   border-color: var(--primary);
