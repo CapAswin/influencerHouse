@@ -15,9 +15,18 @@
 
           <!-- LEFT: form panel -->
           <div class="signup-panel">
-            <a class="signup-logo" href="index.html" aria-label="Go to homepage">
-              <img src="assets/images/favicon.png" alt="Opulent Influencers House" />
-            </a>
+            <div class="signup-panel-top">
+              <a class="signup-back" href="index.html" aria-label="Go back to homepage">
+                <span class="signup-back-icon" aria-hidden="true">
+                  <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+              </a>
+              <a class="signup-logo" href="index.html" aria-label="Go to homepage">
+                <img src="assets/images/favicon.png" alt="Opulent Influencers House" />
+              </a>
+            </div>
             <h1>Where Influence Meets <em>Measurable Growth.</em></h1>
             <p class="signup-copy">Connect with 2,500+ verified creators and 340+ brand partners across UAE &amp; GCC. The region's most trusted influencer infrastructure platform.</p>
 
@@ -48,11 +57,45 @@
               <div class="input-row">
                 <label>
                   <span>Password</span>
-                  <input type="password" name="password" autocomplete="new-password" placeholder="8+ characters" minlength="8" required />
+                  <div class="password-field-wrap">
+                    <input id="password-field" type="password" name="password" autocomplete="new-password" placeholder="8+ characters" minlength="8" required />
+                    <button type="button" class="password-toggle-btn" data-password-toggle="password-field" aria-label="Show password" aria-pressed="false">
+                      <span class="password-icon password-icon--show" aria-hidden="true">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                          <path d="M2.25 12C3.84 8.53 7.49 6.25 12 6.25C16.51 6.25 20.16 8.53 21.75 12C20.16 15.47 16.51 17.75 12 17.75C7.49 17.75 3.84 15.47 2.25 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                          <circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.8"></circle>
+                        </svg>
+                      </span>
+                      <span class="password-icon password-icon--hide" aria-hidden="true">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                          <path d="M3 4L21 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                          <path d="M10.58 10.58C10.21 10.95 10 11.46 10 12C10 13.1 10.9 14 12 14C12.54 14 13.05 13.79 13.42 13.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                          <path d="M6.71 7.16C5.01 8.2 3.69 9.86 2.92 12C4.49 16.35 8.84 18.96 13.28 17.91M17.13 15.99C19.05 14.95 20.56 13.27 21.75 12C20.16 8.53 16.51 6.25 12 6.25C11.36 6.25 10.73 6.3 10.12 6.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
                 </label>
                 <label>
                   <span>Confirm password</span>
-                  <input type="password" name="password_confirm" autocomplete="new-password" placeholder="Repeat password" minlength="8" required />
+                  <div class="password-field-wrap">
+                    <input id="password-confirm-field" type="password" name="password_confirm" autocomplete="new-password" placeholder="Repeat password" minlength="8" required />
+                    <button type="button" class="password-toggle-btn" data-password-toggle="password-confirm-field" aria-label="Show password" aria-pressed="false">
+                      <span class="password-icon password-icon--show" aria-hidden="true">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                          <path d="M2.25 12C3.84 8.53 7.49 6.25 12 6.25C16.51 6.25 20.16 8.53 21.75 12C20.16 15.47 16.51 17.75 12 17.75C7.49 17.75 3.84 15.47 2.25 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                          <circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.8"></circle>
+                        </svg>
+                      </span>
+                      <span class="password-icon password-icon--hide" aria-hidden="true">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                          <path d="M3 4L21 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                          <path d="M10.58 10.58C10.21 10.95 10 11.46 10 12C10 13.1 10.9 14 12 14C12.54 14 13.05 13.79 13.42 13.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                          <path d="M6.71 7.16C5.01 8.2 3.69 9.86 2.92 12C4.49 16.35 8.84 18.96 13.28 17.91M17.13 15.99C19.05 14.95 20.56 13.27 21.75 12C20.16 8.53 16.51 6.25 12 6.25C11.36 6.25 10.73 6.3 10.12 6.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
                 </label>
               </div>
 
@@ -164,6 +207,98 @@
     </section>
   </main>
 
+  <div id="otp-modal" class="otp-modal" aria-hidden="true">
+    <div class="otp-modal-backdrop" data-otp-close="true"></div>
+    <section class="otp-modal-card" role="dialog" aria-modal="true" aria-labelledby="otp-modal-title">
+      <button type="button" class="otp-modal-close" id="otp-close-btn" aria-label="Close verification modal">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <p class="otp-modal-eyebrow">Signup Verification</p>
+      <h2 id="otp-modal-title">Enter OTP code</h2>
+      <p class="otp-modal-copy">We sent a 6-digit code to your email. Enter it below to verify your account.</p>
+
+      <form id="otp-form" class="otp-form" novalidate>
+        <label for="otp-input">Verification code</label>
+        <input id="otp-input" name="otp_code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000" autocomplete="one-time-code" required />
+        <p id="otp-feedback" class="otp-feedback" aria-live="polite"></p>
+        <button type="submit" class="btn btn-gold otp-verify-btn">Verify &amp; continue</button>
+      </form>
+
+      <button type="button" id="otp-resend-btn" class="otp-resend-btn">Resend code</button>
+    </section>
+  </div>
+
+  <div id="brand-details-modal" class="brand-details-modal" aria-hidden="true">
+    <div class="brand-details-backdrop"></div>
+    <section class="brand-details-card" role="dialog" aria-modal="true" aria-labelledby="brand-details-title">
+      <button type="button" class="brand-details-close" id="brand-details-close-btn" aria-label="Close brand registration">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <h2 id="brand-details-title">Tell us about your brand</h2>
+
+      <form id="brand-details-form" class="brand-details-form" novalidate>
+        <label>
+          <span>Name</span>
+          <input type="text" name="brand_contact_name" placeholder="Enter your full name" autocomplete="name" required />
+        </label>
+
+        <label>
+          <span>Phone</span>
+          <div class="brand-phone-wrap">
+            <div class="brand-code-select" id="brand-code-select">
+              <input id="brand-country-code-display" class="brand-phone-code-input" type="text" placeholder="Select code" autocomplete="off" readonly required />
+              <input id="brand-country-code" type="hidden" name="brand_country_code" />
+              <button type="button" class="brand-code-toggle" id="brand-code-toggle" aria-label="Toggle country code list">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </button>
+              <div id="brand-country-code-dropdown" class="brand-code-dropdown" role="listbox" aria-label="Country codes">
+                <div class="brand-code-search-wrap">
+                  <input id="brand-country-code-search" class="brand-code-search-input" type="text" placeholder="Search country or code" autocomplete="off" />
+                </div>
+                <div id="brand-country-code-results"></div>
+              </div>
+            </div>
+            <input type="tel" name="brand_phone" inputmode="tel" placeholder="Enter your phone number" autocomplete="tel" required />
+          </div>
+        </label>
+
+        <label>
+          <span>Country</span>
+          <select name="brand_country" required>
+            <option value="" selected disabled>Select country</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Province</span>
+          <select name="brand_province" required>
+            <option value="" selected disabled>Select province</option>
+            <option value="Abu Dhabi">Abu Dhabi</option>
+            <option value="Dubai">Dubai</option>
+            <option value="Sharjah">Sharjah</option>
+            <option value="Ajman">Ajman</option>
+            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+            <option value="Fujairah">Fujairah</option>
+            <option value="Umm Al Quwain">Umm Al Quwain</option>
+          </select>
+        </label>
+
+        <label>
+          <span>City</span>
+          <input type="text" name="brand_city" placeholder="Enter your city" autocomplete="address-level2" required />
+        </label>
+
+        <button type="submit" class="btn btn-gold brand-details-submit">Submit</button>
+      </form>
+    </section>
+  </div>
+
   <script src="assets/vendor/lenis.min.js"></script>
   <script src="assets/shared.js"></script>
   <script>
@@ -173,6 +308,34 @@
       var visual = document.getElementById('signup-visual-card');
       var faceCreator = document.querySelector('.signup-flip-face--creator');
       var faceBrand = document.querySelector('.signup-flip-face--brand');
+      var signupForm = document.getElementById('signup-form-panel');
+      var passwordField = document.getElementById('password-field');
+      var passwordConfirmField = document.getElementById('password-confirm-field');
+      var otpModal = document.getElementById('otp-modal');
+      var otpCloseBtn = document.getElementById('otp-close-btn');
+      var otpForm = document.getElementById('otp-form');
+      var otpInput = document.getElementById('otp-input');
+      var otpFeedback = document.getElementById('otp-feedback');
+      var otpResendBtn = document.getElementById('otp-resend-btn');
+      var brandDetailsModal = document.getElementById('brand-details-modal');
+      var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
+      var brandDetailsForm = document.getElementById('brand-details-form');
+      var brandCountryField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_country"]') : null;
+      var brandCountryCodeField = document.getElementById('brand-country-code');
+      var brandCountryCodeDisplay = document.getElementById('brand-country-code-display');
+      var brandCodeSelect = document.getElementById('brand-code-select');
+      var brandCodeToggle = document.getElementById('brand-code-toggle');
+      var brandCountryCodeDropdown = document.getElementById('brand-country-code-dropdown');
+      var brandCountryCodeSearch = document.getElementById('brand-country-code-search');
+      var brandCountryCodeResults = document.getElementById('brand-country-code-results');
+      var passwordToggleButtons = document.querySelectorAll('[data-password-toggle]');
+      var countryCodeByName = {};
+      var countryNameByCode = {};
+      var countryRows = [];
+      var filteredCodeRows = [];
+      var codeSearchTimer = null;
+      var lastValidCountryCode = '';
+      var lastValidCountryDisplay = '';
 
       function setMode(isBrand) {
         if (visual) {
@@ -203,6 +366,539 @@
           setMode(isBrand);
         });
       });
+
+      function openOtpModal() {
+        if (!otpModal) return;
+        otpModal.classList.add('is-open');
+        otpModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        if (otpInput) otpInput.focus();
+      }
+
+      function closeOtpModal(keepBodyLock) {
+        if (!otpModal) return;
+        otpModal.classList.remove('is-open');
+        otpModal.setAttribute('aria-hidden', 'true');
+        if (!keepBodyLock) {
+          document.body.classList.remove('modal-open');
+        }
+        if (otpFeedback) otpFeedback.textContent = '';
+      }
+
+      function openBrandDetailsModal() {
+        if (!brandDetailsModal) return;
+        brandDetailsModal.classList.add('is-open');
+        brandDetailsModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        var firstField = brandDetailsForm ? brandDetailsForm.querySelector('input, select') : null;
+        if (firstField) firstField.focus();
+      }
+
+      function closeBrandDetailsModal() {
+        if (!brandDetailsModal) return;
+        brandDetailsModal.classList.remove('is-open');
+        brandDetailsModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
+
+      function detectCountryCodeFromRegion() {
+        var codeByRegion = {
+          AE: '+971',
+          IN: '+91',
+          SA: '+966',
+          QA: '+974',
+          KW: '+965',
+          BH: '+973',
+          OM: '+968',
+          US: '+1',
+          CA: '+1',
+          GB: '+44',
+          PK: '+92',
+          BD: '+880',
+          NP: '+977',
+          LK: '+94',
+          AU: '+61',
+          SG: '+65'
+        };
+        var locale = '';
+        try {
+          locale = Intl.DateTimeFormat().resolvedOptions().locale || '';
+        } catch (err) {
+          locale = '';
+        }
+        var regionFromLocale = locale.indexOf('-') > -1 ? locale.split('-').pop().toUpperCase() : '';
+        if (regionFromLocale && codeByRegion[regionFromLocale]) return codeByRegion[regionFromLocale];
+
+        var tz = '';
+        try {
+          tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        } catch (err) {
+          tz = '';
+        }
+        if (/Dubai|Abu_Dhabi|Muscat/.test(tz)) return '+971';
+        if (/Kolkata|Calcutta/.test(tz)) return '+91';
+        if (/Riyadh/.test(tz)) return '+966';
+        if (/Doha/.test(tz)) return '+974';
+        return '+971';
+      }
+
+      function detectCountryFromRegion() {
+        var countryByRegion = {
+          AE: 'United Arab Emirates',
+          IN: 'India',
+          SA: 'Saudi Arabia',
+          QA: 'Qatar',
+          KW: 'Kuwait',
+          BH: 'Bahrain',
+          OM: 'Oman'
+        };
+        var locale = '';
+        try {
+          locale = Intl.DateTimeFormat().resolvedOptions().locale || '';
+        } catch (err) {
+          locale = '';
+        }
+        var regionFromLocale = locale.indexOf('-') > -1 ? locale.split('-').pop().toUpperCase() : '';
+        if (regionFromLocale && countryByRegion[regionFromLocale]) return countryByRegion[regionFromLocale];
+
+        var tz = '';
+        try {
+          tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        } catch (err) {
+          tz = '';
+        }
+        if (/Kolkata|Calcutta/.test(tz)) return 'India';
+        if (/Riyadh/.test(tz)) return 'Saudi Arabia';
+        if (/Doha/.test(tz)) return 'Qatar';
+        if (/Dubai|Abu_Dhabi/.test(tz)) return 'United Arab Emirates';
+        return 'United Arab Emirates';
+      }
+
+      function getCodeFromCountry(country) {
+        var codeByCountry = {
+          India: '+91',
+          'United Arab Emirates': '+971',
+          'Saudi Arabia': '+966',
+          Qatar: '+974',
+          Kuwait: '+965',
+          Bahrain: '+973',
+          Oman: '+968',
+          'United Kingdom': '+44',
+          'United States': '+1',
+          Canada: '+1'
+        };
+        return countryCodeByName[country] || codeByCountry[country] || '+971';
+      }
+
+      function getFlagEmoji(countryCode) {
+        if (!countryCode || countryCode.length !== 2) return '';
+        var chars = countryCode.toUpperCase().split('');
+        return String.fromCodePoint(chars[0].charCodeAt(0) + 127397) + String.fromCodePoint(chars[1].charCodeAt(0) + 127397);
+      }
+
+      function getDisplayCode(row) {
+        var flag = getFlagEmoji(row.region);
+        return flag ? flag + ' ' + row.code : row.code;
+      }
+
+      function getDisplayCountry(row) {
+        var flag = getFlagEmoji(row.region);
+        return flag ? flag + ' ' + row.country : row.country;
+      }
+
+      function setCountryFromCode(code) {
+        if (!brandCountryField || !code) return;
+        var mappedCountry = countryNameByCode[code];
+        if (!mappedCountry) return;
+        var hasOption = Array.prototype.some.call(brandCountryField.options, function (opt) {
+          return opt.value === mappedCountry;
+        });
+        if (hasOption) {
+          brandCountryField.value = mappedCountry;
+        }
+      }
+
+      function openCodeDropdown() {
+        if (!brandCodeSelect || !brandCountryCodeDropdown) return;
+        var rect = brandCodeSelect.getBoundingClientRect();
+        var spaceBelow = window.innerHeight - rect.bottom;
+        var spaceAbove = rect.top;
+        var openUp = spaceBelow < 180 && spaceAbove > spaceBelow;
+        brandCodeSelect.classList.add('is-open');
+        brandCodeSelect.classList.toggle('is-up', openUp);
+        if (brandCountryCodeSearch) {
+          brandCountryCodeSearch.value = '';
+          setTimeout(function () {
+            brandCountryCodeSearch.focus();
+          }, 0);
+        }
+      }
+
+      function closeCodeDropdown() {
+        if (!brandCodeSelect) return;
+        brandCodeSelect.classList.remove('is-open', 'is-up');
+      }
+
+      function renderCodeDropdown(rows) {
+        if (!brandCountryCodeResults) return;
+        if (!rows.length) {
+          brandCountryCodeResults.innerHTML = '<div class="brand-code-option-empty">No matches found</div>';
+          return;
+        }
+        brandCountryCodeResults.innerHTML = rows
+          .slice(0, 80)
+          .map(function (row, index) {
+            return (
+              '<button type="button" class="brand-code-option" data-index="' +
+              index +
+              '" data-code="' +
+              row.code +
+              '" data-country="' +
+              row.country.replace(/"/g, '&quot;') +
+              '">' +
+              '<span class="brand-code-option-main">' +
+              getDisplayCode(row) +
+              '</span>' +
+              '<span class="brand-code-option-country">' +
+              row.country +
+              '</span>' +
+              '</button>'
+            );
+          })
+          .join('');
+      }
+
+      function applyCodeSelection(row) {
+        if (!row || !brandCountryCodeDisplay || !brandCountryCodeField) return;
+        brandCountryCodeField.value = row.code;
+        brandCountryCodeDisplay.value = getDisplayCode(row);
+        lastValidCountryCode = row.code;
+        lastValidCountryDisplay = getDisplayCode(row);
+        setCountryFromCode(row.code);
+        closeCodeDropdown();
+      }
+
+      function filterCodeRows(query) {
+        var q = (query || '').toLowerCase().trim();
+        if (!q) return countryRows.slice();
+        var qNoPlus = q.replace(/\+/g, '');
+        return countryRows.filter(function (row) {
+          var country = row.country.toLowerCase();
+          var code = row.code.toLowerCase();
+          var codeNoPlus = code.replace('+', '');
+          return (
+            country.indexOf(q) > -1 ||
+            code.indexOf(q) > -1 ||
+            codeNoPlus.indexOf(qNoPlus) > -1
+          );
+        });
+      }
+
+      function populateCountryFieldsFromApi() {
+        if (!brandCountryField || !brandCountryCodeField) return;
+        fetch('https://restcountries.com/v3.1/all?fields=name,idd,cca2')
+          .then(function (response) {
+            if (!response.ok) throw new Error('Country API failed');
+            return response.json();
+          })
+          .then(function (countries) {
+            countryRows = [];
+            countries.forEach(function (item) {
+              if (!item || !item.name || !item.name.common || !item.idd || !item.idd.root) return;
+              var root = item.idd.root;
+              var suffix = item.idd.suffixes && item.idd.suffixes.length ? item.idd.suffixes[0] : '';
+              var dialingCode = '' + root + suffix;
+              if (!/^\+\d+$/.test(dialingCode)) return;
+              countryRows.push({
+                country: item.name.common,
+                code: dialingCode,
+                region: item.cca2 || ''
+              });
+            });
+
+            countryRows.sort(function (a, b) {
+              return a.country.localeCompare(b.country);
+            });
+
+            countryCodeByName = {};
+            countryNameByCode = {};
+            brandCountryField.innerHTML = '';
+
+            countryRows.forEach(function (row) {
+              countryCodeByName[row.country] = row.code;
+              if (!countryNameByCode[row.code]) {
+                countryNameByCode[row.code] = row.country;
+              }
+
+              var countryOption = document.createElement('option');
+              countryOption.value = row.country;
+              countryOption.textContent = row.country;
+              brandCountryField.appendChild(countryOption);
+            });
+
+            var detectedCountry = detectCountryFromRegion();
+            var detectedCode = getCodeFromCountry(detectedCountry);
+
+            if (countryCodeByName[detectedCountry]) {
+              brandCountryField.value = detectedCountry;
+              var preferred = countryRows.find(function (row) {
+                return row.country === detectedCountry && row.code === detectedCode;
+              });
+              applyCodeSelection(preferred || countryRows[0]);
+            } else if (countryRows.length) {
+              brandCountryField.value = countryRows[0].country;
+              applyCodeSelection(countryRows[0]);
+            }
+            if (brandCountryCodeField.value) {
+              lastValidCountryCode = brandCountryCodeField.value;
+              var initialRow = countryRows.find(function (row) {
+                return row.code === lastValidCountryCode && row.country === brandCountryField.value;
+              }) || countryRows.find(function (row) {
+                return row.code === lastValidCountryCode;
+              });
+              if (initialRow) {
+                lastValidCountryDisplay = getDisplayCode(initialRow);
+                brandCountryCodeDisplay.value = lastValidCountryDisplay;
+              }
+            }
+            filteredCodeRows = countryRows.slice();
+            renderCodeDropdown(filteredCodeRows);
+          })
+          .catch(function () {
+            // API-only requirement: leave placeholders if fetch fails.
+          });
+      }
+
+      if (signupForm) {
+        signupForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          if (!signupForm.checkValidity()) {
+            signupForm.reportValidity();
+            return;
+          }
+          if (passwordField && passwordConfirmField && passwordField.value !== passwordConfirmField.value) {
+            passwordConfirmField.setCustomValidity('Passwords do not match');
+            passwordConfirmField.reportValidity();
+            return;
+          }
+          if (passwordConfirmField) {
+            passwordConfirmField.setCustomValidity('');
+          }
+          openOtpModal();
+        });
+      }
+
+      if (passwordField && passwordConfirmField) {
+        passwordConfirmField.addEventListener('input', function () {
+          if (passwordField.value === passwordConfirmField.value) {
+            passwordConfirmField.setCustomValidity('');
+          }
+        });
+      }
+
+      if (otpModal) {
+        otpModal.addEventListener('click', function (event) {
+          if (event.target && event.target.getAttribute('data-otp-close') === 'true') {
+            event.preventDefault();
+          }
+        });
+      }
+
+      if (otpCloseBtn) {
+        otpCloseBtn.addEventListener('click', closeOtpModal);
+      }
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && otpModal && otpModal.classList.contains('is-open')) {
+          event.preventDefault();
+        }
+      });
+
+      if (otpInput) {
+        otpInput.addEventListener('input', function () {
+          otpInput.value = otpInput.value.replace(/\D/g, '').slice(0, 6);
+        });
+      }
+
+      if (otpForm) {
+        otpForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          if (!otpInput || !otpFeedback) return;
+          if (otpInput.value.length !== 6) {
+            otpFeedback.textContent = 'Please enter the 6-digit OTP.';
+            otpFeedback.classList.remove('otp-feedback--ok');
+            otpFeedback.classList.add('otp-feedback--error');
+            otpInput.focus();
+            return;
+          }
+          otpFeedback.textContent = 'OTP verified successfully.';
+          otpFeedback.classList.remove('otp-feedback--error');
+          otpFeedback.classList.add('otp-feedback--ok');
+          setTimeout(function () {
+            var isBrandAccount = field && field.value === 'brand';
+            if (isBrandAccount) {
+              closeOtpModal(true);
+              openBrandDetailsModal();
+              return;
+            }
+            closeOtpModal();
+          }, 800);
+        });
+      }
+
+      if (otpResendBtn && otpFeedback) {
+        otpResendBtn.addEventListener('click', function () {
+          if (otpInput) {
+            otpInput.value = '';
+            otpInput.focus();
+          }
+          otpFeedback.textContent = 'A new OTP has been sent.';
+          otpFeedback.classList.remove('otp-feedback--error');
+          otpFeedback.classList.add('otp-feedback--ok');
+        });
+      }
+
+      if (passwordToggleButtons.length) {
+        passwordToggleButtons.forEach(function (toggleBtn) {
+          toggleBtn.addEventListener('click', function () {
+            var inputId = toggleBtn.getAttribute('data-password-toggle');
+            var targetField = inputId ? document.getElementById(inputId) : null;
+            if (!targetField) return;
+            var showPassword = targetField.type === 'password';
+            targetField.type = showPassword ? 'text' : 'password';
+            toggleBtn.setAttribute('aria-pressed', showPassword ? 'true' : 'false');
+            toggleBtn.setAttribute('aria-label', showPassword ? 'Hide password' : 'Show password');
+            toggleBtn.classList.toggle('is-visible', showPassword);
+          });
+        });
+      }
+
+      if (brandDetailsCloseBtn) {
+        brandDetailsCloseBtn.addEventListener('click', closeBrandDetailsModal);
+      }
+
+      if (brandDetailsForm) {
+        brandDetailsForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          if (!brandDetailsForm.checkValidity()) {
+            brandDetailsForm.reportValidity();
+            return;
+          }
+          closeBrandDetailsModal();
+        });
+      }
+
+      if (brandCountryCodeField) {
+        if (!brandCountryCodeField.value) brandCountryCodeField.value = detectCountryCodeFromRegion();
+      }
+
+      if (brandCountryField) {
+        var detectedCountry = detectCountryFromRegion();
+        var matchingOption = Array.prototype.find.call(brandCountryField.options, function (opt) {
+          return opt.value === detectedCountry;
+        });
+        if (matchingOption) {
+          brandCountryField.value = detectedCountry;
+          if (brandCountryCodeField && brandCountryCodeDisplay) {
+            brandCountryCodeField.value = getCodeFromCountry(detectedCountry);
+            lastValidCountryCode = brandCountryCodeField.value;
+            var detectedRow = countryRows.find(function (row) {
+              return row.country === detectedCountry && row.code === brandCountryCodeField.value;
+            });
+            if (detectedRow) {
+              lastValidCountryDisplay = getDisplayCode(detectedRow);
+              brandCountryCodeDisplay.value = lastValidCountryDisplay;
+            }
+            lastValidCountryCode = brandCountryCodeField.value;
+          }
+        }
+        brandCountryField.addEventListener('change', function () {
+          if (!brandCountryCodeField || !brandCountryCodeDisplay) return;
+          var selectedCode = getCodeFromCountry(brandCountryField.value);
+          var rowMatch = countryRows.find(function (row) {
+            return row.country === brandCountryField.value && row.code === selectedCode;
+          });
+          if (!rowMatch) {
+            rowMatch = countryRows.find(function (row) {
+              return row.country === brandCountryField.value;
+            });
+          }
+          if (rowMatch) {
+            applyCodeSelection(rowMatch);
+          } else {
+            brandCountryCodeField.value = selectedCode;
+            brandCountryCodeDisplay.value = selectedCode;
+            lastValidCountryCode = selectedCode;
+            lastValidCountryDisplay = selectedCode;
+          }
+        });
+      }
+
+      if (brandCountryCodeDisplay && brandCountryCodeDropdown) {
+        brandCountryCodeDisplay.addEventListener('click', function () {
+          filteredCodeRows = filterCodeRows('');
+          renderCodeDropdown(filteredCodeRows);
+          openCodeDropdown();
+        });
+
+        brandCountryCodeDisplay.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === 'ArrowDown' || event.key === ' ') {
+            event.preventDefault();
+            filteredCodeRows = filterCodeRows('');
+            renderCodeDropdown(filteredCodeRows);
+            openCodeDropdown();
+          }
+        });
+
+        brandCountryCodeDropdown.addEventListener('click', function (event) {
+          var option = event.target.closest('.brand-code-option');
+          if (!option) return;
+          var code = option.getAttribute('data-code');
+          var country = option.getAttribute('data-country');
+          var row = countryRows.find(function (item) {
+            return item.code === code && item.country === country;
+          });
+          if (row) applyCodeSelection(row);
+        });
+      }
+
+      if (brandCountryCodeSearch) {
+        brandCountryCodeSearch.addEventListener('input', function () {
+          if (codeSearchTimer) clearTimeout(codeSearchTimer);
+          codeSearchTimer = setTimeout(function () {
+            filteredCodeRows = filterCodeRows(brandCountryCodeSearch.value);
+            renderCodeDropdown(filteredCodeRows);
+          }, 180);
+        });
+
+        brandCountryCodeSearch.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            if (filteredCodeRows.length) applyCodeSelection(filteredCodeRows[0]);
+          }
+          if (event.key === 'Escape') closeCodeDropdown();
+        });
+      }
+
+      if (brandCodeToggle && brandCountryCodeDisplay) {
+        brandCodeToggle.addEventListener('click', function () {
+          if (brandCodeSelect && brandCodeSelect.classList.contains('is-open')) {
+            closeCodeDropdown();
+            return;
+          }
+          filteredCodeRows = filterCodeRows('');
+          renderCodeDropdown(filteredCodeRows);
+          openCodeDropdown();
+          brandCountryCodeDisplay.focus();
+        });
+      }
+
+      document.addEventListener('click', function (event) {
+        if (!brandCodeSelect) return;
+        if (!brandCodeSelect.contains(event.target)) closeCodeDropdown();
+      });
+
+      populateCountryFieldsFromApi();
     })();
   </script>
 </body>
