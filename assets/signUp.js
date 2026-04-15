@@ -25,11 +25,16 @@
   var brandStepBackBtn = document.getElementById('brand-step-back-btn');
   var brandStepNextBtn = document.getElementById('brand-step-next-btn');
   var brandStepSubmitBtn = document.getElementById('brand-step-submit-btn');
+  var brandScrollHint = document.getElementById('brand-scroll-hint');
   var welcomeAccessModal = document.getElementById('welcome-access-modal');
   var welcomeAccessCloseBtn = document.getElementById('welcome-access-close-btn');
   var welcomeAccessDismissBtn = document.getElementById('welcome-access-dismiss-btn');
   var signupSnackbarStack = document.getElementById('signup-snackbar-stack');
   var brandPhoneField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_phone"]') : null;
+  var brandLogoField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_logo"]') : null;
+  var brandLogoPreview = document.getElementById('brand-logo-preview');
+  var brandLogoPreviewImg = document.getElementById('brand-logo-preview-img');
+  var brandLogoPreviewText = document.getElementById('brand-logo-preview-text');
   var brandCountryField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_country"]') : null;
   var brandCountryCodeField = document.getElementById('brand-country-code');
   var brandCountryCodeDisplay = document.getElementById('brand-country-code-display');
@@ -50,8 +55,9 @@
   var MAX_SNACKBARS = 3;
   var SNACKBAR_EXIT_MS = 320;
   var SNACKBAR_OVERFLOW_EXIT_MS = 380;
-  var BRAND_DETAILS_TITLE_BASE = 'Tell me about yourself';
+  var BRAND_DETAILS_TITLE_BASE = 'Tell me about your';
   var brandCurrentStep = 0;
+  var brandLogoPreviewObjectUrl = '';
 
   function updateSnackbarStackState() {
     if (!signupSnackbarStack) return;
@@ -381,28 +387,25 @@
     brandDetailsModal.classList.add('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+    if (brandDetailsForm) brandDetailsForm.scrollTop = 0;
     setBrandStep(0, true);
-  }
-
-  function getSignupDisplayName() {
-    if (!signupForm) return '';
-    var firstNameField = signupForm.querySelector('[name="given_name"]');
-    var lastNameField = signupForm.querySelector('[name="family_name"]');
-    var firstName = firstNameField && firstNameField.value ? firstNameField.value.trim() : '';
-    var lastName = lastNameField && lastNameField.value ? lastNameField.value.trim() : '';
-    return (firstName + ' ' + lastName).trim();
+    setTimeout(updateBrandScrollHint, 0);
   }
 
   function syncBrandDetailsTitle() {
     if (!brandDetailsTitle) return;
-    var displayName = getSignupDisplayName();
-    brandDetailsTitle.textContent = BRAND_DETAILS_TITLE_BASE;
-    if (!displayName) return;
-    brandDetailsTitle.appendChild(document.createTextNode(' - '));
-    var nameSpan = document.createElement('span');
-    nameSpan.className = 'brand-details-title-name';
-    nameSpan.textContent = displayName;
-    brandDetailsTitle.appendChild(nameSpan);
+    var signupBrandField = signupForm ? signupForm.querySelector('[name="brand_name"]') : null;
+    var signupBrandName = signupBrandField && signupBrandField.value
+      ? signupBrandField.value.trim()
+      : '';
+    var highlightedBrand = (signupBrandName || 'brand')
+      .toLowerCase()
+      .replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
+    brandDetailsTitle.textContent = BRAND_DETAILS_TITLE_BASE + ' ';
+    var highlightWord = document.createElement('span');
+    highlightWord.className = 'brand-details-title-name';
+    highlightWord.textContent = highlightedBrand;
+    brandDetailsTitle.appendChild(highlightWord);
   }
 
   function getBrandStepFirstField(stepIndex) {
@@ -424,10 +427,10 @@
       });
     }
     if (brandStepBackBtn) {
-      brandStepBackBtn.style.display = brandCurrentStep === 0 ? 'none' : '';
+      brandStepBackBtn.disabled = brandCurrentStep === 0;
     }
     if (brandStepNextBtn) {
-      brandStepNextBtn.style.display = brandCurrentStep >= total - 1 ? 'none' : '';
+      brandStepNextBtn.disabled = brandCurrentStep >= total - 1;
     }
     if (brandStepSubmitBtn) {
       brandStepSubmitBtn.style.display = brandCurrentStep >= total - 1 ? '' : 'none';
@@ -442,9 +445,17 @@
       slide.classList.toggle('is-active', slideIndex === brandCurrentStep);
     });
     updateBrandStepUI();
+    updateBrandScrollHint();
     if (!shouldFocus) return;
     var firstField = getBrandStepFirstField(brandCurrentStep);
     if (firstField && typeof firstField.focus === 'function') firstField.focus();
+  }
+
+  function updateBrandScrollHint() {
+    if (!brandDetailsForm || !brandScrollHint) return;
+    var hasOverflow = brandDetailsForm.scrollHeight > brandDetailsForm.clientHeight + 2;
+    var hasScrolled = brandDetailsForm.scrollTop > 6;
+    brandScrollHint.classList.toggle('is-hidden', !hasOverflow || hasScrolled);
   }
 
   function validateBrandStep(stepIndex) {
@@ -470,6 +481,62 @@
       firstInvalid: firstInvalid,
       invalidFields: invalidFields
     };
+  }
+
+  function validateBrandLogoFile() {
+    if (!brandLogoField) return true;
+    var allowedTypes = {
+      'image/jpeg': true,
+      'image/jpg': true,
+      'image/png': true,
+      'image/webp': true
+    };
+    var file = brandLogoField.files && brandLogoField.files.length ? brandLogoField.files[0] : null;
+    if (!file) {
+      brandLogoField.setCustomValidity('');
+      return true;
+    }
+    var fileName = (file.name || '').toLowerCase();
+    var hasAllowedExt = /\.(jpe?g|png|webp)$/.test(fileName);
+    var hasAllowedType = !!allowedTypes[(file.type || '').toLowerCase()];
+    if (hasAllowedExt || hasAllowedType) {
+      brandLogoField.setCustomValidity('');
+      return true;
+    }
+    brandLogoField.setCustomValidity('Only JPG, JPEG, PNG, or WEBP images are allowed.');
+    return false;
+  }
+
+  function clearBrandLogoPreview() {
+    if (brandLogoPreviewObjectUrl) {
+      URL.revokeObjectURL(brandLogoPreviewObjectUrl);
+      brandLogoPreviewObjectUrl = '';
+    }
+    if (brandLogoPreview) brandLogoPreview.classList.remove('has-image');
+    if (brandLogoPreviewImg) {
+      brandLogoPreviewImg.removeAttribute('src');
+      brandLogoPreviewImg.style.display = '';
+    }
+    if (brandLogoPreviewText) {
+      brandLogoPreviewText.textContent = 'Logo preview will appear here';
+    }
+  }
+
+  function updateBrandLogoPreview() {
+    if (!brandLogoField) return;
+    var file = brandLogoField.files && brandLogoField.files.length ? brandLogoField.files[0] : null;
+    if (!file) {
+      clearBrandLogoPreview();
+      return;
+    }
+    if (brandLogoPreviewObjectUrl) {
+      URL.revokeObjectURL(brandLogoPreviewObjectUrl);
+      brandLogoPreviewObjectUrl = '';
+    }
+    brandLogoPreviewObjectUrl = URL.createObjectURL(file);
+    if (brandLogoPreviewImg) brandLogoPreviewImg.src = brandLogoPreviewObjectUrl;
+    if (brandLogoPreviewText) brandLogoPreviewText.textContent = file.name;
+    if (brandLogoPreview) brandLogoPreview.classList.add('has-image');
   }
 
   function closeBrandDetailsModal() {
@@ -970,10 +1037,31 @@
         return;
       }
       setBrandStep(brandCurrentStep + 1, true);
+      if (brandDetailsForm) brandDetailsForm.scrollTop = 0;
+      updateBrandScrollHint();
     });
   }
 
   if (brandDetailsForm) {
+    brandDetailsForm.addEventListener('scroll', updateBrandScrollHint, { passive: true });
+    if (brandLogoField) {
+      brandLogoField.addEventListener('change', function () {
+        var isValidFile = validateBrandLogoFile();
+        if (!isValidFile) {
+          brandLogoField.value = '';
+          clearBrandLogoPreview();
+          setFieldErrorState(brandLogoField, true);
+          showSignupSnackbar({
+            type: 'error',
+            message: 'Please upload an image file: JPG, JPEG, PNG, or WEBP.',
+            actionLabel: 'OK'
+          });
+          return;
+        }
+        updateBrandLogoPreview();
+        setFieldErrorState(brandLogoField, false);
+      });
+    }
     if (brandPhoneField) {
       brandPhoneField.addEventListener('input', function () {
         brandPhoneField.value = sanitizePhoneNumberInput(brandPhoneField.value);
@@ -981,6 +1069,7 @@
     }
     brandDetailsForm.addEventListener('submit', function (event) {
       event.preventDefault();
+      validateBrandLogoFile();
       if (brandSlides.length && brandCurrentStep < brandSlides.length - 1) {
         var currentStepValidation = validateBrandStep(brandCurrentStep);
         if (!currentStepValidation.isValid) {
@@ -1001,6 +1090,8 @@
           return;
         }
         setBrandStep(brandCurrentStep + 1, true);
+        if (brandDetailsForm) brandDetailsForm.scrollTop = 0;
+        updateBrandScrollHint();
         return;
       }
       if (brandPhoneField) {

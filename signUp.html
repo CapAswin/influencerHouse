@@ -106,16 +106,10 @@
             <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate>
               <input type="hidden" name="account_type" id="account-type-field" value="brand" />
 
-              <div class="input-row">
-                <label>
-                  <span>First name</span>
-                  <input type="text" name="given_name" autocomplete="given-name" placeholder="First name" required />
-                </label>
-                <label>
-                  <span>Last name</span>
-                  <input type="text" name="family_name" autocomplete="family-name" placeholder="Last name" required />
-                </label>
-              </div>
+              <label>
+                <span>Brand name</span>
+                <input type="text" name="brand_name" autocomplete="organization" placeholder="Enter brand name" required />
+              </label>
 
               <label>
                 <span>Work email</span>
@@ -308,22 +302,25 @@
       </button>
       <h2 id="brand-details-title">Tell me about your brand</h2>
       <p class="brand-details-subtitle">Complete your brand profile in 3 quick steps.</p>
+      <div class="brand-step-pill" id="brand-step-pill">Step 1 of 3 - Company</div>
+      <div class="brand-step-dots" aria-hidden="true">
+        <span class="brand-step-dot is-active" data-brand-dot="0"></span>
+        <span class="brand-step-dot" data-brand-dot="1"></span>
+        <span class="brand-step-dot" data-brand-dot="2"></span>
+      </div>
 
       <form id="brand-details-form" class="brand-details-form" novalidate>
-        <div class="brand-step-pill" id="brand-step-pill">Step 1 of 3 - Company</div>
-        <div class="brand-step-dots" aria-hidden="true">
-          <span class="brand-step-dot is-active" data-brand-dot="0"></span>
-          <span class="brand-step-dot" data-brand-dot="1"></span>
-          <span class="brand-step-dot" data-brand-dot="2"></span>
-        </div>
-
         <div class="brand-slides" id="brand-slides">
           <section class="brand-slide is-active" data-brand-step="0">
             <h3>Company &amp; brand</h3>
 
             <label>
-              <span>Company name</span>
-              <input type="text" name="brand_company_name" placeholder="Enter company name" autocomplete="organization" required />
+              <span>Company logo</span>
+              <input type="file" name="brand_logo" accept=".jpg,.jpeg,.png,.webp" />
+              <div class="brand-logo-preview" id="brand-logo-preview" aria-live="polite">
+                <img id="brand-logo-preview-img" alt="Selected company logo preview" />
+                <span id="brand-logo-preview-text">Logo preview will appear here</span>
+              </div>
             </label>
 
             <label>
@@ -453,12 +450,18 @@
           </section>
         </div>
 
-        <div class="brand-step-actions">
-          <button type="button" class="brand-step-btn brand-step-btn-secondary" id="brand-step-back-btn">Back</button>
-          <button type="button" class="brand-step-btn brand-step-btn-primary" id="brand-step-next-btn">Next</button>
-          <button type="submit" class="btn btn-gold brand-details-submit" id="brand-step-submit-btn">Submit</button>
-        </div>
       </form>
+      <div class="brand-step-actions">
+        <button type="button" class="brand-step-btn brand-step-btn-secondary" id="brand-step-back-btn">Back</button>
+        <button type="button" class="brand-step-btn brand-step-btn-primary" id="brand-step-next-btn">Next</button>
+        <button type="submit" form="brand-details-form" class="btn btn-gold brand-details-submit" id="brand-step-submit-btn">Submit</button>
+      </div>
+      <div class="brand-scroll-hint" id="brand-scroll-hint" aria-hidden="true">
+        <span>Scroll down</span>
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
     </section>
   </div>
 
