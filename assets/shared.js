@@ -97,7 +97,7 @@
         <div class="footer-newsletter">
           <strong>Newsletter</strong>
           <form class="newsletter-form" action="#" aria-label="Newsletter form" style="margin-bottom:24px;">
-            <input type="email" placeholder="Email Address" required />
+            <input type="email" name="newsletter_email" placeholder="Email Address" required />
             <button type="submit" aria-label="Subscribe">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
@@ -243,6 +243,11 @@
       });
     }
 
+    function syncParallaxNow() {
+      onScroll();
+      requestAnimationFrame(onScroll);
+    }
+
     function resetFooterParallaxTransforms() {
       if (wordmark) wordmark.style.transform = '';
       if (orb1) orb1.style.transform = '';
@@ -276,41 +281,46 @@
       if (orb2) orb2.style.transform = '';
     });
 
-    // Blog: skip footer parallax. Other pages: only listen while the footer is near the
-    // viewport so scrolling long pages does not schedule RAF + getBoundingClientRect.
-    if (!document.body.classList.contains('blog-detail-page')) {
-      if ('IntersectionObserver' in window) {
-        let parallaxScrollAttached = false;
-        function attachParallaxScroll() {
-          if (parallaxScrollAttached) return;
-          parallaxScrollAttached = true;
-          window.addEventListener('scroll', onScroll, { passive: true });
-          onScroll();
-        }
-        function detachParallaxScroll() {
-          if (!parallaxScrollAttached) return;
-          parallaxScrollAttached = false;
-          window.removeEventListener('scroll', onScroll);
-          if (footerScrollRaf !== null) {
-            cancelAnimationFrame(footerScrollRaf);
-            footerScrollRaf = null;
-          }
-          resetFooterParallaxTransforms();
-        }
-        const parallaxNearIo = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) attachParallaxScroll();
-              else detachParallaxScroll();
-            });
-          },
-          { root: null, rootMargin: '0px 0px 45% 0px', threshold: 0 }
-        );
-        parallaxNearIo.observe(footer);
-      } else {
+    // Attach footer parallax while footer is near the viewport to avoid
+    // unnecessary RAF + getBoundingClientRect work on long pages.
+    const shouldAlwaysAttachParallax = window.matchMedia('(max-width: 1050px)').matches;
+    if ('IntersectionObserver' in window && !shouldAlwaysAttachParallax) {
+      let parallaxScrollAttached = false;
+      function attachParallaxScroll() {
+        if (parallaxScrollAttached) return;
+        parallaxScrollAttached = true;
         window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
+        window.addEventListener('resize', onScroll, { passive: true });
+        window.addEventListener('orientationchange', onScroll, { passive: true });
+        syncParallaxNow();
       }
+      function detachParallaxScroll() {
+        if (!parallaxScrollAttached) return;
+        parallaxScrollAttached = false;
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+        window.removeEventListener('orientationchange', onScroll);
+        if (footerScrollRaf !== null) {
+          cancelAnimationFrame(footerScrollRaf);
+          footerScrollRaf = null;
+        }
+        resetFooterParallaxTransforms();
+      }
+      const parallaxNearIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) attachParallaxScroll();
+            else detachParallaxScroll();
+          });
+        },
+        { root: null, rootMargin: '0px 0px 45% 0px', threshold: 0 }
+      );
+      parallaxNearIo.observe(footer);
+    } else {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      window.addEventListener('orientationchange', onScroll, { passive: true });
+      syncParallaxNow();
     }
   }
 
