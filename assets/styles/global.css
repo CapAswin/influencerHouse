@@ -2246,6 +2246,10 @@ h1 em {
     transform 0.2s ease;
 }
 
+.toggle-label-mobile {
+  display: none;
+}
+
 .toggle-item:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
@@ -2255,6 +2259,16 @@ h1 em {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #fff;
   box-shadow: 0 6px 18px rgba(97, 97, 255, 0.35);
+}
+
+@media (max-width: 640px) {
+  .toggle-label-desktop {
+    display: none;
+  }
+
+  .toggle-label-mobile {
+    display: inline;
+  }
 }
 
 .signup-form {
