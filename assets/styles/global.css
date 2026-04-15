@@ -532,6 +532,15 @@ h2 {
   margin-bottom: 20px;
 }
 
+@media (max-width: 680px) {
+  .wwa-eyebrow,
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+  }
+}
+
 h1 {
   margin: 14px 0 18px;
   font-size: clamp(2.3rem, 5.2vw, 4.3rem);
