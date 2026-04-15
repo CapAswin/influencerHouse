@@ -1,3 +1,7 @@
+.fb-hero.section {
+  padding-top: 0;
+}
+
 .fb-page {
   padding-top: clamp(10px, 2vw, 24px);
   position: relative;
