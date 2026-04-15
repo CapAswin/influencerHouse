@@ -4,6 +4,8 @@
   var visual = document.getElementById('signup-visual-card');
   var faceCreator = document.querySelector('.signup-flip-face--creator');
   var faceBrand = document.querySelector('.signup-flip-face--brand');
+  var inlineMetricsCreator = document.querySelector('.signup-notch-cluster--inline[data-inline-mode="creator"]');
+  var inlineMetricsBrand = document.querySelector('.signup-notch-cluster--inline[data-inline-mode="brand"]');
   var signupForm = document.getElementById('signup-form-panel');
   var passwordField = document.getElementById('password-field');
   var passwordConfirmField = document.getElementById('password-confirm-field');
@@ -81,6 +83,14 @@
     if (faceBrand) {
       if (isBrand) faceBrand.removeAttribute('aria-hidden');
       else faceBrand.setAttribute('aria-hidden', 'true');
+    }
+    if (inlineMetricsCreator) {
+      inlineMetricsCreator.classList.toggle('is-active', !isBrand);
+      inlineMetricsCreator.setAttribute('aria-hidden', isBrand ? 'true' : 'false');
+    }
+    if (inlineMetricsBrand) {
+      inlineMetricsBrand.classList.toggle('is-active', !!isBrand);
+      inlineMetricsBrand.setAttribute('aria-hidden', !isBrand ? 'true' : 'false');
     }
   }
 
