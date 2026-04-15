@@ -4621,6 +4621,13 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
 
+  .hero-photo {
+    min-height: 460px;
+    max-height: 460px;
+    width: min(100%, 520px);
+    margin-inline: auto;
+  }
+
   .cta {
     flex-direction: column;
     align-items: flex-start;
@@ -4638,6 +4645,58 @@ body.modal-open {
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 40px;
+  }
+
+  .float-card {
+    padding: 12px 14px;
+    border-radius: 16px;
+  }
+
+  .card-views {
+    width: 188px;
+    gap: 8px;
+  }
+
+  .card-views b {
+    font-size: 1.16rem;
+  }
+
+  .card-verified {
+    width: 180px;
+    gap: 8px;
+  }
+
+  .card-verified .badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .card-verified small,
+  .card-roi small,
+  .card-views small {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  .card-roi {
+    width: 182px;
+  }
+
+  .card-views {
+    left: 10px;
+    top: 16px;
+  }
+
+  .card-verified {
+    right: 10px;
+    bottom: 72px;
+  }
+
+  .card-roi {
+    left: 24px;
+    bottom: 10px;
   }
 
   .testimonials {
@@ -4659,12 +4718,33 @@ body.modal-open {
     transform: none;
     filter: none;
     cursor: default;
+    padding: 20px;
+    border-radius: 20px;
   }
 
   .testimonials.is-switching .quote-card,
   .testimonials.is-switching .quote-card.is-active {
     transform: none;
     opacity: 1;
+  }
+
+  .quote-main-copy,
+  .quote-side-copy {
+    font-size: 13px;
+    line-height: 1.54;
+  }
+
+  .quote-author strong {
+    font-size: 13px;
+  }
+
+  .quote-author span {
+    font-size: 11px;
+  }
+
+  .quote-avatar {
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -4684,13 +4764,65 @@ body.modal-open {
 
   .hero-visual,
   .hero-photo {
-    min-height: 390px;
+    min-height: 330px;
+  }
+
+  .hero-photo {
+    max-height: 330px;
+    width: min(100%, 420px);
+    margin-inline: auto;
   }
 
   .float-card {
-    position: static;
+    position: absolute;
     transform: none !important;
-    margin-top: 10px;
+    margin-top: 0;
+    padding: 10px 12px;
+    border-radius: 14px;
+    box-shadow: 0 8px 18px rgba(10, 15, 30, 0.1);
+  }
+
+  .card-views,
+  .card-verified,
+  .card-roi {
+    width: 170px;
+  }
+
+  .card-views {
+    left: 8px;
+    top: 10px;
+  }
+
+  .card-verified {
+    right: 8px;
+    bottom: 60px;
+  }
+
+  .card-roi {
+    left: 18px;
+    bottom: 8px;
+  }
+
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .card-views b,
+  .card-roi strong,
+  .card-verified strong {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .card-views small,
+  .card-verified small,
+  .card-roi small {
+    font-size: 10px;
+    line-height: 1.35;
+    margin-bottom: 3px;
   }
 
   .analytics-stage {
@@ -4708,8 +4840,39 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
 
-  .quote-main-copy {
-    font-size: 1.04rem;
+  .quote-main-copy,
+  .quote-side-copy {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .quote-card,
+  .quote-card.is-active {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .quote-mark {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+
+  .quote-author {
+    margin-top: 12px;
+    gap: 8px;
+  }
+
+  .quote-author strong {
+    font-size: 12.5px;
+  }
+
+  .quote-author span {
+    font-size: 10.5px;
+  }
+
+  .quote-avatar {
+    width: 24px;
+    height: 24px;
   }
 
   .footer-grid {
@@ -4724,6 +4887,55 @@ body.modal-open {
 }
 
 @media (max-width: 480px) {
+  .card-views,
+  .card-verified,
+  .card-roi {
+    width: 152px;
+  }
+
+  .float-card {
+    padding: 9px 10px;
+    border-radius: 12px;
+  }
+
+  .card-icon,
+  .card-verified .badge {
+    width: 28px;
+    height: 28px;
+  }
+
+  .hero-photo {
+    min-height: 270px;
+    max-height: 270px;
+    width: min(100%, 340px);
+  }
+
+  .card-views {
+    left: 6px;
+    top: 8px;
+  }
+
+  .card-verified {
+    right: 6px;
+    bottom: 48px;
+  }
+
+  .card-roi {
+    left: 12px;
+    bottom: 6px;
+  }
+
+  .quote-card,
+  .quote-card.is-active {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .quote-avatar {
+    width: 22px;
+    height: 22px;
+  }
+
   .stats {
     grid-template-columns: 1fr;
   }
