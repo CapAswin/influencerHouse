@@ -1,1 +1,57 @@
-/* For Influencers page specific styles */
+/* For Influencers page small-device consistency overrides */
+
+.fi-page {
+  overflow-x: clip;
+}
+
+@media (max-width: 900px) {
+  .fi-hero .container,
+  .fi-section .container {
+    padding-inline: clamp(16px, 4vw, 22px);
+  }
+
+  .fi-breadcrumb {
+    font-size: 0.84rem;
+    margin-bottom: 10px;
+  }
+
+  .fi-hero h1 {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 680px) {
+  .fi-page::before,
+  .fi-page::after,
+  .fi-hero .container::after {
+    display: none;
+  }
+
+  .fi-heading {
+    margin-bottom: 16px;
+  }
+
+  .fi-card,
+  .fi-benefit-item {
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 8px 18px rgba(10, 18, 40, 0.08);
+  }
+
+  .fi-cta {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .fi-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .fi-card:hover,
+  .fi-benefit-item:hover {
+    transform: none;
+  }
+}

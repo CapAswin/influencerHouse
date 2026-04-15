@@ -5,6 +5,7 @@
 .fb-page {
   padding-top: clamp(10px, 2vw, 24px);
   position: relative;
+  overflow-x: clip;
 }
 
 .fb-page::before,
@@ -399,11 +400,42 @@
     border-radius: 22px;
   }
 
+  .fb-page::before,
+  .fb-page::after,
+  .fb-hero .container::after {
+    display: none;
+  }
+
   .fb-steps {
     grid-template-columns: 1fr;
   }
 
   .fb-hero-metrics {
     grid-template-columns: 1fr;
+  }
+
+  .fb-card,
+  .fb-step,
+  .fb-plan {
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  .fb-cta .fb-cta-inner {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .fb-hero-actions .btn,
+  .fb-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .fb-card:hover,
+  .fb-step:hover {
+    transform: none;
   }
 }
