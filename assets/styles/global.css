@@ -4657,6 +4657,10 @@ body.modal-open {
     gap: 40px;
   }
 
+  .footer-wordmark-bg {
+    padding-bottom: 96px;
+  }
+
   .float-card {
     padding: 12px 14px;
     border-radius: 16px;
@@ -4892,12 +4896,59 @@ body.modal-open {
 
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 26px;
+    padding-bottom: 20px;
+  }
+
+  .footer-brand .footer-main-logo {
+    max-width: 150px;
   }
 
   .footer-base {
     flex-direction: column;
     align-items: flex-start;
+    padding: 18px 0;
+    gap: 8px;
+  }
+
+  .footer-copy,
+  .footer-legal a {
+    font-size: 8px;
+  }
+
+  .footer-content-wrap {
+    padding-top: 42px;
+  }
+
+  .footer-legal {
+    gap: 14px;
+  }
+
+  .footer-newsletter .newsletter-form {
+    margin-bottom: 10px !important;
+  }
+
+  .footer-contact-details strong {
+    font-size: 12px !important;
+  }
+
+  .footer-contact-details a,
+  .footer-contact-details span {
+    font-size: 9px !important;
+    line-height: 1.4 !important;
+  }
+
+  .footer-contact-details {
+    gap: 12px !important;
+  }
+
+  .footer-contact-details .contact-item {
+    gap: 8px !important;
+  }
+
+  .footer-contact-details .contact-item svg {
+    width: 14px;
+    height: 14px;
   }
 }
 
