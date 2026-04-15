@@ -38,8 +38,8 @@
               performance tracking.
             </p>
             <div class="hero-actions">
-              <button class="btn btn-dark">I'm a Brand</button>
-              <button class="btn btn-gold">I'm an Influencer</button>
+              <button class="btn btn-dark" id="hero-brand-btn">I'm a Brand</button>
+              <button class="btn btn-gold" id="hero-influencer-btn">I'm an Influencer</button>
             </div>
           </div>
           <div class="hero-visual">
@@ -1096,6 +1096,23 @@
     <script src="assets/vendor/lenis.min.js"></script>
     <script src="assets/shared.js"></script>
     <script>
+      (function () {
+        const brandBtn = document.getElementById("hero-brand-btn");
+        const influencerBtn = document.getElementById("hero-influencer-btn");
+
+        if (brandBtn) {
+          brandBtn.addEventListener("click", () => {
+            window.location.href = "signUp.html?type=brand";
+          });
+        }
+
+        if (influencerBtn) {
+          influencerBtn.addEventListener("click", () => {
+            window.location.href = "signUp.html?type=influencer";
+          });
+        }
+      })();
+
       (function () {
         const tabs = document.querySelectorAll(".pricing-tab");
         let current = document.querySelector(".pricing-panel.active");
