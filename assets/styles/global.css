@@ -2386,7 +2386,8 @@ h1 em {
 
 .signup-form input.is-field-error,
 .brand-details-form input.is-field-error,
-.brand-details-form select.is-field-error {
+.brand-details-form select.is-field-error,
+.brand-details-form textarea.is-field-error {
   border-color: #e11d48 !important;
   box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.16);
 }
@@ -2834,9 +2835,69 @@ body.modal-open {
   letter-spacing: -0.02em;
 }
 
+.brand-details-subtitle {
+  margin: -6px 0 14px;
+  font-size: 13px;
+  color: #5f6677;
+}
+
 .brand-details-form {
   display: grid;
   gap: 12px;
+}
+
+.brand-step-pill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #394057;
+  background: #eef1ff;
+  border: 1px solid rgba(97, 97, 255, 0.2);
+}
+
+.brand-step-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: -2px;
+}
+
+.brand-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(97, 97, 255, 0.2);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.brand-step-dot.is-active {
+  background: var(--primary);
+  transform: scale(1.1);
+}
+
+.brand-slides {
+  position: relative;
+  min-height: 430px;
+}
+
+.brand-slide {
+  display: none;
+  gap: 12px;
+}
+
+.brand-slide.is-active {
+  display: grid;
+  animation: brand-slide-enter 0.32s ease both;
+}
+
+.brand-slide h3 {
+  margin: 0 0 2px;
+  font-size: 1.08rem;
+  letter-spacing: -0.01em;
+  color: #171d33;
 }
 
 .brand-details-form label {
@@ -2848,7 +2909,8 @@ body.modal-open {
 }
 
 .brand-details-form input,
-.brand-details-form select {
+.brand-details-form select,
+.brand-details-form textarea {
   width: 100%;
   border: 1px solid rgba(10, 15, 30, 0.16);
   border-radius: 14px;
@@ -2869,10 +2931,16 @@ body.modal-open {
 }
 
 .brand-details-form input:focus,
-.brand-details-form select:focus {
+.brand-details-form select:focus,
+.brand-details-form textarea:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(97, 97, 255, 0.12);
+}
+
+.brand-details-form textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 
 .brand-phone-wrap {
@@ -3052,6 +3120,48 @@ body.modal-open {
 .brand-details-submit {
   width: 100%;
   margin-top: 6px;
+}
+
+.brand-step-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.brand-step-btn {
+  min-height: 48px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid rgba(10, 15, 30, 0.15);
+  cursor: pointer;
+}
+
+.brand-step-btn-secondary {
+  color: #374151;
+  background: #e8ebf3;
+}
+
+.brand-step-btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), #4b4bde);
+  border-color: transparent;
+}
+
+.brand-step-actions .brand-details-submit {
+  grid-column: 1 / -1;
+}
+
+@keyframes brand-slide-enter {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .welcome-access-modal {

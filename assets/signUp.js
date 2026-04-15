@@ -19,6 +19,12 @@
   var brandDetailsTitle = document.getElementById('brand-details-title');
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
+  var brandSlides = brandDetailsForm ? brandDetailsForm.querySelectorAll('.brand-slide') : [];
+  var brandStepPill = document.getElementById('brand-step-pill');
+  var brandStepDots = brandDetailsForm ? brandDetailsForm.querySelectorAll('[data-brand-dot]') : [];
+  var brandStepBackBtn = document.getElementById('brand-step-back-btn');
+  var brandStepNextBtn = document.getElementById('brand-step-next-btn');
+  var brandStepSubmitBtn = document.getElementById('brand-step-submit-btn');
   var welcomeAccessModal = document.getElementById('welcome-access-modal');
   var welcomeAccessCloseBtn = document.getElementById('welcome-access-close-btn');
   var welcomeAccessDismissBtn = document.getElementById('welcome-access-dismiss-btn');
@@ -45,6 +51,7 @@
   var SNACKBAR_EXIT_MS = 320;
   var SNACKBAR_OVERFLOW_EXIT_MS = 380;
   var BRAND_DETAILS_TITLE_BASE = 'Tell me about yourself';
+  var brandCurrentStep = 0;
 
   function updateSnackbarStackState() {
     if (!signupSnackbarStack) return;
@@ -334,6 +341,9 @@
 
   bindLiveFieldValidation(signupForm);
   bindLiveFieldValidation(brandDetailsForm);
+  if (brandSlides.length) {
+    setBrandStep(0, false);
+  }
   if (signupSnackbarStack) {
     signupSnackbarStack.addEventListener('mouseenter', function () {
       isSnackbarStackExpanded = true;
@@ -371,8 +381,7 @@
     brandDetailsModal.classList.add('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
-    var firstField = brandDetailsForm ? brandDetailsForm.querySelector('input, select') : null;
-    if (firstField) firstField.focus();
+    setBrandStep(0, true);
   }
 
   function getSignupDisplayName() {
@@ -394,6 +403,73 @@
     nameSpan.className = 'brand-details-title-name';
     nameSpan.textContent = displayName;
     brandDetailsTitle.appendChild(nameSpan);
+  }
+
+  function getBrandStepFirstField(stepIndex) {
+    if (!brandSlides.length || stepIndex < 0 || stepIndex >= brandSlides.length) return null;
+    var step = brandSlides[stepIndex];
+    return step ? step.querySelector('input, select, textarea') : null;
+  }
+
+  function updateBrandStepUI() {
+    var total = brandSlides.length || 1;
+    if (brandStepPill) {
+      var labels = ['Company', 'Location', 'Online'];
+      var suffix = labels[brandCurrentStep] ? ' - ' + labels[brandCurrentStep] : '';
+      brandStepPill.textContent = 'Step ' + (brandCurrentStep + 1) + ' of ' + total + suffix;
+    }
+    if (brandStepDots.length) {
+      brandStepDots.forEach(function (dot, index) {
+        dot.classList.toggle('is-active', index === brandCurrentStep);
+      });
+    }
+    if (brandStepBackBtn) {
+      brandStepBackBtn.style.display = brandCurrentStep === 0 ? 'none' : '';
+    }
+    if (brandStepNextBtn) {
+      brandStepNextBtn.style.display = brandCurrentStep >= total - 1 ? 'none' : '';
+    }
+    if (brandStepSubmitBtn) {
+      brandStepSubmitBtn.style.display = brandCurrentStep >= total - 1 ? '' : 'none';
+    }
+  }
+
+  function setBrandStep(index, shouldFocus) {
+    if (!brandSlides.length) return;
+    var target = Math.max(0, Math.min(index, brandSlides.length - 1));
+    brandCurrentStep = target;
+    brandSlides.forEach(function (slide, slideIndex) {
+      slide.classList.toggle('is-active', slideIndex === brandCurrentStep);
+    });
+    updateBrandStepUI();
+    if (!shouldFocus) return;
+    var firstField = getBrandStepFirstField(brandCurrentStep);
+    if (firstField && typeof firstField.focus === 'function') firstField.focus();
+  }
+
+  function validateBrandStep(stepIndex) {
+    if (!brandSlides.length || stepIndex < 0 || stepIndex >= brandSlides.length) {
+      return { isValid: true, firstInvalid: null, invalidFields: [] };
+    }
+    var controls = brandSlides[stepIndex].querySelectorAll('input, select, textarea');
+    var firstInvalid = null;
+    var invalidFields = [];
+    controls.forEach(function (control) {
+      if (!control || control.disabled) return;
+      var type = (control.type || '').toLowerCase();
+      if (type === 'hidden' || type === 'button' || type === 'submit' || type === 'reset') return;
+      var isInvalid = !control.checkValidity();
+      setFieldErrorState(control, isInvalid);
+      if (isInvalid) {
+        invalidFields.push(control);
+        if (!firstInvalid) firstInvalid = control;
+      }
+    });
+    return {
+      isValid: !firstInvalid,
+      firstInvalid: firstInvalid,
+      invalidFields: invalidFields
+    };
   }
 
   function closeBrandDetailsModal() {
@@ -804,8 +880,8 @@
         actionLabel: 'Done'
       });
       setTimeout(function () {
-        var isCreatorAccount = field && field.value === 'creator';
-        if (isCreatorAccount) {
+        var isBrandAccount = field && field.value === 'brand';
+        if (isBrandAccount) {
           closeOtpModal(true);
           openBrandDetailsModal();
           return;
@@ -867,6 +943,36 @@
     });
   }
 
+  if (brandStepBackBtn) {
+    brandStepBackBtn.addEventListener('click', function () {
+      setBrandStep(brandCurrentStep - 1, true);
+    });
+  }
+
+  if (brandStepNextBtn) {
+    brandStepNextBtn.addEventListener('click', function () {
+      var stepValidation = validateBrandStep(brandCurrentStep);
+      if (!stepValidation.isValid) {
+        var stepSnack = getValidationSnackbarState(stepValidation, 'Please complete the required fields to continue.');
+        showSignupSnackbar({
+          type: stepSnack.type,
+          message: stepSnack.message,
+          actionLabel: 'Fix',
+          onAction: function () {
+            if (stepValidation.firstInvalid && typeof stepValidation.firstInvalid.focus === 'function') {
+              stepValidation.firstInvalid.focus();
+            }
+          }
+        });
+        if (stepValidation.firstInvalid && typeof stepValidation.firstInvalid.focus === 'function') {
+          stepValidation.firstInvalid.focus();
+        }
+        return;
+      }
+      setBrandStep(brandCurrentStep + 1, true);
+    });
+  }
+
   if (brandDetailsForm) {
     if (brandPhoneField) {
       brandPhoneField.addEventListener('input', function () {
@@ -875,6 +981,28 @@
     }
     brandDetailsForm.addEventListener('submit', function (event) {
       event.preventDefault();
+      if (brandSlides.length && brandCurrentStep < brandSlides.length - 1) {
+        var currentStepValidation = validateBrandStep(brandCurrentStep);
+        if (!currentStepValidation.isValid) {
+          var currentStepSnack = getValidationSnackbarState(currentStepValidation, 'Please complete the required fields to continue.');
+          showSignupSnackbar({
+            type: currentStepSnack.type,
+            message: currentStepSnack.message,
+            actionLabel: 'Fix',
+            onAction: function () {
+              if (currentStepValidation.firstInvalid && typeof currentStepValidation.firstInvalid.focus === 'function') {
+                currentStepValidation.firstInvalid.focus();
+              }
+            }
+          });
+          if (currentStepValidation.firstInvalid && typeof currentStepValidation.firstInvalid.focus === 'function') {
+            currentStepValidation.firstInvalid.focus();
+          }
+          return;
+        }
+        setBrandStep(brandCurrentStep + 1, true);
+        return;
+      }
       if (brandPhoneField) {
         brandPhoneField.value = sanitizePhoneNumberInput(brandPhoneField.value);
       }
