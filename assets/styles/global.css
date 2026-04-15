@@ -5103,6 +5103,10 @@ body.modal-open {
   -webkit-backdrop-filter: blur(10px) saturate(130%);
 }
 
+.fi-hero.section {
+  padding-top: 0;
+}
+
 .fi-hero .container::after {
   content: "";
   position: absolute;
