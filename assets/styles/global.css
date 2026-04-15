@@ -327,6 +327,26 @@ h2 {
   flex-shrink: 0;
 }
 
+@media (max-width: 1024px) and (min-width: 901px) {
+  .logo {
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  .logo-icon {
+    height: 30px;
+  }
+
+  .nav-links {
+    font-size: 13px;
+    gap: 6px 14px;
+  }
+
+  .nav-links a {
+    padding: 5px 8px;
+  }
+}
+
 @media (max-width: 900px) {
   .nav-wrap {
     z-index: 1300;
