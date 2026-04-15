@@ -96,6 +96,33 @@
     }
   }
 
+  function applyInitialModeFromQuery() {
+    var params = null;
+    try {
+      params = new URLSearchParams(window.location.search || '');
+    } catch (err) {
+      params = null;
+    }
+    if (!params) return;
+
+    var requestedType = (params.get('type') || '').toLowerCase().trim();
+    if (!requestedType) return;
+
+    var isBrand = requestedType === 'brand';
+    if (requestedType !== 'brand' && requestedType !== 'influencer' && requestedType !== 'creator') {
+      return;
+    }
+
+    tabs.forEach(function (t) {
+      var isBrandTab = t.id === 'tab-brand';
+      var shouldBeActive = isBrand ? isBrandTab : !isBrandTab;
+      t.classList.toggle('active', shouldBeActive);
+      t.setAttribute('aria-selected', shouldBeActive ? 'true' : 'false');
+    });
+    if (field) field.value = isBrand ? 'brand' : 'creator';
+    setMode(isBrand);
+  }
+
   function showSignupSnackbar(options) {
     if (!signupSnackbarStack) return;
     var data = options || {};
@@ -290,6 +317,7 @@
   }
 
   if (!tabs.length) return;
+  applyInitialModeFromQuery();
   tabs.forEach(function (btn, i) {
     btn.addEventListener('click', function () {
       tabs.forEach(function (t) {
