@@ -557,6 +557,10 @@
 }
 
 @media (max-width: 760px) {
+  .existence-block {
+    padding-top: 36px;
+  }
+
   .existence-grid {
     grid-template-columns: 1fr;
   }
@@ -923,6 +927,12 @@
 
   .kpc-visual {
     height: 360px;
+  }
+}
+
+@media (max-width: 760px) {
+  .kpc-block {
+    padding-bottom: 40px;
   }
 }
 
