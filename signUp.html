@@ -33,7 +33,7 @@
 
             <div class="signup-inline-metrics" id="signup-inline-metrics">
               <div class="signup-inline-metrics-inner">
-                <div class="signup-notch-cluster signup-notch-cluster--inline is-active" data-inline-mode="creator" aria-hidden="false">
+                <div class="signup-notch-cluster signup-notch-cluster--inline" data-inline-mode="creator" aria-hidden="true">
                   <div class="signup-notch-card">
                     <div class="snc-card-head">
                       <span class="snc-card-eyebrow">Network snapshot</span>
@@ -61,7 +61,7 @@
                     <span class="live-pill-text">Live platform</span>
                   </div>
                 </div>
-                <div class="signup-notch-cluster signup-notch-cluster--inline" data-inline-mode="brand" aria-hidden="true">
+                <div class="signup-notch-cluster signup-notch-cluster--inline is-active" data-inline-mode="brand" aria-hidden="false">
                   <div class="signup-notch-card">
                     <div class="snc-card-head">
                       <span class="snc-card-eyebrow">Network snapshot</span>
@@ -93,18 +93,18 @@
             </div>
 
             <div class="signup-toggle" role="tablist" aria-label="Choose account type">
-              <button class="toggle-item" type="button" role="tab" id="tab-brand" aria-selected="false" aria-controls="signup-form-panel">
+              <button class="toggle-item active" type="button" role="tab" id="tab-brand" aria-selected="true" aria-controls="signup-form-panel">
                 <span class="toggle-label-desktop">I'm a Brand</span>
                 <span class="toggle-label-mobile">Brand</span>
               </button>
-              <button class="toggle-item active" type="button" role="tab" id="tab-creator" aria-selected="true" aria-controls="signup-form-panel">
+              <button class="toggle-item" type="button" role="tab" id="tab-creator" aria-selected="false" aria-controls="signup-form-panel">
                 <span class="toggle-label-desktop">I'm an Influencer</span>
                 <span class="toggle-label-mobile">Influencer</span>
               </button>
             </div>
 
             <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate>
-              <input type="hidden" name="account_type" id="account-type-field" value="creator" />
+              <input type="hidden" name="account_type" id="account-type-field" value="brand" />
 
               <div class="input-row">
                 <label>
@@ -178,9 +178,9 @@
 
           <!-- RIGHT: 3D flip — creator vs brand image + copy -->
           <div class="signup-visual">
-            <div class="signup-card-wrap" id="signup-visual-card" data-mode="creator">
+            <div class="signup-card-wrap signup-card-wrap--brand" id="signup-visual-card" data-mode="brand">
               <div class="signup-card-flipper">
-                <div class="signup-flip-face signup-flip-face--creator" data-flip-side="creator">
+                <div class="signup-flip-face signup-flip-face--creator" data-flip-side="creator" aria-hidden="true">
                   <div class="signup-notch-cluster">
                     <div class="signup-notch-card">
                       <div class="snc-card-head">
@@ -223,7 +223,7 @@
                   </div>
                 </div>
 
-                <div class="signup-flip-face signup-flip-face--brand" data-flip-side="brand" aria-hidden="true">
+                <div class="signup-flip-face signup-flip-face--brand" data-flip-side="brand">
                   <div class="signup-notch-cluster">
                     <div class="signup-notch-card">
                       <div class="snc-card-head">
