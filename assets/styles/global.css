@@ -348,6 +348,14 @@ h2 {
 }
 
 @media (max-width: 900px) {
+  .logo {
+    gap: 8px;
+  }
+
+  .logo-icon {
+    height: 24px;
+  }
+
   .nav-wrap {
     z-index: 1300;
   }
@@ -4687,7 +4695,7 @@ body.modal-open {
   }
 
   .footer-wordmark-bg {
-    padding-bottom: 96px;
+    padding-bottom: 240px;
   }
 
   .float-card {
