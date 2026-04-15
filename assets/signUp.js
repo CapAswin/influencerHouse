@@ -298,7 +298,7 @@
       });
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
-      var isBrand = i === 1;
+      var isBrand = btn.id === 'tab-brand';
       if (field) field.value = isBrand ? 'brand' : 'creator';
       setMode(isBrand);
     });
