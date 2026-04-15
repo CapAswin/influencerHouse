@@ -108,6 +108,11 @@ img {
   border-radius: inherit;
 }
 
+p {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
 .container {
   width: var(--container);
   margin: 0 auto;
@@ -4628,6 +4633,11 @@ body.modal-open {
     margin-inline: auto;
   }
 
+  p {
+    font-size: 14px;
+    line-height: 1.58;
+  }
+
   .cta {
     flex-direction: column;
     align-items: flex-start;
@@ -4751,6 +4761,11 @@ body.modal-open {
 @media (max-width: 760px) {
   .container {
     width: min(1140px, calc(100% - 24px));
+  }
+
+  p {
+    font-size: 13px !important;
+    line-height: 1.54;
   }
 
   .stats {
@@ -4887,6 +4902,11 @@ body.modal-open {
 }
 
 @media (max-width: 480px) {
+  p {
+    font-size: 12.5px !important;
+    line-height: 1.5;
+  }
+
   .card-views,
   .card-verified,
   .card-roi {
