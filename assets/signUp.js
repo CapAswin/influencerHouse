@@ -16,6 +16,7 @@
   var otpFeedback = document.getElementById('otp-feedback');
   var otpResendBtn = document.getElementById('otp-resend-btn');
   var brandDetailsModal = document.getElementById('brand-details-modal');
+  var brandDetailsTitle = document.getElementById('brand-details-title');
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
   var welcomeAccessModal = document.getElementById('welcome-access-modal');
@@ -43,6 +44,7 @@
   var MAX_SNACKBARS = 3;
   var SNACKBAR_EXIT_MS = 320;
   var SNACKBAR_OVERFLOW_EXIT_MS = 380;
+  var BRAND_DETAILS_TITLE_BASE = 'Tell me about yourself';
 
   function updateSnackbarStackState() {
     if (!signupSnackbarStack) return;
@@ -337,11 +339,33 @@
 
   function openBrandDetailsModal() {
     if (!brandDetailsModal) return;
+    syncBrandDetailsTitle();
     brandDetailsModal.classList.add('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
     var firstField = brandDetailsForm ? brandDetailsForm.querySelector('input, select') : null;
     if (firstField) firstField.focus();
+  }
+
+  function getSignupDisplayName() {
+    if (!signupForm) return '';
+    var firstNameField = signupForm.querySelector('[name="given_name"]');
+    var lastNameField = signupForm.querySelector('[name="family_name"]');
+    var firstName = firstNameField && firstNameField.value ? firstNameField.value.trim() : '';
+    var lastName = lastNameField && lastNameField.value ? lastNameField.value.trim() : '';
+    return (firstName + ' ' + lastName).trim();
+  }
+
+  function syncBrandDetailsTitle() {
+    if (!brandDetailsTitle) return;
+    var displayName = getSignupDisplayName();
+    brandDetailsTitle.textContent = BRAND_DETAILS_TITLE_BASE;
+    if (!displayName) return;
+    brandDetailsTitle.appendChild(document.createTextNode(' - '));
+    var nameSpan = document.createElement('span');
+    nameSpan.className = 'brand-details-title-name';
+    nameSpan.textContent = displayName;
+    brandDetailsTitle.appendChild(nameSpan);
   }
 
   function closeBrandDetailsModal() {
