@@ -4,8 +4,6 @@
   var visual = document.getElementById('signup-visual-card');
   var faceCreator = document.querySelector('.signup-flip-face--creator');
   var faceBrand = document.querySelector('.signup-flip-face--brand');
-  var inlineMetricsCreator = document.querySelector('.signup-notch-cluster--inline[data-inline-mode="creator"]');
-  var inlineMetricsBrand = document.querySelector('.signup-notch-cluster--inline[data-inline-mode="brand"]');
   var signupForm = document.getElementById('signup-form-panel');
   var passwordField = document.getElementById('password-field');
   var passwordConfirmField = document.getElementById('password-confirm-field');
@@ -16,25 +14,13 @@
   var otpFeedback = document.getElementById('otp-feedback');
   var otpResendBtn = document.getElementById('otp-resend-btn');
   var brandDetailsModal = document.getElementById('brand-details-modal');
-  var brandDetailsTitle = document.getElementById('brand-details-title');
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
-  var brandSlides = brandDetailsForm ? brandDetailsForm.querySelectorAll('.brand-slide') : [];
-  var brandStepPill = document.getElementById('brand-step-pill');
-  var brandStepDots = brandDetailsForm ? brandDetailsForm.querySelectorAll('[data-brand-dot]') : [];
-  var brandStepBackBtn = document.getElementById('brand-step-back-btn');
-  var brandStepNextBtn = document.getElementById('brand-step-next-btn');
-  var brandStepSubmitBtn = document.getElementById('brand-step-submit-btn');
-  var brandScrollHint = document.getElementById('brand-scroll-hint');
   var welcomeAccessModal = document.getElementById('welcome-access-modal');
   var welcomeAccessCloseBtn = document.getElementById('welcome-access-close-btn');
   var welcomeAccessDismissBtn = document.getElementById('welcome-access-dismiss-btn');
   var signupSnackbarStack = document.getElementById('signup-snackbar-stack');
   var brandPhoneField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_phone"]') : null;
-  var brandLogoField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_logo"]') : null;
-  var brandLogoPreview = document.getElementById('brand-logo-preview');
-  var brandLogoPreviewImg = document.getElementById('brand-logo-preview-img');
-  var brandLogoPreviewText = document.getElementById('brand-logo-preview-text');
   var brandCountryField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_country"]') : null;
   var brandCountryCodeField = document.getElementById('brand-country-code');
   var brandCountryCodeDisplay = document.getElementById('brand-country-code-display');
@@ -55,9 +41,6 @@
   var MAX_SNACKBARS = 3;
   var SNACKBAR_EXIT_MS = 320;
   var SNACKBAR_OVERFLOW_EXIT_MS = 380;
-  var BRAND_DETAILS_TITLE_BASE = 'Tell me about your';
-  var brandCurrentStep = 0;
-  var brandLogoPreviewObjectUrl = '';
 
   function updateSnackbarStackState() {
     if (!signupSnackbarStack) return;
@@ -117,41 +100,6 @@
       if (isBrand) faceBrand.removeAttribute('aria-hidden');
       else faceBrand.setAttribute('aria-hidden', 'true');
     }
-    if (inlineMetricsCreator) {
-      inlineMetricsCreator.classList.toggle('is-active', !isBrand);
-      inlineMetricsCreator.setAttribute('aria-hidden', isBrand ? 'true' : 'false');
-    }
-    if (inlineMetricsBrand) {
-      inlineMetricsBrand.classList.toggle('is-active', !!isBrand);
-      inlineMetricsBrand.setAttribute('aria-hidden', !isBrand ? 'true' : 'false');
-    }
-  }
-
-  function applyInitialModeFromQuery() {
-    var params = null;
-    try {
-      params = new URLSearchParams(window.location.search || '');
-    } catch (err) {
-      params = null;
-    }
-    if (!params) return;
-
-    var requestedType = (params.get('type') || '').toLowerCase().trim();
-    if (!requestedType) return;
-
-    var isBrand = requestedType === 'brand';
-    if (requestedType !== 'brand' && requestedType !== 'influencer' && requestedType !== 'creator') {
-      return;
-    }
-
-    tabs.forEach(function (t) {
-      var isBrandTab = t.id === 'tab-brand';
-      var shouldBeActive = isBrand ? isBrandTab : !isBrandTab;
-      t.classList.toggle('active', shouldBeActive);
-      t.setAttribute('aria-selected', shouldBeActive ? 'true' : 'false');
-    });
-    if (field) field.value = isBrand ? 'brand' : 'creator';
-    setMode(isBrand);
   }
 
   function showSignupSnackbar(options) {
@@ -246,7 +194,7 @@
     var firstInvalid = null;
     var invalidFields = [];
     controls.forEach(function (control) {
-      if (!control || control.disabled) return;
+      if (!control) return;
       var type = (control.type || '').toLowerCase();
       if (type === 'hidden' || type === 'button' || type === 'submit' || type === 'reset') return;
       var isInvalid = !control.checkValidity();
@@ -335,7 +283,7 @@
     if (!form) return;
     var controls = form.querySelectorAll('input, select, textarea');
     controls.forEach(function (control) {
-      if (!control || control.disabled) return;
+      if (!control) return;
       var type = (control.type || '').toLowerCase();
       if (type === 'hidden' || type === 'button' || type === 'submit' || type === 'reset') return;
       function updateState() {
@@ -348,7 +296,6 @@
   }
 
   if (!tabs.length) return;
-  applyInitialModeFromQuery();
   tabs.forEach(function (btn, i) {
     btn.addEventListener('click', function () {
       tabs.forEach(function (t) {
@@ -363,11 +310,14 @@
     });
   });
 
+  if (field && field.value === 'brand') {
+    setMode(true);
+  } else if (field && field.value === 'creator') {
+    setMode(false);
+  }
+
   bindLiveFieldValidation(signupForm);
   bindLiveFieldValidation(brandDetailsForm);
-  if (brandSlides.length) {
-    setBrandStep(0, false);
-  }
   if (signupSnackbarStack) {
     signupSnackbarStack.addEventListener('mouseenter', function () {
       isSnackbarStackExpanded = true;
@@ -401,92 +351,78 @@
 
   function openBrandDetailsModal() {
     if (!brandDetailsModal) return;
-    syncBrandDetailsTitle();
     brandDetailsModal.classList.add('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
-    if (brandDetailsForm) brandDetailsForm.scrollTop = 0;
-    setBrandStep(0, true);
-    setTimeout(updateBrandScrollHint, 0);
-  }
-
-  function syncBrandDetailsTitle() {
-    if (!brandDetailsTitle) return;
-    var signupBrandField = signupForm ? signupForm.querySelector('[name="brand_name"]') : null;
-    var signupBrandName = signupBrandField && signupBrandField.value
-      ? signupBrandField.value.trim()
-      : '';
-    var highlightedBrand = (signupBrandName || 'brand')
-      .toLowerCase()
-      .replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
-    brandDetailsTitle.textContent = BRAND_DETAILS_TITLE_BASE + ' ';
-    var highlightWord = document.createElement('span');
-    highlightWord.className = 'brand-details-title-name';
-    highlightWord.textContent = highlightedBrand;
-    brandDetailsTitle.appendChild(highlightWord);
-  }
-
-  function getBrandStepFirstField(stepIndex) {
-    if (!brandSlides.length || stepIndex < 0 || stepIndex >= brandSlides.length) return null;
-    var step = brandSlides[stepIndex];
-    return step ? step.querySelector('input, select, textarea') : null;
-  }
-
-  function updateBrandStepUI() {
-    var total = brandSlides.length || 1;
-    if (brandStepPill) {
-      var labels = ['Company', 'Location', 'Online'];
-      var suffix = labels[brandCurrentStep] ? ' - ' + labels[brandCurrentStep] : '';
-      brandStepPill.textContent = 'Step ' + (brandCurrentStep + 1) + ' of ' + total + suffix;
-    }
-    if (brandStepDots.length) {
-      brandStepDots.forEach(function (dot, index) {
-        dot.classList.toggle('is-active', index === brandCurrentStep);
-      });
-    }
-    if (brandStepBackBtn) {
-      brandStepBackBtn.disabled = brandCurrentStep === 0;
-    }
-    if (brandStepNextBtn) {
-      brandStepNextBtn.disabled = brandCurrentStep >= total - 1;
-    }
-    if (brandStepSubmitBtn) {
-      brandStepSubmitBtn.style.display = brandCurrentStep >= total - 1 ? '' : 'none';
-    }
-  }
-
-  function setBrandStep(index, shouldFocus) {
-    if (!brandSlides.length) return;
-    var target = Math.max(0, Math.min(index, brandSlides.length - 1));
-    brandCurrentStep = target;
-    brandSlides.forEach(function (slide, slideIndex) {
-      slide.classList.toggle('is-active', slideIndex === brandCurrentStep);
-    });
-    updateBrandStepUI();
-    updateBrandScrollHint();
-    if (!shouldFocus) return;
-    var firstField = getBrandStepFirstField(brandCurrentStep);
+    setBrandWizardStep(1);
+    if (!brandDetailsForm) return;
+    var activePanel = brandDetailsForm.querySelector('.brand-details-step.is-active');
+    var firstField = activePanel
+      ? activePanel.querySelector('input:not([type="file"]):not([disabled]), select:not([disabled])')
+      : null;
     if (firstField && typeof firstField.focus === 'function') firstField.focus();
   }
 
-  function updateBrandScrollHint() {
-    if (!brandDetailsForm || !brandScrollHint) return;
-    var hasOverflow = brandDetailsForm.scrollHeight > brandDetailsForm.clientHeight + 2;
-    var hasScrolled = brandDetailsForm.scrollTop > 6;
-    brandScrollHint.classList.toggle('is-hidden', !hasOverflow || hasScrolled);
+  function closeBrandDetailsModal() {
+    if (!brandDetailsModal) return;
+    brandDetailsModal.classList.remove('is-open');
+    brandDetailsModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
   }
 
-  function validateBrandStep(stepIndex) {
-    if (!brandSlides.length || stepIndex < 0 || stepIndex >= brandSlides.length) {
-      return { isValid: true, firstInvalid: null, invalidFields: [] };
-    }
-    var controls = brandSlides[stepIndex].querySelectorAll('input, select, textarea');
+  var brandIndustryCategoryMap = {
+    'Fashion and Beauty': ['Luxury', 'Streetwear', 'Beauty and cosmetics', 'Jewellery and watches', 'Retail chain'],
+    'Food and Beverage': ['Restaurant and dining', 'QSR', 'CPG and packaged goods', 'Cloud kitchen', 'Catering'],
+    Technology: ['Consumer electronics', 'SaaS and software', 'Fintech', 'Health tech', 'Gaming'],
+    'Travel and Hospitality': ['Hotels and resorts', 'Airlines', 'Experiences and tours', 'Travel tech'],
+    'Retail and E-commerce': ['Marketplace', 'D2C brand', 'Department store', 'Specialty retail'],
+    'Health and Wellness': ['Fitness', 'Medical and clinics', 'Nutrition and supplements', 'Spa and recovery'],
+    Automotive: ['OEM', 'Dealership', 'Aftermarket and accessories', 'EV and mobility'],
+    Other: ['General brand', 'Agency representing brands', 'Non-profit', 'Public sector']
+  };
+
+  var brandWizardStep = 1;
+  var brandWizardStepCount = 3;
+  var brandIndustrySelect = document.getElementById('brand-industry-select');
+  var brandCategorySelect = document.getElementById('brand-category-select');
+  var brandWizardBackBtn = document.getElementById('brand-wizard-back');
+  var brandWizardNextBtn = document.getElementById('brand-wizard-next');
+  var brandWizardSubmitBtn = document.getElementById('brand-wizard-submit');
+  var brandDetailsProgressBadge = document.getElementById('brand-details-progress-badge');
+  var brandDetailsProgressFill = document.getElementById('brand-details-progress-fill');
+
+  function getBrandWizardStepLabels() {
+    return ['Company & brand', 'Industry & location', 'Contact & online presence'];
+  }
+
+  function enableAllBrandWizardControls() {
+    if (!brandDetailsForm) return;
+    brandDetailsForm.querySelectorAll('.brand-details-step input, .brand-details-step select, .brand-details-step textarea').forEach(function (el) {
+      var t = (el.type || '').toLowerCase();
+      if (t === 'button' || t === 'submit' || t === 'reset') return;
+      el.disabled = false;
+    });
+  }
+
+  function validateBrandWizardStep(step) {
+    if (!brandDetailsForm) return { isValid: true, firstInvalid: null, invalidFields: [] };
+    var panel = brandDetailsForm.querySelector('.brand-details-step[data-step="' + step + '"]');
+    if (!panel) return { isValid: true, firstInvalid: null, invalidFields: [] };
+    var controls = panel.querySelectorAll('input, select, textarea');
     var firstInvalid = null;
     var invalidFields = [];
     controls.forEach(function (control) {
       if (!control || control.disabled) return;
       var type = (control.type || '').toLowerCase();
       if (type === 'hidden' || type === 'button' || type === 'submit' || type === 'reset') return;
+      if (type === 'file') {
+        var uploaded = control.files && control.files[0];
+        if (uploaded && uploaded.size > 5 * 1024 * 1024) {
+          control.setCustomValidity('Please choose an image under 5 MB.');
+        } else {
+          control.setCustomValidity('');
+        }
+      }
       var isInvalid = !control.checkValidity();
       setFieldErrorState(control, isInvalid);
       if (isInvalid) {
@@ -501,67 +437,84 @@
     };
   }
 
-  function validateBrandLogoFile() {
-    if (!brandLogoField) return true;
-    var allowedTypes = {
-      'image/jpeg': true,
-      'image/jpg': true,
-      'image/png': true,
-      'image/webp': true
-    };
-    var file = brandLogoField.files && brandLogoField.files.length ? brandLogoField.files[0] : null;
-    if (!file) {
-      brandLogoField.setCustomValidity('');
-      return true;
-    }
-    var fileName = (file.name || '').toLowerCase();
-    var hasAllowedExt = /\.(jpe?g|png|webp)$/.test(fileName);
-    var hasAllowedType = !!allowedTypes[(file.type || '').toLowerCase()];
-    if (hasAllowedExt || hasAllowedType) {
-      brandLogoField.setCustomValidity('');
-      return true;
-    }
-    brandLogoField.setCustomValidity('Only JPG, JPEG, PNG, or WEBP images are allowed.');
-    return false;
-  }
-
-  function clearBrandLogoPreview() {
-    if (brandLogoPreviewObjectUrl) {
-      URL.revokeObjectURL(brandLogoPreviewObjectUrl);
-      brandLogoPreviewObjectUrl = '';
-    }
-    if (brandLogoPreview) brandLogoPreview.classList.remove('has-image');
-    if (brandLogoPreviewImg) {
-      brandLogoPreviewImg.removeAttribute('src');
-      brandLogoPreviewImg.style.display = '';
-    }
-    if (brandLogoPreviewText) {
-      brandLogoPreviewText.textContent = 'Logo preview will appear here';
-    }
-  }
-
-  function updateBrandLogoPreview() {
-    if (!brandLogoField) return;
-    var file = brandLogoField.files && brandLogoField.files.length ? brandLogoField.files[0] : null;
-    if (!file) {
-      clearBrandLogoPreview();
+  function syncBrandCategoryOptions() {
+    if (!brandIndustrySelect || !brandCategorySelect) return;
+    var industry = brandIndustrySelect.value;
+    var categories = brandIndustryCategoryMap[industry];
+    brandCategorySelect.innerHTML = '';
+    if (!industry || !categories) {
+      var placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Select industry first';
+      placeholder.disabled = true;
+      placeholder.selected = true;
+      brandCategorySelect.appendChild(placeholder);
+      brandCategorySelect.disabled = true;
+      brandCategorySelect.required = false;
       return;
     }
-    if (brandLogoPreviewObjectUrl) {
-      URL.revokeObjectURL(brandLogoPreviewObjectUrl);
-      brandLogoPreviewObjectUrl = '';
-    }
-    brandLogoPreviewObjectUrl = URL.createObjectURL(file);
-    if (brandLogoPreviewImg) brandLogoPreviewImg.src = brandLogoPreviewObjectUrl;
-    if (brandLogoPreviewText) brandLogoPreviewText.textContent = file.name;
-    if (brandLogoPreview) brandLogoPreview.classList.add('has-image');
+    var first = document.createElement('option');
+    first.value = '';
+    first.textContent = 'Select brand category';
+    first.disabled = true;
+    first.selected = true;
+    brandCategorySelect.appendChild(first);
+    categories.forEach(function (name) {
+      var opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      brandCategorySelect.appendChild(opt);
+    });
+    brandCategorySelect.disabled = false;
+    brandCategorySelect.required = true;
   }
 
-  function closeBrandDetailsModal() {
-    if (!brandDetailsModal) return;
-    brandDetailsModal.classList.remove('is-open');
-    brandDetailsModal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
+  function setBrandWizardStep(step) {
+    if (!brandDetailsForm) return;
+    brandWizardStep = Math.max(1, Math.min(brandWizardStepCount, step));
+    var labels = getBrandWizardStepLabels();
+    var panels = brandDetailsForm.querySelectorAll('.brand-details-step');
+    panels.forEach(function (panel) {
+      var n = parseInt(panel.getAttribute('data-step'), 10);
+      var active = n === brandWizardStep;
+      panel.classList.toggle('is-active', active);
+      if (active) panel.removeAttribute('hidden');
+      else panel.setAttribute('hidden', '');
+
+      panel.querySelectorAll('input, select, textarea').forEach(function (el) {
+        var t = (el.type || '').toLowerCase();
+        if (t === 'button' || t === 'submit' || t === 'reset') return;
+        el.disabled = !active;
+      });
+    });
+
+    if (brandWizardStep === 2 && brandIndustrySelect && brandCategorySelect && !brandIndustrySelect.value) {
+      brandCategorySelect.disabled = true;
+      brandCategorySelect.required = false;
+    }
+
+    if (brandDetailsProgressBadge) {
+      brandDetailsProgressBadge.textContent =
+        'Step ' + brandWizardStep + ' of ' + brandWizardStepCount + ' · ' + (labels[brandWizardStep - 1] || '');
+    }
+    if (brandDetailsProgressFill) {
+      brandDetailsProgressFill.style.width = Math.round((100 * brandWizardStep) / brandWizardStepCount) + '%';
+    }
+
+    if (brandWizardBackBtn) {
+      brandWizardBackBtn.disabled = brandWizardStep === 1;
+    }
+    if (brandWizardNextBtn && brandWizardSubmitBtn) {
+      if (brandWizardStep === brandWizardStepCount) {
+        brandWizardNextBtn.hidden = true;
+        brandWizardSubmitBtn.hidden = false;
+      } else {
+        brandWizardNextBtn.hidden = false;
+        brandWizardSubmitBtn.hidden = true;
+      }
+    }
+
+    brandDetailsForm.setAttribute('data-wizard-step', String(brandWizardStep));
   }
 
   function openWelcomeAccessModal() {
@@ -967,11 +920,12 @@
       setTimeout(function () {
         var isBrandAccount = field && field.value === 'brand';
         if (isBrandAccount) {
-          closeOtpModal(true);
+          closeOtpModal();
           openBrandDetailsModal();
           return;
         }
-        closeOtpModal();
+        closeOtpModal(true);
+        openBrandDetailsModal();
       }, 800);
     });
   }
@@ -1028,58 +982,57 @@
     });
   }
 
-  if (brandStepBackBtn) {
-    brandStepBackBtn.addEventListener('click', function () {
-      setBrandStep(brandCurrentStep - 1, true);
-    });
+  if (brandIndustrySelect) {
+    brandIndustrySelect.addEventListener('change', syncBrandCategoryOptions);
+    syncBrandCategoryOptions();
   }
 
-  if (brandStepNextBtn) {
-    brandStepNextBtn.addEventListener('click', function () {
-      var stepValidation = validateBrandStep(brandCurrentStep);
-      if (!stepValidation.isValid) {
-        var stepSnack = getValidationSnackbarState(stepValidation, 'Please complete the required fields to continue.');
+  if (brandWizardNextBtn && brandDetailsForm) {
+    brandWizardNextBtn.addEventListener('click', function () {
+      var stepResult = validateBrandWizardStep(brandWizardStep);
+      if (!stepResult.isValid) {
+        var nextSnack = getValidationSnackbarState(stepResult, 'Please complete this step before continuing.');
         showSignupSnackbar({
-          type: stepSnack.type,
-          message: stepSnack.message,
+          type: nextSnack.type,
+          message: nextSnack.message,
           actionLabel: 'Fix',
           onAction: function () {
-            if (stepValidation.firstInvalid && typeof stepValidation.firstInvalid.focus === 'function') {
-              stepValidation.firstInvalid.focus();
+            if (stepResult.firstInvalid && typeof stepResult.firstInvalid.focus === 'function') {
+              stepResult.firstInvalid.focus();
             }
           }
         });
-        if (stepValidation.firstInvalid && typeof stepValidation.firstInvalid.focus === 'function') {
-          stepValidation.firstInvalid.focus();
+        if (stepResult.firstInvalid && typeof stepResult.firstInvalid.focus === 'function') {
+          stepResult.firstInvalid.focus();
         }
         return;
       }
-      setBrandStep(brandCurrentStep + 1, true);
-      if (brandDetailsForm) brandDetailsForm.scrollTop = 0;
-      updateBrandScrollHint();
+      setBrandWizardStep(brandWizardStep + 1);
+      var nextPanel = brandDetailsForm.querySelector('.brand-details-step.is-active');
+      var focusNext = nextPanel
+        ? nextPanel.querySelector('input:not([type="file"]):not([disabled]), select:not([disabled]), textarea:not([disabled])')
+        : null;
+      if (focusNext && typeof focusNext.focus === 'function') focusNext.focus();
     });
   }
 
+  if (brandWizardBackBtn && brandDetailsForm) {
+    brandWizardBackBtn.addEventListener('click', function () {
+      if (brandWizardStep <= 1) return;
+      setBrandWizardStep(brandWizardStep - 1);
+      var prevPanel = brandDetailsForm.querySelector('.brand-details-step.is-active');
+      var focusPrev = prevPanel
+        ? prevPanel.querySelector('input:not([type="file"]):not([disabled]), select:not([disabled]), textarea:not([disabled])')
+        : null;
+      if (focusPrev && typeof focusPrev.focus === 'function') focusPrev.focus();
+    });
+  }
+
+  if (brandDetailsForm && brandWizardNextBtn) {
+    setBrandWizardStep(1);
+  }
+
   if (brandDetailsForm) {
-    brandDetailsForm.addEventListener('scroll', updateBrandScrollHint, { passive: true });
-    if (brandLogoField) {
-      brandLogoField.addEventListener('change', function () {
-        var isValidFile = validateBrandLogoFile();
-        if (!isValidFile) {
-          brandLogoField.value = '';
-          clearBrandLogoPreview();
-          setFieldErrorState(brandLogoField, true);
-          showSignupSnackbar({
-            type: 'error',
-            message: 'Please upload an image file: JPG, JPEG, PNG, or WEBP.',
-            actionLabel: 'OK'
-          });
-          return;
-        }
-        updateBrandLogoPreview();
-        setFieldErrorState(brandLogoField, false);
-      });
-    }
     if (brandPhoneField) {
       brandPhoneField.addEventListener('input', function () {
         brandPhoneField.value = sanitizePhoneNumberInput(brandPhoneField.value);
@@ -1087,31 +1040,7 @@
     }
     brandDetailsForm.addEventListener('submit', function (event) {
       event.preventDefault();
-      validateBrandLogoFile();
-      if (brandSlides.length && brandCurrentStep < brandSlides.length - 1) {
-        var currentStepValidation = validateBrandStep(brandCurrentStep);
-        if (!currentStepValidation.isValid) {
-          var currentStepSnack = getValidationSnackbarState(currentStepValidation, 'Please complete the required fields to continue.');
-          showSignupSnackbar({
-            type: currentStepSnack.type,
-            message: currentStepSnack.message,
-            actionLabel: 'Fix',
-            onAction: function () {
-              if (currentStepValidation.firstInvalid && typeof currentStepValidation.firstInvalid.focus === 'function') {
-                currentStepValidation.firstInvalid.focus();
-              }
-            }
-          });
-          if (currentStepValidation.firstInvalid && typeof currentStepValidation.firstInvalid.focus === 'function') {
-            currentStepValidation.firstInvalid.focus();
-          }
-          return;
-        }
-        setBrandStep(brandCurrentStep + 1, true);
-        if (brandDetailsForm) brandDetailsForm.scrollTop = 0;
-        updateBrandScrollHint();
-        return;
-      }
+      enableAllBrandWizardControls();
       if (brandPhoneField) {
         brandPhoneField.value = sanitizePhoneNumberInput(brandPhoneField.value);
       }

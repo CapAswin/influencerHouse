@@ -6,7 +6,6 @@
   <title>Sign Up – Opulent Influencers House</title>
   <link rel="icon" type="image/png" href="assets/images/fav.png" />
   <link rel="stylesheet" href="assets/styles/global.css" />
-  <link rel="stylesheet" href="assets/styles/signUp.css" />
 </head>
 <body class="signup-page">
   <main class="signup-main">
@@ -31,76 +30,9 @@
             <h1>Where Influence Meets <em>Measurable Growth.</em></h1>
             <p class="signup-copy">Connect with 2,500+ verified creators and 340+ brand partners across UAE &amp; GCC. The region's most trusted influencer infrastructure platform.</p>
 
-            <div class="signup-inline-metrics" id="signup-inline-metrics">
-              <div class="signup-inline-metrics-inner">
-                <div class="signup-notch-cluster signup-notch-cluster--inline" data-inline-mode="creator" aria-hidden="true">
-                  <div class="signup-notch-card">
-                    <div class="snc-card-head">
-                      <span class="snc-card-eyebrow">Network snapshot</span>
-                    </div>
-                    <div class="snc-stats" role="group" aria-label="Platform metrics">
-                      <div class="snc-stat">
-                        <strong>2.5K+</strong>
-                        <span>Creators</span>
-                      </div>
-                      <div class="snc-divider" aria-hidden="true"></div>
-                      <div class="snc-stat">
-                        <strong>340+</strong>
-                        <span>Brands</span>
-                      </div>
-                      <div class="snc-divider" aria-hidden="true"></div>
-                      <div class="snc-stat">
-                        <strong>91%</strong>
-                        <span>Retention</span>
-                      </div>
-                    </div>
-                    <div class="snc-footer">Opulent Influencers House</div>
-                  </div>
-                  <div class="signup-live-pill">
-                    <span class="live-pill-dot" aria-hidden="true"></span>
-                    <span class="live-pill-text">Live platform</span>
-                  </div>
-                </div>
-                <div class="signup-notch-cluster signup-notch-cluster--inline is-active" data-inline-mode="brand" aria-hidden="false">
-                  <div class="signup-notch-card">
-                    <div class="snc-card-head">
-                      <span class="snc-card-eyebrow">Network snapshot</span>
-                    </div>
-                    <div class="snc-stats" role="group" aria-label="Platform metrics">
-                      <div class="snc-stat">
-                        <strong>340+</strong>
-                        <span>Brands</span>
-                      </div>
-                      <div class="snc-divider" aria-hidden="true"></div>
-                      <div class="snc-stat">
-                        <strong>2.5K+</strong>
-                        <span>Creators</span>
-                      </div>
-                      <div class="snc-divider" aria-hidden="true"></div>
-                      <div class="snc-stat">
-                        <strong>91%</strong>
-                        <span>Retention</span>
-                      </div>
-                    </div>
-                    <div class="snc-footer">Opulent Influencers House</div>
-                  </div>
-                  <div class="signup-live-pill">
-                    <span class="live-pill-dot" aria-hidden="true"></span>
-                    <span class="live-pill-text">Live platform</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div class="signup-toggle" role="tablist" aria-label="Choose account type">
-              <button class="toggle-item active" type="button" role="tab" id="tab-brand" aria-selected="true" aria-controls="signup-form-panel">
-                <span class="toggle-label-desktop">I'm a Brand</span>
-                <span class="toggle-label-mobile">Brand</span>
-              </button>
-              <button class="toggle-item" type="button" role="tab" id="tab-creator" aria-selected="false" aria-controls="signup-form-panel">
-                <span class="toggle-label-desktop">I'm an Influencer</span>
-                <span class="toggle-label-mobile">Influencer</span>
-              </button>
+              <button class="toggle-item active" type="button" role="tab" id="tab-brand" aria-selected="true" aria-controls="signup-form-panel">I'm a Brand</button>
+              <button class="toggle-item" type="button" role="tab" id="tab-creator" aria-selected="false" aria-controls="signup-form-panel">I'm a Creator</button>
             </div>
 
             <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate data-account-mode="brand">
@@ -186,7 +118,7 @@
           </div>
 
           <!-- RIGHT: 3D flip — creator vs brand image + copy -->
-          <div class="signup-visual">
+            <div class="signup-visual">
             <div class="signup-card-wrap signup-card-wrap--brand" id="signup-visual-card" data-mode="brand">
               <div class="signup-card-flipper">
                 <div class="signup-flip-face signup-flip-face--creator" data-flip-side="creator" aria-hidden="true">
@@ -310,175 +242,190 @@
   <div id="brand-details-modal" class="brand-details-modal" aria-hidden="true">
     <div class="brand-details-backdrop"></div>
     <section class="brand-details-card" role="dialog" aria-modal="true" aria-labelledby="brand-details-title">
-      <button type="button" class="brand-details-close" id="brand-details-close-btn" aria-label="Close influencer registration">
+      <button type="button" class="brand-details-close" id="brand-details-close-btn" aria-label="Close brand registration">
         <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"></path>
         </svg>
       </button>
-      <h2 id="brand-details-title">Tell me about your brand</h2>
-      <p class="brand-details-subtitle">Complete your brand profile in 3 quick steps.</p>
-      <div class="brand-step-pill" id="brand-step-pill">Step 1 of 3 - Company</div>
-      <div class="brand-step-dots" aria-hidden="true">
-        <span class="brand-step-dot is-active" data-brand-dot="0"></span>
-        <span class="brand-step-dot" data-brand-dot="1"></span>
-        <span class="brand-step-dot" data-brand-dot="2"></span>
+      <h2 id="brand-details-title">Tell us about your company</h2>
+      <p class="brand-details-lead">Share a few details so we can set up your brand workspace. Use <strong>Next</strong> to move through each step.</p>
+
+      <div class="brand-details-progress" aria-hidden="false">
+        <p class="brand-details-progress-badge" id="brand-details-progress-badge">Step 1 of 3 · Company &amp; brand</p>
+        <div class="brand-details-progress-track" aria-hidden="true">
+          <span class="brand-details-progress-fill" id="brand-details-progress-fill" style="width: 33.3333%"></span>
+        </div>
       </div>
 
-      <form id="brand-details-form" class="brand-details-form" novalidate>
-        <div class="brand-slides" id="brand-slides">
-          <section class="brand-slide is-active" data-brand-step="0">
-            <h3>Company &amp; brand</h3>
+      <form id="brand-details-form" class="brand-details-form brand-details-form--wizard" novalidate data-wizard-step="1">
+        <div class="brand-details-steps-scroll">
+        <div class="brand-details-step is-active" data-step="1" role="region" aria-labelledby="bd-step-1-label">
+          <p class="brand-details-step-label" id="bd-step-1-label">Company &amp; brand</p>
+          <p class="brand-details-step-hint">Logo, legal name, size, and how you operate</p>
 
-            <label>
-              <span>Company logo</span>
-              <div class="brand-logo-upload-box">
-                <input type="file" name="brand_logo" accept=".jpg,.jpeg,.png,.webp" />
-                <div class="brand-logo-preview" id="brand-logo-preview" aria-live="polite">
-                  <img id="brand-logo-preview-img" alt="Selected company logo preview" />
-                  <span id="brand-logo-preview-text">Logo preview will appear here</span>
-                </div>
-              </div>
+          <div class="brand-logo-field">
+            <span class="brand-logo-field-title">Company logo</span>
+            <label class="brand-logo-upload">
+              <input type="file" name="company_logo" accept="image/png,image/jpeg,image/webp" />
+              <span class="brand-logo-upload-inner" aria-hidden="true">
+                <span class="brand-logo-upload-icon">+</span>
+                <span class="brand-logo-upload-text">Tap to upload logo</span>
+                <span class="brand-logo-upload-meta">PNG, JPG or WebP · up to 5&nbsp;MB</span>
+              </span>
             </label>
+          </div>
 
-            <label>
-              <span>Company size</span>
-              <select name="brand_company_size" required>
-                <option value="" selected disabled>Select company size</option>
-                <option value="1-10">1-10 employees</option>
-                <option value="11-50">11-50 employees</option>
-                <option value="51-200">51-200 employees</option>
-                <option value="201-500">201-500 employees</option>
-                <option value="500+">500+ employees</option>
-              </select>
-            </label>
+          <label>
+            <span>Company name</span>
+            <input type="text" name="company_name" placeholder="Enter your text" autocomplete="organization" required />
+          </label>
 
-            <label>
-              <span>Company type</span>
-              <select name="brand_company_type" required>
-                <option value="" selected disabled>Select company type</option>
-                <option value="Agency">Agency</option>
-                <option value="E-commerce">E-commerce</option>
-                <option value="SME">SME</option>
-                <option value="Enterprise">Enterprise</option>
-                <option value="Startup">Startup</option>
-              </select>
-            </label>
+          <label>
+            <span>Company size</span>
+            <select name="company_size" required>
+              <option value="" selected disabled>Select company size</option>
+              <option value="1-10">1 – 10 employees</option>
+              <option value="11-50">11 – 50 employees</option>
+              <option value="51-200">51 – 200 employees</option>
+              <option value="201-500">201 – 500 employees</option>
+              <option value="500+">500+ employees</option>
+            </select>
+          </label>
 
-            <label>
-              <span>Brand name</span>
-              <input type="text" name="brand_name" placeholder="Enter brand name" required />
-            </label>
+          <label>
+            <span>Company type</span>
+            <select name="company_type" required>
+              <option value="" selected disabled>Select company type</option>
+              <option value="brand">Brand</option>
+              <option value="agency">Agency</option>
+              <option value="enterprise">Enterprise</option>
+              <option value="d2c">D2C / e-commerce</option>
+              <option value="marketplace">Marketplace</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
 
-            <label>
-              <span>Year of establishment</span>
-              <input type="number" name="brand_year_established" min="1900" max="2099" step="1" placeholder="Enter year" required />
-            </label>
+          <label>
+            <span>Brand name</span>
+            <input type="text" name="brand_profile_name" placeholder="Enter your text" autocomplete="organization" required />
+          </label>
 
-            <label>
-              <span>Industry</span>
-              <select name="brand_industry" required>
-                <option value="" selected disabled>Select industry</option>
-                <option value="Fashion">Fashion</option>
-                <option value="Beauty">Beauty</option>
-                <option value="Technology">Technology</option>
-                <option value="Food & Beverage">Food &amp; Beverage</option>
-                <option value="Travel">Travel</option>
-                <option value="Finance">Finance</option>
-                <option value="Health & Wellness">Health &amp; Wellness</option>
-                <option value="Real Estate">Real Estate</option>
-              </select>
-            </label>
-
-            <label>
-              <span>Brand category</span>
-              <input type="text" name="brand_category" placeholder="Enter category" required />
-            </label>
-          </section>
-
-          <section class="brand-slide" data-brand-step="1">
-            <h3>Location details</h3>
-
-            <label>
-              <span>Phone</span>
-              <div class="brand-phone-wrap">
-                <div class="brand-code-select" id="brand-code-select">
-                  <input id="brand-country-code-display" class="brand-phone-code-input" type="text" placeholder="Select code" autocomplete="off" readonly required />
-                  <input id="brand-country-code" type="hidden" name="brand_country_code" />
-                  <button type="button" class="brand-code-toggle" id="brand-code-toggle" aria-label="Toggle country code list">
-                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                  </button>
-                  <div id="brand-country-code-dropdown" class="brand-code-dropdown" role="listbox" aria-label="Country codes">
-                    <div class="brand-code-search-wrap">
-                      <input id="brand-country-code-search" class="brand-code-search-input" type="text" placeholder="Search country or code" autocomplete="off" />
-                    </div>
-                    <div id="brand-country-code-results"></div>
-                  </div>
-                </div>
-                <input type="tel" name="brand_phone" inputmode="tel" placeholder="Enter your phone number" autocomplete="tel" required />
-              </div>
-            </label>
-
-            <label>
-              <span>Country</span>
-              <select name="brand_country" required>
-                <option value="" selected disabled>Select country</option>
-              </select>
-            </label>
-
-            <label>
-              <span>Emirate / Province</span>
-              <select name="brand_province" required>
-                <option value="" selected disabled>Select province</option>
-                <option value="Abu Dhabi">Abu Dhabi</option>
-                <option value="Dubai">Dubai</option>
-                <option value="Sharjah">Sharjah</option>
-                <option value="Ajman">Ajman</option>
-                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                <option value="Fujairah">Fujairah</option>
-                <option value="Umm Al Quwain">Umm Al Quwain</option>
-              </select>
-            </label>
-
-            <label>
-              <span>City</span>
-              <input type="text" name="brand_city" placeholder="Enter your city" autocomplete="address-level2" required />
-            </label>
-          </section>
-
-          <section class="brand-slide" data-brand-step="2">
-            <h3>Online &amp; description</h3>
-
-            <label>
-              <span>Company website</span>
-              <input type="url" name="brand_website" placeholder="https://example.com" autocomplete="url" required />
-            </label>
-
-            <label>
-              <span>Company bio</span>
-              <textarea name="brand_bio" rows="4" placeholder="Tell us about your brand" required></textarea>
-            </label>
-
-            <label>
-              <span>Company address</span>
-              <textarea name="brand_address" rows="3" placeholder="Enter company address" required></textarea>
-            </label>
-          </section>
+          <label>
+            <span>Year of establishment</span>
+            <input type="number" name="year_established" inputmode="numeric" min="1800" max="2026" placeholder="e.g. 2018" required />
+          </label>
         </div>
 
+        <div class="brand-details-step" data-step="2" role="region" aria-labelledby="bd-step-2-label" hidden>
+          <p class="brand-details-step-label" id="bd-step-2-label">Industry &amp; location</p>
+          <p class="brand-details-step-hint">Sector, category, and where you are based</p>
+
+          <label>
+            <span>Industry</span>
+            <select name="industry" id="brand-industry-select" required>
+              <option value="" selected disabled>Select industry</option>
+              <option value="Fashion and Beauty">Fashion and Beauty</option>
+              <option value="Food and Beverage">Food and Beverage</option>
+              <option value="Technology">Technology</option>
+              <option value="Travel and Hospitality">Travel and Hospitality</option>
+              <option value="Retail and E-commerce">Retail and E-commerce</option>
+              <option value="Health and Wellness">Health and Wellness</option>
+              <option value="Automotive">Automotive</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Brand category</span>
+            <select name="brand_category" id="brand-category-select" disabled>
+              <option value="">Select industry first</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Country</span>
+            <select name="brand_country" required>
+              <option value="" selected disabled>Select country</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Emirate / state</span>
+            <select name="brand_province" required>
+              <option value="" selected disabled>Select emirate</option>
+              <option value="Abu Dhabi">Abu Dhabi</option>
+              <option value="Dubai">Dubai</option>
+              <option value="Sharjah">Sharjah</option>
+              <option value="Ajman">Ajman</option>
+              <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+              <option value="Fujairah">Fujairah</option>
+              <option value="Umm Al Quwain">Umm Al Quwain</option>
+              <option value="Other">Other / outside UAE</option>
+            </select>
+          </label>
+
+          <label>
+            <span>City</span>
+            <input type="text" name="brand_city" placeholder="Enter your text" autocomplete="address-level2" required />
+          </label>
+        </div>
+
+        <div class="brand-details-step" data-step="3" role="region" aria-labelledby="bd-step-3-label" hidden>
+          <p class="brand-details-step-label" id="bd-step-3-label">Contact &amp; online presence</p>
+          <p class="brand-details-step-hint">Primary contact, phone, and public-facing links</p>
+
+          <label>
+            <span>Contact name</span>
+            <input type="text" name="brand_contact_name" placeholder="Enter your full name" autocomplete="name" required />
+          </label>
+
+          <label>
+            <span>Phone</span>
+            <div class="brand-phone-wrap">
+              <div class="brand-code-select" id="brand-code-select">
+                <input id="brand-country-code-display" class="brand-phone-code-input" type="text" placeholder="Select code" autocomplete="off" readonly required />
+                <input id="brand-country-code" type="hidden" name="brand_country_code" />
+                <button type="button" class="brand-code-toggle" id="brand-code-toggle" aria-label="Toggle country code list">
+                  <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+                <div id="brand-country-code-dropdown" class="brand-code-dropdown" role="listbox" aria-label="Country codes">
+                  <div class="brand-code-search-wrap">
+                    <input id="brand-country-code-search" class="brand-code-search-input" type="text" placeholder="Search country or code" autocomplete="off" />
+                  </div>
+                  <div id="brand-country-code-results"></div>
+                </div>
+              </div>
+              <input type="tel" name="brand_phone" inputmode="tel" placeholder="Enter your phone number" autocomplete="tel" required />
+            </div>
+          </label>
+
+          <label>
+            <span>Company website</span>
+            <input type="url" name="company_website" placeholder="https://..." autocomplete="url" />
+          </label>
+
+          <label>
+            <span>Company bio</span>
+            <textarea name="company_bio" rows="3" placeholder="Tell us about your brand in a few sentences"></textarea>
+          </label>
+
+          <label>
+            <span>Company address</span>
+            <textarea name="company_address" rows="3" placeholder="Registered or office address"></textarea>
+          </label>
+        </div>
+        </div>
+
+        <div class="brand-details-wizard-nav">
+          <button type="button" class="btn brand-details-back-btn" id="brand-wizard-back" disabled>Back</button>
+          <div class="brand-details-wizard-nav-primary">
+            <button type="button" class="btn btn-gold brand-details-next-btn" id="brand-wizard-next">Next</button>
+            <button type="submit" class="btn btn-gold brand-details-submit-btn" id="brand-wizard-submit" hidden>Submit</button>
+          </div>
+        </div>
       </form>
-      <div class="brand-step-actions">
-        <button type="button" class="brand-step-btn brand-step-btn-secondary" id="brand-step-back-btn">Back</button>
-        <button type="button" class="brand-step-btn brand-step-btn-primary" id="brand-step-next-btn">Next</button>
-        <button type="submit" form="brand-details-form" class="btn btn-gold brand-details-submit" id="brand-step-submit-btn">Submit</button>
-      </div>
-      <div class="brand-scroll-hint" id="brand-scroll-hint" aria-hidden="true">
-        <span>Scroll down</span>
-        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </div>
     </section>
   </div>
 
