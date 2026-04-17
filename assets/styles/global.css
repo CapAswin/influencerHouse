@@ -2145,6 +2145,11 @@ h1 em {
   gap: 8px;
 }
 
+.signup-form[data-account-mode="brand"] .signup-name-creator,
+.signup-form[data-account-mode="creator"] .signup-name-brand {
+  display: none;
+}
+
 .input-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

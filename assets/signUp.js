@@ -70,6 +70,24 @@
   }
 
   function setMode(isBrand) {
+    if (signupForm) {
+      signupForm.setAttribute('data-account-mode', isBrand ? 'brand' : 'creator');
+    }
+    var brandNameInput = signupForm ? signupForm.querySelector('[name="brand_name"]') : null;
+    var givenNameInput = signupForm ? signupForm.querySelector('[name="given_name"]') : null;
+    var familyNameInput = signupForm ? signupForm.querySelector('[name="family_name"]') : null;
+    if (brandNameInput) {
+      brandNameInput.disabled = !isBrand;
+      brandNameInput.required = !!isBrand;
+    }
+    if (givenNameInput) {
+      givenNameInput.disabled = !!isBrand;
+      givenNameInput.required = !isBrand;
+    }
+    if (familyNameInput) {
+      familyNameInput.disabled = !!isBrand;
+      familyNameInput.required = !isBrand;
+    }
     if (visual) {
       visual.classList.toggle('signup-card-wrap--brand', isBrand);
       visual.setAttribute('data-mode', isBrand ? 'brand' : 'creator');
@@ -291,6 +309,12 @@
       setMode(isBrand);
     });
   });
+
+  if (field && field.value === 'brand') {
+    setMode(true);
+  } else if (field && field.value === 'creator') {
+    setMode(false);
+  }
 
   bindLiveFieldValidation(signupForm);
   bindLiveFieldValidation(brandDetailsForm);

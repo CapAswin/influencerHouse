@@ -31,22 +31,31 @@
             <p class="signup-copy">Connect with 2,500+ verified creators and 340+ brand partners across UAE &amp; GCC. The region's most trusted influencer infrastructure platform.</p>
 
             <div class="signup-toggle" role="tablist" aria-label="Choose account type">
-              <button class="toggle-item" type="button" role="tab" id="tab-brand" aria-selected="false" aria-controls="signup-form-panel">I'm a Brand</button>
-              <button class="toggle-item active" type="button" role="tab" id="tab-creator" aria-selected="true" aria-controls="signup-form-panel">I'm a Creator</button>
+              <button class="toggle-item active" type="button" role="tab" id="tab-brand" aria-selected="true" aria-controls="signup-form-panel">I'm a Brand</button>
+              <button class="toggle-item" type="button" role="tab" id="tab-creator" aria-selected="false" aria-controls="signup-form-panel">I'm a Creator</button>
             </div>
 
-            <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate>
-              <input type="hidden" name="account_type" id="account-type-field" value="creator" />
+            <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate data-account-mode="brand">
+              <input type="hidden" name="account_type" id="account-type-field" value="brand" />
 
-              <div class="input-row">
+              <div class="signup-name-brand">
                 <label>
-                  <span>First name</span>
-                  <input type="text" name="given_name" autocomplete="given-name" placeholder="First name" required />
+                  <span>Brand name</span>
+                  <input type="text" name="brand_name" autocomplete="organization" placeholder="Enter brand name" required />
                 </label>
-                <label>
-                  <span>Last name</span>
-                  <input type="text" name="family_name" autocomplete="family-name" placeholder="Last name" required />
-                </label>
+              </div>
+
+              <div class="signup-name-creator">
+                <div class="input-row signup-name-creator-row">
+                  <label>
+                    <span>First name</span>
+                    <input type="text" name="given_name" autocomplete="given-name" placeholder="First name" disabled />
+                  </label>
+                  <label>
+                    <span>Last name</span>
+                    <input type="text" name="family_name" autocomplete="family-name" placeholder="Last name" disabled />
+                  </label>
+                </div>
               </div>
 
               <label>
@@ -109,10 +118,10 @@
           </div>
 
           <!-- RIGHT: 3D flip — creator vs brand image + copy -->
-          <div class="signup-visual">
-            <div class="signup-card-wrap" id="signup-visual-card" data-mode="creator">
+            <div class="signup-visual">
+            <div class="signup-card-wrap signup-card-wrap--brand" id="signup-visual-card" data-mode="brand">
               <div class="signup-card-flipper">
-                <div class="signup-flip-face signup-flip-face--creator" data-flip-side="creator">
+                <div class="signup-flip-face signup-flip-face--creator" data-flip-side="creator" aria-hidden="true">
                   <div class="signup-notch-cluster">
                     <div class="signup-notch-card">
                       <div class="snc-card-head">
@@ -155,7 +164,7 @@
                   </div>
                 </div>
 
-                <div class="signup-flip-face signup-flip-face--brand" data-flip-side="brand" aria-hidden="true">
+                <div class="signup-flip-face signup-flip-face--brand" data-flip-side="brand">
                   <div class="signup-notch-cluster">
                     <div class="signup-notch-card">
                       <div class="snc-card-head">
