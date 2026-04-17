@@ -103,13 +103,28 @@
               </button>
             </div>
 
-            <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate>
+            <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate data-account-mode="brand">
               <input type="hidden" name="account_type" id="account-type-field" value="brand" />
 
-              <label>
-                <span>Brand name</span>
-                <input type="text" name="brand_name" autocomplete="organization" placeholder="Enter brand name" required />
-              </label>
+              <div class="signup-name-brand">
+                <label>
+                  <span>Brand name</span>
+                  <input type="text" name="brand_name" autocomplete="organization" placeholder="Enter brand name" required />
+                </label>
+              </div>
+
+              <div class="signup-name-creator">
+                <div class="input-row signup-name-creator-row">
+                  <label>
+                    <span>First name</span>
+                    <input type="text" name="first_name" autocomplete="given-name" placeholder="First name" disabled />
+                  </label>
+                  <label>
+                    <span>Last name</span>
+                    <input type="text" name="last_name" autocomplete="family-name" placeholder="Last name" disabled />
+                  </label>
+                </div>
+              </div>
 
               <label>
                 <span>Work email</span>
