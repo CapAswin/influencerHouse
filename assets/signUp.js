@@ -74,19 +74,19 @@
       signupForm.setAttribute('data-account-mode', isBrand ? 'brand' : 'creator');
     }
     var brandNameInput = signupForm ? signupForm.querySelector('[name="brand_name"]') : null;
-    var givenNameInput = signupForm ? signupForm.querySelector('[name="given_name"]') : null;
-    var familyNameInput = signupForm ? signupForm.querySelector('[name="family_name"]') : null;
+    var firstNameInput = signupForm ? signupForm.querySelector('[name="first_name"]') : null;
+    var lastNameInput = signupForm ? signupForm.querySelector('[name="last_name"]') : null;
     if (brandNameInput) {
       brandNameInput.disabled = !isBrand;
       brandNameInput.required = !!isBrand;
     }
-    if (givenNameInput) {
-      givenNameInput.disabled = !!isBrand;
-      givenNameInput.required = !isBrand;
+    if (firstNameInput) {
+      firstNameInput.disabled = !!isBrand;
+      firstNameInput.required = !isBrand;
     }
-    if (familyNameInput) {
-      familyNameInput.disabled = !!isBrand;
-      familyNameInput.required = !isBrand;
+    if (lastNameInput) {
+      lastNameInput.disabled = !!isBrand;
+      lastNameInput.required = !isBrand;
     }
     if (visual) {
       visual.classList.toggle('signup-card-wrap--brand', isBrand);

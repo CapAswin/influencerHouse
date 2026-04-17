@@ -1,5 +1,19 @@
 /* Sign Up page specific styles */
 
+/* Brand vs influencer name fields on main signup form */
+#signup-form-panel[data-account-mode="brand"] .signup-name-creator {
+  display: none;
+}
+
+#signup-form-panel[data-account-mode="creator"] .signup-name-brand {
+  display: none;
+}
+
+.signup-name-creator-row label {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 .brand-details-title-name {
   background: linear-gradient(135deg, #4f46e5 0%, #ec4899 100%);
   -webkit-background-clip: text;
