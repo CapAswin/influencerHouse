@@ -2260,7 +2260,8 @@ h1 em {
 
 .signup-form input.is-field-error,
 .brand-details-form input.is-field-error,
-.brand-details-form select.is-field-error {
+.brand-details-form select.is-field-error,
+.brand-details-form textarea.is-field-error {
   border-color: #e11d48 !important;
   box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.16);
 }
@@ -2676,6 +2677,10 @@ body.modal-open {
   position: relative;
   z-index: 1;
   width: min(480px, calc(100% - 24px));
+  max-height: min(88vh, 720px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: #f8f9fd;
   border-radius: 20px;
   padding: 26px 18px 18px;
@@ -2702,15 +2707,176 @@ body.modal-open {
 }
 
 .brand-details-card h2 {
-  margin: 0 0 16px;
+  margin: 0 0 10px;
   font-size: 2rem;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
+.brand-details-lead {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.brand-details-progress {
+  margin: 0 0 16px;
+}
+
+.brand-details-progress-badge {
+  margin: 0 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+}
+
+.brand-details-progress-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(10, 15, 30, 0.08);
+  overflow: hidden;
+}
+
+.brand-details-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  transition: width 0.28s ease;
+}
+
 .brand-details-form {
   display: grid;
   gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.brand-details-form--wizard {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.brand-details-steps-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-right: -2px;
+}
+
+.brand-details-step {
+  display: none;
+  gap: 12px;
+}
+
+.brand-details-step.is-active {
+  display: grid;
+}
+
+.brand-details-step-label {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.brand-details-step-hint {
+  margin: -4px 0 2px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.brand-logo-field {
+  display: grid;
+  gap: 8px;
+}
+
+.brand-logo-field-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2a3037;
+}
+
+.brand-logo-upload {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  border-radius: 14px;
+  border: 1px dashed rgba(10, 15, 30, 0.2);
+  background: #eef1f8;
+  min-height: 120px;
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.brand-logo-upload:hover {
+  border-color: rgba(97, 97, 255, 0.45);
+  background: #e8ecfb;
+}
+
+.brand-logo-upload input[type='file'] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+}
+
+.brand-logo-upload-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px 14px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.brand-logo-upload-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #4f46e5;
+  background: #fff;
+  border: 1px solid rgba(97, 97, 255, 0.2);
+}
+
+.brand-logo-upload-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.brand-logo-upload-meta {
+  font-size: 12px;
+  color: #6b7280;
 }
 
 .brand-details-form label {
@@ -2722,7 +2888,8 @@ body.modal-open {
 }
 
 .brand-details-form input,
-.brand-details-form select {
+.brand-details-form select,
+.brand-details-form textarea {
   width: 100%;
   border: 1px solid rgba(10, 15, 30, 0.16);
   border-radius: 14px;
@@ -2734,6 +2901,12 @@ body.modal-open {
   appearance: none;
 }
 
+.brand-details-form textarea {
+  min-height: 96px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
 .brand-details-form select {
   background-image: linear-gradient(45deg, transparent 50%, #4b5563 50%), linear-gradient(135deg, #4b5563 50%, transparent 50%);
   background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
@@ -2743,7 +2916,8 @@ body.modal-open {
 }
 
 .brand-details-form input:focus,
-.brand-details-form select:focus {
+.brand-details-form select:focus,
+.brand-details-form textarea:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(97, 97, 255, 0.12);
@@ -2923,9 +3097,52 @@ body.modal-open {
   box-shadow: 0 0 0 3px rgba(97, 97, 255, 0.12);
 }
 
-.brand-details-submit {
+.brand-details-wizard-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+  padding-top: 4px;
+  flex-shrink: 0;
+}
+
+.brand-details-wizard-nav-primary {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.brand-details-wizard-nav-primary .btn {
   width: 100%;
-  margin-top: 6px;
+  max-width: 220px;
+}
+
+.brand-details-back-btn {
+  flex-shrink: 0;
+  min-width: 96px;
+  border-radius: 12px;
+  border: 1px solid rgba(10, 15, 30, 0.18);
+  background: #fff;
+  color: #1f2937;
+  font-weight: 700;
+  padding: 12px 14px;
+}
+
+.brand-details-back-btn:hover:not(:disabled) {
+  border-color: rgba(97, 97, 255, 0.35);
+  color: #111827;
+}
+
+.brand-details-back-btn:disabled {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.brand-details-submit,
+.brand-details-submit-btn {
+  width: 100%;
+  margin-top: 0;
 }
 
 .welcome-access-modal {
