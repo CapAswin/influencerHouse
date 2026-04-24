@@ -2043,6 +2043,15 @@ h1 em {
   border: 1px solid rgba(10, 15, 30, 0.06);
 }
 
+/* Reusable gradient text (matches site theme) */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 .signup-panel-top {
   display: flex;
   align-items: center;
