@@ -2045,6 +2045,8 @@ h1 em {
 
 /* Reusable gradient text (matches site theme) */
 .text-gradient {
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   background-clip: text;
