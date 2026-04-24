@@ -32,13 +32,18 @@
 
             <div class="signup-toggle" role="tablist" aria-label="Choose account type">
               <button class="toggle-item active" type="button" role="tab" id="tab-brand" aria-selected="true" aria-controls="signup-form-panel">I'm a Brand</button>
-              <button class="toggle-item" type="button" role="tab" id="tab-creator" aria-selected="false" aria-controls="signup-form-panel">I'm a Creator</button>
+              <button class="toggle-item" type="button" role="tab" id="tab-creator" aria-selected="false" aria-controls="signup-form-panel">I'm an Influencer</button>
             </div>
 
             <form id="signup-form-panel" class="signup-form" action="#" method="post" aria-label="Create account form" novalidate>
               <input type="hidden" name="account_type" id="account-type-field" value="brand" />
 
-              <div class="input-row">
+              <label data-account="brand" aria-hidden="false">
+                <span>Brand name</span>
+                <input type="text" name="brand_name" autocomplete="organization" placeholder="Your brand name" required />
+              </label>
+
+              <div class="input-row" data-account="creator" style="display: none;" aria-hidden="true">
                 <label>
                   <span>First name</span>
                   <input type="text" name="given_name" autocomplete="given-name" placeholder="First name" required />

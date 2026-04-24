@@ -82,6 +82,22 @@
       if (isBrand) faceBrand.removeAttribute('aria-hidden');
       else faceBrand.setAttribute('aria-hidden', 'true');
     }
+
+    var activeMode = isBrand ? 'brand' : 'creator';
+    var accountScopedNodes = document.querySelectorAll('[data-account]');
+    accountScopedNodes.forEach(function (node) {
+      var forAccount = node.getAttribute('data-account');
+      var isActive = forAccount === activeMode;
+      node.style.display = isActive ? '' : 'none';
+      node.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      var scopedControls = node.querySelectorAll('input, select, textarea');
+      scopedControls.forEach(function (control) {
+        if (!control) return;
+        if (isActive) control.setAttribute('required', '');
+        else control.removeAttribute('required');
+        setFieldErrorState(control, false);
+      });
+    });
   }
 
   function showSignupSnackbar(options) {
