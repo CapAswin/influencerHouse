@@ -16,6 +16,7 @@
   var brandDetailsModal = document.getElementById('brand-details-modal');
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
+  var brandDetailsTitle = document.getElementById('brand-details-title');
   var welcomeAccessModal = document.getElementById('welcome-access-modal');
   var welcomeAccessCloseBtn = document.getElementById('welcome-access-close-btn');
   var welcomeAccessDismissBtn = document.getElementById('welcome-access-dismiss-btn');
@@ -349,6 +350,24 @@
 
   function openBrandDetailsModal() {
     if (!brandDetailsModal) return;
+
+    var isBrandAccount = field && field.value === 'brand';
+    if (brandDetailsTitle) {
+      if (isBrandAccount) {
+        brandDetailsTitle.textContent = 'Tell us about your brand';
+      } else {
+        var firstNameField = signupForm ? signupForm.querySelector('[name="given_name"]') : null;
+        var lastNameField = signupForm ? signupForm.querySelector('[name="family_name"]') : null;
+        var firstName = firstNameField && firstNameField.value ? firstNameField.value.trim() : '';
+        var lastName = lastNameField && lastNameField.value ? lastNameField.value.trim() : '';
+        var fullName = (firstName + ' ' + lastName).trim();
+        var safeName = fullName || 'you';
+        brandDetailsTitle.innerHTML = 'Tell us about you — <em class="text-gradient"></em>';
+        var nameNode = brandDetailsTitle.querySelector('.text-gradient');
+        if (nameNode) nameNode.textContent = safeName;
+      }
+    }
+
     brandDetailsModal.classList.add('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
@@ -764,11 +783,6 @@
         actionLabel: 'Done'
       });
       setTimeout(function () {
-        var isBrandAccount = field && field.value === 'brand';
-        if (isBrandAccount) {
-          closeOtpModal();
-          return;
-        }
         closeOtpModal(true);
         openBrandDetailsModal();
       }, 800);
@@ -858,9 +872,10 @@
       }
       closeBrandDetailsModal();
       openWelcomeAccessModal();
+      var isBrandAccount = field && field.value === 'brand';
       showSignupSnackbar({
         type: 'success',
-        message: 'Brand profile submitted successfully.',
+        message: isBrandAccount ? 'Brand profile submitted successfully.' : 'Profile submitted successfully.',
         actionLabel: 'Great'
       });
     });

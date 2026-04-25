@@ -2043,6 +2043,26 @@ h1 em {
   border: 1px solid rgba(10, 15, 30, 0.06);
 }
 
+/* Reusable gradient text (matches site theme) */
+.text-gradient {
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.required-asterisk {
+  margin-left: 2px;
+  font-size: 0.8em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: super;
+  color: #dc2626;
+}
+
 .signup-panel-top {
   display: flex;
   align-items: center;
