@@ -304,6 +304,205 @@
     </section>
   </div>
 
+  <!-- Brand details (company) — new, multi-slide -->
+  <div id="brand-company-modal" class="brand-details-modal brand-company-modal" aria-hidden="true">
+    <div class="brand-details-backdrop" data-brand-company-close="true"></div>
+    <section class="brand-details-card brand-company-card" role="dialog" aria-modal="true" aria-labelledby="brand-company-title">
+      <button type="button" class="brand-details-close" id="brand-company-close-btn" aria-label="Close brand details">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"></path>
+        </svg>
+      </button>
+
+      <div class="brand-company-head">
+        <p class="brand-company-step" id="brand-company-step">Step 1 of 3 · Brand details</p>
+        <h2 id="brand-company-title">Tell us about your company</h2>
+        <p class="brand-company-subcopy">All fields are required. This helps us set up your brand profile.</p>
+      </div>
+
+      <form id="brand-company-form" class="brand-details-form brand-company-form" novalidate>
+        <input type="hidden" name="brand_company_logo_dataurl" id="brand-company-logo-dataurl" />
+
+        <div class="brand-company-slide is-active" data-slide="1">
+          <div class="brand-company-section-title">Company &amp; brand</div>
+
+          <section class="brand-upload-card" aria-label="Upload company logo">
+            <header class="brand-upload-head">
+              <strong class="brand-upload-title">Upload Photos</strong>
+              <button type="button" class="brand-upload-x" id="brand-upload-clear-btn" aria-label="Clear uploaded logo">×</button>
+            </header>
+
+            <input id="brand-company-logo" class="brand-logo-input" type="file" accept="image/png,image/jpeg" required />
+            <label class="brand-dropzone" id="brand-dropzone" for="brand-company-logo">
+              <span class="brand-dropzone-icon" aria-hidden="true">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                  <path d="M16 16H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                  <path d="M12 12V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                  <path d="M12 4V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                  <path d="M7 8H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <span class="brand-dropzone-text">Drop your image here, or <u>browse</u></span>
+              <span class="brand-dropzone-hint">Supports PNG, JPG (up to 5 MB)</span>
+              <img id="brand-company-logo-preview" class="brand-dropzone-preview" alt="" />
+            </label>
+
+            <div class="brand-upload-divider" aria-hidden="true"></div>
+
+            <div class="brand-upload-url">
+              <div class="brand-upload-url-label">Import from URL</div>
+              <div class="brand-upload-url-row">
+                <input id="brand-logo-url" type="url" placeholder="Add file URL" autocomplete="url" />
+                <button type="button" class="brand-upload-url-btn" id="brand-logo-url-btn">Upload</button>
+              </div>
+            </div>
+          </section>
+
+          <label>
+            <span>Company name</span>
+            <input type="text" name="brand_company_name" placeholder="Enter your text" autocomplete="organization" required />
+          </label>
+
+          <label>
+            <span>Company size</span>
+            <select name="brand_company_size" required>
+              <option value="" selected disabled>Select company size</option>
+              <option value="1-10">1-10</option>
+              <option value="11-50">11-50</option>
+              <option value="51-200">51-200</option>
+              <option value="201-500">201-500</option>
+              <option value="501-1000">501-1000</option>
+              <option value="1000+">1000+</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Company type</span>
+            <select name="brand_company_type" required>
+              <option value="" selected disabled>Select company type</option>
+              <option value="Agency">Agency</option>
+              <option value="Brand">Brand</option>
+              <option value="E-commerce">E-commerce</option>
+              <option value="Retail">Retail</option>
+              <option value="Marketplace">Marketplace</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="brand-company-slide" data-slide="2">
+          <div class="brand-company-section-title">Brand details</div>
+
+          <label>
+            <span>Brand name</span>
+            <input type="text" name="brand_brand_name" placeholder="Enter your text" required />
+          </label>
+
+          <label>
+            <span>Year of Establishment</span>
+            <input type="number" name="brand_year_established" inputmode="numeric" min="1800" max="2100" placeholder="Tap to select year" required />
+          </label>
+
+          <label>
+            <span>Industry</span>
+            <select name="brand_industry" id="brand-industry" required>
+              <option value="" selected disabled>Select industry</option>
+              <option value="Fashion & Beauty">Fashion & Beauty</option>
+              <option value="Food & Beverage">Food & Beverage</option>
+              <option value="Tech & Apps">Tech & Apps</option>
+              <option value="Travel & Hospitality">Travel & Hospitality</option>
+              <option value="Health & Fitness">Health & Fitness</option>
+              <option value="Automotive">Automotive</option>
+              <option value="Real Estate">Real Estate</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Brand category</span>
+            <select name="brand_category" id="brand-category" required disabled>
+              <option value="" selected disabled>Select industry first</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="brand-company-slide" data-slide="3">
+          <details class="brand-accordion" open>
+            <summary class="brand-accordion-summary">
+              <span>Location</span>
+              <span class="brand-accordion-icon" aria-hidden="true">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+            </summary>
+            <div class="brand-accordion-body">
+              <label>
+                <span>Country</span>
+                <select name="brand_location_country" required>
+                  <option value="" selected disabled>Select country</option>
+                  <option value="United Arab Emirates">United Arab Emirates</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Emirates</span>
+                <select name="brand_location_emirates" required>
+                  <option value="" selected disabled>Select emirate</option>
+                  <option value="Abu Dhabi">Abu Dhabi</option>
+                  <option value="Dubai">Dubai</option>
+                  <option value="Sharjah">Sharjah</option>
+                  <option value="Ajman">Ajman</option>
+                  <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                  <option value="Fujairah">Fujairah</option>
+                  <option value="Umm Al Quwain">Umm Al Quwain</option>
+                </select>
+              </label>
+
+              <label>
+                <span>City</span>
+                <input type="text" name="brand_location_city" placeholder="Enter your text" required />
+              </label>
+            </div>
+          </details>
+
+          <details class="brand-accordion" open>
+            <summary class="brand-accordion-summary">
+              <span>Online &amp; description</span>
+              <span class="brand-accordion-icon" aria-hidden="true">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+            </summary>
+            <div class="brand-accordion-body">
+              <label>
+                <span>Company website</span>
+                <input type="url" name="brand_website" placeholder="https://..." required />
+              </label>
+
+              <label>
+                <span>Company bio</span>
+                <textarea name="brand_bio" rows="4" placeholder="Enter your text" required></textarea>
+              </label>
+
+              <label>
+                <span>Company address</span>
+                <textarea name="brand_address" rows="3" placeholder="Enter your text" required></textarea>
+              </label>
+            </div>
+          </details>
+        </div>
+
+        <div class="brand-company-actions">
+          <button type="button" class="btn brand-company-back" id="brand-company-back-btn">Back</button>
+          <button type="button" class="btn btn-gold brand-company-next" id="brand-company-next-btn">Next</button>
+          <button type="submit" class="btn btn-gold brand-company-submit" id="brand-company-submit-btn" style="display:none;">Submit</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
   <div id="welcome-access-modal" class="welcome-access-modal" aria-hidden="true">
     <div class="welcome-access-backdrop" data-welcome-close="true"></div>
     <section class="welcome-access-card" role="dialog" aria-modal="true" aria-labelledby="welcome-access-title">

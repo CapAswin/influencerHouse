@@ -2749,6 +2749,18 @@ body.modal-open {
   appearance: none;
 }
 
+.brand-details-form textarea {
+  width: 100%;
+  border: 1px solid rgba(10, 15, 30, 0.16);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 15px;
+  color: #1f2937;
+  background: #f1f3f8;
+  resize: vertical;
+  min-height: 92px;
+}
+
 .brand-details-form select {
   background-image: linear-gradient(45deg, transparent 50%, #4b5563 50%), linear-gradient(135deg, #4b5563 50%, transparent 50%);
   background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
@@ -2758,10 +2770,334 @@ body.modal-open {
 }
 
 .brand-details-form input:focus,
-.brand-details-form select:focus {
+.brand-details-form select:focus,
+.brand-details-form textarea:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(97, 97, 255, 0.12);
+}
+
+.brand-company-head {
+  margin-bottom: 12px;
+}
+
+.brand-company-step {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.brand-company-subcopy {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.brand-company-section-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #2a3037;
+  letter-spacing: -0.01em;
+  margin: 8px 0 8px;
+}
+
+.brand-company-form {
+  gap: 10px;
+}
+
+.brand-company-slide {
+  display: none;
+  gap: 12px;
+}
+
+.brand-company-slide.is-active {
+  display: grid;
+}
+
+.brand-company-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.brand-company-back {
+  background: #eceff3;
+  border: 1px solid rgba(10, 15, 30, 0.08);
+  color: var(--ink);
+  border-radius: 14px;
+  padding: 14px 0;
+  font-weight: 800;
+}
+
+.brand-company-next,
+.brand-company-submit {
+  border-radius: 14px;
+  padding: 14px 0;
+  font-weight: 800;
+}
+
+.brand-accordion {
+  border-radius: 16px;
+  border: 1px solid rgba(10, 15, 30, 0.08);
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 10px 24px rgba(10, 15, 30, 0.06);
+  overflow: hidden;
+}
+
+.brand-accordion-summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px;
+  font-weight: 900;
+  color: #0a0f1e;
+}
+
+.brand-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.brand-accordion-icon .icon-svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.18s ease;
+}
+
+.brand-accordion[open] .brand-accordion-icon .icon-svg {
+  transform: rotate(180deg);
+}
+
+.brand-accordion-body {
+  padding: 0 14px 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.brand-logo-uploader {
+  border-radius: 18px;
+  border: 1px solid rgba(97, 97, 255, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 14px 30px rgba(10, 15, 30, 0.08);
+  overflow: hidden;
+}
+
+.brand-logo-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.brand-logo-drop {
+  cursor: pointer;
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 18px 14px;
+  position: relative;
+  color: #0a0f1e;
+}
+
+.brand-logo-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(97, 97, 255, 0.1);
+  border: 1px solid rgba(97, 97, 255, 0.2);
+  color: var(--primary);
+}
+
+.brand-logo-title {
+  font-weight: 900;
+}
+
+.brand-logo-hint {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.brand-logo-preview {
+  display: none;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.brand-logo-drop.has-preview {
+  padding: 10px;
+  gap: 10px;
+}
+
+.brand-logo-drop.has-preview .brand-logo-icon,
+.brand-logo-drop.has-preview .brand-logo-title,
+.brand-logo-drop.has-preview .brand-logo-hint {
+  display: none;
+}
+
+.brand-logo-drop.has-preview .brand-logo-preview {
+  display: block;
+}
+
+/* Brand upload card (match reference "Upload Photos") */
+.brand-upload-card {
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(10, 15, 30, 0.08);
+  box-shadow: 0 14px 30px rgba(10, 15, 30, 0.08);
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.brand-upload-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.brand-upload-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0a0f1e;
+}
+
+.brand-upload-x {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  border: 1px solid rgba(10, 15, 30, 0.08);
+  background: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: rgba(10, 15, 30, 0.62);
+}
+
+.brand-dropzone {
+  border-radius: 14px;
+  border: 2px dashed rgba(10, 15, 30, 0.12);
+  background: #ffffff;
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 18px 14px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-dropzone.is-drag {
+  background: rgba(97, 97, 255, 0.08);
+  border-color: rgba(97, 97, 255, 0.35);
+}
+
+.brand-dropzone-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(97, 97, 255, 0.1);
+  border: 1px solid rgba(97, 97, 255, 0.2);
+  color: var(--primary);
+}
+
+.brand-dropzone-text {
+  font-weight: 700;
+  color: rgba(10, 15, 30, 0.72);
+  font-size: 13px;
+}
+
+.brand-dropzone-hint {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(10, 15, 30, 0.35);
+}
+
+.brand-dropzone-preview {
+  display: none;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.brand-dropzone.has-preview {
+  padding: 0;
+  min-height: 170px;
+}
+
+.brand-dropzone.has-preview .brand-dropzone-icon,
+.brand-dropzone.has-preview .brand-dropzone-text,
+.brand-dropzone.has-preview .brand-dropzone-hint {
+  display: none;
+}
+
+.brand-dropzone.has-preview .brand-dropzone-preview {
+  display: block;
+}
+
+.brand-upload-divider {
+  height: 1px;
+  background: rgba(10, 15, 30, 0.08);
+}
+
+.brand-upload-url-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(10, 15, 30, 0.6);
+  margin-bottom: 8px;
+}
+
+.brand-upload-url-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.brand-upload-url-row input {
+  border: 1px solid rgba(10, 15, 30, 0.12);
+  border-radius: 12px;
+  min-height: 42px;
+  padding: 10px 12px;
+  background: #f6f7fb;
+}
+
+.brand-upload-url-btn {
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(10, 15, 30, 0.12);
+  background: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.brand-upload-url-btn:hover {
+  border-color: rgba(97, 97, 255, 0.22);
+  box-shadow: 0 2px 12px rgba(97, 97, 255, 0.08);
 }
 
 .brand-phone-wrap {
