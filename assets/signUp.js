@@ -17,6 +17,22 @@
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
   var brandDetailsTitle = document.getElementById('brand-details-title');
+  var brandCompanyModal = document.getElementById('brand-company-modal');
+  var brandCompanyCloseBtn = document.getElementById('brand-company-close-btn');
+  var brandCompanyForm = document.getElementById('brand-company-form');
+  var brandCompanyStep = document.getElementById('brand-company-step');
+  var brandCompanyNextBtn = document.getElementById('brand-company-next-btn');
+  var brandCompanyBackBtn = document.getElementById('brand-company-back-btn');
+  var brandCompanySubmitBtn = document.getElementById('brand-company-submit-btn');
+  var brandCompanyLogoInput = document.getElementById('brand-company-logo');
+  var brandCompanyLogoPreview = document.getElementById('brand-company-logo-preview');
+  var brandCompanyLogoDataUrl = document.getElementById('brand-company-logo-dataurl');
+  var brandDropzone = document.getElementById('brand-dropzone');
+  var brandUploadClearBtn = document.getElementById('brand-upload-clear-btn');
+  var brandLogoUrlInput = document.getElementById('brand-logo-url');
+  var brandLogoUrlBtn = document.getElementById('brand-logo-url-btn');
+  var brandIndustrySelect = document.getElementById('brand-industry');
+  var brandCategorySelect = document.getElementById('brand-category');
   var welcomeAccessModal = document.getElementById('welcome-access-modal');
   var welcomeAccessCloseBtn = document.getElementById('welcome-access-close-btn');
   var welcomeAccessDismissBtn = document.getElementById('welcome-access-dismiss-btn');
@@ -349,9 +365,12 @@
   }
 
   function openBrandDetailsModal() {
-    if (!brandDetailsModal) return;
-
     var isBrandAccount = field && field.value === 'brand';
+    if (isBrandAccount) {
+      openBrandCompanyModal();
+      return;
+    }
+    if (!brandDetailsModal) return;
     if (brandDetailsTitle) {
       if (isBrandAccount) {
         brandDetailsTitle.textContent = 'Tell us about your brand';
@@ -380,6 +399,244 @@
     brandDetailsModal.classList.remove('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
+  }
+
+  var brandCompanyCurrentSlide = 1;
+  var BRAND_COMPANY_SLIDES = 3;
+
+  function getBrandCompanySlideNode(slideNum) {
+    if (!brandCompanyForm) return null;
+    return brandCompanyForm.querySelector('.brand-company-slide[data-slide="' + slideNum + '"]');
+  }
+
+  function setBrandCompanySlide(slideNum) {
+    if (!brandCompanyForm) return;
+    brandCompanyCurrentSlide = Math.max(1, Math.min(BRAND_COMPANY_SLIDES, slideNum));
+    var slides = brandCompanyForm.querySelectorAll('.brand-company-slide');
+    slides.forEach(function (node) {
+      var n = parseInt(node.getAttribute('data-slide') || '0', 10);
+      node.classList.toggle('is-active', n === brandCompanyCurrentSlide);
+    });
+    if (brandCompanyStep) {
+      brandCompanyStep.textContent = 'Step ' + brandCompanyCurrentSlide + ' of ' + BRAND_COMPANY_SLIDES + ' · Brand details';
+    }
+    if (brandCompanyBackBtn) {
+      brandCompanyBackBtn.style.display = brandCompanyCurrentSlide === 1 ? 'none' : '';
+    }
+    if (brandCompanyNextBtn && brandCompanySubmitBtn) {
+      var isLast = brandCompanyCurrentSlide === BRAND_COMPANY_SLIDES;
+      brandCompanyNextBtn.style.display = isLast ? 'none' : '';
+      brandCompanySubmitBtn.style.display = isLast ? '' : 'none';
+    }
+  }
+
+  function validateVisibleBrandCompanySlide() {
+    var slideNode = getBrandCompanySlideNode(brandCompanyCurrentSlide);
+    if (!slideNode) return { isValid: true, firstInvalid: null, invalidFields: [] };
+    var controls = slideNode.querySelectorAll('input, select, textarea');
+    var firstInvalid = null;
+    var invalidFields = [];
+    controls.forEach(function (control) {
+      if (!control || control.disabled) return;
+      var type = (control.type || '').toLowerCase();
+      if (type === 'hidden' || type === 'button' || type === 'submit' || type === 'reset') return;
+      var isInvalid = !control.checkValidity();
+      setFieldErrorState(control, isInvalid);
+      if (isInvalid) {
+        invalidFields.push(control);
+        if (!firstInvalid) firstInvalid = control;
+      }
+    });
+    return { isValid: !firstInvalid, firstInvalid: firstInvalid, invalidFields: invalidFields };
+  }
+
+  function openBrandCompanyModal() {
+    if (!brandCompanyModal) return;
+    setBrandCompanySlide(1);
+    brandCompanyModal.classList.add('is-open');
+    brandCompanyModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    var firstField = brandCompanyForm ? brandCompanyForm.querySelector('.brand-company-slide.is-active input, .brand-company-slide.is-active select, .brand-company-slide.is-active textarea') : null;
+    if (firstField) firstField.focus();
+  }
+
+  function closeBrandCompanyModal() {
+    if (!brandCompanyModal) return;
+    brandCompanyModal.classList.remove('is-open');
+    brandCompanyModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  function wireBrandIndustryCategory() {
+    if (!brandIndustrySelect || !brandCategorySelect) return;
+    var categoryByIndustry = {
+      'Fashion & Beauty': ['Skincare', 'Makeup', 'Fragrance', 'Haircare', 'Fashion', 'Accessories', 'Other'],
+      'Food & Beverage': ['Restaurants', 'Cafe', 'Delivery', 'CPG', 'Beverages', 'Other'],
+      'Tech & Apps': ['Mobile App', 'SaaS', 'Consumer Tech', 'Electronics', 'Other'],
+      'Travel & Hospitality': ['Hotel', 'Airline', 'Tourism', 'Experiences', 'Other'],
+      'Health & Fitness': ['Gym', 'Supplements', 'Wellness', 'Clinics', 'Other'],
+      Automotive: ['Cars', 'Accessories', 'Services', 'Other'],
+      'Real Estate': ['Developer', 'Brokerage', 'Property Portal', 'Other'],
+      Other: ['Other']
+    };
+    function setCategoryOptions(industry) {
+      var categories = categoryByIndustry[industry] || [];
+      brandCategorySelect.innerHTML = '';
+      if (!industry) {
+        brandCategorySelect.disabled = true;
+        var opt = document.createElement('option');
+        opt.value = '';
+        opt.textContent = 'Select industry first';
+        opt.disabled = true;
+        opt.selected = true;
+        brandCategorySelect.appendChild(opt);
+        return;
+      }
+      brandCategorySelect.disabled = false;
+      var placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Select category';
+      placeholder.disabled = true;
+      placeholder.selected = true;
+      brandCategorySelect.appendChild(placeholder);
+      categories.forEach(function (c) {
+        var o = document.createElement('option');
+        o.value = c;
+        o.textContent = c;
+        brandCategorySelect.appendChild(o);
+      });
+    }
+    brandIndustrySelect.addEventListener('change', function () {
+      setCategoryOptions(brandIndustrySelect.value);
+    });
+    setCategoryOptions(brandIndustrySelect.value);
+  }
+
+  function wireBrandLogoUpload() {
+    if (!brandCompanyLogoInput || !brandCompanyLogoPreview) return;
+
+    function clearLogo() {
+      brandCompanyLogoInput.value = '';
+      if (brandCompanyLogoDataUrl) brandCompanyLogoDataUrl.value = '';
+      brandCompanyLogoPreview.src = '';
+      if (brandDropzone) brandDropzone.classList.remove('has-preview');
+      setFieldErrorState(brandCompanyLogoInput, true);
+    }
+
+    function applyLogoDataUrl(dataUrl) {
+      if (!dataUrl) return;
+      if (brandCompanyLogoDataUrl) brandCompanyLogoDataUrl.value = dataUrl;
+      brandCompanyLogoPreview.src = dataUrl;
+      if (brandDropzone) brandDropzone.classList.add('has-preview');
+      setFieldErrorState(brandCompanyLogoInput, false);
+    }
+
+    function validateFile(file) {
+      if (!file) return { ok: false, message: 'Please choose an image file.' };
+      var isOkType = /image\/(png|jpeg)/.test(file.type || '');
+      if (!isOkType) return { ok: false, message: 'Logo must be a PNG or JPG.' };
+      var maxBytes = 5 * 1024 * 1024;
+      if (file.size > maxBytes) return { ok: false, message: 'Logo must be 5 MB or smaller.' };
+      return { ok: true };
+    }
+
+    function handleFile(file) {
+      var v = validateFile(file);
+      if (!v.ok) {
+        showSignupSnackbar({ type: 'error', message: v.message, actionLabel: 'OK' });
+        clearLogo();
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var dataUrl = typeof reader.result === 'string' ? reader.result : '';
+        applyLogoDataUrl(dataUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    brandCompanyLogoInput.addEventListener('change', function () {
+      var file = brandCompanyLogoInput.files && brandCompanyLogoInput.files[0] ? brandCompanyLogoInput.files[0] : null;
+      if (!file) return;
+      handleFile(file);
+    });
+
+    if (brandUploadClearBtn) {
+      brandUploadClearBtn.addEventListener('click', function () {
+        clearLogo();
+      });
+    }
+
+    if (brandDropzone) {
+      brandDropzone.addEventListener('dragenter', function (e) {
+        e.preventDefault();
+        brandDropzone.classList.add('is-drag');
+      });
+      brandDropzone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        brandDropzone.classList.add('is-drag');
+      });
+      brandDropzone.addEventListener('dragleave', function (e) {
+        e.preventDefault();
+        brandDropzone.classList.remove('is-drag');
+      });
+      brandDropzone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        brandDropzone.classList.remove('is-drag');
+        var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0] ? e.dataTransfer.files[0] : null;
+        if (file) handleFile(file);
+      });
+    }
+
+    if (brandLogoUrlBtn && brandLogoUrlInput) {
+      brandLogoUrlBtn.addEventListener('click', function () {
+        var url = (brandLogoUrlInput.value || '').trim();
+        if (!url) {
+          showSignupSnackbar({ type: 'warning', message: 'Please paste an image URL first.', actionLabel: 'OK' });
+          return;
+        }
+        try {
+          // validate URL format
+          new URL(url);
+        } catch (e) {
+          showSignupSnackbar({ type: 'error', message: 'Please enter a valid URL.', actionLabel: 'OK' });
+          return;
+        }
+        brandLogoUrlBtn.disabled = true;
+        brandLogoUrlBtn.textContent = 'Uploading...';
+        fetch(url)
+          .then(function (res) {
+            if (!res.ok) throw new Error('Fetch failed');
+            return res.blob();
+          })
+          .then(function (blob) {
+            var fileType = blob.type || '';
+            var fakeFile = { type: fileType, size: blob.size };
+            var v = validateFile(fakeFile);
+            if (!v.ok) throw new Error(v.message);
+            return new Promise(function (resolve) {
+              var reader = new FileReader();
+              reader.onload = function () {
+                resolve(typeof reader.result === 'string' ? reader.result : '');
+              };
+              reader.readAsDataURL(blob);
+            });
+          })
+          .then(function (dataUrl) {
+            if (!dataUrl) throw new Error('Could not read image.');
+            applyLogoDataUrl(dataUrl);
+            showSignupSnackbar({ type: 'success', message: 'Image imported from URL.', actionLabel: 'OK' });
+          })
+          .catch(function (err) {
+            showSignupSnackbar({ type: 'error', message: (err && err.message) || 'Could not import image.', actionLabel: 'OK' });
+            clearLogo();
+          })
+          .finally(function () {
+            brandLogoUrlBtn.disabled = false;
+            brandLogoUrlBtn.textContent = 'Upload';
+          });
+      });
+    }
   }
 
   function openWelcomeAccessModal() {
@@ -825,6 +1082,18 @@
     brandDetailsCloseBtn.addEventListener('click', closeBrandDetailsModal);
   }
 
+  if (brandCompanyCloseBtn) {
+    brandCompanyCloseBtn.addEventListener('click', closeBrandCompanyModal);
+  }
+
+  if (brandCompanyModal) {
+    brandCompanyModal.addEventListener('click', function (event) {
+      if (event.target && event.target.getAttribute('data-brand-company-close') === 'true') {
+        closeBrandCompanyModal();
+      }
+    });
+  }
+
   if (welcomeAccessCloseBtn) {
     welcomeAccessCloseBtn.addEventListener('click', closeWelcomeAccessModal);
   }
@@ -876,6 +1145,76 @@
       showSignupSnackbar({
         type: 'success',
         message: isBrandAccount ? 'Brand profile submitted successfully.' : 'Profile submitted successfully.',
+        actionLabel: 'Great'
+      });
+    });
+  }
+
+  if (brandCompanyForm) {
+    bindLiveFieldValidation(brandCompanyForm);
+    wireBrandIndustryCategory();
+    wireBrandLogoUpload();
+    setBrandCompanySlide(1);
+
+    if (brandCompanyBackBtn) {
+      brandCompanyBackBtn.addEventListener('click', function () {
+        setBrandCompanySlide(brandCompanyCurrentSlide - 1);
+      });
+    }
+
+    if (brandCompanyNextBtn) {
+      brandCompanyNextBtn.addEventListener('click', function () {
+        var v = validateVisibleBrandCompanySlide();
+        if (!v.isValid) {
+          var snack = getValidationSnackbarState(v, 'Please complete the required fields.');
+          showSignupSnackbar({
+            type: snack.type,
+            message: snack.message,
+            actionLabel: 'Fix',
+            onAction: function () {
+              if (v.firstInvalid && typeof v.firstInvalid.focus === 'function') v.firstInvalid.focus();
+            }
+          });
+          if (v.firstInvalid && typeof v.firstInvalid.focus === 'function') v.firstInvalid.focus();
+          return;
+        }
+        setBrandCompanySlide(brandCompanyCurrentSlide + 1);
+      });
+    }
+
+    brandCompanyForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Validate whole brand company form before submit
+      var brandCompanyValidation = validateFormFields(brandCompanyForm);
+      if (!brandCompanyValidation.isValid) {
+        var brandSnack = getValidationSnackbarState(brandCompanyValidation, 'Please complete all brand details.');
+        showSignupSnackbar({
+          type: brandSnack.type,
+          message: brandSnack.message,
+          actionLabel: 'Fix',
+          onAction: function () {
+            if (brandCompanyValidation.firstInvalid && typeof brandCompanyValidation.firstInvalid.focus === 'function') {
+              brandCompanyValidation.firstInvalid.focus();
+            }
+          }
+        });
+        if (brandCompanyValidation.firstInvalid && typeof brandCompanyValidation.firstInvalid.focus === 'function') {
+          brandCompanyValidation.firstInvalid.focus();
+        }
+        // If the invalid field is on slide 1, ensure slide 1 is visible
+        var slide1 = getBrandCompanySlideNode(1);
+        if (slide1 && slide1.contains(brandCompanyValidation.firstInvalid)) setBrandCompanySlide(1);
+        var slide2 = getBrandCompanySlideNode(2);
+        if (slide2 && slide2.contains(brandCompanyValidation.firstInvalid)) setBrandCompanySlide(2);
+        return;
+      }
+
+      closeBrandCompanyModal();
+      openWelcomeAccessModal();
+      showSignupSnackbar({
+        type: 'success',
+        message: 'Brand profile submitted successfully.',
         actionLabel: 'Great'
       });
     });
