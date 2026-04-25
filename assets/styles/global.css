@@ -32,6 +32,9 @@ html.lenis.lenis-smooth {
       transparent 28%
     ),
     linear-gradient(135deg, #eef1ff 0%, #e8ebff 40%, #f4f6ff 100%);
+
+  /* Shared chevron-down icon for all <select> */
+  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%2355607a' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 * {
@@ -2762,9 +2765,9 @@ body.modal-open {
 }
 
 .brand-details-form select {
-  background-image: linear-gradient(45deg, transparent 50%, #4b5563 50%), linear-gradient(135deg, #4b5563 50%, transparent 50%);
-  background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
-  background-size: 6px 6px, 6px 6px;
+  background-image: var(--select-chevron);
+  background-position: calc(100% - 16px) 50%;
+  background-size: 16px 16px;
   background-repeat: no-repeat;
   padding-right: 34px;
 }
@@ -2798,11 +2801,15 @@ body.modal-open {
 }
 
 .brand-company-section-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: #2a3037;
-  letter-spacing: -0.01em;
-  margin: 8px 0 8px;
+  margin: 2px 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Use the shared pill style (.wwa-eyebrow) for brand slides. */
+.brand-company-section-title .wwa-eyebrow {
+  margin-bottom: 0;
 }
 
 .brand-company-form {
@@ -2876,9 +2883,31 @@ body.modal-open {
 }
 
 .brand-accordion-body {
-  padding: 0 14px 14px;
+  padding: 0 14px;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms var(--ease-smooth);
+}
+
+.brand-accordion-body-inner {
+  overflow: hidden;
+  padding-bottom: 14px;
   display: grid;
   gap: 12px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 220ms ease,
+    transform 320ms var(--ease-smooth);
+}
+
+.brand-accordion[open] .brand-accordion-body {
+  grid-template-rows: 1fr;
+}
+
+.brand-accordion[open] .brand-accordion-body-inner {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .brand-logo-uploader {
@@ -2956,66 +2985,36 @@ body.modal-open {
   display: block;
 }
 
-/* Brand upload card (match reference "Upload Photos") */
-.brand-upload-card {
-  border-radius: 18px;
-  background: #ffffff;
-  border: 1px solid rgba(10, 15, 30, 0.08);
-  box-shadow: 0 14px 30px rgba(10, 15, 30, 0.08);
-  padding: 14px;
+/* Brand upload (simple layout like reference) */
+.brand-upload-simple {
   display: grid;
-  gap: 12px;
-}
-
-.brand-upload-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 10px;
 }
 
-.brand-upload-title {
-  font-size: 14px;
-  font-weight: 800;
-  color: #0a0f1e;
-}
-
-.brand-upload-x {
-  width: 28px;
-  height: 28px;
-  border-radius: 10px;
-  border: 1px solid rgba(10, 15, 30, 0.08);
-  background: #fff;
-  cursor: pointer;
-  font-size: 18px;
-  line-height: 1;
-  color: rgba(10, 15, 30, 0.62);
-}
-
-.brand-dropzone {
-  border-radius: 14px;
-  border: 2px dashed rgba(10, 15, 30, 0.12);
-  background: #ffffff;
+.brand-upload-drop {
+  border-radius: 16px;
+  border: 2px dashed rgba(10, 15, 30, 0.18);
+  background: rgba(255, 255, 255, 0.75);
   min-height: 150px;
   display: grid;
   place-items: center;
   text-align: center;
-  gap: 6px;
-  padding: 18px 14px;
+  gap: 10px;
+  padding: 22px 18px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 
-.brand-dropzone.is-drag {
+.brand-upload-drop.is-drag {
+  border-color: rgba(97, 97, 255, 0.45);
   background: rgba(97, 97, 255, 0.08);
-  border-color: rgba(97, 97, 255, 0.35);
 }
 
-.brand-dropzone-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 16px;
+.brand-upload-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
   background: rgba(97, 97, 255, 0.1);
@@ -3023,61 +3022,66 @@ body.modal-open {
   color: var(--primary);
 }
 
-.brand-dropzone-text {
-  font-weight: 700;
-  color: rgba(10, 15, 30, 0.72);
-  font-size: 13px;
+.brand-upload-text {
+  font-weight: 800;
+  font-size: 16px;
+  color: rgba(10, 15, 30, 0.78);
+  letter-spacing: -0.01em;
 }
 
-.brand-dropzone-hint {
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(10, 15, 30, 0.35);
+.brand-upload-browse {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: inherit;
 }
 
-.brand-dropzone-preview {
+.brand-upload-preview {
   display: none;
-  width: 100%;
-  height: 150px;
+  position: absolute;
+  inset: 8px;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
   object-fit: cover;
   border-radius: 12px;
+  opacity: 1;
 }
 
-.brand-dropzone.has-preview {
-  padding: 0;
-  min-height: 170px;
+.brand-upload-drop.has-preview .brand-upload-icon,
+.brand-upload-drop.has-preview .brand-upload-text {
+  position: relative;
+  z-index: 2;
 }
 
-.brand-dropzone.has-preview .brand-dropzone-icon,
-.brand-dropzone.has-preview .brand-dropzone-text,
-.brand-dropzone.has-preview .brand-dropzone-hint {
-  display: none;
+.brand-upload-drop.has-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* keep text readable but let image show through */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15));
+  z-index: 1;
 }
 
-.brand-dropzone.has-preview .brand-dropzone-preview {
+.brand-upload-drop.has-preview .brand-upload-preview {
   display: block;
+  z-index: 0;
 }
 
-.brand-upload-divider {
-  height: 1px;
-  background: rgba(10, 15, 30, 0.08);
-}
-
-.brand-upload-url-label {
+.brand-upload-url-simple-label {
+  display: block;
   font-size: 12px;
   font-weight: 700;
   color: rgba(10, 15, 30, 0.6);
   margin-bottom: 8px;
 }
 
-.brand-upload-url-row {
+.brand-upload-url-simple-row {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 10px;
   align-items: center;
 }
 
-.brand-upload-url-row input {
+.brand-upload-url-simple-row input {
   border: 1px solid rgba(10, 15, 30, 0.12);
   border-radius: 12px;
   min-height: 42px;
@@ -3085,7 +3089,7 @@ body.modal-open {
   background: #f6f7fb;
 }
 
-.brand-upload-url-btn {
+.brand-upload-url-simple-btn {
   min-height: 42px;
   padding: 10px 16px;
   border-radius: 12px;
@@ -3095,7 +3099,7 @@ body.modal-open {
   cursor: pointer;
 }
 
-.brand-upload-url-btn:hover {
+.brand-upload-url-simple-btn:hover {
   border-color: rgba(97, 97, 255, 0.22);
   box-shadow: 0 2px 12px rgba(97, 97, 255, 0.08);
 }
