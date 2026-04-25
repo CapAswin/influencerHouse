@@ -402,7 +402,7 @@
   }
 
   var brandCompanyCurrentSlide = 1;
-  var BRAND_COMPANY_SLIDES = 3;
+  var BRAND_COMPANY_SLIDES = 4;
 
   function getBrandCompanySlideNode(slideNum) {
     if (!brandCompanyForm) return null;
@@ -520,7 +520,7 @@
       if (brandCompanyLogoDataUrl) brandCompanyLogoDataUrl.value = '';
       brandCompanyLogoPreview.src = '';
       if (brandDropzone) brandDropzone.classList.remove('has-preview');
-      setFieldErrorState(brandCompanyLogoInput, true);
+      setFieldErrorState(brandCompanyLogoInput, false);
     }
 
     function applyLogoDataUrl(dataUrl) {
@@ -637,6 +637,39 @@
           });
       });
     }
+  }
+
+  function wireBrandSlideAccordions() {
+    if (!brandCompanyForm) return;
+    var slide4 = brandCompanyForm.querySelector('.brand-company-slide[data-slide="4"]');
+    if (!slide4) return;
+    var accordions = Array.prototype.slice.call(slide4.querySelectorAll('details.brand-accordion'));
+    if (accordions.length < 2) return;
+
+    function ensureOneOpen(preferIndex) {
+      var anyOpen = accordions.some(function (d) {
+        return d && d.open;
+      });
+      if (anyOpen) return;
+      var fallback = accordions[typeof preferIndex === 'number' ? preferIndex : 0] || accordions[0];
+      if (fallback) fallback.open = true;
+    }
+
+    accordions.forEach(function (detailsNode, idx) {
+      detailsNode.addEventListener('toggle', function () {
+        if (detailsNode.open) {
+          accordions.forEach(function (other) {
+            if (other !== detailsNode) other.open = false;
+          });
+          return;
+        }
+        // If user closes the currently open one, force the other open.
+        ensureOneOpen(idx === 0 ? 1 : 0);
+      });
+    });
+
+    // Initial safety: never allow both closed.
+    ensureOneOpen(0);
   }
 
   function openWelcomeAccessModal() {
@@ -1154,6 +1187,7 @@
     bindLiveFieldValidation(brandCompanyForm);
     wireBrandIndustryCategory();
     wireBrandLogoUpload();
+    wireBrandSlideAccordions();
     setBrandCompanySlide(1);
 
     if (brandCompanyBackBtn) {
