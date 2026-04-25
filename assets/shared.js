@@ -378,4 +378,40 @@
       }
     }
   })();
+
+  // Required-field markers (all forms)
+  function syncRequiredAsterisks(root) {
+    const scope = root && root.querySelectorAll ? root : document;
+    const labels = scope.querySelectorAll('label');
+    labels.forEach(label => {
+      const controls = label.querySelectorAll('input, select, textarea');
+      const hasRequired = Array.from(controls).some(control => {
+        if (!control || control.disabled) return false;
+        const type = (control.getAttribute('type') || '').toLowerCase();
+        if (type === 'hidden' || type === 'button' || type === 'submit' || type === 'reset') return false;
+        return control.hasAttribute('required');
+      });
+
+      const title =
+        label.querySelector('span') ||
+        label.querySelector('.label-text') ||
+        null;
+      if (!title) return;
+
+      let star = title.querySelector('.required-asterisk');
+      if (hasRequired) {
+        if (!star) {
+          star = document.createElement('span');
+          star.className = 'required-asterisk';
+          title.appendChild(star);
+        }
+        star.textContent = '✼';
+      } else if (star) {
+        star.remove();
+      }
+    });
+  }
+
+  window.__syncRequiredAsterisks = syncRequiredAsterisks;
+  syncRequiredAsterisks(document);
 })();

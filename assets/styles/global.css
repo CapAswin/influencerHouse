@@ -2054,6 +2054,15 @@ h1 em {
   color: transparent;
 }
 
+.required-asterisk {
+  margin-left: 2px;
+  font-size: 0.8em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: super;
+  color: #dc2626;
+}
+
 .signup-panel-top {
   display: flex;
   align-items: center;
