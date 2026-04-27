@@ -899,23 +899,34 @@
 
   function populateCountryFieldsFromApi() {
     if (!brandCountryField || !brandCountryCodeField) return;
-    fetch('https://restcountries.com/v3.1/all?fields=name,idd,cca2')
+    
+    // Temporarily routed through corsproxy.io to bypass local development CORS errors
+    fetch('https://corsproxy.io/?https://www.opulentprimeproperties.com/influencer_house/web-v2/country', {
+      headers: {
+        'Authorization': 'Bearer J0eXAiOiJKV1QiLCJhbGciOiJ'
+      }
+    })
       .then(function (response) {
         if (!response.ok) throw new Error('Country API failed');
         return response.json();
       })
-      .then(function (countries) {
+      .then(function (result) {
+        var countries = result.data || [];
         countryRows = [];
         countries.forEach(function (item) {
-          if (!item || !item.name || !item.name.common || !item.idd || !item.idd.root) return;
-          var root = item.idd.root;
-          var suffix = item.idd.suffixes && item.idd.suffixes.length ? item.idd.suffixes[0] : '';
-          var dialingCode = '' + root + suffix;
-          if (!/^\+\d+$/.test(dialingCode)) return;
+          if (!item || !item.country_name || !item.phone_code) return;
+          
+          var region = '';
+          if (item.flag_png) {
+            var match = item.flag_png.match(/\/([a-z]{2})\.png$/i);
+            if (match) region = match[1].toUpperCase();
+          }
+
           countryRows.push({
-            country: item.name.common,
-            code: dialingCode,
-            region: item.cca2 || ''
+            country: item.country_name,
+            code: item.phone_code,
+            region: region,
+            id: item.country_id
           });
         });
 
