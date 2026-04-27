@@ -1886,6 +1886,131 @@ h1 em {
   margin-bottom: 48px;
 }
 
+.pricing-billing {
+  width: fit-content;
+  margin: -26px auto 40px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(10, 15, 30, 0.08);
+  box-shadow: var(--shadow-soft);
+}
+
+.pricing-billing-label {
+  text-align: left;
+  line-height: 1.1;
+}
+
+.pricing-billing-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #364056;
+}
+
+.pricing-billing-subtitle {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+/* Visually distinct from the "For Brands / For Influencers" tabs:
+   - rectangular switch
+   - animated sliding indicator
+   - lighter + more "settings" look */
+.pricing-billing-toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 4px;
+  border-radius: 14px;
+  background: rgba(10, 15, 30, 0.04);
+  border: 1px solid rgba(10, 15, 30, 0.08);
+  overflow: hidden;
+}
+
+.pricing-billing-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(97, 97, 255, 0.18), rgba(255, 3, 96, 0.14));
+  box-shadow: 0 10px 24px rgba(10, 15, 30, 0.08);
+  transform: translateX(0);
+  transition: transform var(--ease-smooth);
+  pointer-events: none;
+}
+
+.pricing-billing-toggle:has(.pricing-billing-btn.active[data-cycle="yearly"])
+  .pricing-billing-indicator {
+  transform: translateX(100%);
+}
+
+.pricing-billing-btn {
+  position: relative;
+  z-index: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #3f4760;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: color var(--ease);
+}
+
+.pricing-billing-btn.active {
+  color: #0a0f1e;
+}
+
+.pricing-billing-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(10, 15, 30, 0.08);
+  color: #0a0f1e;
+}
+
+.pricing-billing-btn:focus-visible {
+  outline: 3px solid rgba(97, 97, 255, 0.35);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .pricing-billing {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 16px;
+  }
+  .pricing-billing-label {
+    display: none;
+  }
+}
+
 .pricing-tab {
   border: none;
   background: transparent;
@@ -4291,6 +4416,40 @@ body.modal-open {
   flex-wrap: wrap;
   gap: 6px 8px;
   margin-bottom: 22px;
+}
+
+.pricing-card.is-annual .pricing-amount {
+  align-items: center;
+}
+
+.pricing-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0a0f1e;
+  background: linear-gradient(
+    90deg,
+    rgba(97, 97, 255, 0.22),
+    rgba(255, 3, 96, 0.18)
+  );
+  border: 1px solid rgba(10, 15, 30, 0.08);
+}
+
+.pricing-bill-note {
+  margin: -10px 0 22px;
+  font-size: 12px;
+  font-weight: 650;
+  color: #6b7280;
+}
+
+.pricing-card.is-annual .pricing-bill-note {
+  color: #374151;
 }
 
 .pricing-currency {
