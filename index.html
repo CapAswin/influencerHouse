@@ -813,6 +813,41 @@
             </button>
           </div>
 
+          <div class="pricing-billing">
+            <div class="pricing-billing-label">
+              <span class="pricing-billing-title">Billing</span>
+              <span class="pricing-billing-subtitle"
+                >Choose monthly or annual</span
+              >
+            </div>
+            <div
+              class="pricing-billing-toggle"
+              role="group"
+              aria-label="Billing cycle"
+            >
+              <span class="pricing-billing-indicator" aria-hidden="true"></span>
+              <button
+                type="button"
+                class="pricing-billing-btn"
+                data-cycle="monthly"
+                aria-pressed="true"
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                class="pricing-billing-btn"
+                data-cycle="yearly"
+                aria-pressed="false"
+              >
+                Annual
+                <span class="pricing-billing-pill" aria-hidden="true"
+                  >Save</span
+                >
+              </button>
+            </div>
+          </div>
+
           <!-- Brands -->
           <div class="pricing-panels-wrap">
             <div class="pricing-panel active" id="tab-brands">
@@ -1095,6 +1130,7 @@
 
     <script src="assets/vendor/lenis.min.js"></script>
     <script src="assets/shared.js"></script>
+    <script src="assets/env.js"></script>
     <script>
       (function () {
         const brandBtn = document.getElementById("hero-brand-btn");
@@ -1116,6 +1152,358 @@
       (function () {
         const tabs = document.querySelectorAll(".pricing-tab");
         let current = document.querySelector(".pricing-panel.active");
+        const panelByType = {
+          brands: document.getElementById("tab-brands"),
+          influencers: document.getElementById("tab-influencers"),
+        };
+        const apiCache = {
+          brands: null,
+          influencers: null,
+        };
+        const pricingTabsWrap = document.querySelector(".pricing-tabs");
+        const billingToggle = document.querySelector(".pricing-billing-toggle");
+        const billingButtons = billingToggle
+          ? Array.from(billingToggle.querySelectorAll("[data-cycle]"))
+          : [];
+        let billingCycle =
+          window.localStorage.getItem("pricingBillingCycle") || "monthly";
+
+        const REMOTE_API_ENDPOINT =
+          "https://www.opulentprimeproperties.com/influencer_house/web-v2/subscription-plans/";
+        const isLocalhost =
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1";
+        // The `/api/subscription-plans` route is provided by `router.php` (PHP built-in server).
+        // If you run the site via a static server (e.g. VSCode Live Server on :5500/:5503),
+        // that route will 404. In that case we fall back to the remote API endpoint.
+        const canUseLocalProxy =
+          isLocalhost &&
+          (window.__USE_LOCAL_API_PROXY__ === true ||
+            window.location.port === "8000" ||
+            window.location.port === "8001");
+        const LOCAL_PROXY_ORIGIN =
+          window.__LOCAL_API_PROXY_ORIGIN__ ||
+          `http://${window.location.hostname}:8001`;
+        const API_ENDPOINT = canUseLocalProxy
+          ? "/api/subscription-plans"
+          : isLocalhost
+            ? `${LOCAL_PROXY_ORIGIN}/api/subscription-plans`
+            : REMOTE_API_ENDPOINT;
+
+        function applyCycleToExistingCards(panel, cycle) {
+          if (!panel) return;
+          const cards = Array.from(panel.querySelectorAll(".pricing-card"));
+          cards.forEach((card) => {
+            const numEl = card.querySelector(".pricing-num");
+            const periodEl = card.querySelector(".pricing-period");
+            const currencyEl = card.querySelector(".pricing-currency");
+            if (!numEl || !periodEl) return;
+
+            const raw = (numEl.textContent || "").trim();
+            const isFree = raw.toLowerCase() === "free";
+            const clean = raw.replace(/,/g, "");
+            const inferredMonthly = isFree ? 0 : Number(clean);
+
+            if (card.dataset.monthlyPrice == null) {
+              card.dataset.monthlyPrice = Number.isFinite(inferredMonthly)
+                ? String(inferredMonthly)
+                : "0";
+            }
+            if (card.dataset.yearlyPrice == null) {
+              const monthlyNum = Number(card.dataset.monthlyPrice);
+              card.dataset.yearlyPrice =
+                Number.isFinite(monthlyNum) && monthlyNum > 0
+                  ? String(monthlyNum * 12)
+                  : "0";
+            }
+
+            const chosenRaw =
+              cycle === "yearly"
+                ? card.dataset.yearlyPrice
+                : card.dataset.monthlyPrice;
+            const chosenNum = Number(chosenRaw);
+            const chosenIsFree = !Number.isFinite(chosenNum) || chosenNum === 0;
+
+            if (chosenIsFree) {
+              if (currencyEl) currencyEl.style.display = "none";
+              numEl.textContent = "Free";
+              periodEl.textContent = "";
+              return;
+            }
+
+            if (currencyEl) currencyEl.style.display = "";
+            numEl.textContent = chosenNum.toLocaleString("en-US");
+            periodEl.textContent = cycle === "yearly" ? "/yr" : "/mo";
+
+            // Add a small billing note so Annual looks distinct.
+            let note = card.querySelector(".pricing-bill-note");
+            if (!note) {
+              note = document.createElement("div");
+              note.className = "pricing-bill-note";
+              const amount = card.querySelector(".pricing-amount");
+              if (amount) amount.insertAdjacentElement("afterend", note);
+            }
+            note.textContent =
+              cycle === "yearly" ? "Billed annually" : "Billed monthly";
+          });
+        }
+
+        function setBillingCycle(nextCycle) {
+          billingCycle = nextCycle === "yearly" ? "yearly" : "monthly";
+          try {
+            window.localStorage.setItem("pricingBillingCycle", billingCycle);
+          } catch (_) {}
+
+          billingButtons.forEach((btn) => {
+            btn.classList.toggle("active", btn.dataset.cycle === billingCycle);
+            btn.setAttribute(
+              "aria-pressed",
+              btn.dataset.cycle === billingCycle ? "true" : "false",
+            );
+          });
+
+          Object.values(panelByType).forEach((panel) => {
+            applyCycleToExistingCards(panel, billingCycle);
+          });
+
+          // If live plans are cached, re-render with selected cycle.
+          ["brands", "influencers"].forEach((type) => {
+            if (!apiCache[type]) return;
+            renderPlans(panelByType[type], apiCache[type]);
+          });
+        }
+
+        function getApiToken() {
+          const tokenCandidates = [
+            window.__OPULENT_API_TOKEN__,
+            window.localStorage.getItem("token"),
+            window.localStorage.getItem("authToken"),
+            window.localStorage.getItem("accessToken"),
+            window.sessionStorage.getItem("token"),
+            window.sessionStorage.getItem("authToken"),
+          ];
+          return tokenCandidates.find(Boolean) || "";
+        }
+
+        function parseFeatures(value) {
+          if (Array.isArray(value)) return value.filter(Boolean);
+          if (value && typeof value === "object") {
+            const features = [];
+            const prettify = (key) =>
+              String(key)
+                .replace(/_/g, " ")
+                .replace(/\b\w/g, (char) => char.toUpperCase());
+
+            const pushBooleanFeatures = (obj) => {
+              if (!obj || typeof obj !== "object") return;
+              Object.entries(obj).forEach(([key, enabled]) => {
+                if (enabled === true) features.push(prettify(key));
+              });
+            };
+
+            const pushLimitFeatures = (obj) => {
+              if (!obj || typeof obj !== "object") return;
+              Object.entries(obj).forEach(([key, limit]) => {
+                if (typeof limit !== "number") return;
+                const label = prettify(key).replace(/^Max /, "");
+                if (limit < 0) {
+                  features.push(`Unlimited ${label.toLowerCase()}`);
+                } else {
+                  features.push(`Up to ${limit} ${label.toLowerCase()}`);
+                }
+              });
+            };
+
+            pushBooleanFeatures(value.flags);
+            pushLimitFeatures(value.limits);
+            pushBooleanFeatures(value.filters);
+            pushBooleanFeatures(value.enterprise);
+
+            if (value.visibility?.influencer_fields) {
+              Object.entries(value.visibility.influencer_fields).forEach(
+                ([key, enabled]) => {
+                  if (enabled === true) {
+                    features.push(`Visibility: ${prettify(key)}`);
+                  }
+                },
+              );
+            }
+            if (value.visibility?.analytics) {
+              Object.entries(value.visibility.analytics).forEach(
+                ([key, enabled]) => {
+                  if (enabled === true) {
+                    features.push(`Analytics: ${prettify(key)}`);
+                  }
+                },
+              );
+            }
+            return Array.from(new Set(features));
+          }
+          if (typeof value === "string") {
+            try {
+              const parsed = JSON.parse(value);
+              return parseFeatures(parsed);
+            } catch (_) {
+              return value
+                .split(/\r?\n|,|\|/)
+                .map((item) => item.trim())
+                .filter(Boolean);
+            }
+          }
+          return [];
+        }
+
+        function formatPrice(price) {
+          if (price === null || price === undefined) return "";
+          const numberPrice = Number(price);
+          if (Number.isFinite(numberPrice)) {
+            return numberPrice.toLocaleString("en-US");
+          }
+          return String(price);
+        }
+
+        function renderPlans(panel, plans) {
+          if (!panel || !Array.isArray(plans) || !plans.length) return;
+
+          panel.innerHTML = plans
+            .map((plan, index) => {
+              const name =
+                plan.plan_name || plan.name || plan.title || "Plan Name";
+              const tier = plan.tier || plan.plan_type || plan.slug || "Plan";
+              const description =
+                plan.description || plan.short_description || "";
+              const features = parseFeatures(
+                plan.features_json ||
+                  plan.features ||
+                  plan.feature_list ||
+                  plan.benefits ||
+                  "",
+              );
+              const campaignSlots = plan.campaign_slots_per_month;
+              if (typeof campaignSlots === "number") {
+                if (campaignSlots < 0) {
+                  features.unshift("Unlimited campaigns per month");
+                } else if (campaignSlots > 0) {
+                  features.unshift(`Up to ${campaignSlots} campaigns per month`);
+                }
+              }
+              const isFeatured = Boolean(
+                plan.is_popular ||
+                  plan.popular ||
+                  plan.recommended ||
+                  String(plan.tier || "").toLowerCase() === "growth" ||
+                  index === 1,
+              );
+              const monthlyRaw =
+                plan.monthly_price ?? plan.monthlyPrice ?? plan.price ?? 0;
+              const yearlyRaw =
+                plan.yearly_price ?? plan.yearlyPrice ?? plan.annual_price ?? null;
+              const monthlyNum = Number(monthlyRaw) || 0;
+              const yearlyNum =
+                yearlyRaw == null ? null : Number(yearlyRaw);
+              const rawPrice =
+                billingCycle === "yearly"
+                  ? yearlyRaw ?? monthlyNum * 12
+                  : monthlyRaw;
+              const priceText =
+                Number(rawPrice) === 0 ? "Free" : formatPrice(rawPrice);
+              const currency = plan.currency || "AED";
+              const period = billingCycle === "yearly" ? "/yr" : "/mo";
+              const buttonText =
+                plan.cta_text || plan.button_text || "Get Started";
+
+              const computedYearly = monthlyNum * 12;
+              const savePct =
+                billingCycle === "yearly" &&
+                Number.isFinite(monthlyNum) &&
+                monthlyNum > 0 &&
+                Number.isFinite(yearlyNum) &&
+                yearlyNum > 0 &&
+                yearlyNum < computedYearly
+                  ? Math.round(((computedYearly - yearlyNum) / computedYearly) * 100)
+                  : 0;
+
+              return `
+                <div class="pricing-card${isFeatured ? " featured" : ""}${
+                  billingCycle === "yearly" ? " is-annual" : ""
+                }">
+                  ${isFeatured ? '<div class="pricing-badge">Most Popular</div>' : ""}
+                  <div class="pricing-tier">${tier}</div>
+                  <h3>${name}</h3>
+                  <p class="pricing-desc">${description}</p>
+                  <div class="pricing-amount">
+                    ${
+                      priceText.toLowerCase() === "free"
+                        ? `<span class="pricing-num" style="font-size: 2.4rem">${priceText}</span>`
+                        : `<span class="pricing-currency">${currency}</span><span class="pricing-num">${priceText}</span><span class="pricing-period">${period}</span>`
+                    }
+                    ${
+                      billingCycle === "yearly" && savePct > 0
+                        ? `<span class="pricing-save">Save ${savePct}%</span>`
+                        : ""
+                    }
+                  </div>
+                  <div class="pricing-bill-note">${
+                    billingCycle === "yearly" ? "Billed annually" : "Billed monthly"
+                  }</div>
+                  <div class="pricing-divider"></div>
+                  <ul class="pricing-features">
+                    ${features.map((feature) => `<li>${feature}</li>`).join("")}
+                  </ul>
+                  <button class="${
+                    isFeatured ? "btn-pricing-featured" : "btn-pricing"
+                  }">${buttonText}</button>
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        async function loadPlans(tabType) {
+          if (apiCache[tabType]) return;
+
+          const usertype = tabType === "brands" ? 0 : 1;
+          const token = getApiToken();
+          const headers = {};
+          if (token) {
+            headers.Authorization = `Bearer ${token}`;
+            headers.token = token;
+            headers["X-API-Token"] = token;
+          }
+
+          try {
+            const response = await fetch(`${API_ENDPOINT}?usertype=${usertype}`, {
+              method: "GET",
+              headers,
+            });
+            if (!response.ok) return;
+
+            const payload = await response.json();
+            const plans = Array.isArray(payload)
+              ? payload
+              : Array.isArray(payload?.data)
+                ? payload.data
+                : [];
+            if (!plans.length) {
+              return;
+            }
+
+            apiCache[tabType] = plans;
+            renderPlans(panelByType[tabType], plans);
+          } catch (_) {
+            // Keep static plans as fallback.
+          }
+        }
+
+        // Init billing toggle UI + apply to static cards immediately.
+        setBillingCycle(billingCycle);
+        if (billingButtons.length) {
+          billingButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              setBillingCycle(btn.dataset.cycle);
+            });
+          });
+        }
 
         tabs.forEach((tab) => {
           tab.addEventListener("click", () => {
@@ -1155,8 +1543,13 @@
               });
               current = next;
             }, 200);
+
+            loadPlans(tab.dataset.tab);
           });
         });
+
+        loadPlans("brands");
+        loadPlans("influencers");
       })();
 
       (function () {
