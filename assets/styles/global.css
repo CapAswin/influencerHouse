@@ -4072,15 +4072,24 @@ body.modal-open {
 
 @media (max-width: 980px) {
   .signup-main {
-    align-items: flex-start;
-    padding-top: 12px;
-    padding-bottom: 48px;
+    /* When the right visual card is hidden, center the form panel */
+    align-items: center;
+    justify-content: center;
+    min-height: 100svh;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .signup-grid {
     grid-template-columns: 1fr;
   }
   .signup-visual {
     display: none;
+  }
+  .signup-shell {
+    width: min(560px, calc(100% - 28px));
+  }
+  .signup-panel {
+    margin: 0 auto;
   }
   .signup-card {
     max-width: 100%;

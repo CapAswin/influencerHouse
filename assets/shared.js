@@ -483,6 +483,9 @@
     fetchProvinces: function (countryId) {
       return apiSendJson('POST', '/province', { country_id: Number(countryId) });
     },
+    influencerTellUs: function (payload) {
+      return apiSendJson('POST', '/influencers/tell-us', payload);
+    },
     signup: function (payload) {
       return apiSendJson('POST', '/signup', payload);
     },

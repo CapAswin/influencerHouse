@@ -1342,12 +1342,84 @@
         }
         return;
       }
+      var isBrandAccount = field && field.value === 'brand';
+
+      // Influencer: submit details via /influencers/tell-us
+      if (!isBrandAccount) {
+        var client = window.API_CLIENT;
+        if (!client || typeof client.influencerTellUs !== 'function') {
+          showSignupSnackbar({
+            type: 'error',
+            message: 'Influencer details API is not available.',
+            actionLabel: 'OK'
+          });
+          return;
+        }
+
+        var formData = new FormData(brandDetailsForm);
+        var selectedCountryName = String(formData.get('brand_country') || '').trim();
+        var countryRow = countryRows.find(function (r) {
+          return r && r.country === selectedCountryName;
+        });
+        var countryId = countryRow && countryRow.id != null ? Number(countryRow.id) : null;
+
+        var payload = {
+          user_type: 1,
+          country_id: countryId,
+          province_name: String(formData.get('brand_province') || '').trim(),
+          city: String(formData.get('brand_city') || '').trim(),
+          phone_code: String(formData.get('brand_country_code') || '').trim(),
+          phone: String(formData.get('brand_phone') || '').trim(),
+          contact_name: String(formData.get('brand_contact_name') || '').trim()
+        };
+
+        showSignupSnackbar({
+          type: 'info',
+          message: 'Saving your profile details…',
+          actionLabel: 'Wait'
+        });
+
+        client
+          .influencerTellUs(payload)
+          .then(function (res) {
+            if (res && res.success === false) {
+              throw new Error(res.error || res.message || 'Details submission failed');
+            }
+            try {
+              var influencerId =
+                (res && res.data && res.data[0] && res.data[0].influencer_id) ||
+                res.influencer_id ||
+                null;
+              if (influencerId != null) {
+                window.INFLUENCER_ID = influencerId;
+                localStorage.setItem('influencer_id', String(influencerId));
+                localStorage.setItem('user_id', String(influencerId));
+              }
+            } catch (e) {}
+            closeBrandDetailsModal();
+            openWelcomeAccessModal();
+            showSignupSnackbar({
+              type: 'success',
+              message: 'Profile submitted successfully.',
+              actionLabel: 'Great'
+            });
+          })
+          .catch(function (err) {
+            showSignupSnackbar({
+              type: 'error',
+              message: err && err.message ? err.message : 'Details submission failed',
+              actionLabel: 'Retry'
+            });
+          });
+        return;
+      }
+
+      // Brand: keep existing UI-only flow.
       closeBrandDetailsModal();
       openWelcomeAccessModal();
-      var isBrandAccount = field && field.value === 'brand';
       showSignupSnackbar({
         type: 'success',
-        message: isBrandAccount ? 'Brand profile submitted successfully.' : 'Profile submitted successfully.',
+        message: 'Brand profile submitted successfully.',
         actionLabel: 'Great'
       });
     });
