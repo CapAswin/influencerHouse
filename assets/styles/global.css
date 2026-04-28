@@ -4026,8 +4026,7 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
   .signup-visual {
-    max-width: 420px;
-    margin: 0 auto;
+    display: none;
   }
   .signup-card {
     max-width: 100%;
@@ -4035,6 +4034,13 @@ body.modal-open {
 }
 
 @media (max-width: 680px) {
+  #tab-brand,
+  #tab-creator {
+    font-size: 0;
+  }
+  #tab-brand::after  { content: 'Brand';     font-size: 13px; }
+  #tab-creator::after { content: 'Influencer'; font-size: 13px; }
+
   .signup-header-inner {
     flex-direction: column-reverse;
     align-items: stretch;
@@ -4084,6 +4090,9 @@ body.modal-open {
   }
   .signup-live-pill {
     padding: 7px 12px 7px 10px;
+  }
+  .signup-flip-face--brand .signup-card {
+    display: none;
   }
   .live-pill-text {
     font-size: 9px;
@@ -4610,6 +4619,7 @@ body.modal-open {
 
 .pricing-panels-wrap {
   position: relative;
+  overflow: hidden;
 }
 
 @media (max-width: 760px) {

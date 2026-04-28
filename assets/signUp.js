@@ -50,6 +50,7 @@
   var countryCodeByName = {};
   var countryNameByCode = {};
   var countryRows = [];
+  var lastSignupPayload = null;
   var filteredCodeRows = [];
   var codeSearchTimer = null;
   var lastValidCountryCode = '';
@@ -1003,15 +1004,56 @@
         }
         return;
       }
+      var formData = new FormData(signupForm);
+      var email = String(formData.get('email') || '').trim();
+      var password = String(formData.get('password') || '');
+      var accountType = String(formData.get('account_type') || 'brand');
+      var payload = {
+        email: email,
+        password: password,
+        user_type: accountType === 'creator' ? 1 : 0
+      };
+      lastSignupPayload = payload;
+
+      var client = window.API_CLIENT;
+      if (!client || typeof client.signup !== 'function') {
+        showSignupSnackbar({
+          type: 'error',
+          message: 'Signup API is not available.',
+          actionLabel: 'OK'
+        });
+        return;
+      }
+
       showSignupSnackbar({
-        type: 'success',
-        message: 'Signup details accepted. Enter OTP to continue.',
-        actionLabel: 'Continue',
-        onAction: function () {
-          if (otpInput) otpInput.focus();
-        }
+        type: 'info',
+        message: 'Creating your account…',
+        actionLabel: 'Wait'
       });
-      openOtpModal();
+
+      client
+        .signup(payload)
+        .then(function (res) {
+          if (res && res.success === false) {
+            throw new Error(res.error || res.message || 'Signup failed');
+          }
+          showSignupSnackbar({
+            type: 'success',
+            message: 'Signup submitted. Enter OTP to continue.',
+            actionLabel: 'Continue',
+            onAction: function () {
+              if (otpInput) otpInput.focus();
+            }
+          });
+          openOtpModal();
+        })
+        .catch(function (err) {
+          showSignupSnackbar({
+            type: 'error',
+            message: (err && err.message) ? err.message : 'Signup failed',
+            actionLabel: 'Retry'
+          });
+        });
     });
   }
 
@@ -1073,18 +1115,60 @@
         otpInput.focus();
         return;
       }
-      otpFeedback.textContent = 'OTP verified successfully.';
+      var client = window.API_CLIENT;
+      if (!client || typeof client.submitOtp !== 'function' || !lastSignupPayload) {
+        showSignupSnackbar({
+          type: 'error',
+          message: 'OTP API is not available. Please submit signup again.',
+          actionLabel: 'OK'
+        });
+        return;
+      }
+
+      var otpPayload = {
+        email: lastSignupPayload.email,
+        password: lastSignupPayload.password,
+        user_type: lastSignupPayload.user_type,
+        otp: String(otpInput.value || '').trim()
+      };
+
+      otpFeedback.textContent = 'Verifying OTP...';
       otpFeedback.classList.remove('otp-feedback--error');
-      otpFeedback.classList.add('otp-feedback--ok');
-      showSignupSnackbar({
-        type: 'success',
-        message: 'OTP verified successfully.',
-        actionLabel: 'Done'
-      });
-      setTimeout(function () {
-        closeOtpModal(true);
-        openBrandDetailsModal();
-      }, 800);
+      otpFeedback.classList.remove('otp-feedback--ok');
+
+      client
+        .submitOtp(otpPayload)
+        .then(function (res) {
+          if (res && res.success === false) {
+            throw new Error(res.error || res.message || 'OTP verification failed');
+          }
+          otpFeedback.textContent = 'OTP verified successfully.';
+          otpFeedback.classList.remove('otp-feedback--error');
+          otpFeedback.classList.add('otp-feedback--ok');
+          showSignupSnackbar({
+            type: 'success',
+            message: 'OTP verified successfully.',
+            actionLabel: 'Done'
+          });
+          setTimeout(function () {
+            closeOtpModal(true);
+            openBrandDetailsModal();
+          }, 800);
+        })
+        .catch(function (err) {
+          var msg = err && err.message ? err.message : 'OTP verification failed';
+          otpFeedback.textContent = msg;
+          otpFeedback.classList.remove('otp-feedback--ok');
+          otpFeedback.classList.add('otp-feedback--error');
+          showSignupSnackbar({
+            type: 'error',
+            message: msg,
+            actionLabel: 'Retry',
+            onAction: function () {
+              otpInput.focus();
+            }
+          });
+        });
     });
   }
 

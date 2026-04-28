@@ -454,6 +454,18 @@
     });
   }
 
+  function apiSendJson(method, urlOrPath, body) {
+    const token = getApiToken();
+    const headers = { Accept: 'application/json', 'Content-Type': 'application/json' };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const url = `${API_BASE_URL}${urlOrPath}`;
+    return fetch(url, { method, headers, body: JSON.stringify(body || {}) }).then(async (res) => {
+      const json = await res.json().catch(() => null);
+      if (res.ok) return json;
+      throw new Error((json && (json.error || json.message)) || 'API failed');
+    });
+  }
+
   function fetchSubscriptionPlans(usertype = 0) {
     const qs = `?usertype=${encodeURIComponent(String(usertype))}`;
     // Keep trailing slash to avoid redirect issues.
@@ -468,5 +480,11 @@
   window.API_CLIENT = {
     fetchSubscriptionPlans,
     fetchCountries,
+    signup: function (payload) {
+      return apiSendJson('POST', '/signup', payload);
+    },
+    submitOtp: function (payload) {
+      return apiSendJson('POST', '/signup', payload);
+    },
   };
 })();
