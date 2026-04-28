@@ -1867,19 +1867,46 @@ h1 em {
 .pricing-wrap {
   text-align: center;
   --pricing-blue: #2b64f1;
-  --pricing-page-bg: #f8f9fb;
   --pricing-card-radius: 24px;
   --pricing-btn-radius: 50px;
-  background: var(--pricing-page-bg);
-  padding-top: 56px;
-  padding-bottom: 56px;
+  background: transparent;
+  padding-top: 44px;
+  padding-bottom: 44px;
   font-family: Inter, "Segoe UI", system-ui, sans-serif;
+}
+
+.pricing-wrap .container {
+  background: transparent;
+}
+
+.pricing-header {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  padding: 0 6px;
+}
+
+.pricing-wrap .wwa-eyebrow {
+  margin-bottom: 10px;
+}
+
+.pricing-header h2 {
+  max-width: none;
+  margin: 10px 0 10px;
+  letter-spacing: -0.04em;
+}
+
+.pricing-subtitle {
+  margin: 0 auto;
+  max-width: 58ch;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 .pricing-tabs {
   display: inline-flex;
-  background: rgba(255, 255, 255, 0.75);
-  box-shadow: var(--shadow-soft);
+  background: transparent;
+  box-shadow: none;
   border-radius: 999px;
   padding: 5px;
   gap: 4px;
@@ -1888,37 +1915,14 @@ h1 em {
 
 .pricing-billing {
   width: fit-content;
-  margin: -26px auto 40px;
+  margin: 12px auto 34px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(10, 15, 30, 0.08);
-  box-shadow: var(--shadow-soft);
-}
-
-.pricing-billing-label {
-  text-align: left;
-  line-height: 1.1;
-}
-
-.pricing-billing-title {
-  display: block;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #364056;
-}
-
-.pricing-billing-subtitle {
-  display: block;
-  margin-top: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b7280;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 /* Visually distinct from the "For Brands / For Influencers" tabs:
@@ -1926,56 +1930,83 @@ h1 em {
    - animated sliding indicator
    - lighter + more "settings" look */
 .pricing-billing-toggle {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  padding: 4px;
-  border-radius: 14px;
-  background: rgba(10, 15, 30, 0.04);
-  border: 1px solid rgba(10, 15, 30, 0.08);
-  overflow: hidden;
-}
-
-.pricing-billing-indicator {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 4px;
-  width: calc(50% - 4px);
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(97, 97, 255, 0.18), rgba(255, 3, 96, 0.14));
-  box-shadow: 0 10px 24px rgba(10, 15, 30, 0.08);
-  transform: translateX(0);
-  transition: transform var(--ease-smooth);
-  pointer-events: none;
-}
-
-.pricing-billing-toggle:has(.pricing-billing-btn.active[data-cycle="yearly"])
-  .pricing-billing-indicator {
-  transform: translateX(100%);
-}
-
-.pricing-billing-btn {
-  position: relative;
-  z-index: 1;
-  border: none;
-  background: transparent;
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-  color: #3f4760;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: color var(--ease);
+  gap: 14px;
+  padding: 0;
+  border-radius: 999px;
+  background: transparent;
+  border: 0;
 }
 
-.pricing-billing-btn.active {
-  color: #0a0f1e;
+.pricing-billing-option {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2f364a;
+  user-select: none;
+  transition: opacity var(--ease), color var(--ease);
+}
+
+.pricing-billing-option.is-dim {
+  opacity: 0.55;
+}
+
+.pricing-switch {
+  position: relative;
+  width: 62px;
+  height: 32px;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+.pricing-switch-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.pricing-switch-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgba(10, 15, 30, 0.14);
+  box-shadow:
+    inset 0 0 0 1px rgba(10, 15, 30, 0.1),
+    inset 0 10px 18px rgba(10, 15, 30, 0.08);
+  transition: background var(--ease-smooth), box-shadow var(--ease-smooth);
+}
+
+.pricing-switch-thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 18px rgba(10, 15, 30, 0.18);
+  transform: translateX(0);
+  transition: transform var(--ease-smooth);
+}
+
+.pricing-switch-input:checked ~ .pricing-switch-track {
+  background: rgba(97, 97, 255, 0.32);
+  box-shadow:
+    inset 0 0 0 1px rgba(97, 97, 255, 0.25),
+    inset 0 10px 18px rgba(10, 15, 30, 0.06);
+}
+
+.pricing-switch-input:checked ~ .pricing-switch-thumb {
+  transform: translateX(30px);
+}
+
+.pricing-switch-input:focus-visible ~ .pricing-switch-track {
+  outline: 3px solid rgba(97, 97, 255, 0.35);
+  outline-offset: 3px;
 }
 
 .pricing-billing-pill {
@@ -1991,11 +2022,6 @@ h1 em {
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(10, 15, 30, 0.08);
   color: #0a0f1e;
-}
-
-.pricing-billing-btn:focus-visible {
-  outline: 3px solid rgba(97, 97, 255, 0.35);
-  outline-offset: 3px;
 }
 
 @media (max-width: 760px) {
@@ -4033,8 +4059,7 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
   .signup-visual {
-    max-width: 420px;
-    margin: 0 auto;
+    display: none;
   }
   .signup-card {
     max-width: 100%;
@@ -4042,6 +4067,13 @@ body.modal-open {
 }
 
 @media (max-width: 680px) {
+  #tab-brand,
+  #tab-creator {
+    font-size: 0;
+  }
+  #tab-brand::after  { content: 'Brand';     font-size: 13px; }
+  #tab-creator::after { content: 'Influencer'; font-size: 13px; }
+
   .signup-header-inner {
     flex-direction: column-reverse;
     align-items: stretch;
@@ -4091,6 +4123,9 @@ body.modal-open {
   }
   .signup-live-pill {
     padding: 7px 12px 7px 10px;
+  }
+  .signup-flip-face--brand .signup-card {
+    display: none;
   }
   .live-pill-text {
     font-size: 9px;
@@ -4177,6 +4212,13 @@ body.modal-open {
   z-index: 1;
   pointer-events: none;
   letter-spacing: -0.06em;
+}
+
+/* Remove decorative card backgrounds for influencer tab */
+#tab-influencers .pricing-card::before,
+#tab-influencers .pricing-card::after {
+  content: none !important;
+  display: none !important;
 }
 
 .pricing-panel .pricing-card:nth-child(1)::before {
@@ -4617,6 +4659,17 @@ body.modal-open {
 
 .pricing-panels-wrap {
   position: relative;
+  /* Prevent absolutely-positioned inactive panels from extending page scroll */
+  overflow: hidden;
+  /* Room for the "Most Popular" badge to sit half-outside cards */
+  padding-top: 22px;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 @media (max-width: 760px) {

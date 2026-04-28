@@ -414,4 +414,77 @@
 
   window.__syncRequiredAsterisks = syncRequiredAsterisks;
   syncRequiredAsterisks(document);
+
+  // --- API helpers (subscription plans + country list) ---
+  const REMOTE_API_BASE_URL =
+    window.API_BASE_URL ||
+    'https://www.opulentprimeproperties.com/influencer_house/web-v2';
+  // Use a single CORS-safe base URL for all API calls (browser).
+  const API_BASE_URL = `https://corsproxy.io/?${REMOTE_API_BASE_URL}`;
+  const DEFAULT_API_TOKEN = 'J0eXAiOiJKV1QiLCJhbGciOiJ';
+
+  function getApiToken() {
+    try {
+      return (
+        (window && window.AUTH_TOKEN) ||
+        (new URLSearchParams(window.location.search).get('token') || '') ||
+        localStorage.getItem('token') ||
+        localStorage.getItem('authToken') ||
+        localStorage.getItem('access_token') ||
+        sessionStorage.getItem('token') ||
+        DEFAULT_API_TOKEN ||
+        ''
+      );
+    } catch (_) {
+      return DEFAULT_API_TOKEN || '';
+    }
+  }
+
+  function apiGetJson(urlOrPath) {
+    const token = getApiToken();
+    const headers = { Accept: 'application/json' };
+    if (token) headers.Authorization = `Bearer ${token}`;
+
+    const url = `${API_BASE_URL}${urlOrPath}`;
+
+    return fetch(url, { method: 'GET', headers }).then(async (res) => {
+      const json = await res.json().catch(() => null);
+      if (res.ok) return json;
+      throw new Error((json && (json.error || json.message)) || 'API failed');
+    });
+  }
+
+  function apiSendJson(method, urlOrPath, body) {
+    const token = getApiToken();
+    const headers = { Accept: 'application/json', 'Content-Type': 'application/json' };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const url = `${API_BASE_URL}${urlOrPath}`;
+    return fetch(url, { method, headers, body: JSON.stringify(body || {}) }).then(async (res) => {
+      const json = await res.json().catch(() => null);
+      if (res.ok) return json;
+      throw new Error((json && (json.error || json.message)) || 'API failed');
+    });
+  }
+
+  function fetchSubscriptionPlans(usertype = 0) {
+    const qs = `?usertype=${encodeURIComponent(String(usertype))}`;
+    // Keep trailing slash to avoid redirect issues.
+    return apiGetJson(`/subscription-plans/${qs}`);
+  }
+
+  function fetchCountries() {
+    // IMPORTANT: country/ returns 500 on server; use /country (no trailing slash).
+    return apiGetJson('/country');
+  }
+
+  window.API_CLIENT = {
+    fetchSubscriptionPlans,
+    fetchCountries,
+    signup: function (payload) {
+      return apiSendJson('POST', '/signup', payload);
+    },
+    submitOtp: function (payload) {
+      return apiSendJson('POST', '/signup', payload);
+    },
+  };
 })();
