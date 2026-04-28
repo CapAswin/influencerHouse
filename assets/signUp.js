@@ -39,6 +39,7 @@
   var signupSnackbarStack = document.getElementById('signup-snackbar-stack');
   var brandPhoneField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_phone"]') : null;
   var brandCountryField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_country"]') : null;
+  var brandProvinceField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_province"]') : null;
   var brandCountryCodeField = document.getElementById('brand-country-code');
   var brandCountryCodeDisplay = document.getElementById('brand-country-code-display');
   var brandCodeSelect = document.getElementById('brand-code-select');
@@ -391,6 +392,34 @@
     brandDetailsModal.classList.add('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+
+    // Influencer default: load UAE provinces immediately.
+    // UAE country_id is 13 (per API); we still look up by name so it works if IDs change.
+    try {
+      if (brandCountryField && brandProvinceField) {
+        var UAE_NAME = 'United Arab Emirates';
+        var uaeOption = Array.prototype.find.call(
+          brandCountryField.options,
+          function (opt) {
+            return opt && String(opt.value) === UAE_NAME;
+          }
+        );
+        if (uaeOption) {
+          brandCountryField.value = UAE_NAME;
+          var uaeRow = countryRows.find(function (r) {
+            return r && r.country === UAE_NAME;
+          });
+          if (uaeRow) {
+            applyCodeSelection(uaeRow);
+          } else {
+            loadProvincesForSelectedCountry();
+          }
+        } else {
+          loadProvincesForSelectedCountry();
+        }
+      }
+    } catch (e) {}
+
     var firstField = brandDetailsForm ? brandDetailsForm.querySelector('input, select') : null;
     if (firstField) firstField.focus();
   }
@@ -879,6 +908,7 @@
     lastValidCountryCode = row.code;
     lastValidCountryDisplay = getDisplayCode(row);
     setCountryFromCode(row.code);
+    loadProvincesForSelectedCountry();
     closeCodeDropdown();
   }
 
@@ -896,6 +926,51 @@
         codeNoPlus.indexOf(qNoPlus) > -1
       );
     });
+  }
+
+  function resetProvinceOptions() {
+    if (!brandProvinceField) return;
+    brandProvinceField.innerHTML = '<option value="" selected disabled>Select province</option>';
+  }
+
+  function loadProvincesForSelectedCountry() {
+    if (!brandProvinceField || !brandCountryField) return;
+    var client = window.API_CLIENT;
+    if (!client || typeof client.fetchProvinces !== 'function') return;
+
+    var selectedName = String(brandCountryField.value || '');
+    if (!selectedName) {
+      resetProvinceOptions();
+      return;
+    }
+
+    var row = countryRows.find(function (r) {
+      return r && r.country === selectedName && r.id != null;
+    });
+    if (!row || row.id == null) {
+      resetProvinceOptions();
+      return;
+    }
+
+    resetProvinceOptions();
+    client
+      .fetchProvinces(row.id)
+      .then(function (payload) {
+        var provinces = (payload && payload.data) || [];
+        provinces.forEach(function (p) {
+          if (!p || !p.province_name) return;
+          var opt = document.createElement('option');
+          opt.value = String(p.province_name);
+          opt.textContent = String(p.province_name);
+          brandProvinceField.appendChild(opt);
+        });
+        if (brandProvinceField.options.length === 2) {
+          brandProvinceField.selectedIndex = 1;
+        }
+      })
+      .catch(function () {
+        // Keep placeholder if API fails.
+      });
   }
 
   function populateCountryFieldsFromApi() {
@@ -973,6 +1048,8 @@
         }
         filteredCodeRows = countryRows.slice();
         renderCodeDropdown(filteredCodeRows);
+
+        loadProvincesForSelectedCountry();
       })
       .catch(function () {
         // API-only requirement: leave placeholders if fetch fails.
@@ -1390,6 +1467,8 @@
         lastValidCountryCode = selectedCode;
         lastValidCountryDisplay = selectedCode;
       }
+
+      loadProvincesForSelectedCountry();
     });
   }
 

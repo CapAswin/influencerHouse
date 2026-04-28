@@ -1877,6 +1877,12 @@ h1 em {
 
 .pricing-wrap .container {
   background: transparent;
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .pricing-header {
@@ -2077,6 +2083,21 @@ h1 em {
   transform: translateY(0);
   pointer-events: auto;
   position: relative;
+}
+
+/* Smooth content transitions (billing + API render) */
+.pricing-panels-wrap.is-cycle-switching .pricing-card,
+.pricing-panel.is-content-switching .pricing-card {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.pricing-panel .pricing-card {
+  transition:
+    opacity 260ms ease,
+    transform 260ms var(--ease-smooth),
+    box-shadow var(--ease-smooth),
+    border-color var(--ease-smooth);
 }
 
 /* Signup page styles */
@@ -4663,8 +4684,8 @@ body.modal-open {
   overflow: hidden;
   /* Room for the "Most Popular" badge to sit half-outside cards */
   padding-top: 22px;
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: clamp(16px, 3vw, 34px);
+  padding-right: clamp(16px, 3vw, 34px);
   padding-bottom: 0;
   background: transparent;
   border: 0;

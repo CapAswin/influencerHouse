@@ -480,6 +480,9 @@
   window.API_CLIENT = {
     fetchSubscriptionPlans,
     fetchCountries,
+    fetchProvinces: function (countryId) {
+      return apiSendJson('POST', '/province', { country_id: Number(countryId) });
+    },
     signup: function (payload) {
       return apiSendJson('POST', '/signup', payload);
     },

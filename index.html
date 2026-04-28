@@ -928,6 +928,7 @@
         influencers: null,
       };
       const pricingTabsWrap = document.querySelector(".pricing-tabs");
+        const pricingPanelsWrap = document.querySelector(".pricing-panels-wrap");
       const billingToggle = document.querySelector(".pricing-billing-toggle");
       const billingSwitch = document.getElementById("pricing-billing-switch");
       const billingLabelMonthly = billingToggle
@@ -938,6 +939,26 @@
         : null;
       let billingCycle =
         window.localStorage.getItem("pricingBillingCycle") || "monthly";
+
+        function kickPricingTransition(panel) {
+          if (!panel) return;
+          panel.classList.add("is-content-switching");
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+              panel.classList.remove("is-content-switching");
+            });
+          });
+        }
+
+        function kickCycleTransition() {
+          if (!pricingPanelsWrap) return;
+          pricingPanelsWrap.classList.add("is-cycle-switching");
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+              pricingPanelsWrap.classList.remove("is-cycle-switching");
+            });
+          });
+        }
 
       function applyCycleToExistingCards(panel, cycle) {
         if (!panel) return;
@@ -1003,6 +1024,8 @@
           window.localStorage.setItem("pricingBillingCycle", billingCycle);
         } catch (_) { }
 
+        kickCycleTransition();
+
         if (billingSwitch) billingSwitch.checked = billingCycle === "yearly";
         if (billingLabelMonthly) {
           billingLabelMonthly.classList.toggle(
@@ -1025,6 +1048,7 @@
         ["brands", "influencers"].forEach((type) => {
           if (!apiCache[type]) return;
           renderPlans(panelByType[type], apiCache[type]);
+          kickPricingTransition(panelByType[type]);
         });
       }
 
@@ -1134,6 +1158,7 @@
               plan.benefits ||
               "",
             );
+            const visibleFeatures = features.slice(0, 5);
             const campaignSlots = plan.campaign_slots_per_month;
             if (typeof campaignSlots === "number") {
               if (campaignSlots < 0) {
@@ -1195,7 +1220,9 @@
               }</div>
                   <div class="pricing-divider"></div>
                   <ul class="pricing-features">
-                    ${features.map((feature) => `<li>${feature}</li>`).join("")}
+                    ${visibleFeatures
+                      .map((feature) => `<li>${feature}</li>`)
+                      .join("")}
                   </ul>
                   <button class="${isFeatured ? "btn-pricing-featured" : "btn-pricing"
               }">${buttonText}</button>
@@ -1226,6 +1253,7 @@
 
           apiCache[tabType] = plans;
           renderPlans(panelByType[tabType], plans);
+          kickPricingTransition(panelByType[tabType]);
         } catch (_) {
           // Keep static plans as fallback.
         }
