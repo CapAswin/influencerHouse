@@ -899,19 +899,14 @@
 
   function populateCountryFieldsFromApi() {
     if (!brandCountryField || !brandCountryCodeField) return;
-    
-    // Temporarily routed through corsproxy.io to bypass local development CORS errors
-    fetch('https://corsproxy.io/?https://www.opulentprimeproperties.com/influencer_house/web-v2/country', {
-      headers: {
-        'Authorization': 'Bearer J0eXAiOiJKV1QiLCJhbGciOiJ'
-      }
-    })
-      .then(function (response) {
-        if (!response.ok) throw new Error('Country API failed');
-        return response.json();
-      })
+
+    var client = window.API_CLIENT;
+    if (!client || typeof client.fetchCountries !== 'function') return;
+
+    client
+      .fetchCountries()
       .then(function (result) {
-        var countries = result.data || [];
+        var countries = (result && result.data) || [];
         countryRows = [];
         countries.forEach(function (item) {
           if (!item || !item.country_name || !item.phone_code) return;
@@ -980,6 +975,9 @@
       })
       .catch(function () {
         // API-only requirement: leave placeholders if fetch fails.
+        try {
+          console.warn('[signup] failed to load countries from API.');
+        } catch (e) {}
       });
   }
 
