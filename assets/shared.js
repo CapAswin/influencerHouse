@@ -5,7 +5,7 @@
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
         <a class="logo" href="index.html">
-          <img class="logo-icon" src="assets/images/favicon.png" alt="Opulent icon" width="36" height="36" />
+          <img class="logo-icon" src="assets/images/logos/OIH%20gold%20%26%20White.png" alt="Opulent icon" width="36" height="36" />
         </a>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
           <span class="nav-toggle-bar" aria-hidden="true"></span>

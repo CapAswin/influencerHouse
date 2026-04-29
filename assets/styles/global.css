@@ -252,13 +252,31 @@ h2 {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  padding: 8px;
+  line-height: 0;
 }
 
 .logo-icon {
   width: auto;
-  height: 36px;
+  height: 32px;
   object-fit: contain;
   flex-shrink: 0;
+}
+
+.nav-wrap.is-scrolled .logo-icon {
+  height: 30px;
+}
+
+@media (max-width: 900px) {
+  .logo {
+    padding: 6px;
+  }
+  .logo-icon {
+    height: 30px;
+  }
+  .nav-wrap.is-scrolled .logo-icon {
+    height: 28px;
+  }
 }
 
 .nav-links {
