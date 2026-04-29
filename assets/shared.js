@@ -1,7 +1,6 @@
 (function () {
   const headerHTML = `
   <div class="nav-wrap">
-    <div class="nav-backdrop" aria-hidden="true"></div>
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
         <a class="logo" href="index.html">
@@ -12,7 +11,14 @@
           <span class="nav-toggle-bar" aria-hidden="true"></span>
           <span class="nav-toggle-bar" aria-hidden="true"></span>
         </button>
-        <div class="nav-panel" id="primary-navigation">
+      </nav>
+    </div>
+    <dialog class="nav-dialog" id="primary-navigation" aria-label="Menu">
+      <div class="nav-dialog-surface">
+        <button type="button" class="nav-dialog-close" aria-label="Close menu">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="nav-panel">
           <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="about.html">About Us</a>
@@ -26,8 +32,8 @@
             <a href="signUp.html" class="btn btn-gold">Sign Up</a>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </dialog>
   </div>`;
 
   const footerHTML = `
@@ -165,26 +171,45 @@
   (function initMobileNav() {
     const nav = document.querySelector('.navbar');
     const btn = document.querySelector('.nav-toggle');
-    const panel = document.getElementById('primary-navigation');
-    const backdrop = document.querySelector('.nav-backdrop');
-    if (!nav || !btn || !panel) return;
+    const dialog = document.getElementById('primary-navigation');
+    if (!nav || !btn || !dialog) return;
+    const closeBtn = dialog.querySelector('.nav-dialog-close');
+    const panel = dialog.querySelector('.nav-panel');
+    if (!panel) return;
 
     function setOpen(open) {
-      nav.classList.toggle('nav-is-open', open);
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      document.body.classList.toggle('nav-open', open);
+      const next = Boolean(open);
+      nav.classList.toggle('nav-is-open', next);
+      btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+      btn.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', next);
+
+      const isDialogOpen = dialog.hasAttribute('open');
+      if (next && !isDialogOpen) {
+        if (typeof dialog.showModal === 'function') dialog.showModal();
+        else dialog.setAttribute('open', '');
+      } else if (!next && isDialogOpen) {
+        if (typeof dialog.close === 'function') dialog.close();
+        else dialog.removeAttribute('open');
+      }
     }
 
     btn.addEventListener('click', function () {
-      setOpen(!nav.classList.contains('nav-is-open'));
+      setOpen(!dialog.hasAttribute('open'));
     });
 
-    if (backdrop) {
-      backdrop.addEventListener('click', function () {
-        setOpen(false);
-      });
-    }
+    if (closeBtn) closeBtn.addEventListener('click', () => setOpen(false));
+
+    dialog.addEventListener('click', (e) => {
+      // Close when clicking the backdrop (outside surface)
+      if (e.target === dialog) setOpen(false);
+    });
+
+    dialog.addEventListener('cancel', (e) => {
+      // Keep state in sync with our nav button animation.
+      e.preventDefault();
+      setOpen(false);
+    });
 
     panel.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
