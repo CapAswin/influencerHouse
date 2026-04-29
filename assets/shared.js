@@ -11,6 +11,20 @@
           <span class="nav-toggle-bar" aria-hidden="true"></span>
           <span class="nav-toggle-bar" aria-hidden="true"></span>
         </button>
+        <div class="nav-panel" aria-label="Primary navigation links">
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="for-brands.html">For Brands</a>
+            <a href="for-influencers.html">For Influencers</a>
+            <a href="service.html">Services</a>
+            <a href="blog.html">Blogs</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-actions">
+            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+          </div>
+        </div>
       </nav>
     </div>
     <dialog class="nav-dialog" id="primary-navigation" aria-label="Menu">

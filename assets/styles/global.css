@@ -253,6 +253,12 @@ h2 {
   background: transparent;
 }
 
+@media (min-width: 901px) {
+  .nav-dialog {
+    display: none !important;
+  }
+}
+
 .nav-dialog::backdrop {
   background: rgba(10, 15, 30, 0.56);
   backdrop-filter: blur(4px);
@@ -5139,6 +5145,12 @@ body.modal-open {
     width: min(1140px, calc(100% - 24px));
   }
 
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding-top: 18px;
+  }
+
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -5157,6 +5169,44 @@ body.modal-open {
     position: static;
     transform: none !important;
     margin-top: 10px;
+    width: 100%;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 14px;
+    border-radius: 18px;
+  }
+
+  .card-views,
+  .card-verified,
+  .card-roi {
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+  }
+
+  .card-views b {
+    font-size: 1.15rem;
+  }
+
+  .card-views small,
+  .card-verified small,
+  .card-roi small {
+    font-size: 11px;
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .card-verified .badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    font-size: 12px;
   }
 
   .analytics-stage {
@@ -5190,8 +5240,22 @@ body.modal-open {
 }
 
 @media (max-width: 480px) {
+  .hero {
+    gap: 18px;
+  }
+
   .stats {
     grid-template-columns: 1fr;
+  }
+
+  .hero-visual,
+  .hero-photo {
+    min-height: 350px;
+  }
+
+  .float-card {
+    max-width: none;
+    padding: 11px 12px;
   }
 }
 
