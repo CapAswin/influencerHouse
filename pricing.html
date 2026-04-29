@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing – Opulent Influencers House</title>
+  <link rel="icon" type="image/png" href="assets/images/fav.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles/global.css" />
+
+  <style>
+    .pricing-card.is-selected-plan {
+      outline: 2px solid rgba(43, 100, 241, 0.85);
+      outline-offset: 7px;
+      box-shadow: 0 24px 70px rgba(43, 100, 241, 0.22);
+      border-radius: calc(var(--pricing-card-radius) + 6px);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="site-header"></div>
+
+  <main>
+    <section class="section pricing-wrap">
+      <div class="container">
+        <div class="pricing-panels-wrap">
+          <header class="pricing-header">
+            <span class="wwa-eyebrow">Transparent Pricing</span>
+            <h2>Simple, Scalable Plans</h2>
+            <p class="pricing-subtitle">Choose the plan that fits your goals — no hidden fees, no lock-ins.</p>
+
+            <div class="pricing-tabs">
+              <button class="pricing-tab active" data-tab="brands" type="button">
+                For Brands
+              </button>
+              <button class="pricing-tab" data-tab="influencers" type="button">
+                For Influencers
+              </button>
+            </div>
+
+            <div class="pricing-billing">
+              <div class="pricing-billing-toggle" role="group" aria-label="Billing cycle">
+                <span class="pricing-billing-option" data-cycle-label="monthly">Monthly</span>
+                <label class="pricing-switch" aria-label="Toggle billing cycle">
+                  <input id="pricing-billing-switch" class="pricing-switch-input" type="checkbox" />
+                  <span class="pricing-switch-track" aria-hidden="true"></span>
+                  <span class="pricing-switch-thumb" aria-hidden="true"></span>
+                </label>
+                <span class="pricing-billing-option" data-cycle-label="yearly">Annual</span>
+              </div>
+            </div>
+          </header>
+
+          <div class="pricing-panel active" id="tab-brands">
+          <div class="pricing-card" data-pricing-type="brands" data-plan-key="starter" data-plan-label="Brand Starter">
+            <div class="pricing-tier">Starter</div>
+            <h3>Brand Starter</h3>
+            <p class="pricing-desc">Perfect for small brands testing influencer marketing for the first time.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">1,500</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Up to 3 creator collaborations</li>
+              <li>Basic campaign dashboard</li>
+              <li>Standard creator verification</li>
+              <li>Email support</li>
+              <li>Monthly performance report</li>
+            </ul>
+            <button class="btn-pricing" type="button">Get Started</button>
+          </div>
+
+          <div class="pricing-card featured" data-pricing-type="brands" data-plan-key="growth" data-plan-label="Brand Growth">
+            <div class="pricing-badge">Most Popular</div>
+            <div class="pricing-tier">Growth</div>
+            <h3>Brand Growth</h3>
+            <p class="pricing-desc">For growing brands ready to scale campaigns across UAE &amp; GCC markets.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">3,500</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Up to 10 creator collaborations</li>
+              <li>Advanced analytics dashboard</li>
+              <li>Elite creator verification access</li>
+              <li>Dedicated account manager</li>
+              <li>Weekly performance reports</li>
+              <li>Multi-platform campaign tracking</li>
+            </ul>
+            <button class="btn-pricing-featured" type="button">Get Started</button>
+          </div>
+
+          <div class="pricing-card" data-pricing-type="brands" data-plan-key="elite" data-plan-label="Brand Elite">
+            <div class="pricing-tier" style="display: flex; align-items: center; gap: 6px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z"
+                  stroke="#fbbf24" stroke-width="2" stroke-linejoin="round"
+                  fill="rgba(251,191,36,0.15)" />
+              </svg>
+              Elite
+            </div>
+            <h3>Brand Elite</h3>
+            <p class="pricing-desc">Full-scale influencer infrastructure for enterprise brands and agencies.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">7,000</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Unlimited creator collaborations</li>
+              <li>Full analytics &amp; ROI tracking</li>
+              <li>Priority elite creator matching</li>
+              <li>Dedicated strategy team</li>
+              <li>Real-time campaign reporting</li>
+              <li>Custom contract management</li>
+              <li>GCC multi-market campaigns</li>
+            </ul>
+            <button class="btn-pricing" type="button">Get Started</button>
+          </div>
+        </div>
+
+          <div class="pricing-panel" id="tab-influencers">
+          <div class="pricing-card" data-pricing-type="influencers" data-plan-key="basic" data-plan-label="Creator Basic">
+            <div class="pricing-tier">Basic</div>
+            <h3>Creator Basic</h3>
+            <p class="pricing-desc">Start building your profile and get discovered by brands — completely free.</p>
+            <div class="pricing-amount">
+              <span class="pricing-num" style="font-size: 2.4rem">Free</span>
+              <span
+                style="
+                      font-size: 11px;
+                      font-weight: 600;
+                      color: #4ade80;
+                      background: rgba(74, 222, 128, 0.12);
+                      border: 1px solid rgba(74, 222, 128, 0.3);
+                      border-radius: 999px;
+                      padding: 2px 8px;
+                      margin-left: 6px;
+                    ">No card</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Public creator profile</li>
+              <li>Basic brand discovery</li>
+              <li>Standard listing visibility</li>
+              <li>Community access</li>
+              <li>Self-service campaign apply</li>
+            </ul>
+            <button class="btn-pricing" type="button">Join Free</button>
+          </div>
+
+          <div
+            class="pricing-card featured"
+            data-pricing-type="influencers"
+            data-plan-key="verified"
+            data-plan-label="Verified Creator"
+          >
+            <div class="pricing-badge">Most Popular</div>
+            <div class="pricing-tier">Verified</div>
+            <h3>Verified Creator</h3>
+            <p class="pricing-desc">Get verified, boost visibility, and unlock direct brand collaboration tools.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">299</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Verified creator badge</li>
+              <li>Priority brand matching</li>
+              <li>Advanced profile analytics</li>
+              <li>Direct brand messaging</li>
+              <li>Campaign performance insights</li>
+              <li>Featured in brand searches</li>
+            </ul>
+            <button class="btn-pricing-featured" type="button">Get Verified</button>
+          </div>
+
+          <div class="pricing-card" data-pricing-type="influencers" data-plan-key="elite-creator" data-plan-label="Elite Creator">
+            <div class="pricing-tier" style="display: flex; align-items: center; gap: 6px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z"
+                  stroke="#fbbf24" stroke-width="2" stroke-linejoin="round"
+                  fill="rgba(251,191,36,0.15)" />
+              </svg>
+              Elite Creator
+            </div>
+            <h3>Elite Creator</h3>
+            <p class="pricing-desc">For top-tier creators who want maximum exposure and premium brand deals.</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">AED</span>
+              <span class="pricing-num">599</span>
+              <span class="pricing-period">/mo</span>
+            </div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Elite verified badge</li>
+              <li>Top placement in all searches</li>
+              <li>Dedicated talent manager</li>
+              <li>Exclusive brand deal access</li>
+              <li>Full ROI &amp; audience reporting</li>
+              <li>Contract &amp; negotiation support</li>
+              <li>Multi-platform campaign tools</li>
+            </ul>
+            <button class="btn-pricing" type="button">Go Elite</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="assets/vendor/lenis.min.js"></script>
+  <script src="assets/shared.js"></script>
+  <script src="assets/env.js"></script>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const desiredType = params.get("type") === "influencers" ? "influencers" : "brands";
+      const desiredPlanKey = params.get("plan") || "";
+      const desiredPlanLabel = params.get("planLabel") || "";
+      const desiredCycle =
+        params.get("cycle") === "yearly" || params.get("cycle") === "monthly"
+          ? params.get("cycle")
+          : window.localStorage.getItem("pricingBillingCycle") || "monthly";
+
+      const tabs = document.querySelectorAll(".pricing-tab");
+      const panelByType = {
+        brands: document.getElementById("tab-brands"),
+        influencers: document.getElementById("tab-influencers"),
+      };
+      const apiCache = { brands: null, influencers: null };
+      const pricingPanelsWrap = document.querySelector(".pricing-panels-wrap");
+      const billingToggle = document.querySelector(".pricing-billing-toggle");
+      const billingSwitch = document.getElementById("pricing-billing-switch");
+      const billingLabelMonthly = billingToggle
+        ? billingToggle.querySelector('[data-cycle-label="monthly"]')
+        : null;
+      const billingLabelYearly = billingToggle
+        ? billingToggle.querySelector('[data-cycle-label="yearly"]')
+        : null;
+
+      let billingCycle = desiredCycle;
+      let current = panelByType[desiredType] || document.querySelector(".pricing-panel.active");
+
+      tabs.forEach((t) => {
+        const nextActive = t.dataset.tab === desiredType;
+        t.classList.toggle("active", nextActive);
+      });
+      Object.values(panelByType).forEach((p) => {
+        if (!p) return;
+        p.classList.toggle("active", p === current);
+      });
+
+      function escapeAttr(value) {
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/"/g, "&quot;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function kickPricingTransition(panel) {
+        if (!panel) return;
+        panel.classList.add("is-content-switching");
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            panel.classList.remove("is-content-switching");
+          });
+        });
+      }
+
+      function kickCycleTransition() {
+        if (!pricingPanelsWrap) return;
+        pricingPanelsWrap.classList.add("is-cycle-switching");
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            pricingPanelsWrap.classList.remove("is-cycle-switching");
+          });
+        });
+      }
+
+      function applyCycleToExistingCards(panel, cycle) {
+        if (!panel) return;
+        const cards = Array.from(panel.querySelectorAll(".pricing-card"));
+        cards.forEach((card) => {
+          const numEl = card.querySelector(".pricing-num");
+          const periodEl = card.querySelector(".pricing-period");
+          const currencyEl = card.querySelector(".pricing-currency");
+          if (!numEl || !periodEl) return;
+
+          const raw = (numEl.textContent || "").trim();
+          const isFree = raw.toLowerCase() === "free";
+          const clean = raw.replace(/,/g, "");
+          const inferredMonthly = isFree ? 0 : Number(clean);
+
+          if (card.dataset.monthlyPrice == null) {
+            card.dataset.monthlyPrice = Number.isFinite(inferredMonthly)
+              ? String(inferredMonthly)
+              : "0";
+          }
+          if (card.dataset.yearlyPrice == null) {
+            const monthlyNum = Number(card.dataset.monthlyPrice);
+            card.dataset.yearlyPrice =
+              Number.isFinite(monthlyNum) && monthlyNum > 0 ? String(monthlyNum * 12) : "0";
+          }
+
+          const chosenRaw = cycle === "yearly" ? card.dataset.yearlyPrice : card.dataset.monthlyPrice;
+          const chosenNum = Number(chosenRaw);
+          const chosenIsFree = !Number.isFinite(chosenNum) || chosenNum === 0;
+
+          if (chosenIsFree) {
+            if (currencyEl) currencyEl.style.display = "none";
+            numEl.textContent = "Free";
+            periodEl.textContent = "";
+            return;
+          }
+
+          if (currencyEl) currencyEl.style.display = "";
+          numEl.textContent = chosenNum.toLocaleString("en-US");
+          periodEl.textContent = cycle === "yearly" ? "/yr" : "/mo";
+
+          // Add a small billing note so Annual looks distinct.
+          let note = card.querySelector(".pricing-bill-note");
+          if (!note) {
+            note = document.createElement("div");
+            note.className = "pricing-bill-note";
+            const amount = card.querySelector(".pricing-amount");
+            if (amount) amount.insertAdjacentElement("afterend", note);
+          }
+          note.textContent = cycle === "yearly" ? "Billed annually" : "Billed monthly";
+        });
+      }
+
+      function setBillingCycle(nextCycle) {
+        billingCycle = nextCycle === "yearly" ? "yearly" : "monthly";
+        try {
+          window.localStorage.setItem("pricingBillingCycle", billingCycle);
+        } catch (_) { }
+
+        kickCycleTransition();
+
+        if (billingSwitch) billingSwitch.checked = billingCycle === "yearly";
+        if (billingLabelMonthly) {
+          billingLabelMonthly.classList.toggle("is-dim", billingCycle === "yearly");
+        }
+        if (billingLabelYearly) {
+          billingLabelYearly.classList.toggle("is-dim", billingCycle !== "yearly");
+        }
+
+        Object.values(panelByType).forEach((panel) => {
+          applyCycleToExistingCards(panel, billingCycle);
+        });
+      }
+
+      function getApiToken() {
+        const tokenCandidates = [
+          window.__OPULENT_API_TOKEN__,
+          window.localStorage.getItem("token"),
+          window.localStorage.getItem("authToken"),
+          window.localStorage.getItem("accessToken"),
+          window.sessionStorage.getItem("token"),
+          window.sessionStorage.getItem("authToken"),
+        ];
+        return tokenCandidates.find(Boolean) || "";
+      }
+
+      function parseFeatures(value) {
+        if (Array.isArray(value)) return value.filter(Boolean);
+        if (value && typeof value === "object") {
+          const features = [];
+          const prettify = (key) =>
+            String(key).replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+
+          const pushBooleanFeatures = (obj) => {
+            if (!obj || typeof obj !== "object") return;
+            Object.entries(obj).forEach(([key, enabled]) => {
+              if (enabled === true) features.push(prettify(key));
+            });
+          };
+
+          const pushLimitFeatures = (obj) => {
+            if (!obj || typeof obj !== "object") return;
+            Object.entries(obj).forEach(([key, limit]) => {
+              if (typeof limit !== "number") return;
+              const label = prettify(key).replace(/^Max /, "");
+              if (limit < 0) {
+                features.push(`Unlimited ${label.toLowerCase()}`);
+              } else {
+                features.push(`Up to ${limit} ${label.toLowerCase()}`);
+              }
+            });
+          };
+
+          pushBooleanFeatures(value.flags);
+          pushLimitFeatures(value.limits);
+          pushBooleanFeatures(value.filters);
+          pushBooleanFeatures(value.enterprise);
+
+          if (value.visibility?.influencer_fields) {
+            Object.entries(value.visibility.influencer_fields).forEach(([key, enabled]) => {
+              if (enabled === true) features.push(`Visibility: ${prettify(key)}`);
+            });
+          }
+          if (value.visibility?.analytics) {
+            Object.entries(value.visibility.analytics).forEach(([key, enabled]) => {
+              if (enabled === true) features.push(`Analytics: ${prettify(key)}`);
+            });
+          }
+          return Array.from(new Set(features));
+        }
+        if (typeof value === "string") {
+          try {
+            const parsed = JSON.parse(value);
+            return parseFeatures(parsed);
+          } catch (_) {
+            return value
+              .split(/\r?\n|,|\|/)
+              .map((item) => item.trim())
+              .filter(Boolean);
+          }
+        }
+        return [];
+      }
+
+      function formatPrice(price) {
+        if (price === null || price === undefined) return "";
+        const numberPrice = Number(price);
+        if (Number.isFinite(numberPrice)) return numberPrice.toLocaleString("en-US");
+        return String(price);
+      }
+
+      function renderPlans(panel, plans) {
+        if (!panel || !Array.isArray(plans) || !plans.length) return;
+        const tabType = panel.id === "tab-brands" ? "brands" : "influencers";
+
+        panel.innerHTML = plans
+          .map((plan, index) => {
+            const name = plan.plan_name || plan.name || plan.title || "Plan Name";
+            const tier = plan.tier || plan.plan_type || plan.slug || "Plan";
+            const planKey = plan.slug || plan.plan_name || plan.name || tier;
+            const description = plan.description || plan.short_description || "";
+            const features = parseFeatures(
+              plan.features_json || plan.features || plan.feature_list || plan.benefits || "",
+            );
+            const visibleFeatures = features; // Show full feature list for the selected plan.
+
+            const campaignSlots = plan.campaign_slots_per_month;
+            if (typeof campaignSlots === "number") {
+              if (campaignSlots < 0) features.unshift("Unlimited campaigns per month");
+              else if (campaignSlots > 0) features.unshift(`Up to ${campaignSlots} campaigns per month`);
+            }
+
+            const isFeatured = Boolean(plan.is_popular || plan.popular || plan.recommended || index === 1);
+
+            const monthlyRaw = plan.monthly_price ?? plan.monthlyPrice ?? plan.price ?? 0;
+            const yearlyRaw = plan.yearly_price ?? plan.yearlyPrice ?? plan.annual_price ?? null;
+            const monthlyNum = Number(monthlyRaw) || 0;
+            const yearlyNum = yearlyRaw == null ? null : Number(yearlyRaw);
+            const rawPrice = billingCycle === "yearly" ? yearlyRaw ?? monthlyNum * 12 : monthlyRaw;
+            const priceText = Number(rawPrice) === 0 ? "Free" : formatPrice(rawPrice);
+            const currency = plan.currency || "AED";
+            const period = billingCycle === "yearly" ? "/yr" : "/mo";
+
+            const buttonText = plan.cta_text || plan.button_text || "Get Started";
+
+            const computedYearly = monthlyNum * 12;
+            const savePct =
+              billingCycle === "yearly" &&
+              Number.isFinite(monthlyNum) &&
+              monthlyNum > 0 &&
+              Number.isFinite(yearlyNum) &&
+              yearlyNum > 0 &&
+              yearlyNum < computedYearly
+                ? Math.round(((computedYearly - yearlyNum) / computedYearly) * 100)
+                : 0;
+
+            return `
+                <div
+                  class="pricing-card${isFeatured ? " featured" : ""}${billingCycle === "yearly" ? " is-annual" : ""}"
+                  data-pricing-type="${tabType}"
+                  data-plan-key="${escapeAttr(planKey)}"
+                  data-plan-label="${escapeAttr(name)}"
+                >
+                  ${isFeatured ? '<div class="pricing-badge">Most Popular</div>' : ""}
+                  <div class="pricing-tier">${escapeAttr(tier)}</div>
+                  <h3>${escapeAttr(name)}</h3>
+                  <p class="pricing-desc">${escapeAttr(description)}</p>
+                  <div class="pricing-amount">
+                    ${
+              priceText.toLowerCase() === "free"
+                ? `<span class="pricing-num" style="font-size: 2.4rem">${escapeAttr(priceText)}</span>`
+                : `<span class="pricing-currency">${escapeAttr(currency)}</span><span class="pricing-num">${escapeAttr(priceText)}</span><span class="pricing-period">${escapeAttr(period)}</span>`
+            }
+                    ${
+              billingCycle === "yearly" && savePct > 0 ? `<span class="pricing-save">Save ${savePct}%</span>` : ""
+            }
+                  </div>
+                  <div class="pricing-bill-note">${billingCycle === "yearly" ? "Billed annually" : "Billed monthly"}</div>
+                  <div class="pricing-divider"></div>
+                  <ul class="pricing-features">
+                    ${visibleFeatures.map((feature) => `<li>${escapeAttr(feature)}</li>`).join("")}
+                  </ul>
+                  <button class="${isFeatured ? "btn-pricing-featured" : "btn-pricing"}" type="button">${escapeAttr(buttonText)}</button>
+                </div>
+              `;
+          })
+          .join("");
+      }
+
+      function selectPlanInPanel(typeToSelect, planKey, planLabel) {
+        const panel = panelByType[typeToSelect];
+        if (!panel) return;
+        const cards = Array.from(panel.querySelectorAll(".pricing-card"));
+        if (!cards.length) return;
+
+        const normalize = (s) => String(s || "").trim().toLowerCase();
+        const wantedKey = normalize(planKey);
+        const wantedLabel = normalize(planLabel);
+
+        let match =
+          (wantedKey && cards.find((c) => normalize(c.dataset.planKey) === wantedKey)) ||
+          (wantedLabel && cards.find((c) => normalize(c.dataset.planLabel) === wantedLabel)) ||
+          cards.find((c) => c.classList.contains("featured")) ||
+          cards[0];
+
+        cards.forEach((c) => c.classList.remove("is-selected-plan"));
+        if (match) {
+          match.classList.add("is-selected-plan");
+          match.setAttribute("tabindex", "-1");
+          match.scrollIntoView({ behavior: "smooth", block: "center" });
+          window.setTimeout(() => match.classList.remove("is-selected-plan"), 4200);
+        }
+      }
+
+      async function loadPlans(tabType) {
+        if (apiCache[tabType]) return;
+
+        const usertype = tabType === "brands" ? 0 : 1;
+        try {
+          const client = window.API_CLIENT;
+          if (!client || typeof client.fetchSubscriptionPlans !== "function") return;
+
+          const payload = await client.fetchSubscriptionPlans(usertype);
+          const plans = Array.isArray(payload) ? payload : Array.isArray(payload?.data) ? payload.data : [];
+          if (!plans.length) return;
+
+          apiCache[tabType] = plans;
+          renderPlans(panelByType[tabType], plans);
+          kickPricingTransition(panelByType[tabType]);
+
+          if (tabType === desiredType) {
+            // Wait for layout + paint so scroll lands correctly.
+            window.setTimeout(() => selectPlanInPanel(tabType, desiredPlanKey, desiredPlanLabel), 80);
+          }
+        } catch (_) {
+          if (tabType === desiredType) window.setTimeout(() => selectPlanInPanel(tabType, desiredPlanKey, desiredPlanLabel), 80);
+        }
+      }
+
+      // Init billing toggle UI + apply to static cards immediately.
+      setBillingCycle(billingCycle);
+
+      if (billingSwitch) {
+        billingSwitch.addEventListener("change", () => {
+          setBillingCycle(billingSwitch.checked ? "yearly" : "monthly");
+        });
+      }
+
+      // Tab switching UI (same animation as index).
+      let tabsCurrent = current;
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const next = document.getElementById("tab-" + tab.dataset.tab);
+          if (!next || next === tabsCurrent) return;
+
+          tabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          tabsCurrent.style.transition = "opacity 0.2s ease, transform 0.2s ease";
+          tabsCurrent.style.opacity = "0";
+          tabsCurrent.style.transform = "translateY(-12px)";
+
+          setTimeout(() => {
+            tabsCurrent.classList.remove("active");
+            tabsCurrent.style.transition = "";
+            tabsCurrent.style.opacity = "";
+            tabsCurrent.style.transform = "";
+
+            next.style.opacity = "0";
+            next.style.transform = "translateY(16px)";
+            next.classList.add("active");
+
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                next.style.transition = "opacity 0.35s ease, transform 0.35s ease";
+                next.style.opacity = "1";
+                next.style.transform = "translateY(0)";
+                setTimeout(() => {
+                  next.style.transition = "";
+                  next.style.opacity = "";
+                  next.style.transform = "";
+                }, 360);
+              });
+            });
+
+            tabsCurrent = next;
+            loadPlans(tab.dataset.tab);
+          }, 200);
+        });
+      });
+
+      // Load plans for the selected tab (and keep the other warm for switching).
+      loadPlans(desiredType);
+      loadPlans(desiredType === "brands" ? "influencers" : "brands");
+
+      // Fallback selection for static content if API is slow.
+      if (desiredPlanKey || desiredPlanLabel) {
+        window.setTimeout(() => selectPlanInPanel(desiredType, desiredPlanKey, desiredPlanLabel), 60);
+      }
+    })();
+  </script>
+</body>
+
+</html>
+

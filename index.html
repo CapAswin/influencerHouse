@@ -651,7 +651,7 @@
             </div>
           </div>
           <div class="pricing-panel active" id="tab-brands">
-            <div class="pricing-card">
+            <div class="pricing-card" data-pricing-type="brands" data-plan-key="starter" data-plan-label="Brand Starter">
               <div class="pricing-tier">Starter</div>
               <h3>Brand Starter</h3>
               <p class="pricing-desc">
@@ -674,7 +674,7 @@
               <button class="btn-pricing">Get Started</button>
             </div>
 
-            <div class="pricing-card featured">
+            <div class="pricing-card featured" data-pricing-type="brands" data-plan-key="growth" data-plan-label="Brand Growth">
               <div class="pricing-badge">Most Popular</div>
               <div class="pricing-tier">Growth</div>
               <h3>Brand Growth</h3>
@@ -699,7 +699,7 @@
               <button class="btn-pricing-featured">Get Started</button>
             </div>
 
-            <div class="pricing-card">
+            <div class="pricing-card" data-pricing-type="brands" data-plan-key="elite" data-plan-label="Brand Elite">
               <div class="pricing-tier" style="display: flex; align-items: center; gap: 6px">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                   <path d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z" stroke="#fbbf24"
@@ -733,7 +733,7 @@
 
           <!-- Influencers -->
           <div class="pricing-panel" id="tab-influencers">
-            <div class="pricing-card">
+            <div class="pricing-card" data-pricing-type="influencers" data-plan-key="basic" data-plan-label="Creator Basic">
               <div class="pricing-tier">Basic</div>
               <h3>Creator Basic</h3>
               <p class="pricing-desc">
@@ -764,7 +764,7 @@
               <button class="btn-pricing">Join Free</button>
             </div>
 
-            <div class="pricing-card featured">
+            <div class="pricing-card featured" data-pricing-type="influencers" data-plan-key="verified" data-plan-label="Verified Creator">
               <div class="pricing-badge">Most Popular</div>
               <div class="pricing-tier">Verified</div>
               <h3>Verified Creator</h3>
@@ -789,7 +789,7 @@
               <button class="btn-pricing-featured">Get Verified</button>
             </div>
 
-            <div class="pricing-card">
+            <div class="pricing-card" data-pricing-type="influencers" data-plan-key="elite-creator" data-plan-label="Elite Creator">
               <div class="pricing-tier" style="display: flex; align-items: center; gap: 6px">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                   <path d="M2 19h20M3 9l4 4 5-7 5 7 4-4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z" stroke="#fbbf24"
@@ -1141,14 +1141,25 @@
         return String(price);
       }
 
+      function escapeAttr(value) {
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/"/g, "&quot;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
       function renderPlans(panel, plans) {
         if (!panel || !Array.isArray(plans) || !plans.length) return;
+
+        const tabType = panel.id === "tab-brands" ? "brands" : "influencers";
 
         panel.innerHTML = plans
           .map((plan, index) => {
             const name =
               plan.plan_name || plan.name || plan.title || "Plan Name";
             const tier = plan.tier || plan.plan_type || plan.slug || "Plan";
+            const planKey = plan.slug || tier || name;
             const description =
               plan.description || plan.short_description || "";
             const features = parseFeatures(
@@ -1158,6 +1169,7 @@
               plan.benefits ||
               "",
             );
+            // On the landing page we only show a short preview list.
             const visibleFeatures = features.slice(0, 5);
             const campaignSlots = plan.campaign_slots_per_month;
             if (typeof campaignSlots === "number") {
@@ -1201,7 +1213,7 @@
 
             return `
                 <div class="pricing-card${isFeatured ? " featured" : ""}${billingCycle === "yearly" ? " is-annual" : ""
-              }">
+              }" data-pricing-type="${tabType}" data-plan-key="${escapeAttr(planKey)}" data-plan-label="${escapeAttr(name)}">
                   ${isFeatured ? '<div class="pricing-badge">Most Popular</div>' : ""}
                   <div class="pricing-tier">${tier}</div>
                   <h3>${name}</h3>
@@ -1264,6 +1276,45 @@
       if (billingSwitch) {
         billingSwitch.addEventListener("change", () => {
           setBillingCycle(billingSwitch.checked ? "yearly" : "monthly");
+        });
+      }
+
+      // Ensure static fallback markup also shows only a short preview list.
+      // (Dynamic rendering already uses the slice above.)
+      const HOME_FEATURE_LIMIT = 5;
+      try {
+        const featureUls = document.querySelectorAll(
+          ".pricing-panel .pricing-features",
+        );
+        featureUls.forEach((ul) => {
+          const lis = ul.querySelectorAll("li");
+          lis.forEach((li, i) => {
+            if (i >= HOME_FEATURE_LIMIT) li.style.display = "none";
+          });
+        });
+      } catch (_) { }
+
+      // Clicking any plan card navigates to the dedicated pricing page.
+      if (pricingPanelsWrap) {
+        pricingPanelsWrap.addEventListener("click", (e) => {
+          const card = e.target.closest(".pricing-card");
+          if (!card) return;
+          const planKey = card.dataset.planKey || "";
+          const planLabel = card.dataset.planLabel || "";
+          const type = card.dataset.pricingType || "";
+          if (!planKey || !type) return;
+
+          const url =
+            "pricing.html" +
+            "?type=" +
+            encodeURIComponent(type) +
+            "&plan=" +
+            encodeURIComponent(planKey) +
+            "&planLabel=" +
+            encodeURIComponent(planLabel) +
+            "&cycle=" +
+            encodeURIComponent(billingCycle);
+          window.location.href = url;
         });
       }
 
