@@ -5,7 +5,7 @@
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
         <a class="logo" href="index.html">
-          <img class="logo-icon" src="assets/images/logos/OIH%20gold%20%26%20White.png" alt="Opulent icon" width="36" height="36" />
+          <img class="logo-icon" src="assets/images/logos/Opulent%20influencers%20house%20gold%20%26%20black.png" alt="Opulent icon" width="36" height="36" />
         </a>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -44,7 +44,7 @@
         <div class="footer-brand-col">
           <div class="footer-brand">
             <a href="index.html" aria-label="Go to homepage">
-              <img class="footer-main-logo" src="assets/images/white_favIcon.png" alt="Opulent Logo" width="200" height="52" loading="lazy" decoding="async" />
+              <img class="footer-main-logo" src="assets/images/logos/Opulent%20influencers%20house%20gold%20%26%20white.png" alt="Opulent Logo" width="200" height="52" loading="lazy" decoding="async" />
             </a>
           </div>
           <p class="footer-note" style="color:#6a6f84;font-size:13px;line-height:1.5;margin-bottom:20px;">
