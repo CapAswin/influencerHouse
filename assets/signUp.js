@@ -13,6 +13,8 @@
   var otpInput = document.getElementById('otp-input');
   var otpFeedback = document.getElementById('otp-feedback');
   var otpResendBtn = document.getElementById('otp-resend-btn');
+  var otpDigitsContainer = document.getElementById('otp-digits');
+  var otpDigitInputs = otpDigitsContainer ? Array.prototype.slice.call(otpDigitsContainer.querySelectorAll('.otp-digit')) : [];
   var brandDetailsModal = document.getElementById('brand-details-modal');
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
@@ -348,12 +350,28 @@
     });
   }
 
+  function syncOtpHiddenInput() {
+    if (!otpInput) return;
+    otpInput.value = otpDigitInputs.map(function (d) { return d.value; }).join('');
+  }
+
+  function clearOtpDigits() {
+    otpDigitInputs.forEach(function (d) {
+      d.value = '';
+      d.classList.remove('is-filled', 'is-field-error');
+    });
+    syncOtpHiddenInput();
+  }
+
   function openOtpModal() {
     if (!otpModal) return;
     otpModal.classList.add('is-open');
     otpModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
-    if (otpInput) otpInput.focus();
+    clearOtpDigits();
+    if (otpDigitInputs.length) {
+      setTimeout(function () { otpDigitInputs[0].focus(); }, 60);
+    }
   }
 
   function closeOtpModal(keepBodyLock) {
@@ -1167,9 +1185,57 @@
     }
   });
 
-  if (otpInput) {
-    otpInput.addEventListener('input', function () {
-      otpInput.value = otpInput.value.replace(/\D/g, '').slice(0, 6);
+  /* ── Wire 6-digit OTP inputs ── */
+  if (otpDigitInputs.length) {
+    otpDigitInputs.forEach(function (digitInput, idx) {
+      digitInput.addEventListener('input', function () {
+        var val = digitInput.value.replace(/\D/g, '');
+        digitInput.value = val.slice(0, 1);
+        digitInput.classList.toggle('is-filled', !!digitInput.value);
+        digitInput.classList.remove('is-field-error');
+        syncOtpHiddenInput();
+        if (val && idx < otpDigitInputs.length - 1) {
+          otpDigitInputs[idx + 1].focus();
+        }
+      });
+
+      digitInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace' && !digitInput.value && idx > 0) {
+          e.preventDefault();
+          otpDigitInputs[idx - 1].value = '';
+          otpDigitInputs[idx - 1].classList.remove('is-filled');
+          otpDigitInputs[idx - 1].focus();
+          syncOtpHiddenInput();
+        }
+        if (e.key === 'ArrowLeft' && idx > 0) {
+          e.preventDefault();
+          otpDigitInputs[idx - 1].focus();
+        }
+        if (e.key === 'ArrowRight' && idx < otpDigitInputs.length - 1) {
+          e.preventDefault();
+          otpDigitInputs[idx + 1].focus();
+        }
+      });
+
+      digitInput.addEventListener('paste', function (e) {
+        e.preventDefault();
+        var pasted = (e.clipboardData || window.clipboardData || { getData: function () { return ''; } }).getData('text');
+        var digits = pasted.replace(/\D/g, '').slice(0, 6).split('');
+        digits.forEach(function (d, i) {
+          if (otpDigitInputs[i]) {
+            otpDigitInputs[i].value = d;
+            otpDigitInputs[i].classList.add('is-filled');
+            otpDigitInputs[i].classList.remove('is-field-error');
+          }
+        });
+        syncOtpHiddenInput();
+        var focusIdx = Math.min(digits.length, otpDigitInputs.length - 1);
+        otpDigitInputs[focusIdx].focus();
+      });
+
+      digitInput.addEventListener('focus', function () {
+        digitInput.select();
+      });
     });
   }
 
@@ -1177,19 +1243,24 @@
     otpForm.addEventListener('submit', function (event) {
       event.preventDefault();
       if (!otpInput || !otpFeedback) return;
-      if (otpInput.value.length !== 6) {
+      syncOtpHiddenInput();
+      if (!otpInput.value || otpInput.value.length !== 6) {
+        otpDigitInputs.forEach(function (d) {
+          if (!d.value) d.classList.add('is-field-error');
+        });
+        var firstEmpty = otpDigitInputs.find(function (d) { return !d.value; });
         showSignupSnackbar({
           type: 'error',
           message: 'Please enter the 6-digit OTP code.',
           actionLabel: 'Retry',
           onAction: function () {
-            otpInput.focus();
+            if (firstEmpty) firstEmpty.focus();
           }
         });
         otpFeedback.textContent = 'Please enter the 6-digit OTP.';
         otpFeedback.classList.remove('otp-feedback--ok');
         otpFeedback.classList.add('otp-feedback--error');
-        otpInput.focus();
+        if (firstEmpty) firstEmpty.focus();
         return;
       }
       var client = window.API_CLIENT;
@@ -1251,9 +1322,9 @@
 
   if (otpResendBtn && otpFeedback) {
     otpResendBtn.addEventListener('click', function () {
-      if (otpInput) {
-        otpInput.value = '';
-        otpInput.focus();
+      clearOtpDigits();
+      if (otpDigitInputs.length) {
+        otpDigitInputs[0].focus();
       }
       otpFeedback.textContent = 'A new OTP has been sent.';
       otpFeedback.classList.remove('otp-feedback--error');

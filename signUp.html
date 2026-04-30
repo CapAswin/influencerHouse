@@ -225,8 +225,16 @@
       <p class="otp-modal-copy">We sent a 6-digit code to your email. Enter it below to verify your account.</p>
 
       <form id="otp-form" class="otp-form" novalidate>
-        <label for="otp-input">Verification code</label>
-        <input id="otp-input" name="otp_code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000" autocomplete="one-time-code" required />
+        <label>Verification code</label>
+        <div class="otp-digits" id="otp-digits">
+          <input class="otp-digit" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1" required />
+          <input class="otp-digit" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" autocomplete="off" aria-label="Digit 2" required />
+          <input class="otp-digit" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" autocomplete="off" aria-label="Digit 3" required />
+          <input class="otp-digit" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" autocomplete="off" aria-label="Digit 4" required />
+          <input class="otp-digit" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" autocomplete="off" aria-label="Digit 5" required />
+          <input class="otp-digit" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" autocomplete="off" aria-label="Digit 6" required />
+        </div>
+        <input id="otp-input" name="otp_code" type="hidden" />
         <p id="otp-feedback" class="otp-feedback" aria-live="polite"></p>
         <button type="submit" class="btn btn-gold otp-verify-btn">Verify &amp; continue</button>
       </form>
