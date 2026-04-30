@@ -56,6 +56,8 @@
   var codeSearchTimer = null;
   var lastValidCountryCode = '';
   var lastValidCountryDisplay = '';
+  var passwordFieldBlurred = false;
+  var passwordConfirmFieldBlurred = false;
   var isSnackbarStackExpanded = false;
   var MAX_SNACKBARS = 3;
   var SNACKBAR_EXIT_MS = 320;
@@ -205,6 +207,45 @@
     }
   }
 
+  function resetOtpState() {
+    if (otpForm && typeof otpForm.reset === 'function') otpForm.reset();
+    if (otpInput) {
+      otpInput.value = '';
+      otpInput.setCustomValidity('');
+      setFieldErrorState(otpInput, false);
+    }
+    if (otpFeedback) {
+      otpFeedback.textContent = '';
+      otpFeedback.classList.remove('otp-feedback--error');
+      otpFeedback.classList.remove('otp-feedback--ok');
+    }
+  }
+
+  function resetSignupFormState() {
+    if (signupForm && typeof signupForm.reset === 'function') signupForm.reset();
+    if (passwordField) {
+      passwordField.setCustomValidity('');
+      setFieldErrorState(passwordField, false);
+    }
+    if (passwordConfirmField) {
+      passwordConfirmField.setCustomValidity('');
+      setFieldErrorState(passwordConfirmField, false);
+    }
+    passwordFieldBlurred = false;
+    passwordConfirmFieldBlurred = false;
+
+    if (signupForm) {
+      var controls = signupForm.querySelectorAll('input, select, textarea');
+      controls.forEach(function (control) {
+        if (!control) return;
+        control.setCustomValidity('');
+        setFieldErrorState(control, false);
+      });
+    }
+    lastSignupPayload = null;
+    resetOtpState();
+  }
+
   function validateFormFields(form) {
     if (!form) return;
     var controls = form.querySelectorAll('input, select, textarea');
@@ -322,6 +363,7 @@
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
       var isBrand = btn.id === 'tab-brand';
+      resetSignupFormState();
       if (field) field.value = isBrand ? 'brand' : 'creator';
       setMode(isBrand);
     });
@@ -363,7 +405,7 @@
     if (!keepBodyLock) {
       document.body.classList.remove('modal-open');
     }
-    if (otpFeedback) otpFeedback.textContent = '';
+    resetOtpState();
   }
 
   function openBrandDetailsModal() {
@@ -729,9 +771,24 @@
     if (!passwordField || !passwordConfirmField) return true;
     var passwordValue = getNormalizedPassword(passwordField.value);
     var confirmValue = getNormalizedPassword(passwordConfirmField.value);
+    if (!passwordValue || !confirmValue) {
+      passwordConfirmField.setCustomValidity('');
+      return true;
+    }
     var isMatch = passwordValue === confirmValue;
     passwordConfirmField.setCustomValidity(isMatch ? '' : 'Passwords do not match');
     return isMatch;
+  }
+
+  function validatePasswordMatchOnBlur() {
+    if (!passwordField || !passwordConfirmField) return;
+    validatePasswordMatch();
+    var shouldShowMismatch = passwordFieldBlurred && passwordConfirmFieldBlurred;
+    if (!shouldShowMismatch) {
+      setFieldErrorState(passwordConfirmField, false);
+      return;
+    }
+    setFieldErrorState(passwordConfirmField, !passwordConfirmField.checkValidity());
   }
 
   function detectCountryCodeFromRegion() {
@@ -1136,12 +1193,20 @@
 
   if (passwordField && passwordConfirmField) {
     passwordField.addEventListener('input', function () {
-      validatePasswordMatch();
-      setFieldErrorState(passwordConfirmField, !passwordConfirmField.checkValidity());
+      passwordConfirmField.setCustomValidity('');
+      setFieldErrorState(passwordConfirmField, false);
     });
     passwordConfirmField.addEventListener('input', function () {
-      validatePasswordMatch();
-      setFieldErrorState(passwordConfirmField, !passwordConfirmField.checkValidity());
+      passwordConfirmField.setCustomValidity('');
+      setFieldErrorState(passwordConfirmField, false);
+    });
+    passwordField.addEventListener('blur', function () {
+      passwordFieldBlurred = true;
+      validatePasswordMatchOnBlur();
+    });
+    passwordConfirmField.addEventListener('blur', function () {
+      passwordConfirmFieldBlurred = true;
+      validatePasswordMatchOnBlur();
     });
   }
 
