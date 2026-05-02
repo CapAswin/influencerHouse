@@ -457,7 +457,7 @@
   // --- API helpers (subscription plans + country list) ---
   const REMOTE_API_BASE_URL =
     window.API_BASE_URL ||
-    'https://www.opulentprimeproperties.com/influencer_house/web-v2';
+    'https://opulentinfluencershouse.com/web/apiv3';
   // Use a single CORS-safe base URL for all API calls (browser).
   const API_BASE_URL = `https://corsproxy.io/?${REMOTE_API_BASE_URL}`;
   const DEFAULT_API_TOKEN = 'J0eXAiOiJKV1QiLCJhbGciOiJ';
@@ -505,6 +505,18 @@
     });
   }
 
+  function apiSendFormData(method, urlOrPath, formData) {
+    const token = getApiToken();
+    const headers = { Accept: 'application/json' };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const url = `${API_BASE_URL}${urlOrPath}`;
+    return fetch(url, { method, headers, body: formData }).then(async (res) => {
+      const json = await res.json().catch(() => null);
+      if (res.ok) return json;
+      throw new Error((json && (json.error || json.message)) || 'API failed');
+    });
+  }
+
   function fetchSubscriptionPlans(usertype = 0) {
     const qs = `?usertype=${encodeURIComponent(String(usertype))}`;
     // Keep trailing slash to avoid redirect issues.
@@ -522,7 +534,16 @@
     fetchProvinces: function (countryId) {
       return apiSendJson('POST', '/province', { country_id: Number(countryId) });
     },
+    fetchCategories: function () {
+      return apiGetJson('/category');
+    },
+    fetchNiches: function (categoryId) {
+      return apiSendJson('POST', '/niche', { category_id: Number(categoryId) });
+    },
     influencerTellUs: function (payload) {
+      if (payload instanceof FormData) {
+        return apiSendFormData('POST', '/influencers/tell-us', payload);
+      }
       return apiSendJson('POST', '/influencers/tell-us', payload);
     },
     signup: function (payload) {
