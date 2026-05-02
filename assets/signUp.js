@@ -1241,7 +1241,7 @@
 
     try {
       var result = await client.fetchNiches(categoryId);
-      var niches = (result && result.data) || [];
+      var niches = (result && (result.niches || result.data)) || [];
       resetNicheOptions('Select niche');
       niches.forEach(function (item) {
         var id = item && (item.niche_id || item.id || item.value);
