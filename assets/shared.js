@@ -479,42 +479,39 @@
     }
   }
 
-  function apiGetJson(urlOrPath) {
+  async function apiGetJson(urlOrPath) {
     const token = getApiToken();
     const headers = { Accept: 'application/json' };
     if (token) headers.Authorization = `Bearer ${token}`;
 
     const url = `${API_BASE_URL}${urlOrPath}`;
 
-    return fetch(url, { method: 'GET', headers }).then(async (res) => {
-      const json = await res.json().catch(() => null);
-      if (res.ok) return json;
-      throw new Error((json && (json.error || json.message)) || 'API failed');
-    });
+    const res = await fetch(url, { method: 'GET', headers });
+    const json = await res.json().catch(() => null);
+    if (res.ok) return json;
+    throw new Error((json && (json.error || json.message)) || 'API failed');
   }
 
-  function apiSendJson(method, urlOrPath, body) {
+  async function apiSendJson(method, urlOrPath, body) {
     const token = getApiToken();
     const headers = { Accept: 'application/json', 'Content-Type': 'application/json' };
     if (token) headers.Authorization = `Bearer ${token}`;
     const url = `${API_BASE_URL}${urlOrPath}`;
-    return fetch(url, { method, headers, body: JSON.stringify(body || {}) }).then(async (res) => {
-      const json = await res.json().catch(() => null);
-      if (res.ok) return json;
-      throw new Error((json && (json.error || json.message)) || 'API failed');
-    });
+    const res = await fetch(url, { method, headers, body: JSON.stringify(body || {}) });
+    const json = await res.json().catch(() => null);
+    if (res.ok) return json;
+    throw new Error((json && (json.error || json.message)) || 'API failed');
   }
 
-  function apiSendFormData(method, urlOrPath, formData) {
+  async function apiSendFormData(method, urlOrPath, formData) {
     const token = getApiToken();
     const headers = { Accept: 'application/json' };
     if (token) headers.Authorization = `Bearer ${token}`;
     const url = `${API_BASE_URL}${urlOrPath}`;
-    return fetch(url, { method, headers, body: formData }).then(async (res) => {
-      const json = await res.json().catch(() => null);
-      if (res.ok) return json;
-      throw new Error((json && (json.error || json.message)) || 'API failed');
-    });
+    const res = await fetch(url, { method, headers, body: formData });
+    const json = await res.json().catch(() => null);
+    if (res.ok) return json;
+    throw new Error((json && (json.error || json.message)) || 'API failed');
   }
 
   function fetchSubscriptionPlans(usertype = 0) {
