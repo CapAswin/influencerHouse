@@ -1,4 +1,5 @@
 (function () {
+  var signupToggle = document.querySelector('.signup-toggle');
   var tabs = document.querySelectorAll('.signup-toggle .toggle-item');
   var field = document.getElementById('account-type-field');
   var visual = document.getElementById('signup-visual-card');
@@ -62,6 +63,7 @@
   var MAX_SNACKBARS = 3;
   var SNACKBAR_EXIT_MS = 320;
   var SNACKBAR_OVERFLOW_EXIT_MS = 380;
+  var flipTimer = null;
 
   function updateSnackbarStackState() {
     if (!signupSnackbarStack) return;
@@ -91,9 +93,23 @@
   }
 
   function setMode(isBrand) {
+    var nextMode = isBrand ? 'brand' : 'creator';
+    var currentMode = visual ? visual.getAttribute('data-mode') : '';
+
+    if (signupToggle) {
+      signupToggle.classList.toggle('is-brand', isBrand);
+      signupToggle.classList.toggle('is-creator', !isBrand);
+    }
     if (visual) {
+      if (currentMode && currentMode !== nextMode) {
+        visual.classList.add('is-flipping');
+        if (flipTimer) clearTimeout(flipTimer);
+        flipTimer = setTimeout(function () {
+          visual.classList.remove('is-flipping');
+        }, 980);
+      }
       visual.classList.toggle('signup-card-wrap--brand', isBrand);
-      visual.setAttribute('data-mode', isBrand ? 'brand' : 'creator');
+      visual.setAttribute('data-mode', nextMode);
     }
     if (faceCreator) {
       if (isBrand) faceCreator.setAttribute('aria-hidden', 'true');

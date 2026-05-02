@@ -2413,6 +2413,7 @@ h1 em {
 }
 
 .signup-toggle {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
@@ -2421,9 +2422,35 @@ h1 em {
   border-radius: 14px;
   background: #e8eaf4;
   border: 1px solid rgba(10, 15, 30, 0.05);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.signup-toggle::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  width: calc((100% - 10px) / 2);
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 8px 22px rgba(97, 97, 255, 0.34);
+  transform: translateX(0);
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.42s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.signup-toggle.is-creator::before {
+  transform: translateX(100%);
 }
 
 .toggle-item {
+  position: relative;
+  z-index: 1;
   border: none;
   border-radius: 11px;
   background: transparent;
@@ -2433,10 +2460,8 @@ h1 em {
   font-size: 13px;
   cursor: pointer;
   transition:
-    background var(--ease),
-    box-shadow var(--ease),
     color var(--ease),
-    transform 0.2s ease;
+    transform 0.22s ease;
 }
 
 .toggle-item:focus-visible {
@@ -2445,9 +2470,15 @@ h1 em {
 }
 
 .toggle-item.active {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #fff;
-  box-shadow: 0 6px 18px rgba(97, 97, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signup-toggle::before,
+  .toggle-item {
+    transition-duration: 0.01ms;
+  }
 }
 
 .signup-form {
@@ -3872,6 +3903,8 @@ body.modal-open {
 /* Positioning context + 3D flip (creator ↔ brand) */
 .signup-card-wrap {
   --signup-visual-h: 540px;
+  --signup-flip-duration: 0.96s;
+  --signup-flip-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   width: 100%;
   max-width: 420px;
@@ -3886,11 +3919,14 @@ body.modal-open {
   height: var(--signup-visual-h);
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  transition: transform 0.85s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform: rotateY(0deg) translateZ(0);
+  transform-origin: 50% 50%;
+  will-change: transform;
+  transition: transform var(--signup-flip-duration) var(--signup-flip-ease);
 }
 
 .signup-card-wrap--brand .signup-card-flipper {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(0);
 }
 
 .signup-flip-face {
@@ -3902,6 +3938,11 @@ body.modal-open {
   -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
+  opacity: 1;
+  will-change: opacity, filter;
+  transition:
+    opacity 0.34s ease,
+    filter var(--signup-flip-duration) ease;
 }
 
 /* Keep the intended front face above in 2D order (fixes blank creator in some browsers) */
@@ -3923,9 +3964,22 @@ body.modal-open {
   z-index: 2;
 }
 
+.signup-card-wrap.is-flipping .signup-flip-face {
+  filter: saturate(1.03) contrast(1.02);
+}
+
+.signup-card-wrap:not(.signup-card-wrap--brand) .signup-flip-face--brand,
+.signup-card-wrap.signup-card-wrap--brand .signup-flip-face--creator {
+  opacity: 0.04;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .signup-card-flipper {
-    transition: transform 0.2s ease;
+    transition: transform 0.01ms ease;
+  }
+
+  .signup-flip-face {
+    transition-duration: 0.01ms;
   }
 }
 
