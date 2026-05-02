@@ -75,8 +75,9 @@
         <div class="brand-seal">
           <div class="brand-seal-card">
             <div class="brand-seal-icon-wrap">
-              <img class="brand-seal-icon" src="assets/images/logos/Opulent%20influencers%20house%20gold%20%26%20white.png" alt="Opulent seal" loading="lazy"
-                decoding="async" />
+              <img class="brand-seal-icon"
+                src="assets/images/logos/Opulent%20influencers%20house%20gold%20%26%20Black.png" alt="Opulent seal"
+                loading="lazy" decoding="async" />
             </div>
             <div class="brand-seal-copy">
               <strong>Opulent Signature Seal</strong>
@@ -501,19 +502,22 @@
             </div>
           </article>
           <article class="video">
-            <img class="thumb" src="assets/images/index/jo1.jpg" alt="Video thumbnail" loading="lazy" decoding="async" />
+            <img class="thumb" src="assets/images/index/jo1.jpg" alt="Video thumbnail" loading="lazy"
+              decoding="async" />
             <div class="meta">
               <span>2.4M views</span><span class="price">Free</span>
             </div>
           </article>
           <article class="video">
-            <img class="thumb" src="assets/images/index/jo2.jpg" alt="Video thumbnail" loading="lazy" decoding="async" />
+            <img class="thumb" src="assets/images/index/jo2.jpg" alt="Video thumbnail" loading="lazy"
+              decoding="async" />
             <div class="meta">
               <span>8.1M views</span><span class="price">$5.00</span>
             </div>
           </article>
           <article class="video">
-            <img class="thumb" src="assets/images/index/jo4.jpg" alt="Video thumbnail" loading="lazy" decoding="async" />
+            <img class="thumb" src="assets/images/index/jo4.jpg" alt="Video thumbnail" loading="lazy"
+              decoding="async" />
             <div class="meta">
               <span>1.9M views</span><span class="price">Free</span>
             </div>
@@ -620,7 +624,7 @@
 
     <section class="section pricing-wrap">
       <div class="container">
-        
+
         <!-- Brands -->
         <div class="pricing-panels-wrap">
           <header class="pricing-header">
@@ -638,7 +642,7 @@
               For Influencers
             </button>
           </div>
-  
+
           <div class="pricing-billing">
             <div class="pricing-billing-toggle" role="group" aria-label="Billing cycle">
               <span class="pricing-billing-option" data-cycle-label="monthly">Monthly</span>
@@ -928,7 +932,7 @@
         influencers: null,
       };
       const pricingTabsWrap = document.querySelector(".pricing-tabs");
-        const pricingPanelsWrap = document.querySelector(".pricing-panels-wrap");
+      const pricingPanelsWrap = document.querySelector(".pricing-panels-wrap");
       const billingToggle = document.querySelector(".pricing-billing-toggle");
       const billingSwitch = document.getElementById("pricing-billing-switch");
       const billingLabelMonthly = billingToggle
@@ -940,25 +944,25 @@
       let billingCycle =
         window.localStorage.getItem("pricingBillingCycle") || "monthly";
 
-        function kickPricingTransition(panel) {
-          if (!panel) return;
-          panel.classList.add("is-content-switching");
+      function kickPricingTransition(panel) {
+        if (!panel) return;
+        panel.classList.add("is-content-switching");
+        window.requestAnimationFrame(() => {
           window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => {
-              panel.classList.remove("is-content-switching");
-            });
+            panel.classList.remove("is-content-switching");
           });
-        }
+        });
+      }
 
-        function kickCycleTransition() {
-          if (!pricingPanelsWrap) return;
-          pricingPanelsWrap.classList.add("is-cycle-switching");
+      function kickCycleTransition() {
+        if (!pricingPanelsWrap) return;
+        pricingPanelsWrap.classList.add("is-cycle-switching");
+        window.requestAnimationFrame(() => {
           window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => {
-              pricingPanelsWrap.classList.remove("is-cycle-switching");
-            });
+            pricingPanelsWrap.classList.remove("is-cycle-switching");
           });
-        }
+        });
+      }
 
       function applyCycleToExistingCards(panel, cycle) {
         if (!panel) return;
@@ -1221,8 +1225,8 @@
                   <div class="pricing-divider"></div>
                   <ul class="pricing-features">
                     ${visibleFeatures
-                      .map((feature) => `<li>${feature}</li>`)
-                      .join("")}
+                .map((feature) => `<li>${feature}</li>`)
+                .join("")}
                   </ul>
                   <button class="${isFeatured ? "btn-pricing-featured" : "btn-pricing"
               }">${buttonText}</button>
