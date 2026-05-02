@@ -42,7 +42,10 @@
   var signupSnackbarStack = document.getElementById('signup-snackbar-stack');
   var brandPhoneField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_phone"]') : null;
   var brandCountryField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_country"]') : null;
+  var brandNationalityCountryField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_nationality_country"]') : null;
   var brandProvinceField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_province"]') : null;
+  var influencerCategoryField = document.getElementById('influencer-category');
+  var influencerNicheField = document.getElementById('influencer-niche');
   var brandCountryCodeField = document.getElementById('brand-country-code');
   var brandCountryCodeDisplay = document.getElementById('brand-country-code-display');
   var brandCodeSelect = document.getElementById('brand-code-select');
@@ -78,6 +81,33 @@
 
     if (looksTooDetailed) return fallbackMessage || COMMON_API_ERROR_MESSAGE;
     return message;
+  }
+
+  function getStoredUserId() {
+    try {
+      return (
+        localStorage.getItem('user_id') ||
+        localStorage.getItem('influencer_id') ||
+        localStorage.getItem('signup_user_id') ||
+        ''
+      );
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function rememberUserIdFromResponse(res) {
+    var data = res && res.data;
+    var first = Array.isArray(data) ? data[0] : data;
+    var userId =
+      (first && (first.user_id || first.id || first.influencer_id)) ||
+      (res && (res.user_id || res.id || res.influencer_id)) ||
+      '';
+    if (!userId) return;
+    try {
+      localStorage.setItem('user_id', String(userId));
+      localStorage.setItem('signup_user_id', String(userId));
+    } catch (e) {}
   }
 
   function updateSnackbarStackState() {
@@ -1009,7 +1039,8 @@
         provinces.forEach(function (p) {
           if (!p || !p.province_name) return;
           var opt = document.createElement('option');
-          opt.value = String(p.province_name);
+          opt.value = String(p.province_id || p.id || p.province_name);
+          opt.setAttribute('data-province-name', String(p.province_name));
           opt.textContent = String(p.province_name);
           brandProvinceField.appendChild(opt);
         });
@@ -1057,6 +1088,9 @@
         countryCodeByName = {};
         countryNameByCode = {};
         brandCountryField.innerHTML = '';
+        if (brandNationalityCountryField) {
+          brandNationalityCountryField.innerHTML = '';
+        }
 
         countryRows.forEach(function (row) {
           countryCodeByName[row.country] = row.code;
@@ -1068,6 +1102,13 @@
           countryOption.value = row.country;
           countryOption.textContent = row.country;
           brandCountryField.appendChild(countryOption);
+
+          if (brandNationalityCountryField) {
+            var nationalityOption = document.createElement('option');
+            nationalityOption.value = row.country;
+            nationalityOption.textContent = row.country;
+            brandNationalityCountryField.appendChild(nationalityOption);
+          }
         });
 
         var detectedCountry = detectCountryFromRegion();
@@ -1075,12 +1116,14 @@
 
         if (countryCodeByName[detectedCountry]) {
           brandCountryField.value = detectedCountry;
+          if (brandNationalityCountryField) brandNationalityCountryField.value = detectedCountry;
           var preferred = countryRows.find(function (row) {
             return row.country === detectedCountry && row.code === detectedCode;
           });
           applyCodeSelection(preferred || countryRows[0]);
         } else if (countryRows.length) {
           brandCountryField.value = countryRows[0].country;
+          if (brandNationalityCountryField) brandNationalityCountryField.value = countryRows[0].country;
           applyCodeSelection(countryRows[0]);
         }
         if (brandCountryCodeField.value) {
@@ -1105,6 +1148,81 @@
         try {
           console.warn('[signup] failed to load countries from API.');
         } catch (e) {}
+      });
+  }
+
+  function getCategoryId(item) {
+    return item && (item.category_id || item.id || item.value);
+  }
+
+  function getCategoryName(item) {
+    return item && (item.category_name || item.name || item.title || item.label);
+  }
+
+  function resetNicheOptions(message) {
+    if (!influencerNicheField) return;
+    influencerNicheField.innerHTML = '';
+    var opt = document.createElement('option');
+    opt.value = '';
+    opt.textContent = message || 'Select niche';
+    opt.disabled = true;
+    opt.selected = true;
+    influencerNicheField.appendChild(opt);
+  }
+
+  function populateInfluencerCategories() {
+    if (!influencerCategoryField) return;
+    var client = window.API_CLIENT;
+    if (!client || typeof client.fetchCategories !== 'function') return;
+
+    client
+      .fetchCategories()
+      .then(function (result) {
+        var categories = (result && result.data) || [];
+        influencerCategoryField.innerHTML = '<option value="" selected disabled>Select category</option>';
+        categories.forEach(function (item) {
+          var id = getCategoryId(item);
+          var name = getCategoryName(item);
+          if (id == null || !name) return;
+          var opt = document.createElement('option');
+          opt.value = String(id);
+          opt.textContent = String(name);
+          influencerCategoryField.appendChild(opt);
+        });
+      })
+      .catch(function () {
+        // Keep placeholder if API fails.
+      });
+  }
+
+  function populateInfluencerNiches(categoryId) {
+    if (!influencerNicheField) return;
+    resetNicheOptions(categoryId ? 'Loading niches...' : 'Select category first');
+    influencerNicheField.disabled = true;
+    if (!categoryId) return;
+
+    var client = window.API_CLIENT;
+    if (!client || typeof client.fetchNiches !== 'function') return;
+
+    client
+      .fetchNiches(categoryId)
+      .then(function (result) {
+        var niches = (result && result.data) || [];
+        resetNicheOptions('Select niche');
+        niches.forEach(function (item) {
+          var id = item && (item.niche_id || item.id || item.value);
+          var name = item && (item.niche_name || item.name || item.title || item.label);
+          if (id == null || !name) return;
+          var opt = document.createElement('option');
+          opt.value = String(id);
+          opt.textContent = String(name);
+          influencerNicheField.appendChild(opt);
+        });
+        influencerNicheField.disabled = false;
+      })
+      .catch(function () {
+        resetNicheOptions('Select niche');
+        influencerNicheField.disabled = false;
       });
   }
 
@@ -1163,6 +1281,7 @@
           if (res && res.success === false) {
             throw new Error(res.error || res.message || 'Signup failed');
           }
+          rememberUserIdFromResponse(res);
           showSignupSnackbar({
             type: 'success',
             message: 'Signup submitted. Enter OTP to continue.',
@@ -1321,6 +1440,7 @@
           if (res && res.success === false) {
             throw new Error(res.error || res.message || 'OTP verification failed');
           }
+          rememberUserIdFromResponse(res);
           otpFeedback.textContent = 'OTP verified successfully.';
           otpFeedback.classList.remove('otp-feedback--error');
           otpFeedback.classList.add('otp-feedback--ok');
@@ -1459,21 +1579,33 @@
         }
 
         var formData = new FormData(brandDetailsForm);
-        var selectedCountryName = String(formData.get('brand_country') || '').trim();
-        var countryRow = countryRows.find(function (r) {
-          return r && r.country === selectedCountryName;
+        var selectedNationalityName = String(formData.get('brand_nationality_country') || '').trim();
+        var selectedResidenceName = String(formData.get('brand_country') || '').trim();
+        var nationalityRow = countryRows.find(function (r) {
+          return r && r.country === selectedNationalityName;
         });
-        var countryId = countryRow && countryRow.id != null ? Number(countryRow.id) : null;
-
-        var payload = {
-          user_type: 1,
-          country_id: countryId,
-          province_name: String(formData.get('brand_province') || '').trim(),
-          city: String(formData.get('brand_city') || '').trim(),
-          phone_code: String(formData.get('brand_country_code') || '').trim(),
-          phone: String(formData.get('brand_phone') || '').trim(),
-          contact_name: String(formData.get('brand_contact_name') || '').trim()
-        };
+        var residenceRow = countryRows.find(function (r) {
+          return r && r.country === selectedResidenceName;
+        });
+        var documentFile = formData.get('influencer_document');
+        var phoneCode = String(formData.get('brand_country_code') || '').trim();
+        var phoneNumber = String(formData.get('brand_phone') || '').trim();
+        var fullPhone = phoneNumber.charAt(0) === '+' ? phoneNumber : phoneCode + phoneNumber;
+        var payload = new FormData();
+        payload.append('user_type', '1');
+        payload.append('user_id', String(getStoredUserId() || ''));
+        payload.append('full_name', String(formData.get('brand_contact_name') || '').trim());
+        payload.append('phone', fullPhone);
+        payload.append('nationality_country_id', String((nationalityRow && nationalityRow.id) || ''));
+        payload.append('country_of_residence_id', String((residenceRow && residenceRow.id) || ''));
+        payload.append('province_id', String(formData.get('brand_province') || '').trim());
+        payload.append('city_name', String(formData.get('brand_city') || '').trim());
+        payload.append('gender', String(formData.get('influencer_gender') || '').trim());
+        payload.append('category_id', String(formData.get('influencer_category_id') || '').trim());
+        payload.append('niche_id', String(formData.get('influencer_niche_id') || '').trim());
+        if (documentFile && documentFile.name) {
+          payload.append('influencer_document', documentFile);
+        }
 
         showSignupSnackbar({
           type: 'info',
@@ -1647,6 +1779,12 @@
     });
   }
 
+  if (influencerCategoryField) {
+    influencerCategoryField.addEventListener('change', function () {
+      populateInfluencerNiches(influencerCategoryField.value);
+    });
+  }
+
   if (brandCountryCodeDisplay && brandCountryCodeDropdown) {
     brandCountryCodeDisplay.addEventListener('click', function () {
       filteredCodeRows = filterCodeRows('');
@@ -1712,4 +1850,5 @@
   });
 
   populateCountryFieldsFromApi();
+  populateInfluencerCategories();
 })();
