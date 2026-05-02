@@ -519,8 +519,7 @@
 
   function fetchSubscriptionPlans(usertype = 0) {
     const qs = `?usertype=${encodeURIComponent(String(usertype))}`;
-    // Keep trailing slash to avoid redirect issues.
-    return apiGetJson(`/subscription-plans/${qs}`);
+    return apiGetJson(`/subscription-plans${qs}`);
   }
 
   function fetchCountries() {

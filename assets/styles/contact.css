@@ -1076,6 +1076,47 @@
   }
 }
 
+@media (min-width: 901px) and (max-width: 1080px) {
+  .contact-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.86fr);
+    gap: 18px;
+  }
+
+  .contact-hero-copy,
+  .contact-hero-panel,
+  .contact-showcase,
+  .contact-form-shell {
+    padding: 24px;
+    border-radius: 28px;
+  }
+
+  .contact-hero-copy h1 {
+    max-width: 12ch;
+  }
+
+  .contact-hero-metrics {
+    gap: 10px;
+  }
+
+  .contact-hero-metric {
+    padding: 14px;
+  }
+
+  .contact-form-layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 18px;
+  }
+
+  .contact-form-shell {
+    position: sticky;
+    top: 86px;
+  }
+
+  .contact-showcase-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 760px) {
   .contact-hero-copy,
   .contact-hero-panel,

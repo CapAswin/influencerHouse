@@ -5322,6 +5322,323 @@ body.modal-open {
   }
 }
 
+@media (min-width: 901px) and (max-width: 1180px) {
+  :root {
+    --container: min(1040px, calc(100% - 36px));
+  }
+
+  #site-header {
+    min-height: 82px;
+  }
+
+  .section {
+    padding: 36px 0;
+  }
+
+  .nav-wrap {
+    padding-top: 12px;
+  }
+
+  .navbar {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .logo {
+    padding: 5px;
+  }
+
+  .logo-icon {
+    height: 38px;
+  }
+
+  .nav-panel {
+    gap: 10px;
+  }
+
+  .nav-links {
+    gap: 4px 8px;
+    font-size: 12px;
+  }
+
+  .nav-links a {
+    padding: 6px 7px;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .nav-actions .btn {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: clamp(2.55rem, 4.55vw, 3.6rem);
+    max-width: 13ch;
+  }
+
+  h2 {
+    font-size: clamp(1.9rem, 3vw, 2.55rem);
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 0.98fr) minmax(360px, 0.82fr);
+    gap: 30px;
+    align-items: center;
+  }
+
+  .hero-visual,
+  .hero-photo {
+    min-height: 470px;
+  }
+
+  .float-card {
+    padding: 13px 14px;
+    border-radius: 18px;
+  }
+
+  .card-views {
+    left: -10px;
+    top: 30px;
+    width: 190px;
+  }
+
+  .card-views b {
+    font-size: 1.18rem;
+  }
+
+  .card-verified {
+    right: -8px;
+    bottom: 92px;
+    width: 190px;
+  }
+
+  .card-roi {
+    left: 34px;
+    bottom: -12px;
+    width: 190px;
+  }
+
+  .stats {
+    margin-top: 44px;
+    padding: 22px 18px;
+  }
+
+  .split {
+    grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+    gap: 30px;
+  }
+
+  .analytics-stage {
+    min-height: 330px;
+  }
+
+  .dash-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .card-sales {
+    width: 58%;
+  }
+
+  .card-activity {
+    width: 48%;
+  }
+
+  .card-order {
+    width: 44%;
+  }
+
+  .cards-3 {
+    gap: 14px;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .roadmap {
+    margin-top: 34px;
+  }
+
+  .roadmap-card {
+    padding: 20px;
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .video .thumb {
+    height: 132px;
+  }
+
+  .blog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .testimonials {
+    width: 100%;
+    margin-left: 0;
+    gap: 14px;
+    min-height: 360px;
+    flex-direction: row;
+  }
+
+  .quote-card,
+  .quote-card.is-active {
+    width: 33.333%;
+    padding: 20px;
+  }
+
+  .pricing-wrap {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+
+  .pricing-panel {
+    gap: 14px;
+  }
+
+  .pricing-card {
+    padding: 26px 18px;
+  }
+
+  .pricing-num {
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
+  }
+
+  .cta {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+    gap: 34px;
+    padding: 44px 36px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1.35fr 0.9fr 0.9fr 1.35fr;
+    gap: 28px;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 900px) {
+  :root {
+    --container: min(820px, calc(100% - 32px));
+  }
+
+  .section {
+    padding: 34px 0;
+  }
+
+  h1 {
+    font-size: clamp(2.65rem, 7vw, 4rem);
+    max-width: 13ch;
+  }
+
+  h2 {
+    max-width: 20ch;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .hero-visual {
+    min-height: 0;
+  }
+
+  .hero-photo {
+    width: 100%;
+    height: 520px;
+    min-height: 0;
+  }
+
+  .float-card {
+    padding: 14px 16px;
+  }
+
+  .card-views {
+    left: 18px;
+    top: 24px;
+  }
+
+  .card-verified {
+    right: 18px;
+    bottom: 96px;
+  }
+
+  .card-roi {
+    left: 36px;
+    bottom: 18px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 34px;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .analytics-stage {
+    min-height: 330px;
+  }
+
+  .cards-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .roadmap-row {
+    grid-template-columns: 42px 1fr;
+  }
+
+  .roadmap-empty {
+    display: none;
+  }
+
+  .roadmap-row.left .roadmap-card,
+  .roadmap-row.right .roadmap-card {
+    text-align: left;
+  }
+
+  .roadmap-row.left .roadmap-spine {
+    order: 1;
+  }
+
+  .roadmap-row.left .roadmap-card {
+    order: 2;
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .blog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pricing-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pricing-panel .pricing-card:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .cta {
+    padding: 40px 30px;
+  }
+}
+
 @media (max-width: 760px) {
   .container {
     width: min(1140px, calc(100% - 24px));
