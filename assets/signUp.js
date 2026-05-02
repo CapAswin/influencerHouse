@@ -47,6 +47,7 @@
   var brandProvinceField = brandDetailsForm ? brandDetailsForm.querySelector('[name="brand_province"]') : null;
   var influencerCategoryField = document.getElementById('influencer-category');
   var influencerNicheField = document.getElementById('influencer-niche');
+  var brandDetailsCard = brandDetailsModal ? brandDetailsModal.querySelector('.brand-details-card') : null;
   var brandCountryCodeField = document.getElementById('brand-country-code');
   var brandCountryCodeDisplay = document.getElementById('brand-country-code-display');
   var brandCodeSelect = document.getElementById('brand-code-select');
@@ -72,6 +73,43 @@
   var flipTimer = null;
   var COMMON_API_ERROR_MESSAGE = 'Something went wrong. Please try again.';
   var MAX_VISIBLE_API_ERROR_LENGTH = 120;
+  var bodyScrollLockY = 0;
+
+  function setBodyScrollLocked(shouldLock) {
+    var root = document.documentElement;
+    if (shouldLock) {
+      if (!document.body.classList.contains('modal-open')) {
+        bodyScrollLockY = window.scrollY || window.pageYOffset || 0;
+        var scrollbarCompensation = Math.max(0, window.innerWidth - root.clientWidth);
+        document.body.style.top = -bodyScrollLockY + 'px';
+        document.body.style.position = 'fixed';
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
+        document.body.style.paddingRight = scrollbarCompensation ? scrollbarCompensation + 'px' : '';
+      }
+      root.classList.add('modal-open');
+      document.body.classList.add('modal-open');
+      return;
+    }
+
+    root.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
+    document.body.style.top = '';
+    document.body.style.position = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.paddingRight = '';
+    window.scrollTo(0, bodyScrollLockY);
+  }
+
+  function syncBodyScrollLock(forceLocked) {
+    var hasOpenModal = forceLocked || [otpModal, brandDetailsModal, brandCompanyModal, welcomeAccessModal].some(function (modal) {
+      return modal && modal.classList.contains('is-open');
+    });
+    setBodyScrollLocked(hasOpenModal);
+  }
 
   function getFriendlyApiErrorMessage(error, fallbackMessage) {
     var message = error && error.message ? String(error.message).trim() : '';
@@ -444,6 +482,24 @@
   if (brandDetailsForm) {
     brandDetailsForm.addEventListener('scroll', updateInfluencerFormScrollButton, { passive: true });
   }
+  if (brandDetailsCard && brandDetailsForm) {
+    brandDetailsCard.addEventListener('wheel', function (event) {
+      if (!brandDetailsModal || !brandDetailsModal.classList.contains('is-open')) return;
+      if (event.target && event.target.closest('#brand-country-code-dropdown')) return;
+      if (brandDetailsForm.scrollHeight <= brandDetailsForm.clientHeight + 2) return;
+
+      var delta = event.deltaY;
+      var atTop = brandDetailsForm.scrollTop <= 0;
+      var atBottom =
+        brandDetailsForm.scrollTop + brandDetailsForm.clientHeight >= brandDetailsForm.scrollHeight - 1;
+
+      if ((delta < 0 && atTop) || (delta > 0 && atBottom)) return;
+
+      event.preventDefault();
+      brandDetailsForm.scrollTop += delta;
+      updateInfluencerFormScrollButton();
+    }, { passive: false });
+  }
   if (influencerFormScrollBtn) {
     influencerFormScrollBtn.classList.add('is-hidden');
     influencerFormScrollBtn.addEventListener('click', scrollInfluencerFormDown);
@@ -479,7 +535,7 @@
     if (!otpModal) return;
     otpModal.classList.add('is-open');
     otpModal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
+    syncBodyScrollLock(true);
     clearOtpDigits();
     if (otpDigitInputs.length) {
       setTimeout(function () { otpDigitInputs[0].focus(); }, 60);
@@ -490,9 +546,7 @@
     if (!otpModal) return;
     otpModal.classList.remove('is-open');
     otpModal.setAttribute('aria-hidden', 'true');
-    if (!keepBodyLock) {
-      document.body.classList.remove('modal-open');
-    }
+    syncBodyScrollLock(keepBodyLock);
     resetOtpState();
   }
 
@@ -540,7 +594,7 @@
 
     brandDetailsModal.classList.add('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
+    syncBodyScrollLock(true);
     if (brandDetailsForm) {
       brandDetailsForm.scrollTop = 0;
       setTimeout(updateInfluencerFormScrollButton, 80);
@@ -581,7 +635,7 @@
     if (!brandDetailsModal) return;
     brandDetailsModal.classList.remove('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
+    syncBodyScrollLock();
     if (influencerFormScrollBtn) influencerFormScrollBtn.classList.add('is-hidden');
   }
 
@@ -639,7 +693,7 @@
     setBrandCompanySlide(1);
     brandCompanyModal.classList.add('is-open');
     brandCompanyModal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
+    syncBodyScrollLock(true);
     var firstField = brandCompanyForm ? brandCompanyForm.querySelector('.brand-company-slide.is-active input, .brand-company-slide.is-active select, .brand-company-slide.is-active textarea') : null;
     if (firstField) firstField.focus();
   }
@@ -648,7 +702,7 @@
     if (!brandCompanyModal) return;
     brandCompanyModal.classList.remove('is-open');
     brandCompanyModal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
+    syncBodyScrollLock();
   }
 
   function wireBrandIndustryCategory() {
@@ -811,14 +865,14 @@
     if (!welcomeAccessModal) return;
     welcomeAccessModal.classList.add('is-open');
     welcomeAccessModal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
+    syncBodyScrollLock(true);
   }
 
   function closeWelcomeAccessModal() {
     if (!welcomeAccessModal) return;
     welcomeAccessModal.classList.remove('is-open');
     welcomeAccessModal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
+    syncBodyScrollLock();
   }
 
   function sanitizePhoneNumberInput(value) {
