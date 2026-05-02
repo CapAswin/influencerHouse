@@ -3132,11 +3132,11 @@ body.modal-open {
 }
 
 #brand-details-modal .brand-details-form {
-  max-height: calc(100svh - 150px);
+  max-height: calc(100svh - 224px);
   overflow-y: auto;
   overscroll-behavior: contain;
   padding-right: 6px;
-  padding-bottom: 72px;
+  padding-bottom: 18px;
   scrollbar-width: thin;
   scrollbar-color: rgba(97, 97, 255, 0.55) rgba(10, 15, 30, 0.08);
 }
@@ -3704,27 +3704,41 @@ body.modal-open {
 
 .brand-details-submit {
   width: 100%;
-  margin-top: 6px;
+}
+
+.brand-details-footer {
+  flex-shrink: 0;
+  margin: 0 -18px -18px;
+  padding: 14px 18px 18px;
+  background:
+    linear-gradient(180deg, rgba(248, 249, 253, 0), #f8f9fd 20%),
+    #f8f9fd;
+  border-top: 1px solid rgba(10, 15, 30, 0.08);
+  box-shadow: 0 -14px 28px rgba(248, 249, 253, 0.88);
 }
 
 .influencer-form-scroll-btn {
   position: absolute;
-  right: 22px;
-  bottom: 20px;
+  left: 50%;
+  bottom: 86px;
   z-index: 8;
-  width: 46px;
-  height: 46px;
+  min-height: 46px;
+  padding: 10px 14px 10px 18px;
   border: 0;
   border-radius: 999px;
   color: #fff;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background:
+    linear-gradient(135deg, rgba(97, 97, 255, 0.96), rgba(255, 3, 96, 0.94));
   box-shadow:
-    0 16px 32px rgba(97, 97, 255, 0.32),
-    0 6px 18px rgba(255, 3, 96, 0.16);
+    0 18px 36px rgba(10, 15, 30, 0.24),
+    0 10px 24px rgba(97, 97, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  transform: translateX(-50%);
   transition:
     opacity var(--ease),
     visibility var(--ease),
@@ -3733,10 +3747,11 @@ body.modal-open {
 }
 
 .influencer-form-scroll-btn:hover {
-  transform: translateY(-2px) scale(1.04);
+  transform: translateX(-50%) translateY(-2px) scale(1.02);
   box-shadow:
-    0 20px 38px rgba(97, 97, 255, 0.42),
-    0 8px 22px rgba(255, 3, 96, 0.2);
+    0 22px 42px rgba(10, 15, 30, 0.28),
+    0 12px 30px rgba(97, 97, 255, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 .influencer-form-scroll-btn.is-hidden {
@@ -3745,9 +3760,16 @@ body.modal-open {
   pointer-events: none;
 }
 
+.influencer-scroll-text {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
 .influencer-scroll-icon {
-  width: 22px;
-  height: 22px;
+  width: 19px;
+  height: 19px;
   display: inline-flex;
   animation: influencerScrollFloat 1.3s ease-in-out infinite;
 }
