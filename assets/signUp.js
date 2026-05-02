@@ -64,6 +64,21 @@
   var SNACKBAR_EXIT_MS = 320;
   var SNACKBAR_OVERFLOW_EXIT_MS = 380;
   var flipTimer = null;
+  var COMMON_API_ERROR_MESSAGE = 'Something went wrong. Please try again.';
+  var MAX_VISIBLE_API_ERROR_LENGTH = 120;
+
+  function getFriendlyApiErrorMessage(error, fallbackMessage) {
+    var message = error && error.message ? String(error.message).trim() : '';
+    if (!message) return fallbackMessage || COMMON_API_ERROR_MESSAGE;
+
+    var looksTooDetailed =
+      message.length > MAX_VISIBLE_API_ERROR_LENGTH ||
+      /<[^>]+>/.test(message) ||
+      /\b(stack|trace|exception|sql|syntaxerror|typeerror|referenceerror)\b/i.test(message);
+
+    if (looksTooDetailed) return fallbackMessage || COMMON_API_ERROR_MESSAGE;
+    return message;
+  }
 
   function updateSnackbarStackState() {
     if (!signupSnackbarStack) return;
@@ -692,7 +707,7 @@
             showSignupSnackbar({ type: 'success', message: 'Image imported from URL.', actionLabel: 'OK' });
           })
           .catch(function (err) {
-            showSignupSnackbar({ type: 'error', message: (err && err.message) || 'Could not import image.', actionLabel: 'OK' });
+            showSignupSnackbar({ type: 'error', message: getFriendlyApiErrorMessage(err, 'Could not import image.'), actionLabel: 'OK' });
             clearLogo();
           })
           .finally(function () {
@@ -1161,7 +1176,7 @@
         .catch(function (err) {
           showSignupSnackbar({
             type: 'error',
-            message: (err && err.message) ? err.message : 'Signup failed',
+            message: getFriendlyApiErrorMessage(err, 'Signup failed. Please try again.'),
             actionLabel: 'Retry'
           });
         });
@@ -1320,7 +1335,7 @@
           }, 800);
         })
         .catch(function (err) {
-          var msg = err && err.message ? err.message : 'OTP verification failed';
+          var msg = getFriendlyApiErrorMessage(err, 'OTP verification failed. Please try again.');
           otpFeedback.textContent = msg;
           otpFeedback.classList.remove('otp-feedback--ok');
           otpFeedback.classList.add('otp-feedback--error');
@@ -1492,9 +1507,10 @@
             });
           })
           .catch(function (err) {
+            var detailsErrorMessage = getFriendlyApiErrorMessage(err, 'Details submission failed. Please try again.');
             showSignupSnackbar({
               type: 'error',
-              message: err && err.message ? err.message : 'Details submission failed',
+              message: detailsErrorMessage,
               actionLabel: 'Retry'
             });
           });
