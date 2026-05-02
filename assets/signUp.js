@@ -772,55 +772,6 @@
       });
     }
 
-    if (brandLogoUrlBtn && brandLogoUrlInput) {
-      brandLogoUrlBtn.addEventListener('click', function () {
-        var url = (brandLogoUrlInput.value || '').trim();
-        if (!url) {
-          showSignupSnackbar({ type: 'warning', message: 'Please paste an image URL first.', actionLabel: 'OK' });
-          return;
-        }
-        try {
-          // validate URL format
-          new URL(url);
-        } catch (e) {
-          showSignupSnackbar({ type: 'error', message: 'Please enter a valid URL.', actionLabel: 'OK' });
-          return;
-        }
-        brandLogoUrlBtn.disabled = true;
-        brandLogoUrlBtn.textContent = 'Uploading...';
-        fetch(url)
-          .then(function (res) {
-            if (!res.ok) throw new Error('Fetch failed');
-            return res.blob();
-          })
-          .then(function (blob) {
-            var fileType = blob.type || '';
-            var fakeFile = { type: fileType, size: blob.size };
-            var v = validateFile(fakeFile);
-            if (!v.ok) throw new Error(v.message);
-            return new Promise(function (resolve) {
-              var reader = new FileReader();
-              reader.onload = function () {
-                resolve(typeof reader.result === 'string' ? reader.result : '');
-              };
-              reader.readAsDataURL(blob);
-            });
-          })
-          .then(function (dataUrl) {
-            if (!dataUrl) throw new Error('Could not read image.');
-            applyLogoDataUrl(dataUrl);
-            showSignupSnackbar({ type: 'success', message: 'Image imported from URL.', actionLabel: 'OK' });
-          })
-          .catch(function (err) {
-            showSignupSnackbar({ type: 'error', message: getFriendlyApiErrorMessage(err, 'Could not import image.'), actionLabel: 'OK' });
-            clearLogo();
-          })
-          .finally(function () {
-            brandLogoUrlBtn.disabled = false;
-            brandLogoUrlBtn.textContent = 'Upload';
-          });
-      });
-    }
   }
 
   function wireBrandSlideAccordions() {
@@ -1102,7 +1053,7 @@
     brandProvinceField.innerHTML = '<option value="" selected disabled>Select province</option>';
   }
 
-  function loadProvincesForSelectedCountry() {
+  async function loadProvincesForSelectedCountry() {
     if (!brandProvinceField || !brandCountryField) return;
     var client = window.API_CLIENT;
     if (!client || typeof client.fetchProvinces !== 'function') return;
@@ -1122,123 +1073,119 @@
     }
 
     resetProvinceOptions();
-    client
-      .fetchProvinces(row.id)
-      .then(function (payload) {
-        var provinces = (payload && payload.data) || [];
-        provinces.forEach(function (p) {
-          if (!p || !p.province_name) return;
-          var opt = document.createElement('option');
-          opt.value = String(p.province_id || p.id || p.province_name);
-          opt.setAttribute('data-province-name', String(p.province_name));
-          opt.textContent = String(p.province_name);
-          brandProvinceField.appendChild(opt);
-        });
-        if (brandProvinceField.options.length === 2) {
-          brandProvinceField.selectedIndex = 1;
-        }
-      })
-      .catch(function () {
-        // Keep placeholder if API fails.
+    try {
+      var payload = await client.fetchProvinces(row.id);
+      var provinces = (payload && payload.data) || [];
+      provinces.forEach(function (p) {
+        if (!p || !p.province_name) return;
+        var opt = document.createElement('option');
+        opt.value = String(p.province_id || p.id || p.province_name);
+        opt.setAttribute('data-province-name', String(p.province_name));
+        opt.textContent = String(p.province_name);
+        brandProvinceField.appendChild(opt);
       });
+      if (brandProvinceField.options.length === 2) {
+        brandProvinceField.selectedIndex = 1;
+      }
+    } catch (_) {
+      // Keep placeholder if API fails.
+    }
   }
 
-  function populateCountryFieldsFromApi() {
+  async function populateCountryFieldsFromApi() {
     if (!brandCountryField || !brandCountryCodeField) return;
 
     var client = window.API_CLIENT;
     if (!client || typeof client.fetchCountries !== 'function') return;
 
-    client
-      .fetchCountries()
-      .then(function (result) {
-        var countries = (result && result.data) || [];
-        countryRows = [];
-        countries.forEach(function (item) {
-          if (!item || !item.country_name || !item.phone_code) return;
-          
-          var region = '';
-          if (item.flag_png) {
-            var match = item.flag_png.match(/\/([a-z]{2})\.png$/i);
-            if (match) region = match[1].toUpperCase();
-          }
+    try {
+      var result = await client.fetchCountries();
+      var countries = (result && result.data) || [];
+      countryRows = [];
+      countries.forEach(function (item) {
+        if (!item || !item.country_name || !item.phone_code) return;
 
-          countryRows.push({
-            country: item.country_name,
-            code: item.phone_code,
-            region: region,
-            id: item.country_id
-          });
-        });
-
-        countryRows.sort(function (a, b) {
-          return a.country.localeCompare(b.country);
-        });
-
-        countryCodeByName = {};
-        countryNameByCode = {};
-        brandCountryField.innerHTML = '';
-        if (brandNationalityCountryField) {
-          brandNationalityCountryField.innerHTML = '';
+        var region = '';
+        if (item.flag_png) {
+          var match = item.flag_png.match(/\/([a-z]{2})\.png$/i);
+          if (match) region = match[1].toUpperCase();
         }
 
-        countryRows.forEach(function (row) {
-          countryCodeByName[row.country] = row.code;
-          if (!countryNameByCode[row.code]) {
-            countryNameByCode[row.code] = row.country;
-          }
-
-          var countryOption = document.createElement('option');
-          countryOption.value = row.country;
-          countryOption.textContent = row.country;
-          brandCountryField.appendChild(countryOption);
-
-          if (brandNationalityCountryField) {
-            var nationalityOption = document.createElement('option');
-            nationalityOption.value = row.country;
-            nationalityOption.textContent = row.country;
-            brandNationalityCountryField.appendChild(nationalityOption);
-          }
+        countryRows.push({
+          country: item.country_name,
+          code: item.phone_code,
+          region: region,
+          id: item.country_id
         });
-
-        var detectedCountry = detectCountryFromRegion();
-        var detectedCode = getCodeFromCountry(detectedCountry);
-
-        if (countryCodeByName[detectedCountry]) {
-          brandCountryField.value = detectedCountry;
-          if (brandNationalityCountryField) brandNationalityCountryField.value = detectedCountry;
-          var preferred = countryRows.find(function (row) {
-            return row.country === detectedCountry && row.code === detectedCode;
-          });
-          applyCodeSelection(preferred || countryRows[0]);
-        } else if (countryRows.length) {
-          brandCountryField.value = countryRows[0].country;
-          if (brandNationalityCountryField) brandNationalityCountryField.value = countryRows[0].country;
-          applyCodeSelection(countryRows[0]);
-        }
-        if (brandCountryCodeField.value) {
-          lastValidCountryCode = brandCountryCodeField.value;
-          var initialRow = countryRows.find(function (row) {
-            return row.code === lastValidCountryCode && row.country === brandCountryField.value;
-          }) || countryRows.find(function (row) {
-            return row.code === lastValidCountryCode;
-          });
-          if (initialRow) {
-            lastValidCountryDisplay = getDisplayCode(initialRow);
-            brandCountryCodeDisplay.value = lastValidCountryDisplay;
-          }
-        }
-        filteredCodeRows = countryRows.slice();
-        renderCodeDropdown(filteredCodeRows);
-
-        loadProvincesForSelectedCountry();
-      })
-      .catch(function () {
-        // API-only requirement: leave placeholders if fetch fails.
-        try {
-          console.warn('[signup] failed to load countries from API.');
-        } catch (e) {}
       });
+
+      countryRows.sort(function (a, b) {
+        return a.country.localeCompare(b.country);
+      });
+
+      countryCodeByName = {};
+      countryNameByCode = {};
+      brandCountryField.innerHTML = '';
+      if (brandNationalityCountryField) {
+        brandNationalityCountryField.innerHTML = '';
+      }
+
+      countryRows.forEach(function (row) {
+        countryCodeByName[row.country] = row.code;
+        if (!countryNameByCode[row.code]) {
+          countryNameByCode[row.code] = row.country;
+        }
+
+        var countryOption = document.createElement('option');
+        countryOption.value = row.country;
+        countryOption.textContent = row.country;
+        brandCountryField.appendChild(countryOption);
+
+        if (brandNationalityCountryField) {
+          var nationalityOption = document.createElement('option');
+          nationalityOption.value = row.country;
+          nationalityOption.textContent = row.country;
+          brandNationalityCountryField.appendChild(nationalityOption);
+        }
+      });
+
+      var detectedCountry = detectCountryFromRegion();
+      var detectedCode = getCodeFromCountry(detectedCountry);
+
+      if (countryCodeByName[detectedCountry]) {
+        brandCountryField.value = detectedCountry;
+        if (brandNationalityCountryField) brandNationalityCountryField.value = detectedCountry;
+        var preferred = countryRows.find(function (row) {
+          return row.country === detectedCountry && row.code === detectedCode;
+        });
+        applyCodeSelection(preferred || countryRows[0]);
+      } else if (countryRows.length) {
+        brandCountryField.value = countryRows[0].country;
+        if (brandNationalityCountryField) brandNationalityCountryField.value = countryRows[0].country;
+        applyCodeSelection(countryRows[0]);
+      }
+      if (brandCountryCodeField.value) {
+        lastValidCountryCode = brandCountryCodeField.value;
+        var initialRow = countryRows.find(function (row) {
+          return row.code === lastValidCountryCode && row.country === brandCountryField.value;
+        }) || countryRows.find(function (row) {
+          return row.code === lastValidCountryCode;
+        });
+        if (initialRow) {
+          lastValidCountryDisplay = getDisplayCode(initialRow);
+          brandCountryCodeDisplay.value = lastValidCountryDisplay;
+        }
+      }
+      filteredCodeRows = countryRows.slice();
+      renderCodeDropdown(filteredCodeRows);
+
+      loadProvincesForSelectedCountry();
+    } catch (_) {
+      // API-only requirement: leave placeholders if fetch fails.
+      try {
+        console.warn('[signup] failed to load countries from API.');
+      } catch (e) {}
+    }
   }
 
   function getCategoryId(item) {
@@ -1260,32 +1207,30 @@
     influencerNicheField.appendChild(opt);
   }
 
-  function populateInfluencerCategories() {
+  async function populateInfluencerCategories() {
     if (!influencerCategoryField) return;
     var client = window.API_CLIENT;
     if (!client || typeof client.fetchCategories !== 'function') return;
 
-    client
-      .fetchCategories()
-      .then(function (result) {
-        var categories = (result && result.data) || [];
-        influencerCategoryField.innerHTML = '<option value="" selected disabled>Select category</option>';
-        categories.forEach(function (item) {
-          var id = getCategoryId(item);
-          var name = getCategoryName(item);
-          if (id == null || !name) return;
-          var opt = document.createElement('option');
-          opt.value = String(id);
-          opt.textContent = String(name);
-          influencerCategoryField.appendChild(opt);
-        });
-      })
-      .catch(function () {
-        // Keep placeholder if API fails.
+    try {
+      var result = await client.fetchCategories();
+      var categories = (result && (result.categories || result.data)) || [];
+      influencerCategoryField.innerHTML = '<option value="" selected disabled>Select category</option>';
+      categories.forEach(function (item) {
+        var id = getCategoryId(item);
+        var name = getCategoryName(item);
+        if (id == null || !name) return;
+        var opt = document.createElement('option');
+        opt.value = String(id);
+        opt.textContent = String(name);
+        influencerCategoryField.appendChild(opt);
       });
+    } catch (_) {
+      // Keep placeholder if API fails.
+    }
   }
 
-  function populateInfluencerNiches(categoryId) {
+  async function populateInfluencerNiches(categoryId) {
     if (!influencerNicheField) return;
     resetNicheOptions(categoryId ? 'Loading niches...' : 'Select category first');
     influencerNicheField.disabled = true;
@@ -1294,30 +1239,28 @@
     var client = window.API_CLIENT;
     if (!client || typeof client.fetchNiches !== 'function') return;
 
-    client
-      .fetchNiches(categoryId)
-      .then(function (result) {
-        var niches = (result && result.data) || [];
-        resetNicheOptions('Select niche');
-        niches.forEach(function (item) {
-          var id = item && (item.niche_id || item.id || item.value);
-          var name = item && (item.niche_name || item.name || item.title || item.label);
-          if (id == null || !name) return;
-          var opt = document.createElement('option');
-          opt.value = String(id);
-          opt.textContent = String(name);
-          influencerNicheField.appendChild(opt);
-        });
-        influencerNicheField.disabled = false;
-      })
-      .catch(function () {
-        resetNicheOptions('Select niche');
-        influencerNicheField.disabled = false;
+    try {
+      var result = await client.fetchNiches(categoryId);
+      var niches = (result && result.data) || [];
+      resetNicheOptions('Select niche');
+      niches.forEach(function (item) {
+        var id = item && (item.niche_id || item.id || item.value);
+        var name = item && (item.niche_name || item.name || item.title || item.label);
+        if (id == null || !name) return;
+        var opt = document.createElement('option');
+        opt.value = String(id);
+        opt.textContent = String(name);
+        influencerNicheField.appendChild(opt);
       });
+      influencerNicheField.disabled = false;
+    } catch (_) {
+      resetNicheOptions('Select niche');
+      influencerNicheField.disabled = false;
+    }
   }
 
   if (signupForm) {
-    signupForm.addEventListener('submit', function (event) {
+    signupForm.addEventListener('submit', async function (event) {
       event.preventDefault();
       validatePasswordMatch();
       var signupValidation = validateFormFields(signupForm);
@@ -1365,30 +1308,28 @@
         actionLabel: 'Wait'
       });
 
-      client
-        .signup(payload)
-        .then(function (res) {
-          if (res && res.success === false) {
-            throw new Error(res.error || res.message || 'Signup failed');
+      try {
+        var res = await client.signup(payload);
+        if (res && res.success === false) {
+          throw new Error(res.error || res.message || 'Signup failed');
+        }
+        rememberUserIdFromResponse(res);
+        showSignupSnackbar({
+          type: 'success',
+          message: 'Signup submitted. Enter OTP to continue.',
+          actionLabel: 'Continue',
+          onAction: function () {
+            if (otpInput) otpInput.focus();
           }
-          rememberUserIdFromResponse(res);
-          showSignupSnackbar({
-            type: 'success',
-            message: 'Signup submitted. Enter OTP to continue.',
-            actionLabel: 'Continue',
-            onAction: function () {
-              if (otpInput) otpInput.focus();
-            }
-          });
-          openOtpModal();
-        })
-        .catch(function (err) {
-          showSignupSnackbar({
-            type: 'error',
-            message: getFriendlyApiErrorMessage(err, 'Signup failed. Please try again.'),
-            actionLabel: 'Retry'
-          });
         });
+        openOtpModal();
+      } catch (err) {
+        showSignupSnackbar({
+          type: 'error',
+          message: getFriendlyApiErrorMessage(err, 'Signup failed. Please try again.'),
+          actionLabel: 'Retry'
+        });
+      }
     });
   }
 
@@ -1488,7 +1429,7 @@
   }
 
   if (otpForm) {
-    otpForm.addEventListener('submit', function (event) {
+    otpForm.addEventListener('submit', async function (event) {
       event.preventDefault();
       if (!otpInput || !otpFeedback) return;
       syncOtpHiddenInput();
@@ -1532,40 +1473,93 @@
       otpFeedback.classList.remove('otp-feedback--error');
       otpFeedback.classList.remove('otp-feedback--ok');
 
-      client
-        .submitOtp(otpPayload)
-        .then(function (res) {
-          if (res && res.success === false) {
-            throw new Error(res.error || res.message || 'OTP verification failed');
-          }
-          rememberUserIdFromResponse(res);
-          otpFeedback.textContent = 'OTP verified successfully.';
-          otpFeedback.classList.remove('otp-feedback--error');
-          otpFeedback.classList.add('otp-feedback--ok');
-          showSignupSnackbar({
-            type: 'success',
-            message: 'OTP verified successfully.',
-            actionLabel: 'Done'
-          });
-          setTimeout(function () {
-            closeOtpModal(true);
-            openBrandDetailsModal();
-          }, 800);
-        })
-        .catch(function (err) {
-          var msg = getFriendlyApiErrorMessage(err, 'OTP verification failed. Please try again.');
-          otpFeedback.textContent = msg;
-          otpFeedback.classList.remove('otp-feedback--ok');
-          otpFeedback.classList.add('otp-feedback--error');
-          showSignupSnackbar({
-            type: 'error',
-            message: msg,
-            actionLabel: 'Retry',
-            onAction: function () {
-              otpInput.focus();
-            }
-          });
+      try {
+        var res = await client.submitOtp(otpPayload);
+        if (res && res.success === false) {
+          throw new Error(res.error || res.message || 'OTP verification failed');
+        }
+        rememberUserIdFromResponse(res);
+        otpFeedback.textContent = 'OTP verified successfully.';
+        otpFeedback.classList.remove('otp-feedback--error');
+        otpFeedback.classList.add('otp-feedback--ok');
+        showSignupSnackbar({
+          type: 'success',
+          message: 'OTP verified successfully.',
+          actionLabel: 'Done'
         });
+        setTimeout(function () {
+          closeOtpModal(true);
+          openBrandDetailsModal();
+        }, 800);
+      } catch (err) {
+        var msg = getFriendlyApiErrorMessage(err, 'OTP verification failed. Please try again.');
+        otpFeedback.textContent = msg;
+        otpFeedback.classList.remove('otp-feedback--ok');
+        otpFeedback.classList.add('otp-feedback--error');
+        showSignupSnackbar({
+          type: 'error',
+          message: msg,
+          actionLabel: 'Retry',
+          onAction: function () {
+            otpInput.focus();
+          }
+        });
+      }
+    });
+  }
+
+  function readBlobAsDataUrl(blob) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        resolve(typeof reader.result === 'string' ? reader.result : '');
+      };
+      reader.onerror = function () {
+        reject(new Error('Could not read image.'));
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  if (brandLogoUrlBtn && brandLogoUrlInput) {
+    brandLogoUrlBtn.addEventListener('click', async function () {
+      var url = (brandLogoUrlInput.value || '').trim();
+      if (!url) {
+        showSignupSnackbar({ type: 'warning', message: 'Please paste an image URL first.', actionLabel: 'OK' });
+        return;
+      }
+      try {
+        // validate URL format
+        new URL(url);
+      } catch (e) {
+        showSignupSnackbar({ type: 'error', message: 'Please enter a valid URL.', actionLabel: 'OK' });
+        return;
+      }
+      brandLogoUrlBtn.disabled = true;
+      brandLogoUrlBtn.textContent = 'Uploading...';
+
+      try {
+        var uploadResponse = await fetch(url);
+        if (!uploadResponse.ok) throw new Error('Fetch failed');
+
+        var blob = await uploadResponse.blob();
+        var fileType = blob.type || '';
+        var fakeFile = { type: fileType, size: blob.size };
+        var v = validateFile(fakeFile);
+        if (!v.ok) throw new Error(v.message);
+
+        var dataUrl = await readBlobAsDataUrl(blob);
+        if (!dataUrl) throw new Error('Could not read image.');
+
+        applyLogoDataUrl(dataUrl);
+        showSignupSnackbar({ type: 'success', message: 'Image imported from URL.', actionLabel: 'OK' });
+      } catch (err) {
+        showSignupSnackbar({ type: 'error', message: getFriendlyApiErrorMessage(err, 'Could not import image.'), actionLabel: 'OK' });
+        clearLogo();
+      } finally {
+        brandLogoUrlBtn.disabled = false;
+        brandLogoUrlBtn.textContent = 'Upload';
+      }
     });
   }
 
@@ -1639,7 +1633,7 @@
         brandPhoneField.value = sanitizePhoneNumberInput(brandPhoneField.value);
       });
     }
-    brandDetailsForm.addEventListener('submit', function (event) {
+    brandDetailsForm.addEventListener('submit', async function (event) {
       event.preventDefault();
       if (brandPhoneField) {
         brandPhoneField.value = sanitizePhoneNumberInput(brandPhoneField.value);
@@ -1711,39 +1705,37 @@
           actionLabel: 'Wait'
         });
 
-        client
-          .influencerTellUs(payload)
-          .then(function (res) {
-            if (res && res.success === false) {
-              throw new Error(res.error || res.message || 'Details submission failed');
+        try {
+          var res = await client.influencerTellUs(payload);
+          if (res && res.success === false) {
+            throw new Error(res.error || res.message || 'Details submission failed');
+          }
+          try {
+            var influencerId =
+              (res && res.data && res.data[0] && res.data[0].influencer_id) ||
+              res.influencer_id ||
+              null;
+            if (influencerId != null) {
+              window.INFLUENCER_ID = influencerId;
+              localStorage.setItem('influencer_id', String(influencerId));
+              localStorage.setItem('user_id', String(influencerId));
             }
-            try {
-              var influencerId =
-                (res && res.data && res.data[0] && res.data[0].influencer_id) ||
-                res.influencer_id ||
-                null;
-              if (influencerId != null) {
-                window.INFLUENCER_ID = influencerId;
-                localStorage.setItem('influencer_id', String(influencerId));
-                localStorage.setItem('user_id', String(influencerId));
-              }
-            } catch (e) {}
-            closeBrandDetailsModal();
-            openWelcomeAccessModal();
-            showSignupSnackbar({
-              type: 'success',
-              message: 'Profile submitted successfully.',
-              actionLabel: 'Great'
-            });
-          })
-          .catch(function (err) {
-            var detailsErrorMessage = getFriendlyApiErrorMessage(err, 'Details submission failed. Please try again.');
-            showSignupSnackbar({
-              type: 'error',
-              message: detailsErrorMessage,
-              actionLabel: 'Retry'
-            });
+          } catch (e) {}
+          closeBrandDetailsModal();
+          openWelcomeAccessModal();
+          showSignupSnackbar({
+            type: 'success',
+            message: 'Profile submitted successfully.',
+            actionLabel: 'Great'
           });
+        } catch (err) {
+          var detailsErrorMessage = getFriendlyApiErrorMessage(err, 'Details submission failed. Please try again.');
+          showSignupSnackbar({
+            type: 'error',
+            message: detailsErrorMessage,
+            actionLabel: 'Retry'
+          });
+        }
         return;
       }
 
