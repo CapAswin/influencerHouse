@@ -19,6 +19,7 @@
   var brandDetailsModal = document.getElementById('brand-details-modal');
   var brandDetailsCloseBtn = document.getElementById('brand-details-close-btn');
   var brandDetailsForm = document.getElementById('brand-details-form');
+  var influencerFormScrollBtn = document.getElementById('influencer-form-scroll-btn');
   var brandDetailsTitle = document.getElementById('brand-details-title');
   var brandCompanyModal = document.getElementById('brand-company-modal');
   var brandCompanyCloseBtn = document.getElementById('brand-company-close-btn');
@@ -398,6 +399,14 @@
 
   bindLiveFieldValidation(signupForm);
   bindLiveFieldValidation(brandDetailsForm);
+  if (brandDetailsForm) {
+    brandDetailsForm.addEventListener('scroll', updateInfluencerFormScrollButton, { passive: true });
+  }
+  if (influencerFormScrollBtn) {
+    influencerFormScrollBtn.classList.add('is-hidden');
+    influencerFormScrollBtn.addEventListener('click', scrollInfluencerFormDown);
+  }
+  window.addEventListener('resize', updateInfluencerFormScrollButton);
   if (signupSnackbarStack) {
     signupSnackbarStack.addEventListener('mouseenter', function () {
       isSnackbarStackExpanded = true;
@@ -445,6 +454,25 @@
     if (otpFeedback) otpFeedback.textContent = '';
   }
 
+  function updateInfluencerFormScrollButton() {
+    if (!brandDetailsForm || !influencerFormScrollBtn) return;
+    var hasScrollableContent = brandDetailsForm.scrollHeight > brandDetailsForm.clientHeight + 12;
+    var distanceFromBottom =
+      brandDetailsForm.scrollHeight - brandDetailsForm.scrollTop - brandDetailsForm.clientHeight;
+    influencerFormScrollBtn.classList.toggle(
+      'is-hidden',
+      !hasScrollableContent || distanceFromBottom <= 18
+    );
+  }
+
+  function scrollInfluencerFormDown() {
+    if (!brandDetailsForm) return;
+    brandDetailsForm.scrollBy({
+      top: Math.max(220, Math.floor(brandDetailsForm.clientHeight * 0.72)),
+      behavior: 'smooth'
+    });
+  }
+
   function openBrandDetailsModal() {
     var isBrandAccount = field && field.value === 'brand';
     if (isBrandAccount) {
@@ -471,6 +499,10 @@
     brandDetailsModal.classList.add('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+    if (brandDetailsForm) {
+      brandDetailsForm.scrollTop = 0;
+      setTimeout(updateInfluencerFormScrollButton, 80);
+    }
 
     // Influencer default: load UAE provinces immediately.
     // UAE country_id is 13 (per API); we still look up by name so it works if IDs change.
@@ -508,6 +540,7 @@
     brandDetailsModal.classList.remove('is-open');
     brandDetailsModal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
+    if (influencerFormScrollBtn) influencerFormScrollBtn.classList.add('is-hidden');
   }
 
   var brandCompanyCurrentSlide = 1;

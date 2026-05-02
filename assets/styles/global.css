@@ -3119,9 +3119,40 @@ body.modal-open {
   letter-spacing: -0.02em;
 }
 
+#brand-details-modal .brand-details-card {
+  display: flex;
+  flex-direction: column;
+  max-height: min(760px, calc(100svh - 36px));
+  overflow: hidden;
+}
+
 .brand-details-form {
   display: grid;
   gap: 12px;
+}
+
+#brand-details-modal .brand-details-form {
+  max-height: calc(100svh - 150px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 6px;
+  padding-bottom: 72px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(97, 97, 255, 0.55) rgba(10, 15, 30, 0.08);
+}
+
+#brand-details-modal .brand-details-form::-webkit-scrollbar {
+  width: 7px;
+}
+
+#brand-details-modal .brand-details-form::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(10, 15, 30, 0.07);
+}
+
+#brand-details-modal .brand-details-form::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
 }
 
 .brand-details-form label {
@@ -3674,6 +3705,67 @@ body.modal-open {
 .brand-details-submit {
   width: 100%;
   margin-top: 6px;
+}
+
+.influencer-form-scroll-btn {
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  z-index: 8;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow:
+    0 16px 32px rgba(97, 97, 255, 0.32),
+    0 6px 18px rgba(255, 3, 96, 0.16);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity var(--ease),
+    visibility var(--ease),
+    transform var(--ease-smooth),
+    box-shadow var(--ease-smooth);
+}
+
+.influencer-form-scroll-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    0 20px 38px rgba(97, 97, 255, 0.42),
+    0 8px 22px rgba(255, 3, 96, 0.2);
+}
+
+.influencer-form-scroll-btn.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.influencer-scroll-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  animation: influencerScrollFloat 1.3s ease-in-out infinite;
+}
+
+@keyframes influencerScrollFloat {
+  0%,
+  100% {
+    transform: translateY(-3px);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .influencer-scroll-icon {
+    animation: none;
+  }
 }
 
 .welcome-access-modal {
