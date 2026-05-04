@@ -303,22 +303,6 @@
     }, { threshold: 0.15 });
     if (cols.length) io.observe(footer);
 
-    footer.addEventListener('mousemove', (e) => {
-      if (reduced.matches || !content) return;
-      const r = footer.getBoundingClientRect();
-      const cx = (e.clientX - r.left) / r.width - 0.5;
-      const cy = (e.clientY - r.top) / r.height - 0.5;
-      content.style.transform = `rotateY(${cx * 2.5}deg) rotateX(${-cy * 1.5}deg)`;
-      content.style.transition = 'transform 0.1s ease';
-      if (orb1) orb1.style.transform = `translate(${cx * 22}px, ${cy * 14}px)`;
-      if (orb2) orb2.style.transform = `translate(${cx * -18}px, ${cy * -10}px)`;
-    });
-
-    footer.addEventListener('mouseleave', () => {
-      if (content) { content.style.transition = 'transform 0.6s ease'; content.style.transform = ''; }
-      if (orb1) orb1.style.transform = '';
-      if (orb2) orb2.style.transform = '';
-    });
 
     // Attach footer parallax while footer is near the viewport to avoid
     // unnecessary RAF + getBoundingClientRect work on long pages.
@@ -457,7 +441,7 @@
   // --- API helpers (subscription plans + country list) ---
   const REMOTE_API_BASE_URL =
     window.API_BASE_URL ||
-    'https://opulentinfluencershouse.com/web/apiv3';
+    'https://opulentinfluencershouse.com/web/api';
   // Use a single CORS-safe base URL for all API calls (browser).
   const API_BASE_URL = `https://corsproxy.io/?${REMOTE_API_BASE_URL}`;
   const DEFAULT_API_TOKEN = 'J0eXAiOiJKV1QiLCJhbGciOiJ';
@@ -645,6 +629,12 @@
         return apiSendFormData('POST', '/influencers/tell-us', payload, 'influencerTellUs:last');
       }
       return apiSendJson('POST', '/influencers/tell-us', payload, { storeKey: 'influencerTellUs:last' });
+    },
+    brandTellUs: function (payload) {
+      if (payload instanceof FormData) {
+        return apiSendFormData('POST', '/brand/register', payload, 'brandTellUs:last');
+      }
+      return apiSendJson('POST', '/brand/register', payload, { storeKey: 'brandTellUs:last' });
     },
     signup: function (payload) {
       return apiSendJson('POST', '/signup', payload, { storeKey: 'signup:last' });

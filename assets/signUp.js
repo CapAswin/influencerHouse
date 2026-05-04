@@ -318,6 +318,22 @@
     }
   }
 
+  var ALLOWED_DOC_TYPES = {
+    'image/png': true,
+    'image/jpeg': true,
+    'image/webp': true,
+    'application/pdf': true
+  };
+  var ALLOWED_DOC_EXTS = /\.(png|jpe?g|pdf|webp)$/i;
+
+  function validateInfluencerDocument(file) {
+    if (!file) return { ok: false, message: 'Please choose a file.' };
+    var typeOk = ALLOWED_DOC_TYPES[file.type] || ALLOWED_DOC_EXTS.test(file.name || '');
+    if (!typeOk) return { ok: false, message: 'Only PNG, JPG, JPEG, PDF, or WEBP files are allowed.' };
+    if (file.size > 5 * 1024 * 1024) return { ok: false, message: 'File must be 5 MB or smaller.' };
+    return { ok: true };
+  }
+
   function updateInfluencerDocumentLabel() {
     if (!influencerDocumentInput || !influencerDocumentName) return;
     var file =
@@ -326,12 +342,21 @@
         : null;
     var uploadBox = influencerDocumentInput.closest('.influencer-document-upload');
     if (file) {
+      var v = validateInfluencerDocument(file);
+      if (!v.ok) {
+        influencerDocumentInput.value = '';
+        influencerDocumentName.textContent = 'Upload media licence';
+        if (uploadBox) uploadBox.classList.remove('has-file');
+        setFieldErrorState(influencerDocumentInput, true);
+        showSignupSnackbar({ type: 'error', message: v.message, actionLabel: 'OK' });
+        return;
+      }
       influencerDocumentName.textContent = file.name;
       if (uploadBox) uploadBox.classList.add('has-file');
       setFieldErrorState(influencerDocumentInput, false);
       return;
     }
-    influencerDocumentName.textContent = 'Upload media lisence';
+    influencerDocumentName.textContent = 'Upload media licence';
     if (uploadBox) uploadBox.classList.remove('has-file');
   }
 
@@ -1738,7 +1763,7 @@
       });
     }
 
-    brandCompanyForm.addEventListener('submit', function (event) {
+    brandCompanyForm.addEventListener('submit', async function (event) {
       event.preventDefault();
 
       // Validate whole brand company form before submit
@@ -1766,13 +1791,48 @@
         return;
       }
 
-      closeBrandCompanyModal();
-      openWelcomeAccessModal();
+      var submitBrandDetails = getApiClientMethod('brandTellUs');
+      if (!submitBrandDetails) {
+        // Fallback to UI-only if API isn't available.
+        closeBrandCompanyModal();
+        openWelcomeAccessModal();
+        showSignupSnackbar({
+          type: 'success',
+          message: 'Brand profile submitted successfully.',
+          actionLabel: 'Great'
+        });
+        return;
+      }
+
+      var formData = new FormData(brandCompanyForm);
+      var payload = buildBrandTellUsPayload(formData);
+
       showSignupSnackbar({
-        type: 'success',
-        message: 'Brand profile submitted successfully.',
-        actionLabel: 'Great'
+        type: 'info',
+        message: 'Saving your brand profile…',
+        actionLabel: 'Wait'
       });
+
+      try {
+        var res = await submitBrandDetails(payload);
+        if (res && res.success === false) {
+          throw new Error(res.error || res.message || 'Brand details submission failed');
+        }
+        closeBrandCompanyModal();
+        openWelcomeAccessModal();
+        showSignupSnackbar({
+          type: 'success',
+          message: 'Brand profile submitted successfully.',
+          actionLabel: 'Great'
+        });
+      } catch (err) {
+        var brandErrorMessage = getFriendlyApiErrorMessage(err, 'Brand details submission failed. Please try again.');
+        showSignupSnackbar({
+          type: 'error',
+          message: brandErrorMessage,
+          actionLabel: 'Retry'
+        });
+      }
     });
   }
 
@@ -1859,6 +1919,165 @@
     if (!brandCodeSelect) return;
     if (!brandCodeSelect.contains(event.target)) closeCodeDropdown();
   });
+
+  function getApiClientMethod(name) {
+    return window.API_CLIENT && typeof window.API_CLIENT[name] === 'function'
+      ? window.API_CLIENT[name].bind(window.API_CLIENT)
+      : null;
+  }
+
+  function getApiResponseList(result, keys) {
+    if (Array.isArray(result)) return result;
+    for (var i = 0; i < keys.length; i++) {
+      if (result && Array.isArray(result[keys[i]])) return result[keys[i]];
+    }
+    return [];
+  }
+
+  function getSignupUserType(accountType) {
+    return accountType === 'creator' ? USER_TYPES.creator : USER_TYPES.brand;
+  }
+
+  function normalizeCountryRows(countries) {
+    return (countries || []).map(function (c) {
+      return {
+        id: c.country_id || c.id || null,
+        country: c.country_name || c.name || c.country || '',
+        code: c.phone_code || c.dial_code || c.code || '',
+        region: c.country_code || c.iso || c.region || ''
+      };
+    }).filter(function (r) { return r.country && r.code; });
+  }
+
+  function findCountryRowByName(name) {
+    return countryRows.find(function (r) { return r.country === name; }) || null;
+  }
+
+  function buildInfluencerTellUsPayload(formData) {
+    var userId = getStoredUserId();
+    var fd = new FormData();
+    for (var pair of formData.entries()) {
+      fd.append(pair[0], pair[1]);
+    }
+    if (userId) fd.append('user_id', userId);
+    // Map province field value to province name if it's an ID
+    var provinceVal = formData.get('brand_province');
+    if (provinceVal && brandProvinceField) {
+      var selectedOpt = Array.prototype.find.call(
+        brandProvinceField.options,
+        function (o) { return o.value === provinceVal; }
+      );
+      var provinceName = selectedOpt
+        ? (selectedOpt.getAttribute('data-province-name') || selectedOpt.textContent)
+        : provinceVal;
+      fd.set('brand_province', provinceName);
+    }
+    var docFile = influencerDocumentInput && influencerDocumentInput.files && influencerDocumentInput.files[0]
+      ? influencerDocumentInput.files[0] : null;
+    if (docFile) fd.set('influencer_document', docFile);
+    return fd;
+  }
+
+  function mapBrandTypeToId(raw) {
+    var type = String(raw || '').trim().toLowerCase();
+    if (!type) return '';
+    if (type === 'agency') return '1';
+    if (type === 'brand') return '2';
+    if (type === 'e-commerce' || type === 'ecommerce') return '3';
+    if (type === 'retail') return '4';
+    if (type === 'marketplace') return '5';
+    return '6';
+  }
+
+  function mapEmirateToProvinceId(raw) {
+    var emirate = String(raw || '').trim().toLowerCase();
+    if (!emirate) return '';
+    // Common UAE emirate ordering (adjust easily if backend differs)
+    if (emirate === 'abu dhabi') return '1';
+    if (emirate === 'dubai') return '2';
+    if (emirate === 'sharjah') return '3';
+    if (emirate === 'ajman') return '4';
+    if (emirate === 'ras al khaimah' || emirate === 'ras al-khaimah') return '5';
+    if (emirate === 'fujairah') return '6';
+    if (emirate === 'umm al quwain' || emirate === 'umm al-quwain') return '7';
+    return '';
+  }
+
+  function buildBrandTellUsPayload(formData) {
+    var userId = getStoredUserId();
+    var fd = new FormData();
+
+    var userType =
+      lastSignupPayload && lastSignupPayload.user_type !== undefined && lastSignupPayload.user_type !== null
+        ? lastSignupPayload.user_type
+        : field && field.value
+          ? getSignupUserType(String(field.value))
+          : USER_TYPES.brand;
+    fd.append('user_type', String(userType));
+
+    var legalCompanyName = String(formData.get('brand_company_name') || '').trim();
+    var brandName = String(formData.get('brand_brand_name') || '').trim();
+    var brandSizeId = String(formData.get('brand_company_size') || '').trim();
+    var brandTypeId = mapBrandTypeToId(formData.get('brand_company_type'));
+    var categoryId = String(formData.get('brand_category') || '').trim();
+
+    var countryName = String(formData.get('brand_location_country') || '').trim();
+    var countryRow = countryName ? findCountryRowByName(countryName) : null;
+    var countryId = countryRow && countryRow.id != null ? String(countryRow.id) : '';
+
+    var provinceId = mapEmirateToProvinceId(formData.get('brand_location_emirates'));
+    var city = String(formData.get('brand_location_city') || '').trim();
+
+    var websiteUrl = String(formData.get('brand_website') || '').trim();
+    var brandDescription = String(formData.get('brand_bio') || '').trim();
+    var address = String(formData.get('brand_address') || '').trim();
+    var yearEstablished = String(formData.get('brand_year_established') || '').trim();
+
+    if (legalCompanyName) fd.append('legal_company_name', legalCompanyName);
+    if (brandName) fd.append('brand_name', brandName);
+    if (brandSizeId) fd.append('brand_size_id', brandSizeId);
+    if (brandTypeId) fd.append('brand_type_id', brandTypeId);
+    if (categoryId) fd.append('category_id', categoryId);
+    if (countryId) fd.append('country_id', countryId);
+    if (provinceId) fd.append('province_id', provinceId);
+    if (city) fd.append('city', city);
+    if (websiteUrl) fd.append('website_url', websiteUrl);
+    if (brandDescription) fd.append('brand_description', brandDescription);
+    if (address) fd.append('address', address);
+    if (yearEstablished) fd.append('year_established', yearEstablished);
+    if (userId) fd.append('user_id', userId);
+
+    var logoDataUrl = String(formData.get('brand_company_logo_dataurl') || '').trim();
+    if (logoDataUrl) fd.append('brand_logo', logoDataUrl);
+
+    return fd;
+  }
+
+  function populateBrandCompanySizes() {
+    if (!brandCompanySizeField) return;
+    var fetchBrandSizes = getApiClientMethod('fetchBrandSizes');
+    if (!fetchBrandSizes) return;
+    fetchBrandSizes().then(function (result) {
+      var sizes = getApiResponseList(result, ['data']);
+      if (!sizes.length) return;
+      brandCompanySizeField.innerHTML = '<option value="" disabled selected>Select company size</option>';
+      sizes.forEach(function (s) {
+        var id = s.brand_size_id || s.id || s.value || null;
+        var label =
+          s.brand_size_name ||
+          s.brand_size ||
+          s.size ||
+          s.name ||
+          s.label ||
+          s.value ||
+          s;
+        var opt = document.createElement('option');
+        opt.value = String(id != null ? id : label);
+        opt.textContent = String(label);
+        brandCompanySizeField.appendChild(opt);
+      });
+    }).catch(function () {});
+  }
 
   populateCountryFieldsFromApi();
   populateInfluencerCategories();
