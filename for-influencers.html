@@ -118,7 +118,7 @@
               This is a self-service platform, giving you full control over your collaborations,
               growth, and earnings.
             </p>
-            <a class="btn btn-gold" href="signUp.html">Sign Up as Influencer</a>
+            <a class="btn btn-gold" href="signUp.html?type=influencer" id="fi-signup-btn">Sign Up as Influencer</a>
           </div>
         </div>
       </section>
@@ -127,5 +127,20 @@
     <div id="site-footer"></div>
     <script src="assets/vendor/lenis.min.js"></script>
     <script src="assets/shared.js"></script>
+    <script>
+      (function () {
+        var btn = document.getElementById('fi-signup-btn');
+        if (!btn) return;
+        btn.addEventListener('click', function (e) {
+          var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reduced) return;
+          e.preventDefault();
+          var href = btn.getAttribute('href');
+          document.documentElement.style.transition = 'opacity 0.38s cubic-bezier(0.4,0,1,1)';
+          document.documentElement.style.opacity = '0';
+          setTimeout(function () { window.location.href = href; }, 360);
+        });
+      })();
+    </script>
   </body>
 </html>
