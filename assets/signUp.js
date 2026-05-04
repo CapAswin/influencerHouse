@@ -493,7 +493,23 @@
       var isBrand = btn.id === 'tab-brand';
       resetSignupFormState();
       if (field) field.value = isBrand ? 'brand' : 'creator';
-      setMode(isBrand);
+      if (signupForm) {
+        signupForm.style.transition = 'opacity 0.18s ease, transform 0.22s cubic-bezier(0.4,0,0.2,1)';
+        signupForm.style.opacity = '0';
+        signupForm.style.transform = 'translateY(6px)';
+        setTimeout(function () {
+          setMode(isBrand);
+          signupForm.style.opacity = '1';
+          signupForm.style.transform = 'translateY(0)';
+          setTimeout(function () {
+            signupForm.style.transition = '';
+            signupForm.style.opacity = '';
+            signupForm.style.transform = '';
+          }, 220);
+        }, 160);
+      } else {
+        setMode(isBrand);
+      }
     });
   });
 
@@ -501,6 +517,19 @@
   (function applyUrlType() {
     var param = new URLSearchParams(window.location.search).get('type');
     var isBrand = param !== 'influencer';
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Fade-in entrance from home page transition
+    if (!reduced) {
+      document.documentElement.style.opacity = '0';
+      document.documentElement.style.transition = 'opacity 0.42s cubic-bezier(0,0,0.2,1)';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.documentElement.style.opacity = '1';
+        });
+      });
+    }
+
     var targetTab = isBrand ? document.getElementById('tab-brand') : document.getElementById('tab-creator');
     if (targetTab) {
       tabs.forEach(function (t) {
@@ -512,10 +541,6 @@
     }
     if (field) field.value = isBrand ? 'brand' : 'creator';
     setMode(isBrand);
-    if (!isBrand) {
-      var signupPanel = document.querySelector('.signup-panel');
-      if (signupPanel) signupPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   })();
 
   bindLiveFieldValidation(signupForm);
