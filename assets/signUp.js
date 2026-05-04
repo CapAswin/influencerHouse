@@ -1860,6 +1860,82 @@
     if (!brandCodeSelect.contains(event.target)) closeCodeDropdown();
   });
 
+  function getApiClientMethod(name) {
+    return window.API_CLIENT && typeof window.API_CLIENT[name] === 'function'
+      ? window.API_CLIENT[name].bind(window.API_CLIENT)
+      : null;
+  }
+
+  function getApiResponseList(result, keys) {
+    if (Array.isArray(result)) return result;
+    for (var i = 0; i < keys.length; i++) {
+      if (result && Array.isArray(result[keys[i]])) return result[keys[i]];
+    }
+    return [];
+  }
+
+  function getSignupUserType(accountType) {
+    return accountType === 'creator' ? USER_TYPES.creator : USER_TYPES.brand;
+  }
+
+  function normalizeCountryRows(countries) {
+    return (countries || []).map(function (c) {
+      return {
+        id: c.country_id || c.id || null,
+        country: c.country_name || c.name || c.country || '',
+        code: c.phone_code || c.dial_code || c.code || '',
+        region: c.country_code || c.iso || c.region || ''
+      };
+    }).filter(function (r) { return r.country && r.code; });
+  }
+
+  function findCountryRowByName(name) {
+    return countryRows.find(function (r) { return r.country === name; }) || null;
+  }
+
+  function buildInfluencerTellUsPayload(formData) {
+    var userId = getStoredUserId();
+    var fd = new FormData();
+    for (var pair of formData.entries()) {
+      fd.append(pair[0], pair[1]);
+    }
+    if (userId) fd.append('user_id', userId);
+    // Map province field value to province name if it's an ID
+    var provinceVal = formData.get('brand_province');
+    if (provinceVal && brandProvinceField) {
+      var selectedOpt = Array.prototype.find.call(
+        brandProvinceField.options,
+        function (o) { return o.value === provinceVal; }
+      );
+      var provinceName = selectedOpt
+        ? (selectedOpt.getAttribute('data-province-name') || selectedOpt.textContent)
+        : provinceVal;
+      fd.set('brand_province', provinceName);
+    }
+    var docFile = influencerDocumentInput && influencerDocumentInput.files && influencerDocumentInput.files[0]
+      ? influencerDocumentInput.files[0] : null;
+    if (docFile) fd.set('influencer_document', docFile);
+    return fd;
+  }
+
+  function populateBrandCompanySizes() {
+    if (!brandCompanySizeField) return;
+    var fetchBrandSizes = getApiClientMethod('fetchBrandSizes');
+    if (!fetchBrandSizes) return;
+    fetchBrandSizes().then(function (result) {
+      var sizes = getApiResponseList(result, ['data']);
+      if (!sizes.length) return;
+      brandCompanySizeField.innerHTML = '<option value="" disabled selected>Select company size</option>';
+      sizes.forEach(function (s) {
+        var val = s.brand_size || s.name || s.value || s;
+        var opt = document.createElement('option');
+        opt.value = String(val);
+        opt.textContent = String(val);
+        brandCompanySizeField.appendChild(opt);
+      });
+    }).catch(function () {});
+  }
+
   populateCountryFieldsFromApi();
   populateInfluencerCategories();
   populateBrandCompanySizes();

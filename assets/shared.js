@@ -441,7 +441,7 @@
   // --- API helpers (subscription plans + country list) ---
   const REMOTE_API_BASE_URL =
     window.API_BASE_URL ||
-    'https://opulentinfluencershouse.com/web/apiv3';
+    'https://opulentinfluencershouse.com/web/api';
   // Use a single CORS-safe base URL for all API calls (browser).
   const API_BASE_URL = `https://corsproxy.io/?${REMOTE_API_BASE_URL}`;
   const DEFAULT_API_TOKEN = 'J0eXAiOiJKV1QiLCJhbGciOiJ';
