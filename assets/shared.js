@@ -303,22 +303,6 @@
     }, { threshold: 0.15 });
     if (cols.length) io.observe(footer);
 
-    footer.addEventListener('mousemove', (e) => {
-      if (reduced.matches || !content) return;
-      const r = footer.getBoundingClientRect();
-      const cx = (e.clientX - r.left) / r.width - 0.5;
-      const cy = (e.clientY - r.top) / r.height - 0.5;
-      content.style.transform = `rotateY(${cx * 2.5}deg) rotateX(${-cy * 1.5}deg)`;
-      content.style.transition = 'transform 0.1s ease';
-      if (orb1) orb1.style.transform = `translate(${cx * 22}px, ${cy * 14}px)`;
-      if (orb2) orb2.style.transform = `translate(${cx * -18}px, ${cy * -10}px)`;
-    });
-
-    footer.addEventListener('mouseleave', () => {
-      if (content) { content.style.transition = 'transform 0.6s ease'; content.style.transform = ''; }
-      if (orb1) orb1.style.transform = '';
-      if (orb2) orb2.style.transform = '';
-    });
 
     // Attach footer parallax while footer is near the viewport to avoid
     // unnecessary RAF + getBoundingClientRect work on long pages.
