@@ -49,6 +49,8 @@
   var influencerCategoryField = document.getElementById('influencer-category');
   var influencerNicheField = document.getElementById('influencer-niche');
   var brandDetailsCard = brandDetailsModal ? brandDetailsModal.querySelector('.brand-details-card') : null;
+  var influencerDocumentInput = document.getElementById('influencer-document-input');
+  var influencerDocumentName = document.getElementById('influencer-document-name');
   var brandCountryCodeField = document.getElementById('brand-country-code');
   var brandCountryCodeDisplay = document.getElementById('brand-country-code-display');
   var brandCodeSelect = document.getElementById('brand-code-select');
@@ -306,125 +308,31 @@
   function setFieldErrorState(field, isInvalid) {
     if (!field) return;
     field.classList.toggle('is-field-error', !!isInvalid);
+    if (field.name === 'influencer_document') {
+      var uploadBox = field.closest('.influencer-document-upload');
+      if (uploadBox) uploadBox.classList.toggle('is-field-error', !!isInvalid);
+    }
     if (field.type === 'checkbox') {
       var termsRow = field.closest('.signup-terms');
       if (termsRow) termsRow.classList.toggle('has-error', !!isInvalid);
     }
   }
 
-  function getApiClientMethod(methodName) {
-    var client = window.API_CLIENT;
-    if (!client) return null;
-    return typeof client[methodName] === 'function' ? client[methodName].bind(client) : null;
-  }
-
-  function getApiResponseList(result, keys) {
-    if (Array.isArray(result)) return result;
-    var lookupKeys = Array.isArray(keys) ? keys : [];
-    for (var i = 0; i < lookupKeys.length; i += 1) {
-      var value = result && result[lookupKeys[i]];
-      if (Array.isArray(value)) {
-        return value;
-      }
+  function updateInfluencerDocumentLabel() {
+    if (!influencerDocumentInput || !influencerDocumentName) return;
+    var file =
+      influencerDocumentInput.files && influencerDocumentInput.files[0]
+        ? influencerDocumentInput.files[0]
+        : null;
+    var uploadBox = influencerDocumentInput.closest('.influencer-document-upload');
+    if (file) {
+      influencerDocumentName.textContent = file.name;
+      if (uploadBox) uploadBox.classList.add('has-file');
+      setFieldErrorState(influencerDocumentInput, false);
+      return;
     }
-    return [];
-  }
-
-  function findCountryRowByName(countryName) {
-    return countryRows.find(function (row) {
-      return row && row.country === countryName;
-    }) || null;
-  }
-
-  function normalizeCountryRows(countries) {
-    return countries
-      .filter(function (item) {
-        return item && item.country_name && item.phone_code;
-      })
-      .map(function (item) {
-        var region = '';
-        if (item.flag_png) {
-          var match = item.flag_png.match(/\/([a-z]{2})\.png$/i);
-          if (match) region = match[1].toUpperCase();
-        }
-
-        return {
-          country: item.country_name,
-          code: item.phone_code,
-          region: region,
-          id: item.country_id
-        };
-      })
-      .sort(function (a, b) {
-        return a.country.localeCompare(b.country);
-      });
-  }
-
-  function buildInfluencerTellUsPayload(formData) {
-    var selectedNationalityName = String(formData.get('brand_nationality_country') || '').trim();
-    var selectedResidenceName = String(formData.get('brand_country') || '').trim();
-    var nationalityRow = findCountryRowByName(selectedNationalityName);
-    var residenceRow = findCountryRowByName(selectedResidenceName);
-    var documentFile = formData.get('influencer_document');
-    var phoneCode = String(formData.get('brand_country_code') || '').trim();
-    var phoneNumber = String(formData.get('brand_phone') || '').trim();
-    var fullPhone = phoneNumber.charAt(0) === '+' ? phoneNumber : phoneCode + phoneNumber;
-    var payload = new FormData();
-
-    payload.append('user_type', '1');
-    payload.append('user_id', String(getStoredUserId() || ''));
-    payload.append('full_name', String(formData.get('brand_contact_name') || '').trim());
-    payload.append('phone', fullPhone);
-    payload.append('nationality_country_id', String((nationalityRow && nationalityRow.id) || ''));
-    payload.append('country_of_residence_id', String((residenceRow && residenceRow.id) || ''));
-    payload.append('province_id', String(formData.get('brand_province') || '').trim());
-    payload.append('city_name', String(formData.get('brand_city') || '').trim());
-    payload.append('gender', String(formData.get('influencer_gender') || '').trim());
-    payload.append('category_id', String(formData.get('influencer_category_id') || '').trim());
-    payload.append('niche_id', String(formData.get('influencer_niche_id') || '').trim());
-    if (documentFile && documentFile.name) {
-      payload.append('influencer_document', documentFile);
-    }
-
-    return payload;
-  }
-
-  function getSignupUserType(accountType) {
-    return accountType === 'brand' ? USER_TYPES.brand : USER_TYPES.creator;
-  }
-
-  function getBrandSizeId(item) {
-    return item && (item.brand_size_id || item.id || item.value);
-  }
-
-  function getBrandSizeLabel(item) {
-    return item && (item.brand_size_name || item.size_name || item.name || item.title || item.label || item.value);
-  }
-
-  async function populateBrandCompanySizes() {
-    if (!brandCompanySizeField) return;
-    var fetchBrandSizes = getApiClientMethod('fetchBrandSizes');
-    if (!fetchBrandSizes) return;
-
-    try {
-      var result = await fetchBrandSizes();
-      var sizes = getApiResponseList(result, ['brand_sizes', 'sizes', 'data']);
-      if (!sizes.length) return;
-
-      brandCompanySizeField.innerHTML = '<option value="" selected disabled>Select company size</option>';
-      sizes.forEach(function (item) {
-        var id = getBrandSizeId(item);
-        var label = getBrandSizeLabel(item);
-        if (id == null || !label) return;
-
-        var option = document.createElement('option');
-        option.value = String(id);
-        option.textContent = String(label);
-        brandCompanySizeField.appendChild(option);
-      });
-    } catch (_) {
-      // Keep static options if API fails.
-    }
+    influencerDocumentName.textContent = 'Upload media lisence';
+    if (uploadBox) uploadBox.classList.remove('has-file');
   }
 
   function resetOtpState() {
@@ -621,6 +529,10 @@
   if (influencerFormScrollBtn) {
     influencerFormScrollBtn.classList.add('is-hidden');
     influencerFormScrollBtn.addEventListener('click', scrollInfluencerFormDown);
+  }
+  if (influencerDocumentInput) {
+    influencerDocumentInput.addEventListener('change', updateInfluencerDocumentLabel);
+    updateInfluencerDocumentLabel();
   }
   window.addEventListener('resize', updateInfluencerFormScrollButton);
   if (signupSnackbarStack) {

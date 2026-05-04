@@ -3181,6 +3181,102 @@ body.modal-open {
   appearance: none;
 }
 
+.influencer-document-field {
+  cursor: pointer;
+}
+
+.influencer-document-upload {
+  position: relative;
+  min-height: 74px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1.5px dashed rgba(97, 97, 255, 0.28);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(241, 243, 248, 0.88)),
+    #f1f3f8;
+  transition:
+    border-color var(--ease),
+    background var(--ease),
+    box-shadow var(--ease),
+    transform var(--ease-smooth);
+}
+
+.influencer-document-field:hover .influencer-document-upload {
+  border-color: rgba(97, 97, 255, 0.52);
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(97, 97, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.influencer-document-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.influencer-document-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 10px 22px rgba(97, 97, 255, 0.24);
+}
+
+.influencer-document-icon .icon-svg {
+  width: 21px;
+  height: 21px;
+}
+
+.influencer-document-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.influencer-document-copy strong {
+  color: #111827;
+  font-size: 14px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.influencer-document-copy small {
+  color: #6b7280;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.influencer-document-action {
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--primary);
+  background: rgba(97, 97, 255, 0.1);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.influencer-document-upload.has-file {
+  border-style: solid;
+  border-color: rgba(97, 97, 255, 0.42);
+}
+
+.influencer-document-upload.is-field-error {
+  border-color: rgba(255, 3, 96, 0.7);
+  box-shadow: 0 0 0 3px rgba(255, 3, 96, 0.1);
+}
+
 .brand-details-form textarea {
   width: 100%;
   border: 1px solid rgba(10, 15, 30, 0.16);
