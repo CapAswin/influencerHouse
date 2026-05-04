@@ -630,6 +630,12 @@
       }
       return apiSendJson('POST', '/influencers/tell-us', payload, { storeKey: 'influencerTellUs:last' });
     },
+    brandTellUs: function (payload) {
+      if (payload instanceof FormData) {
+        return apiSendFormData('POST', '/brand/register', payload, 'brandTellUs:last');
+      }
+      return apiSendJson('POST', '/brand/register', payload, { storeKey: 'brandTellUs:last' });
+    },
     signup: function (payload) {
       return apiSendJson('POST', '/signup', payload, { storeKey: 'signup:last' });
     },
