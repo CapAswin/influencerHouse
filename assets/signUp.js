@@ -318,6 +318,22 @@
     }
   }
 
+  var ALLOWED_DOC_TYPES = {
+    'image/png': true,
+    'image/jpeg': true,
+    'image/webp': true,
+    'application/pdf': true
+  };
+  var ALLOWED_DOC_EXTS = /\.(png|jpe?g|pdf|webp)$/i;
+
+  function validateInfluencerDocument(file) {
+    if (!file) return { ok: false, message: 'Please choose a file.' };
+    var typeOk = ALLOWED_DOC_TYPES[file.type] || ALLOWED_DOC_EXTS.test(file.name || '');
+    if (!typeOk) return { ok: false, message: 'Only PNG, JPG, JPEG, PDF, or WEBP files are allowed.' };
+    if (file.size > 5 * 1024 * 1024) return { ok: false, message: 'File must be 5 MB or smaller.' };
+    return { ok: true };
+  }
+
   function updateInfluencerDocumentLabel() {
     if (!influencerDocumentInput || !influencerDocumentName) return;
     var file =
@@ -326,12 +342,21 @@
         : null;
     var uploadBox = influencerDocumentInput.closest('.influencer-document-upload');
     if (file) {
+      var v = validateInfluencerDocument(file);
+      if (!v.ok) {
+        influencerDocumentInput.value = '';
+        influencerDocumentName.textContent = 'Upload media licence';
+        if (uploadBox) uploadBox.classList.remove('has-file');
+        setFieldErrorState(influencerDocumentInput, true);
+        showSignupSnackbar({ type: 'error', message: v.message, actionLabel: 'OK' });
+        return;
+      }
       influencerDocumentName.textContent = file.name;
       if (uploadBox) uploadBox.classList.add('has-file');
       setFieldErrorState(influencerDocumentInput, false);
       return;
     }
-    influencerDocumentName.textContent = 'Upload media lisence';
+    influencerDocumentName.textContent = 'Upload media licence';
     if (uploadBox) uploadBox.classList.remove('has-file');
   }
 
