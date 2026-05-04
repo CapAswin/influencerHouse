@@ -132,9 +132,11 @@
   function getStoredUserId() {
     try {
       return (
+        localStorage.getItem('register_user_id') ||
         localStorage.getItem('user_id') ||
-        localStorage.getItem('influencer_id') ||
         localStorage.getItem('signup_user_id') ||
+        localStorage.getItem('influencer_id') ||
+        localStorage.getItem('brand_id') ||
         ''
       );
     } catch (e) {
@@ -142,17 +144,67 @@
     }
   }
 
-  function rememberUserIdFromResponse(res) {
+  /**
+   * From signup / OTP responses: use brand_id as register user_id for brands (user_type 0),
+   * and influencer_id as register user_id for creators (user_type 1). Falls back to user_id / id.
+   */
+  function extractSignupRegisterId(res, accountUserType) {
+    var isBrand = Number(accountUserType) === USER_TYPES.brand;
+
+    function pickFromObject(o) {
+      if (!o || typeof o !== 'object') return '';
+      if (isBrand) {
+        if (o.brand_id != null && String(o.brand_id).trim() !== '') return String(o.brand_id).trim();
+      } else {
+        if (o.influencer_id != null && String(o.influencer_id).trim() !== '') {
+          return String(o.influencer_id).trim();
+        }
+      }
+      if (o.user_id != null && String(o.user_id).trim() !== '') return String(o.user_id).trim();
+      if (o.id != null && String(o.id).trim() !== '') return String(o.id).trim();
+      return '';
+    }
+
+    var out = '';
+    out = pickFromObject(res);
+    if (out) return out;
+
     var data = res && res.data;
-    var first = Array.isArray(data) ? data[0] : data;
-    var userId =
-      (first && (first.user_id || first.id || first.influencer_id)) ||
-      (res && (res.user_id || res.id || res.influencer_id)) ||
-      '';
-    if (!userId) return;
+    if (Array.isArray(data)) {
+      for (var i = 0; i < data.length; i++) {
+        out = pickFromObject(data[i]);
+        if (out) return out;
+      }
+    } else if (data && typeof data === 'object') {
+      out = pickFromObject(data);
+      if (out) return out;
+    }
+
+    return '';
+  }
+
+  function rememberUserIdFromResponse(res) {
     try {
-      localStorage.setItem('user_id', String(userId));
-      localStorage.setItem('signup_user_id', String(userId));
+      if (!res || typeof res !== 'object') return;
+      var accountUserType =
+        lastSignupPayload && lastSignupPayload.user_type != null
+          ? lastSignupPayload.user_type
+          : field && field.value === 'creator'
+            ? USER_TYPES.creator
+            : USER_TYPES.brand;
+
+      var id = extractSignupRegisterId(res, accountUserType);
+      if (!id) return;
+
+      localStorage.setItem('register_user_id', id);
+      localStorage.setItem('user_id', id);
+      localStorage.setItem('signup_user_id', id);
+
+      if (Number(accountUserType) === USER_TYPES.brand) {
+        localStorage.setItem('brand_id', id);
+      } else {
+        localStorage.setItem('influencer_id', id);
+      }
     } catch (e) {}
   }
 
@@ -1698,7 +1750,6 @@
             if (influencerId != null) {
               window.INFLUENCER_ID = influencerId;
               localStorage.setItem('influencer_id', String(influencerId));
-              localStorage.setItem('user_id', String(influencerId));
             }
           } catch (e) {}
           closeBrandDetailsModal();
@@ -1957,9 +2008,10 @@
     var userId = getStoredUserId();
     var fd = new FormData();
     for (var pair of formData.entries()) {
+      if (pair[0] === 'user_id') continue;
       fd.append(pair[0], pair[1]);
     }
-    if (userId) fd.append('user_id', userId);
+    if (userId) fd.set('user_id', userId);
     // Map province field value to province name if it's an ID
     var provinceVal = formData.get('brand_province');
     if (provinceVal && brandProvinceField) {
@@ -2045,7 +2097,7 @@
     if (brandDescription) fd.append('brand_description', brandDescription);
     if (address) fd.append('address', address);
     if (yearEstablished) fd.append('year_established', yearEstablished);
-    if (userId) fd.append('user_id', userId);
+    if (userId) fd.set('user_id', userId);
 
     var logoDataUrl = String(formData.get('brand_company_logo_dataurl') || '').trim();
     if (logoDataUrl) fd.append('brand_logo', logoDataUrl);
