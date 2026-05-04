@@ -19,6 +19,10 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-inview");
+            entry.target.addEventListener('transitionend', function cleanup() {
+              entry.target.style.willChange = 'auto';
+              entry.target.removeEventListener('transitionend', cleanup);
+            }, { once: true });
           }
         });
       },
