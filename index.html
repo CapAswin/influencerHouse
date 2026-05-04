@@ -736,19 +736,23 @@
   <script src="assets/env.js"></script>
   <script>
     (function () {
+      function navigateTo(url) {
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) { window.location.href = url; return; }
+        document.documentElement.style.transition = 'opacity 0.38s cubic-bezier(0.4,0,1,1)';
+        document.documentElement.style.opacity = '0';
+        setTimeout(function () { window.location.href = url; }, 360);
+      }
+
       const brandBtn = document.getElementById("hero-brand-btn");
       const influencerBtn = document.getElementById("hero-influencer-btn");
 
       if (brandBtn) {
-        brandBtn.addEventListener("click", () => {
-          window.location.href = "signUp.html?type=brand";
-        });
+        brandBtn.addEventListener("click", () => navigateTo("signUp.html?type=brand"));
       }
 
       if (influencerBtn) {
-        influencerBtn.addEventListener("click", () => {
-          window.location.href = "signUp.html?type=influencer";
-        });
+        influencerBtn.addEventListener("click", () => navigateTo("signUp.html?type=influencer"));
       }
     })();
 
