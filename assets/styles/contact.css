@@ -22,10 +22,9 @@
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(10, 15, 30, 0.08);
   box-shadow: var(--shadow-soft);
-  /* Backdrop blur is very expensive during scroll (especially with sticky).
-     Keep the glassy look via translucency without repaint-heavy filters. */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+  transform: translateZ(0);
 }
 
 .contact-showcase,
@@ -75,12 +74,16 @@
   gap: 24px;
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
+  contain: layout style;
 }
 
 .contact-panel-orb {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
+  will-change: auto;
+  transform: translateZ(0);
 }
 
 .contact-panel-orb--1 {
@@ -382,11 +385,13 @@
   min-height: 360px;
   object-fit: cover;
   border-radius: 28px;
+  will-change: transform;
+  transform: translateZ(0);
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .contact-showcase-media:hover img {
-  transform: scale(1.03);
+  transform: scale(1.03) translateZ(0);
 }
 
 .contact-showcase-badge {
@@ -734,8 +739,11 @@
     linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 42px 42px;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 90%);
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 90%);
   pointer-events: none;
+  will-change: auto;
+  transform: translateZ(0);
 }
 
 .contact-panel-header,
@@ -1000,12 +1008,14 @@
 }
 
 .contact-form-shell {
-  position: relative;
-  overflow: hidden;
   position: sticky;
   top: 92px;
   align-self: start;
   z-index: 2;
+  overflow: hidden;
+  will-change: transform;
+  contain: layout style;
+  transform: translateZ(0);
 }
 
 .contact-form-shell::before {
