@@ -479,74 +479,178 @@
     }
   }
 
-  async function apiGetJson(urlOrPath) {
+  const API_RESPONSE_STORE = {
+    data: Object.create(null),
+    pending: Object.create(null),
+    get(key) {
+      return Object.prototype.hasOwnProperty.call(this.data, key)
+        ? this.data[key]
+        : undefined;
+    },
+    set(key, value) {
+      this.data[key] = value;
+      return value;
+    },
+    has(key) {
+      return Object.prototype.hasOwnProperty.call(this.data, key);
+    },
+    clear(key) {
+      if (typeof key === 'string') {
+        delete this.data[key];
+        delete this.pending[key];
+        return;
+      }
+      this.data = Object.create(null);
+      this.pending = Object.create(null);
+    },
+    async remember(key, loader) {
+      if (this.has(key)) {
+        return this.get(key);
+      }
+      if (this.pending[key]) {
+        return this.pending[key];
+      }
+
+      const request = Promise.resolve()
+        .then(loader)
+        .then((value) => {
+          this.set(key, value);
+          delete this.pending[key];
+          return value;
+        })
+        .catch((error) => {
+          delete this.pending[key];
+          throw error;
+        });
+
+      this.pending[key] = request;
+      return request;
+    }
+  };
+
+  function buildApiHeaders(contentType) {
     const token = getApiToken();
     const headers = { Accept: 'application/json' };
+    if (contentType) headers['Content-Type'] = contentType;
     if (token) headers.Authorization = `Bearer ${token}`;
+    return headers;
+  }
 
-    const url = `${API_BASE_URL}${urlOrPath}`;
-
-    const res = await fetch(url, { method: 'GET', headers });
+  async function parseApiResponse(res) {
     const json = await res.json().catch(() => null);
     if (res.ok) return json;
     throw new Error((json && (json.error || json.message)) || 'API failed');
   }
 
-  async function apiSendJson(method, urlOrPath, body) {
-    const token = getApiToken();
-    const headers = { Accept: 'application/json', 'Content-Type': 'application/json' };
-    if (token) headers.Authorization = `Bearer ${token}`;
+  async function requestApi(method, urlOrPath, options = {}) {
+    const isFormData = options.body instanceof FormData;
+    const headers = buildApiHeaders(isFormData ? null : options.contentType || null);
     const url = `${API_BASE_URL}${urlOrPath}`;
-    const res = await fetch(url, { method, headers, body: JSON.stringify(body || {}) });
-    const json = await res.json().catch(() => null);
-    if (res.ok) return json;
-    throw new Error((json && (json.error || json.message)) || 'API failed');
+    const requestOptions = { method, headers };
+
+    if (Object.prototype.hasOwnProperty.call(options, 'body')) {
+      requestOptions.body = isFormData
+        ? options.body
+        : options.contentType === 'application/json'
+          ? JSON.stringify(options.body || {})
+          : options.body;
+    }
+
+    const res = await fetch(url, requestOptions);
+    return parseApiResponse(res);
   }
 
-  async function apiSendFormData(method, urlOrPath, formData) {
-    const token = getApiToken();
-    const headers = { Accept: 'application/json' };
-    if (token) headers.Authorization = `Bearer ${token}`;
-    const url = `${API_BASE_URL}${urlOrPath}`;
-    const res = await fetch(url, { method, headers, body: formData });
-    const json = await res.json().catch(() => null);
-    if (res.ok) return json;
-    throw new Error((json && (json.error || json.message)) || 'API failed');
+  function apiGetJson(urlOrPath, cacheKey) {
+    const load = function () {
+      return requestApi('GET', urlOrPath);
+    };
+    return cacheKey ? API_RESPONSE_STORE.remember(cacheKey, load) : load();
+  }
+
+  function apiSendJson(method, urlOrPath, body, options = {}) {
+    const load = function () {
+      return requestApi(method, urlOrPath, {
+        body,
+        contentType: 'application/json'
+      });
+    };
+
+    const request = options.cacheKey
+      ? API_RESPONSE_STORE.remember(options.cacheKey, load)
+      : load();
+
+    return request.then(function (response) {
+      if (options.storeKey) {
+        API_RESPONSE_STORE.set(options.storeKey, response);
+      }
+      return response;
+    });
+  }
+
+  function apiSendFormData(method, urlOrPath, formData, storeKey) {
+    return requestApi(method, urlOrPath, { body: formData }).then(function (response) {
+      if (storeKey) {
+        API_RESPONSE_STORE.set(storeKey, response);
+      }
+      return response;
+    });
   }
 
   function fetchSubscriptionPlans(usertype = 0) {
     const qs = `?usertype=${encodeURIComponent(String(usertype))}`;
-    return apiGetJson(`/subscription-plans${qs}`);
+    return apiGetJson(`/subscription-plans${qs}`, `subscription-plans:${String(usertype)}`);
   }
 
   function fetchCountries() {
     // IMPORTANT: country/ returns 500 on server; use /country (no trailing slash).
-    return apiGetJson('/country');
+    return apiGetJson('/country', 'countries');
   }
 
   window.API_CLIENT = {
+    store: API_RESPONSE_STORE,
     fetchSubscriptionPlans,
     fetchCountries,
     fetchProvinces: function (countryId) {
-      return apiSendJson('POST', '/province', { country_id: Number(countryId) });
+      const normalizedCountryId = Number(countryId);
+      return apiSendJson(
+        'POST',
+        '/province',
+        { country_id: normalizedCountryId },
+        {
+          cacheKey: `provinces:${String(normalizedCountryId)}`,
+          storeKey: `provinces:${String(normalizedCountryId)}`
+        }
+      );
     },
     fetchCategories: function () {
-      return apiGetJson('/category');
+      return apiGetJson('/category', 'categories');
+    },
+    fetchBrandSizes: function () {
+      return apiGetJson('/brand-size', 'brand-sizes');
     },
     fetchNiches: function (categoryId) {
-      return apiSendJson('POST', '/niche', { category_id: Number(categoryId) });
+      const normalizedCategoryId = Number(categoryId);
+      return apiSendJson(
+        'POST',
+        '/niche',
+        { category_id: normalizedCategoryId },
+        {
+          cacheKey: `niches:${String(normalizedCategoryId)}`,
+          storeKey: `niches:${String(normalizedCategoryId)}`
+        }
+      );
     },
     influencerTellUs: function (payload) {
       if (payload instanceof FormData) {
-        return apiSendFormData('POST', '/influencers/tell-us', payload);
+        return apiSendFormData('POST', '/influencers/tell-us', payload, 'influencerTellUs:last');
       }
-      return apiSendJson('POST', '/influencers/tell-us', payload);
+      return apiSendJson('POST', '/influencers/tell-us', payload, { storeKey: 'influencerTellUs:last' });
     },
     signup: function (payload) {
-      return apiSendJson('POST', '/signup', payload);
+      return apiSendJson('POST', '/signup', payload, { storeKey: 'signup:last' });
     },
     submitOtp: function (payload) {
-      return apiSendJson('POST', '/signup', payload);
+      return apiSendJson('POST', '/signup', payload, { storeKey: 'signup:otp:last' });
     },
   };
 })();

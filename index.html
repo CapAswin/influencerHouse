@@ -927,10 +927,6 @@
         brands: document.getElementById("tab-brands"),
         influencers: document.getElementById("tab-influencers"),
       };
-      const apiCache = {
-        brands: null,
-        influencers: null,
-      };
       const pricingTabsWrap = document.querySelector(".pricing-tabs");
       const pricingPanelsWrap = document.querySelector(".pricing-panels-wrap");
       const billingToggle = document.querySelector(".pricing-billing-toggle");
@@ -943,6 +939,18 @@
         : null;
       let billingCycle =
         window.localStorage.getItem("pricingBillingCycle") || "monthly";
+
+      function getPlansCacheKey(tabType) {
+        return `subscription-plans:${tabType === "brands" ? "0" : "1"}`;
+      }
+
+      function getCachedPlans(tabType) {
+        const client = window.API_CLIENT;
+        if (!client || !client.store || typeof client.store.get !== "function") {
+          return null;
+        }
+        return client.store.get(getPlansCacheKey(tabType)) || null;
+      }
 
       function kickPricingTransition(panel) {
         if (!panel) return;
@@ -1050,22 +1058,11 @@
 
         // If live plans are cached, re-render with selected cycle.
         ["brands", "influencers"].forEach((type) => {
-          if (!apiCache[type]) return;
-          renderPlans(panelByType[type], apiCache[type]);
+          const cachedPlans = getCachedPlans(type);
+          if (!cachedPlans) return;
+          renderPlans(panelByType[type], cachedPlans);
           kickPricingTransition(panelByType[type]);
         });
-      }
-
-      function getApiToken() {
-        const tokenCandidates = [
-          window.__OPULENT_API_TOKEN__,
-          window.localStorage.getItem("token"),
-          window.localStorage.getItem("authToken"),
-          window.localStorage.getItem("accessToken"),
-          window.sessionStorage.getItem("token"),
-          window.sessionStorage.getItem("authToken"),
-        ];
-        return tokenCandidates.find(Boolean) || "";
       }
 
       function parseFeatures(value) {
@@ -1237,8 +1234,6 @@
       }
 
       async function loadPlans(tabType) {
-        if (apiCache[tabType]) return;
-
         const usertype = tabType === "brands" ? 0 : 1;
         try {
           const client = window.API_CLIENT;
@@ -1255,7 +1250,6 @@
             return;
           }
 
-          apiCache[tabType] = plans;
           renderPlans(panelByType[tabType], plans);
           kickPricingTransition(panelByType[tabType]);
         } catch (_) {
