@@ -497,11 +497,26 @@
     });
   });
 
-  if (field && field.value === 'brand') {
-    setMode(true);
-  } else if (field && field.value === 'creator') {
-    setMode(false);
-  }
+  // Read ?type= URL param to pre-select the correct tab on page load.
+  (function applyUrlType() {
+    var param = new URLSearchParams(window.location.search).get('type');
+    var isBrand = param !== 'influencer';
+    var targetTab = isBrand ? document.getElementById('tab-brand') : document.getElementById('tab-creator');
+    if (targetTab) {
+      tabs.forEach(function (t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      targetTab.classList.add('active');
+      targetTab.setAttribute('aria-selected', 'true');
+    }
+    if (field) field.value = isBrand ? 'brand' : 'creator';
+    setMode(isBrand);
+    if (!isBrand) {
+      var signupPanel = document.querySelector('.signup-panel');
+      if (signupPanel) signupPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  })();
 
   bindLiveFieldValidation(signupForm);
   bindLiveFieldValidation(brandDetailsForm);

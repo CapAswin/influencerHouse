@@ -385,12 +385,12 @@
   min-height: 360px;
   object-fit: cover;
   border-radius: 28px;
-  will-change: transform;
   transform: translateZ(0);
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .contact-showcase-media:hover img {
+  will-change: transform;
   transform: scale(1.03) translateZ(0);
 }
 

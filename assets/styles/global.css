@@ -138,6 +138,8 @@ h2 {
   transition:
     padding var(--ease-smooth),
     transform var(--ease-smooth);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .nav-wrap.is-scrolled {
@@ -4733,6 +4735,9 @@ body.modal-open {
   display: flex;
   flex-direction: column;
   isolation: isolate;
+}
+
+.pricing-card:hover {
   will-change: transform;
 }
 
@@ -4971,11 +4976,6 @@ body.modal-open {
   letter-spacing: 0.1em;
   color: var(--pricing-blue);
   margin-bottom: 8px;
-  transition: letter-spacing 0.3s ease;
-}
-
-.pricing-card:hover .pricing-tier {
-  letter-spacing: 0.15em;
 }
 
 .pricing-card.featured .pricing-tier {
@@ -4992,7 +4992,6 @@ body.modal-open {
   letter-spacing: -0.03em;
   margin-bottom: 8px;
   color: var(--ink);
-  transition: color 0.3s ease;
 }
 
 .pricing-card.featured h3 {
@@ -5008,11 +5007,6 @@ body.modal-open {
   color: #5e667b;
   margin-bottom: 22px;
   line-height: 1.55;
-  transition: color 0.3s ease;
-}
-
-.pricing-card:hover .pricing-desc {
-  color: #4a5168;
 }
 
 .pricing-card.featured .pricing-desc {
@@ -5126,17 +5120,7 @@ body.modal-open {
   font-size: 14px;
   color: #5e667b;
   line-height: 1.45;
-  transition: color 0.25s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
-.pricing-card:hover .pricing-features li { color: #404860; }
-.pricing-card:hover .pricing-features li:nth-child(1) { transform: translateX(4px); transition-delay: 0ms; }
-.pricing-card:hover .pricing-features li:nth-child(2) { transform: translateX(4px); transition-delay: 35ms; }
-.pricing-card:hover .pricing-features li:nth-child(3) { transform: translateX(4px); transition-delay: 70ms; }
-.pricing-card:hover .pricing-features li:nth-child(4) { transform: translateX(4px); transition-delay: 105ms; }
-.pricing-card:hover .pricing-features li:nth-child(5) { transform: translateX(4px); transition-delay: 140ms; }
-.pricing-card:hover .pricing-features li:nth-child(6) { transform: translateX(4px); transition-delay: 175ms; }
-.pricing-card:hover .pricing-features li:nth-child(7) { transform: translateX(4px); transition-delay: 210ms; }
 
 .pricing-card.featured .pricing-features li {
   color: #5e667b;
@@ -5159,12 +5143,6 @@ body.modal-open {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 11px 11px;
-  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s ease;
-}
-
-.pricing-card:hover .pricing-features li::before {
-  transform: scale(1.18);
-  box-shadow: inset 0 0 0 2px #fff, 0 4px 10px rgba(43, 100, 241, 0.32);
 }
 
 .pricing-divider {
