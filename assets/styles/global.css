@@ -4827,37 +4827,9 @@ body.modal-open {
   letter-spacing: -0.06em;
 }
 
-/* Remove decorative card backgrounds for influencer tab */
-#tab-influencers .pricing-card::before,
-#tab-influencers .pricing-card::after {
-  content: none !important;
-  display: none !important;
-}
-
 .pricing-panel .pricing-card:nth-child(1)::before {
   content: "1";
   color: rgba(37, 99, 235, 0.14);
-}
-
-/* Card 1 — white + pale blue only (subtle top mist) */
-.pricing-panel .pricing-card:nth-child(1)::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 82px;
-  z-index: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    185deg,
-    rgba(219, 234, 254, 0.95) 0%,
-    rgba(239, 246, 255, 0.65) 42%,
-    rgba(255, 255, 255, 0.35) 70%,
-    transparent 100%
-  );
-  filter: blur(16px);
-  opacity: 0.62;
 }
 
 .pricing-panel .pricing-card:nth-child(2)::before {
@@ -4870,10 +4842,34 @@ body.modal-open {
   color: rgba(157, 23, 77, 0.16);
 }
 
-/*
- * Card 2 — mesh band: pink ↔ white ↔ blue (same palette only)
- */
-.pricing-panel .pricing-card:nth-child(2)::after {
+/* 3rd last card: very subtle gradient */
+.pricing-panel .pricing-card:nth-last-child(3)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at 70% 85%,
+      rgba(255, 255, 255, 0.28),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 65% 55% at 20% 25%,
+      rgba(162, 195, 236, 0.45),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 80% 35%,
+      rgba(194, 159, 179, 0.45),
+      transparent 60%
+    );
+}
+
+/* 2nd last card */
+.pricing-panel .pricing-card:nth-last-child(2)::after {
   content: "";
   position: absolute;
   top: 0;
@@ -4908,10 +4904,8 @@ body.modal-open {
   opacity: 0.96;
 }
 
-/*
- * Card 3 — full-card gradient: white, blue, pink only (mesh / soft bloom)
- */
-.pricing-panel .pricing-card:nth-child(3) {
+/* Last card */
+.pricing-panel .pricing-card:nth-last-child(1) {
   background:
     radial-gradient(
       ellipse 95% 75% at 88% 12%,
@@ -4941,32 +4935,6 @@ body.modal-open {
     0 6px 28px rgba(59, 130, 246, 0.12),
     0 6px 28px rgba(236, 72, 153, 0.1),
     0 2px 8px rgba(10, 15, 30, 0.04);
-}
-
-.pricing-panel .pricing-card:nth-child(3)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  background:
-    radial-gradient(
-      circle at 72% 88%,
-      rgba(255, 255, 255, 0.5),
-      transparent 52%
-    ),
-    radial-gradient(
-      ellipse 60% 50% at 18% 22%,
-      rgba(191, 219, 254, 0.58),
-      transparent 58%
-    ),
-    radial-gradient(
-      ellipse 55% 45% at 82% 30%,
-      rgba(251, 207, 232, 0.52),
-      transparent 55%
-    );
-  opacity: 0.94;
 }
 
 .pricing-card:hover {
