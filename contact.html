@@ -247,8 +247,101 @@
       </section>
     </main>
 
+    <div id="signup-snackbar-stack" class="signup-snackbar-stack" aria-live="polite" aria-atomic="true"></div>
+
     <div id="site-footer"></div>
     <script src="assets/vendor/lenis.min.js"></script>
     <script src="assets/shared.js"></script>
+    <script>
+      (function () {
+        const form = document.querySelector('.contact-form');
+        const btn = form && form.querySelector('.contact-submit');
+        const stack = document.getElementById('signup-snackbar-stack');
+        if (!form) return;
+
+        const SNACKBAR_MS = 4200;
+        const SNACKBAR_EXIT_MS = 320;
+
+        function showContactSnackbar(type, message) {
+          if (!stack) return;
+          const item = document.createElement('article');
+          item.className = 'signup-snackbar signup-snackbar--' + (type || 'info');
+          item.classList.add('is-new');
+          item.setAttribute('role', 'status');
+
+          const icon = document.createElement('span');
+          icon.className = 'signup-snackbar-icon';
+          icon.setAttribute('aria-hidden', 'true');
+
+          const text = document.createElement('p');
+          text.className = 'signup-snackbar-text';
+          text.textContent = message || 'Message';
+
+          const close = document.createElement('button');
+          close.type = 'button';
+          close.className = 'signup-snackbar-close';
+          close.setAttribute('aria-label', 'Dismiss');
+          close.textContent = '×';
+
+          close.addEventListener('click', () => {
+            item.classList.add('is-exit');
+            setTimeout(() => item.remove(), SNACKBAR_EXIT_MS);
+          });
+
+          item.appendChild(icon);
+          item.appendChild(text);
+          item.appendChild(close);
+          stack.prepend(item);
+
+          setTimeout(() => item.classList.add('is-visible'), 10);
+          setTimeout(() => item.classList.remove('is-new'), 180);
+          setTimeout(() => {
+            if (!item.isConnected) return;
+            item.classList.add('is-exit');
+            setTimeout(() => item.remove(), SNACKBAR_EXIT_MS);
+          }, SNACKBAR_MS);
+        }
+
+        const subjectMap = {
+          brand: 'Brand Collaboration',
+          creator: 'Influencer Application',
+          consultation: 'Consultation Request',
+          support: 'General Support',
+        };
+
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          const data = new FormData(form);
+          const payload = {
+            name: (data.get('full-name') || '').trim(),
+            email: (data.get('email') || '').trim(),
+            phone: (data.get('phone') || '').trim(),
+            subject: subjectMap[data.get('subject')] || data.get('subject') || '',
+            message: (data.get('message') || '').trim(),
+          };
+
+          btn.disabled = true;
+          btn.textContent = 'Sending…';
+
+          try {
+            await window.API_CLIENT.submitContact(payload);
+            btn.textContent = 'Message Sent!';
+            form.reset();
+            showContactSnackbar(
+              'success',
+              'Thanks — your message has been sent. Our team will get back to you soon.',
+            );
+          } catch (err) {
+            btn.disabled = false;
+            btn.textContent = 'Submit Now';
+            showContactSnackbar(
+              'error',
+              (err && err.message) ||
+                'Something went wrong while sending your message. Please try again.',
+            );
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
