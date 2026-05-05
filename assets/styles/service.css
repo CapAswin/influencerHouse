@@ -424,11 +424,24 @@ main.service-page + .footer {
   border-radius: 18px;
   box-shadow: var(--shadow-soft);
   overflow: hidden;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    border-color 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .service-faq-item:hover {
-  border-color: rgba(97, 97, 255, 0.12);
+  border-color: rgba(97, 97, 255, 0.18);
+  box-shadow: 0 8px 28px rgba(97, 97, 255, 0.1);
+}
+
+.service-faq-item[open] {
+  border-color: rgba(97, 97, 255, 0.28);
+  background: #ffffff;
+  box-shadow:
+    0 12px 36px rgba(97, 97, 255, 0.13),
+    0 0 0 1px rgba(97, 97, 255, 0.1);
 }
 
 .service-faq-item summary {
@@ -438,13 +451,19 @@ main.service-page + .footer {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 14px;
-  padding: 18px 20px;
+  padding: 20px 22px;
   font-weight: 600;
   color: #0a0f1e;
+  user-select: none;
+  transition: background 0.22s ease;
 }
 
 .service-faq-item summary::-webkit-details-marker {
   display: none;
+}
+
+.service-faq-item summary:hover {
+  background: rgba(97, 97, 255, 0.03);
 }
 
 .service-faq-num {
@@ -452,26 +471,97 @@ main.service-page + .footer {
   font-weight: 800;
   color: var(--primary);
   font-variant-numeric: tabular-nums;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: rgba(97, 97, 255, 0.08);
+  transition:
+    background 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-faq-item[open] .service-faq-num {
+  background: linear-gradient(135deg, var(--primary), #4b4bde);
+  color: #fff;
+  transform: scale(1.08);
 }
 
 .service-faq-q {
   font-size: 15px;
   line-height: 1.35;
   text-align: left;
+  transition: color 0.28s ease;
+}
+
+.service-faq-item[open] .service-faq-q {
+  color: var(--primary);
 }
 
 .service-faq-chevron {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
   color: var(--muted);
-  transition: transform 0.25s ease;
+  background: rgba(10, 15, 30, 0.05);
+  flex-shrink: 0;
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.28s ease,
+    color 0.28s ease;
 }
 
 .service-faq-item[open] .service-faq-chevron {
   transform: rotate(180deg);
+  background: rgba(97, 97, 255, 0.1);
+  color: var(--primary);
+}
+
+/* Animated body using grid-template-rows trick */
+.service-faq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-faq-item[open] .service-faq-body {
+  grid-template-rows: 1fr;
+}
+
+.service-faq-body-inner {
+  overflow: hidden;
 }
 
 .service-faq-a {
-  padding: 0 20px 18px 56px;
+  padding: 0 22px 20px 64px;
   border-top: 1px solid rgba(10, 15, 30, 0.06);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1) 0.06s,
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.06s;
+}
+
+.service-faq-item[open] .service-faq-a,
+.service-faq-item.is-closing .service-faq-a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-faq-item.is-closing .service-faq-a {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.22s ease,
+    transform 0.28s ease;
+}
+
+.service-faq-item.is-closing .service-faq-body {
+  grid-template-rows: 0fr;
 }
 
 .service-faq-a p {
@@ -479,6 +569,16 @@ main.service-page + .footer {
   font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-faq-body,
+  .service-faq-a,
+  .service-faq-chevron,
+  .service-faq-num,
+  .service-faq-item {
+    transition: none;
+  }
 }
 
 @media (max-width: 520px) {
@@ -505,10 +605,5 @@ main.service-page + .footer {
 
   .service-faq-chevron {
     margin-left: auto;
-  }
-
-  .service-breadcrumb {
-    font-size: 12px;
-    padding: 6px 12px;
   }
 }

@@ -351,96 +351,66 @@
             <details class="service-faq-item" open>
               <summary>
                 <span class="service-faq-num">01</span>
-                <span class="service-faq-q"
-                  >What does the platform help brands do?</span
-                >
-                <span class="service-faq-chevron" aria-hidden="true"
-                  ><i class="fa-solid fa-chevron-down"></i
-                ></span>
+                <span class="service-faq-q">What does the platform help brands do?</span>
+                <span class="service-faq-chevron" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
               </summary>
-              <div class="service-faq-a">
-                <p>
-                  Brands can discover creators, launch campaigns, manage
-                  approvals, track deliverables, and monitor campaign
-                  performance from one place.
-                </p>
-              </div>
+              <div class="service-faq-body"><div class="service-faq-body-inner">
+                <div class="service-faq-a">
+                  <p>Brands can discover creators, launch campaigns, manage approvals, track deliverables, and monitor campaign performance from one place.</p>
+                </div>
+              </div></div>
             </details>
 
             <details class="service-faq-item">
               <summary>
                 <span class="service-faq-num">02</span>
-                <span class="service-faq-q"
-                  >How do creators benefit from the service?</span
-                >
-                <span class="service-faq-chevron" aria-hidden="true"
-                  ><i class="fa-solid fa-chevron-down"></i
-                ></span>
+                <span class="service-faq-q">How do creators benefit from the service?</span>
+                <span class="service-faq-chevron" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
               </summary>
-              <div class="service-faq-a">
-                <p>
-                  Creators gain direct visibility to brands, manage
-                  collaborations more independently, and present a stronger
-                  professional profile for paid opportunities.
-                </p>
-              </div>
+              <div class="service-faq-body"><div class="service-faq-body-inner">
+                <div class="service-faq-a">
+                  <p>Creators gain direct visibility to brands, manage collaborations more independently, and present a stronger professional profile for paid opportunities.</p>
+                </div>
+              </div></div>
             </details>
 
             <details class="service-faq-item">
               <summary>
                 <span class="service-faq-num">03</span>
-                <span class="service-faq-q"
-                  >Is the platform self-service or agency-managed?</span
-                >
-                <span class="service-faq-chevron" aria-hidden="true"
-                  ><i class="fa-solid fa-chevron-down"></i
-                ></span>
+                <span class="service-faq-q">Is the platform self-service or agency-managed?</span>
+                <span class="service-faq-chevron" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
               </summary>
-              <div class="service-faq-a">
-                <p>
-                  The platform is designed as a self-service environment, giving
-                  both brands and creators more direct control over
-                  collaboration, communication, and execution.
-                </p>
-              </div>
+              <div class="service-faq-body"><div class="service-faq-body-inner">
+                <div class="service-faq-a">
+                  <p>The platform is designed as a self-service environment, giving both brands and creators more direct control over collaboration, communication, and execution.</p>
+                </div>
+              </div></div>
             </details>
 
             <details class="service-faq-item">
               <summary>
                 <span class="service-faq-num">04</span>
-                <span class="service-faq-q"
-                  >Does verification play a role in the service?</span
-                >
-                <span class="service-faq-chevron" aria-hidden="true"
-                  ><i class="fa-solid fa-chevron-down"></i
-                ></span>
+                <span class="service-faq-q">Does verification play a role in the service?</span>
+                <span class="service-faq-chevron" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
               </summary>
-              <div class="service-faq-a">
-                <p>
-                  Yes. Verification supports trust, improves quality control,
-                  and helps the platform maintain safer, more credible
-                  collaboration opportunities.
-                </p>
-              </div>
+              <div class="service-faq-body"><div class="service-faq-body-inner">
+                <div class="service-faq-a">
+                  <p>Yes. Verification supports trust, improves quality control, and helps the platform maintain safer, more credible collaboration opportunities.</p>
+                </div>
+              </div></div>
             </details>
 
             <details class="service-faq-item">
               <summary>
                 <span class="service-faq-num">05</span>
-                <span class="service-faq-q"
-                  >Can the platform support growth over time?</span
-                >
-                <span class="service-faq-chevron" aria-hidden="true"
-                  ><i class="fa-solid fa-chevron-down"></i
-                ></span>
+                <span class="service-faq-q">Can the platform support growth over time?</span>
+                <span class="service-faq-chevron" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
               </summary>
-              <div class="service-faq-a">
-                <p>
-                  Yes. The service is built for ongoing growth, whether a brand
-                  is managing more campaigns or a creator is scaling visibility
-                  and monetization opportunities.
-                </p>
-              </div>
+              <div class="service-faq-body"><div class="service-faq-body-inner">
+                <div class="service-faq-a">
+                  <p>Yes. The service is built for ongoing growth, whether a brand is managing more campaigns or a creator is scaling visibility and monetization opportunities.</p>
+                </div>
+              </div></div>
             </details>
           </div>
         </div>
@@ -450,5 +420,23 @@
     <div id="site-footer"></div>
     <script src="assets/vendor/lenis.min.js"></script>
     <script src="assets/shared.js"></script>
+    <script>
+      (function () {
+        var items = document.querySelectorAll('.service-faq-item');
+        var CLOSE_DURATION = 400;
+        items.forEach(function (details) {
+          details.addEventListener('click', function (e) {
+            if (!e.target.closest('summary')) return;
+            if (!details.open) return; // opening — let browser handle naturally
+            e.preventDefault();
+            details.classList.add('is-closing');
+            setTimeout(function () {
+              details.classList.remove('is-closing');
+              details.removeAttribute('open');
+            }, CLOSE_DURATION);
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
