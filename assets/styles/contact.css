@@ -482,10 +482,13 @@
 
 .contact-form-grid span,
 .contact-agreement span {
-  display: block;
-  font-size: 13px;
+  /* Keep the required ✼ attached to label text */
+  display: inline-flex;
+  align-items: baseline;
+  /* Match signup required-field label styling */
+  font-size: 12px;
   font-weight: 600;
-  color: #25304a;
+  color: #41484f;
   margin-bottom: 8px;
 }
 
@@ -544,6 +547,7 @@
   font-weight: 500;
   color: var(--muted);
   line-height: 1.6;
+  display: inline;
 }
 
 .contact-submit {
@@ -1036,7 +1040,19 @@
 
 .contact-form-grid span,
 .contact-agreement span {
+  /* Keep consistent with signup labels */
+  font-weight: 600;
+}
+
+/* Ensure required ✼ matches signup across contact page */
+.contact-form-grid .required-asterisk,
+.contact-agreement .required-asterisk {
+  margin-left: 2px;
+  font-size: 0.8em;
   font-weight: 700;
+  line-height: 1;
+  vertical-align: super;
+  color: #dc2626;
 }
 
 .contact-form-grid input,

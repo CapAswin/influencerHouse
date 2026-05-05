@@ -193,7 +193,7 @@
               <div class="contact-form-grid">
                 <label>
                   <span>Full Name</span>
-                  <input type="text" name="full-name" placeholder="Full Name" />
+                  <input type="text" name="full-name" placeholder="Full Name" required />
                 </label>
                 <label>
                   <span>Email Address</span>
@@ -201,6 +201,7 @@
                     type="email"
                     name="email"
                     placeholder="Email Address"
+                    required
                   />
                 </label>
                 <label>
@@ -209,12 +210,13 @@
                     type="tel"
                     name="phone"
                     placeholder="Phone Number"
+                    required
                   />
                 </label>
                 <label>
                   <span>Subject</span>
-                  <select name="subject">
-                    <option value="">Select a subject</option>
+                  <select name="subject" required>
+                    <option value="" selected disabled>Select a subject</option>
                     <option value="brand">Brand Collaboration</option>
                     <option value="creator">Influencer Application</option>
                     <option value="consultation">Consultation Request</option>
@@ -226,12 +228,13 @@
                   <textarea
                     name="message"
                     placeholder="Tell us about your project or inquiry"
+                    required
                   ></textarea>
                 </label>
               </div>
 
               <label class="contact-agreement" for="contact-agreement">
-                <input id="contact-agreement" type="checkbox" name="contact_agreement" checked />
+                <input id="contact-agreement" type="checkbox" name="contact_agreement" checked required />
                 <span>
                   I agree to be contacted regarding my inquiry and understand
                   that response times may vary depending on request volume.
