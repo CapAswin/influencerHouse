@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 – Page Not Found</title>
+    <link rel="icon" type="image/png" href="assets/images/logos/OIH%20gold%20%26%20White.png" />
+    <link rel="stylesheet" href="assets/styles/global.css" />
+  </head>
+  <body style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <main class="section" style="width: 100%; display: flex; justify-content: center; align-items: center; flex: 1;">
+      <div class="container" style="display:grid; place-items:center;">
+        <section style="
+          width: min(920px, 100%);
+          border-radius: 30px;
+          padding: clamp(26px, 5vw, 54px);
+          background:
+            radial-gradient(circle at 14% 18%, rgba(255,255,255,0.9), transparent 56%),
+            radial-gradient(circle at 86% 22%, rgba(97, 97, 255, 0.14), transparent 52%),
+            linear-gradient(145deg, rgba(255,255,255,0.82), rgba(241, 246, 255, 0.72));
+          border: 1px solid rgba(255,255,255,0.8);
+          box-shadow: 0 24px 48px rgba(10, 18, 40, 0.14), 0 0 0 1px rgba(97, 97, 255, 0.08);
+          text-align:center;
+        ">
+          <div style="
+            font-size: clamp(7rem, 22vw, 14rem);
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            line-height: 1;
+            margin-bottom: 8px;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          ">
+            <span style="color: #0a0f1e; position: relative; z-index: 1;">4</span>
+            <span style="background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; font-weight: 100; font-style: italic; position: relative; z-index: 2; margin: 0 -0.18em;">0</span>
+            <span style="color: #0a0f1e; position: relative; z-index: 1;">4</span>
+          </div>
+
+          <h1 style="margin: 0 0 10px;">Page not found</h1>
+          <p style="margin: 0 auto 22px; max-width: 58ch; color: var(--muted);">
+            The page you’re looking for doesn’t exist or was moved. Use the buttons below to get back on track.
+          </p>
+
+          <div style="display:flex; gap: 12px; justify-content:center; flex-wrap:wrap;">
+            <a class="btn btn-dark" href="index.html">Go to Home</a>
+            <a class="btn btn-gold" href="contact.html">Contact Support</a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
+
