@@ -148,6 +148,7 @@
     if (!footerEl) return;
     footerEl.outerHTML = footerHTML;
     initFooterAnimations();
+    initNewsletterCapture();
   }
   if (footerEl) {
     if ('requestIdleCallback' in window) {
@@ -348,6 +349,156 @@
   }
 
   initFooterAnimations();
+
+  function initNewsletterCapture() {
+    var footer = document.querySelector('[data-shared-footer="true"]');
+    if (!footer) return;
+    var form = footer.querySelector('form.newsletter-form');
+    if (!form || form.__newsletterBound) return;
+    form.__newsletterBound = true;
+
+    var emailInput = form.querySelector('input[type="email"][name="newsletter_email"]');
+
+    function ensureSnackbarStack() {
+      var existing = document.getElementById('signup-snackbar-stack');
+      if (existing) return existing;
+      var stack = document.createElement('div');
+      stack.id = 'signup-snackbar-stack';
+      stack.className = 'signup-snackbar-stack';
+      document.body.appendChild(stack);
+      return stack;
+    }
+
+    var snackbarStack = ensureSnackbarStack();
+    var SNACKBAR_EXIT_MS = 320;
+    var MAX_SNACKBARS = 3;
+    function showSnackbar(opts) {
+      if (!snackbarStack) return;
+      var data = opts || {};
+      var type = data.type || 'info';
+      var message = data.message || 'Message';
+      var actionLabel = data.actionLabel || 'OK';
+      var duration = typeof data.duration === 'number' ? data.duration : 4200;
+      var onAction = typeof data.onAction === 'function' ? data.onAction : null;
+
+      var snackbar = document.createElement('article');
+      snackbar.className = 'signup-snackbar signup-snackbar--' + type;
+      snackbar.classList.add('is-new');
+      snackbar.setAttribute('role', 'status');
+
+      var icon = document.createElement('span');
+      icon.className = 'signup-snackbar-icon';
+      icon.setAttribute('aria-hidden', 'true');
+
+      var text = document.createElement('p');
+      text.className = 'signup-snackbar-text';
+      text.textContent = message;
+
+      var actionButton = document.createElement('button');
+      actionButton.type = 'button';
+      actionButton.className = 'signup-snackbar-action';
+      actionButton.textContent = actionLabel;
+
+      var closeButton = document.createElement('button');
+      closeButton.type = 'button';
+      closeButton.className = 'signup-snackbar-close';
+      closeButton.setAttribute('aria-label', 'Dismiss message');
+      closeButton.textContent = '×';
+
+      var removed = false;
+      function removeSnackbar() {
+        if (removed) return;
+        removed = true;
+        snackbar.classList.remove('is-visible');
+        snackbar.classList.add('is-exit');
+        setTimeout(function () {
+          if (snackbar.parentNode) snackbar.parentNode.removeChild(snackbar);
+        }, SNACKBAR_EXIT_MS);
+      }
+
+      actionButton.addEventListener('click', function () {
+        if (onAction) onAction();
+        removeSnackbar();
+      });
+      closeButton.addEventListener('click', removeSnackbar);
+
+      snackbar.appendChild(icon);
+      snackbar.appendChild(text);
+      snackbar.appendChild(actionButton);
+      snackbar.appendChild(closeButton);
+      snackbarStack.prepend(snackbar);
+
+      requestAnimationFrame(function () {
+        snackbar.classList.add('is-visible');
+        snackbar.classList.remove('is-new');
+      });
+
+      var active = snackbarStack.querySelectorAll('.signup-snackbar:not(.is-exit)');
+      if (active.length > MAX_SNACKBARS) {
+        var oldest = active[active.length - 1];
+        if (oldest && oldest !== snackbar) oldest.remove();
+      }
+      setTimeout(removeSnackbar, duration);
+    }
+
+    function normalizeEmail(raw) {
+      return String(raw || '').trim().toLowerCase();
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var email = normalizeEmail(emailInput ? emailInput.value : '');
+      if (!email) {
+        showSnackbar({
+          type: 'error',
+          message: 'Please enter your email.',
+          actionLabel: 'Fix',
+          onAction: function () { if (emailInput) emailInput.focus(); }
+        });
+        if (emailInput) emailInput.focus();
+        return;
+      }
+
+      var client = window.API_CLIENT;
+      if (!client || typeof client.submitContact !== 'function') {
+        showSnackbar({
+          type: 'error',
+          message: 'Newsletter API is not available.',
+          actionLabel: 'OK'
+        });
+        return;
+      }
+
+      showSnackbar({
+        type: 'info',
+        message: 'Subscribing…',
+        actionLabel: 'Wait',
+        duration: 1800
+      });
+
+      try {
+        await client.submitContact({
+          name: 'none',
+          email: email,
+          phone: '00000',
+          subject: 'newsletter subscribe',
+          message: 'newsletter subscribe from footer'
+        });
+        showSnackbar({
+          type: 'success',
+          message: 'Subscribed.',
+          actionLabel: 'OK'
+        });
+        try { if (emailInput) emailInput.value = ''; } catch (_) {}
+      } catch (err) {
+        showSnackbar({
+          type: 'error',
+          message: (err && err.message) ? String(err.message) : 'Subscription failed. Please try again.',
+          actionLabel: 'Retry'
+        });
+      }
+    });
+  }
 
   // Premium smooth scrolling (Lenis) — disabled when user prefers reduced motion
   (function initSmoothScroll() {
