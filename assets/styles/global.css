@@ -879,30 +879,91 @@ h1 em {
   top: 40px;
   width: 46%;
   z-index: 5;
-  background: rgba(255, 255, 255, 0.93);
+  background: linear-gradient(145deg, #ffffff, #f4f6ff);
+  border-color: rgba(108, 108, 255, 0.15);
+  color: #1a1a2e;
+}
+
+.card-activity > strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4a4aaa;
+}
+
+.card-activity > strong::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6c6cff;
+  box-shadow: 0 0 6px rgba(108, 108, 255, 0.5);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.5); }
 }
 
 .feed {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 10px;
+  display: flex;
   align-items: center;
-  padding-top: 12px;
-  margin-top: 12px;
-  border-top: 1px solid var(--line);
-  font-size: 13px;
+  gap: 10px;
+  padding: 9px 12px;
+  margin-top: 8px;
+  border-radius: 12px;
+  background: #f8f9ff;
+  border: 1px solid rgba(108, 108, 255, 0.1);
+  transition: background 0.2s, border-color 0.2s;
+  min-width: 0;
+}
+
+.feed:hover {
+  background: #eeeeff;
+  border-color: rgba(108, 108, 255, 0.3);
+}
+
+.feed-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.feed span:not(.avatar) {
+  font-size: 12px;
+  color: #555577;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feed strong {
+  font-size: 11px;
+  font-weight: 700;
+  color: #4a4aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .avatar {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: linear-gradient(145deg, #e0e0ff, #b3b3ff);
-  font-size: 11px;
-  font-weight: 700;
-  color: #0a0f1e;
+  background: linear-gradient(145deg, #c5c5ff, #9898ff);
+  font-size: 10px;
+  font-weight: 800;
+  color: #1a1a4e;
+  box-shadow: 0 2px 8px rgba(108, 108, 255, 0.2);
 }
 
 .card-order {
