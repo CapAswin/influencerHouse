@@ -5131,11 +5131,7 @@ body.modal-open {
   font-size: clamp(2.25rem, 4vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--ink);
   line-height: 1;
   display: inline-block;
   transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
@@ -5146,19 +5142,11 @@ body.modal-open {
 }
 
 .pricing-card.featured .pricing-num {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--ink);
 }
 
 .pricing-panel .pricing-card:nth-child(3) .pricing-num {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--ink);
 }
 
 .pricing-period {
@@ -6496,9 +6484,31 @@ body.not-found-page {
 }
 
 .not-found-watermark .not-found-giant {
-  font-size: clamp(260px, 38vw, 640px);
-  letter-spacing: -0.08em;
-  opacity: 0.22;
+  /* Prefer vmin-based scaling so it stays inside phone viewports */
+  font-size: clamp(220px, 112vmin, 680px);
+  line-height: 0.84;
+  letter-spacing: -0.09em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  opacity: 0.18;
+}
+
+@media (max-width: 520px) {
+  .not-found-watermark .not-found-giant {
+    font-size: clamp(190px, 104vmin, 520px);
+    letter-spacing: -0.07em;
+    opacity: 0.14;
+  }
+
+  .not-found-main {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .not-found-watermark .not-found-giant {
+    font-size: clamp(170px, 100vmin, 460px);
+  }
 }
 
 .not-found-main {
