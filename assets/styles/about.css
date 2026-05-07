@@ -1,4 +1,4 @@
-/* —— About page layout + scroll reveal (about-page.js) —— */
+/* -- About page layout + scroll reveal (about-page.js) -- */
 .about-ui {
   overflow-x: clip;
 }
@@ -11,7 +11,7 @@
   scroll-margin-top: 96px;
 }
 
-/* Intro hero — layered panel + stats */
+/* Intro hero - layered panel + stats */
 .about-hero {
   position: relative;
   padding: 20px 0 36px;
@@ -370,7 +370,7 @@
   filter: brightness(1.08);
 }
 
-/* Purpose + pillars — side-by-side intro (replaces stacked duplicate headers) */
+/* Purpose + pillars - side-by-side intro (replaces stacked duplicate headers) */
 .existence-dual-intro {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -736,7 +736,7 @@
   }
 }
 
-/* Key Platform Capabilities — let global body canvas show through (matches index) */
+/* Key Platform Capabilities - let global body canvas show through (matches index) */
 .kpc-block {
   padding: 72px 0;
   background: transparent;

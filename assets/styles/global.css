@@ -1,4 +1,4 @@
-/* Lenis smooth scroll — height auto so momentum scroll measures correctly */
+/* Lenis smooth scroll - height auto so momentum scroll measures correctly */
 html.lenis {
   height: auto;
 }
@@ -1410,7 +1410,7 @@ h1 em {
   gap: 10px;
 }
 
-/* Two-column value rows (e.g. about / split layouts) — same .tick + .value-item as index */
+/* Two-column value rows (e.g. about / split layouts) - same .tick + .value-item as index */
 .value-list.value-list--cols-2 {
   margin-top: 20px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4343,7 +4343,7 @@ body.modal-open {
   transform: translateZ(0);
 }
 
-/* Dark gradient only (no blur) — sharp photo, readable bottom copy */
+/* Dark gradient only (no blur) - sharp photo, readable bottom copy */
 .signup-card::after {
   content: "";
   position: absolute;
@@ -4841,7 +4841,7 @@ body.modal-open {
   z-index: 0;
 }
 
-/* Large background index — above mesh, below copy */
+/* Large background index - above mesh, below copy */
 .pricing-panel .pricing-card::before {
   content: "";
   position: absolute;
@@ -5266,7 +5266,7 @@ body.modal-open {
   filter: brightness(1.05);
 }
 
-/* Tier 3 — same electric-blue CTA */
+/* Tier 3 - same electric-blue CTA */
 .pricing-panel .pricing-card:nth-child(3) .btn-pricing {
   background: var(--pricing-blue);
   color: #fff;

@@ -1,4 +1,4 @@
-/* Blog — site tokens; left rail + wide article (page canvas = global body --page-bg) */
+/* Blog - site tokens; left rail + wide article (page canvas = global body --page-bg) */
 
 .blog-detail-page main {
   padding-top: 18px;
@@ -77,7 +77,7 @@
   gap: 8px;
   padding: 8px 14px;
   border-radius: 999px;
-  /* Solid fill — backdrop-filter repaints heavily while scrolling */
+  /* Solid fill - backdrop-filter repaints heavily while scrolling */
   background: var(--surface);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-soft);
@@ -143,7 +143,7 @@
   grid-area: rail;
   position: sticky;
   top: 96px;
-  /* Own compositor layer — sticky + large shadows repaint less of the document while scrolling. */
+  /* Own compositor layer - sticky + large shadows repaint less of the document while scrolling. */
   backface-visibility: hidden;
   transform: translateZ(0);
 }

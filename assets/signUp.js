@@ -733,7 +733,7 @@
         var lastName = lastNameField && lastNameField.value ? lastNameField.value.trim() : '';
         var fullName = (firstName + ' ' + lastName).trim();
         var safeName = fullName || 'you';
-        brandDetailsTitle.innerHTML = 'Tell us about you — <em class="text-gradient"></em>';
+        brandDetailsTitle.innerHTML = 'Tell us about you - <em class="text-gradient"></em>';
         var nameNode = brandDetailsTitle.querySelector('.text-gradient');
         if (nameNode) nameNode.textContent = safeName;
       }

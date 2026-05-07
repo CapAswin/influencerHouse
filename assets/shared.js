@@ -81,7 +81,7 @@
               <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
             </a>
             <a href="https://snapchat.com/t/r6Pjgsw3" target="_blank" rel="noopener noreferrer" aria-label="Snapchat">
-              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor"><path d="M424.3 325.2c-5.7-3.9-10.4-8-12.7-10.1-4.7-4.2-10-8.9-13.7-13.6-7.1-9-8.4-14.8-1.5-27 10-18.2 24.3-39 23-55.9-1.3-15.6-13.4-19-21.6-19.6-12.7-1-29.6 5.8-54.7 17.5-12 5.5-23 10.6-32.5 14-8.8 3.1-15.8 2.6-21.7-1.4-1.2-.8-21.4-14.4-65.7-14.4s-64.6 13.6-65.7 14.4c-5.9 4-12.8 4.6-21.7 1.4-9.5-3.4-20.5-8.5-32.5-14-25.1-11.7-42-18.4-54.7-17.5-8.2.6-20.4 4-21.6 19.6-1.3 16.9 13.1 37.7 23.1 55.9 6.8 12.2 5.6 18-1.5 27-3.6 4.6-9 9.4-13.6 13.6-2.4 2.1-7 6.2-12.8 10.1C18 342.3.8 358 1 371.3c.4 12.5 13.9 14.8 15.6 15 13 1.9 29.8 1.4 46.5-.4 10.5-1.2 21.2-2.5 32-3 22-1 46.4 11.2 56 16.4 20.8 11.3 49 11.5 72.8 0 9.6-5.2 34-17.4 56-16.4 10.8.5 21.5 1.8 32 3 16.8 1.8 33.6 2.3 46.5.4 1.7-.2 15.2-2.5 15.6-15 .2-13.3-17-29.1-49.7-46.1zM223.8 16c-38.3 0-82.6 19.1-105.8 69.1-10.9 23.4-16.1 48-15.2 71.9 1 25.5 8 50.8 10.6 62.5 3.3 14.8 9.5 22.8 15.6 28 8.1 7.1 19 8.2 23.4 8.7 1.2.2 2 .5 2.5 1 .7.8 1 2 1 3.5 0 2.2-.6 4.9-1.9 8-1.5 3.7-3.8 8.3-6.1 13.5-3.7 8.2-7.8 17.5-7.8 24.3 0 5 2.1 10.4 9 16.9 7.8 7.4 19.4 11.4 34.2 12 18.2.7 34.3-5.2 41.2-8a9.4 9.4 0 0 1 12 5.5l1.3 3.5c1.4-1 6.5-4.4 16.9-4.4 10.4 0 15.5 3.4 16.9 4.4l1.3-3.6a9.5 9.5 0 0 1 12-5.4c6.9 2.8 22.9 8.6 41.1 8 14.8-.6 26.4-4.6 34.2-12 6.9-6.5 9-11.9 9-16.9 0-6.8-4-16.1-7.8-24.3-2.3-5.2-4.6-9.8-6.1-13.5-1.3-3-1.9-5.8-1.9-8 0-1.5.3-2.7 1-3.5.5-.6 1.3-1 2.5-1 4.5-.4 15.3-1.6 23.4-8.7 6.1-5.3 12.3-13.2 15.6-28 2.6-11.7 9.6-37 10.6-62.5.9-23.9-4.3-48.4-15.2-71.9C306.4 35.1 262.1 16 223.8 16z"/></svg>
+              <i class="fa-brands fa-snapchat" style="font-size:16px;"></i>
             </a>
           </div>
         </div>
@@ -95,6 +95,8 @@
             <a href="service.html">Services</a>
             <a href="blog.html">Blog</a>
             <a href="contact.html">Contact Us</a>
+            <a href="faq-brands.html">FAQ – Brands</a>
+            <a href="faq-influencers.html">FAQ – Influencers</a>
           </nav>
         </div>
 
@@ -500,7 +502,7 @@
     });
   }
 
-  // Premium smooth scrolling (Lenis) — disabled when user prefers reduced motion
+  // Premium smooth scrolling (Lenis) - disabled when user prefers reduced motion
   (function initSmoothScroll() {
     if (typeof Lenis === 'undefined') return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -509,13 +511,13 @@
     if ((navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
         (navigator.deviceMemory && navigator.deviceMemory <= 4)) return;
 
-    // Blog article: native scroll — Lenis + sticky sidebar often causes initial wheel lag
+    // Blog article: native scroll - Lenis + sticky sidebar often causes initial wheel lag
     // and jank; long-form reading matches OS scrolling better.
     if (document.body.classList.contains('blog-detail-page')) return;
 
     const lenis = new Lenis({
       autoRaf: true,
-      // Slightly higher lerp converges in fewer frames — less main-thread churn on long scrolls.
+      // Slightly higher lerp converges in fewer frames - less main-thread churn on long scrolls.
       lerp: 0.1,
       wheelMultiplier: 0.9,
       touchMultiplier: 1,
