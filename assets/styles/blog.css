@@ -128,7 +128,7 @@
 /* ── Main: left rail + article (grid areas keep article on top on mobile) ── */
 .blog-detail-main {
   padding-top: 0;
-  padding-bottom: 88px;
+  padding-bottom: 0;
 }
 
 .blog-detail-layout {
@@ -307,16 +307,23 @@ span.blog-cat-pill {
   line-height: 1.15;
   letter-spacing: -0.03em;
   color: var(--ink);
+  margin-top: 40px;
   margin-bottom: 14px;
 }
 
-.blog-detail-body > h2:first-child {
+.blog-detail-body > h2:first-child,
+.blog-detail-body > p:first-child {
   margin-top: 0;
 }
 
 .blog-detail-copy {
   color: var(--muted);
   line-height: 1.75;
+  margin-bottom: 20px;
+}
+
+.blog-detail-copy:last-of-type {
+  margin-bottom: 0;
 }
 
 .blog-detail-body h3 {
@@ -335,6 +342,7 @@ span.blog-cat-pill {
 .blog-detail-body ul {
   padding-left: 1.25rem;
   color: var(--muted);
+  margin-bottom: 20px;
 }
 
 .blog-detail-body li + li {
