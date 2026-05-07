@@ -5449,12 +5449,12 @@ body.modal-open {
 .footer-nav-col nav {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 }
 
 .footer-nav-col a {
   color: #8c95a8;
-  font-size: 14px;
+  font-size: 13px;
   transition:
     color var(--ease),
     transform var(--ease-smooth);
