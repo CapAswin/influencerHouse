@@ -427,7 +427,7 @@
         items.forEach(function (details) {
           details.addEventListener('click', function (e) {
             if (!e.target.closest('summary')) return;
-            if (!details.open) return; // opening — let browser handle naturally
+            if (!details.open) return; // opening - let browser handle naturally
             e.preventDefault();
             details.classList.add('is-closing');
             setTimeout(function () {
