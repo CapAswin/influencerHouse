@@ -18,7 +18,7 @@
             <a href="for-brands.html">For Brands</a>
             <a href="for-influencers.html">For Influencers</a>
             <a href="service.html">Services</a>
-            <a href="blog.html">Blogs</a>
+            <a href="blog.html">Blog</a>
             <a href="contact.html">Contact</a>
           </div>
           <div class="nav-actions">
@@ -39,7 +39,7 @@
             <a href="for-brands.html">For Brands</a>
             <a href="for-influencers.html">For Influencers</a>
             <a href="service.html">Services</a>
-            <a href="blog.html">Blogs</a>
+            <a href="blog.html">Blog</a>
             <a href="contact.html">Contact</a>
           </div>
           <div class="nav-actions">
@@ -93,7 +93,7 @@
             <a href="for-brands.html">For Brands</a>
             <a href="for-influencers.html">For Influencers</a>
             <a href="service.html">Services</a>
-            <a href="blog.html">Blogs</a>
+            <a href="blog.html">Blog</a>
             <a href="contact.html">Contact Us</a>
           </nav>
         </div>
