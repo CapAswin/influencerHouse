@@ -128,7 +128,7 @@
 /* ── Main: left rail + article (grid areas keep article on top on mobile) ── */
 .blog-detail-main {
   padding-top: 0;
-  padding-bottom: 88px;
+  padding-bottom: 0;
 }
 
 .blog-detail-layout {
