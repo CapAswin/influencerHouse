@@ -2007,26 +2007,51 @@
   function buildInfluencerTellUsPayload(formData) {
     var userId = getStoredUserId();
     var fd = new FormData();
-    for (var pair of formData.entries()) {
-      if (pair[0] === 'user_id') continue;
-      fd.append(pair[0], pair[1]);
-    }
+
+    var userType =
+      lastSignupPayload && lastSignupPayload.user_type !== undefined && lastSignupPayload.user_type !== null
+        ? lastSignupPayload.user_type
+        : USER_TYPES.creator;
+    fd.set('user_type', String(userType));
+
     if (userId) fd.set('user_id', userId);
-    // Map province field value to province name if it's an ID
-    var provinceVal = formData.get('brand_province');
-    if (provinceVal && brandProvinceField) {
-      var selectedOpt = Array.prototype.find.call(
-        brandProvinceField.options,
-        function (o) { return o.value === provinceVal; }
-      );
-      var provinceName = selectedOpt
-        ? (selectedOpt.getAttribute('data-province-name') || selectedOpt.textContent)
-        : provinceVal;
-      fd.set('brand_province', provinceName);
-    }
+
+    var fullName = String(formData.get('brand_contact_name') || '').trim();
+    if (fullName) fd.set('full_name', fullName);
+
+    // country_id from country name lookup
+    var countryName = String(formData.get('brand_country') || '').trim();
+    var countryRow = countryName ? findCountryRowByName(countryName) : null;
+    if (countryRow && countryRow.id != null) fd.set('country_id', String(countryRow.id));
+
+    // province_id — the option value is already the province ID
+    var provinceVal = String(formData.get('brand_province') || '').trim();
+    if (provinceVal) fd.set('province_id', provinceVal);
+
+    // city_name
+    var city = String(formData.get('brand_city') || '').trim();
+    if (city) fd.set('city_name', city);
+
+    // phone = country_code + phone number
+    var countryCode = String(formData.get('brand_country_code') || '').trim();
+    var phoneNum = String(formData.get('brand_phone') || '').trim();
+    if (phoneNum) fd.set('phone', countryCode ? countryCode + phoneNum : phoneNum);
+
+    // nationality_country
+    var nationality = String(formData.get('brand_nationality_country') || '').trim();
+    if (nationality) fd.set('nationality_country', nationality);
+
+    // influencer-specific fields passed through as-is
+    var passThrough = ['influencer_gender', 'influencer_category_id', 'influencer_niche_id'];
+    passThrough.forEach(function (key) {
+      var val = formData.get(key);
+      if (val != null && String(val).trim() !== '') fd.set(key, String(val));
+    });
+
     var docFile = influencerDocumentInput && influencerDocumentInput.files && influencerDocumentInput.files[0]
       ? influencerDocumentInput.files[0] : null;
     if (docFile) fd.set('influencer_document', docFile);
+
     return fd;
   }
 
