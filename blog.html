@@ -414,6 +414,9 @@
             document.querySelectorAll(".blog-modal.is-open").forEach(closeModal);
           }
         });
+
+        const openParam = new URLSearchParams(window.location.search).get("open");
+        if (openParam) openModal(openParam);
       })();
     </script>
   </body>

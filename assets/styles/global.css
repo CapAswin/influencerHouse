@@ -1033,6 +1033,10 @@ h1 em {
   gap: 16px;
 }
 
+.cards-industries {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .panel {
   background: var(--surface);
   border-radius: 20px;
@@ -5753,12 +5757,9 @@ body.modal-open {
     gap: 14px;
   }
 
-  .panel {
-    padding: 18px;
+  .cards-industries {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  .roadmap {
-    margin-top: 34px;
   }
 
   .roadmap-card {
@@ -5952,6 +5953,7 @@ body.modal-open {
   }
 
   .cards-3,
+  .cards-industries,
   .video-grid {
     grid-template-columns: 1fr;
   }
