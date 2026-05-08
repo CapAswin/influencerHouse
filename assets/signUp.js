@@ -1622,19 +1622,32 @@
   }
 
   if (otpResendBtn && otpFeedback) {
-    otpResendBtn.addEventListener('click', function () {
-      clearOtpDigits();
-      if (otpDigitInputs.length) {
-        otpDigitInputs[0].focus();
+    otpResendBtn.addEventListener('click', async function () {
+      var resendOtp = getApiClientMethod('resendOtp');
+      if (!resendOtp || !lastSignupPayload) return;
+
+      otpResendBtn.disabled = true;
+      otpFeedback.textContent = '';
+      otpFeedback.classList.remove('otp-feedback--error', 'otp-feedback--ok');
+
+      try {
+        await resendOtp({
+          email: lastSignupPayload.email,
+          password: lastSignupPayload.password,
+          user_type: lastSignupPayload.user_type
+        });
+        clearOtpDigits();
+        if (otpDigitInputs.length) otpDigitInputs[0].focus();
+        otpFeedback.textContent = 'A new OTP has been sent.';
+        otpFeedback.classList.add('otp-feedback--ok');
+        showSignupSnackbar({ type: 'info', message: 'A new OTP has been sent to your email.', actionLabel: 'OK' });
+      } catch (err) {
+        var msg = (err && err.message) || 'Failed to resend OTP. Please try again.';
+        otpFeedback.textContent = msg;
+        otpFeedback.classList.add('otp-feedback--error');
+      } finally {
+        otpResendBtn.disabled = false;
       }
-      otpFeedback.textContent = 'A new OTP has been sent.';
-      otpFeedback.classList.remove('otp-feedback--error');
-      otpFeedback.classList.add('otp-feedback--ok');
-      showSignupSnackbar({
-        type: 'info',
-        message: 'A new OTP has been sent to your email.',
-        actionLabel: 'OK'
-      });
     });
   }
 

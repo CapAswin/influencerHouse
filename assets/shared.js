@@ -642,6 +642,9 @@
     submitOtp: function (payload) {
       return apiSendJson('POST', '/signup', payload, { storeKey: 'signup:otp:last' });
     },
+    resendOtp: function (payload) {
+      return apiSendJson('POST', '/signup', payload, { storeKey: 'resend-otp:last' });
+    },
     submitContact: function (payload) {
       return apiSendJson('POST', '/contact', payload, { storeKey: 'contact:last' });
     },
