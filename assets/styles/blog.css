@@ -188,13 +188,6 @@
   transform: translateX(3px);
 }
 
-.blog-toc-item.is-active {
-  color: var(--primary);
-  border-color: rgba(97, 97, 255, 0.28);
-  background: rgba(97, 97, 255, 0.08);
-  box-shadow: 0 10px 26px rgba(97, 97, 255, 0.12);
-}
-
 .blog-side-backlink {
   display: inline-flex;
   align-items: center;
@@ -253,13 +246,6 @@
   background: rgba(97, 97, 255, 0.1);
   transform: translateX(4px);
   box-shadow: 0 8px 22px rgba(97, 97, 255, 0.1);
-}
-
-.blog-cat-pill.is-active {
-  color: var(--primary);
-  border-color: rgba(97, 97, 255, 0.34);
-  background: rgba(97, 97, 255, 0.11);
-  box-shadow: 0 10px 26px rgba(97, 97, 255, 0.12);
 }
 
 .blog-cat-pill span {
