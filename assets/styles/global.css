@@ -2259,7 +2259,6 @@ h1 em {
 
 .signup-back:hover {
   color: var(--primary);
-  transform: translateX(-3px);
 }
 
 .signup-back-icon {
