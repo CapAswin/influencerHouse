@@ -444,8 +444,6 @@
     'https://opulentinfluencershouse.com/web/api';
   // Use a single CORS-safe base URL for all API calls (browser).
   const API_BASE_URL = `https://corsproxy.io/?${REMOTE_API_BASE_URL}`;
-  const DEFAULT_API_TOKEN = 'J0eXAiOiJKV1QiLCJhbGciOiJ';
-
   function getApiToken() {
     try {
       return (
@@ -455,11 +453,10 @@
         localStorage.getItem('authToken') ||
         localStorage.getItem('access_token') ||
         sessionStorage.getItem('token') ||
-        DEFAULT_API_TOKEN ||
         ''
       );
     } catch (_) {
-      return DEFAULT_API_TOKEN || '';
+      return '';
     }
   }
 
