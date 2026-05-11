@@ -1,0 +1,15 @@
+# Environment variables — never commit secrets
+.env
+.env.*
+!.env.example
+
+# Generated at deploy time from .env — contains secrets
+assets/env.js
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
