@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Changa+One&display=swap");
+
 /* Lenis smooth scroll - height auto so momentum scroll measures correctly */
 html.lenis {
   height: auto;
@@ -340,31 +342,56 @@ h2 {
 }
 
 .logo {
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  font-size: 15px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   padding: 8px;
-  line-height: 0;
+  line-height: 1;
+  text-decoration: none;
 }
 
-.logo-icon {
-  width: auto;
-  /* Responsive on larger screens */
-  height: clamp(40px, 4.2vw, 52px);
-  object-fit: contain;
-  flex-shrink: 0;
+.creova-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.creova-logo-text {
+  font-family: "Changa One", cursive;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.creova-logo-star {
+  margin-left: 2px;
+  font-size: 0.62em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: super;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.logo.creova-logo {
+  font-size: clamp(1.45rem, 2.8vw, 1.85rem);
+}
+
+.creova-logo--footer .creova-logo-text {
+  color: #ffffff;
+}
+
+.footer-brand .creova-logo {
+  font-size: clamp(1.55rem, 3vw, 1.95rem);
 }
 
 @media (max-width: 900px) {
   .logo {
     padding: 6px;
-  }
-  .logo-icon {
-    /* Tablet + mobile: smaller, still responsive */
-    height: clamp(40px, 5.2vw, 36px);
   }
 }
 
@@ -372,9 +399,9 @@ h2 {
   .logo {
     padding: 5px;
   }
-  .logo-icon {
-    /* Small phones */
-    height: clamp(35px, 7.8vw, 34px);
+
+  .logo.creova-logo {
+    font-size: clamp(1.25rem, 5.5vw, 1.45rem);
   }
 
   /* Typography: reduce paragraph size on small phones */
@@ -2377,15 +2404,12 @@ h1 em {
 .signup-logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: -0.02em;
-  color: var(--ink);
+  margin-bottom: 0;
+  transition: transform var(--ease);
 }
 
-.signup-logo img {
-  border-radius: 10px;
+.signup-logo.creova-logo {
+  font-size: clamp(1.45rem, 2.5vw, 1.75rem);
 }
 
 .signup-main {
@@ -2466,24 +2490,6 @@ h1 em {
   text-transform: uppercase;
 }
 
-.signup-logo {
-  display: inline-flex;
-  align-items: center;
-  margin-bottom: 0;
-  transition: transform var(--ease);
-}
-
-.signup-logo img {
-  width: auto;
-  height: 44px;
-  object-fit: contain;
-}
-
-@media (max-width: 480px) {
-  .signup-logo img {
-    height: 40px;
-  }
-}
 
 .signup-panel h1 {
   font-size: clamp(1.45rem, 2.8vw, 2.05rem);
@@ -5404,11 +5410,6 @@ body.modal-open {
   margin-bottom: 24px;
 }
 
-.footer-brand .footer-main-logo {
-  max-width: 200px;
-  height: auto;
-  display: block;
-}
 
 .footer-socials {
   display: flex;
@@ -5648,10 +5649,6 @@ body.modal-open {
     padding: 5px;
   }
 
-  .logo-icon {
-    height: 38px;
-  }
-
   .nav-panel {
     gap: 10px;
   }
@@ -5758,7 +5755,6 @@ body.modal-open {
 
   .cards-industries {
     grid-template-columns: repeat(2, 1fr);
-  }
   }
 
   .roadmap-card {

@@ -3,8 +3,8 @@
   <div class="nav-wrap">
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
-        <a class="logo" href="index.html">
-          <img class="logo-icon" src="assets/images/logos/OPH_gold_black.png" alt="Opulent icon" width="36" height="36" />
+        <a class="logo creova-logo" href="index.html" aria-label="CREOVA">
+          <span class="creova-logo-text">CREOVA<span class="creova-logo-star" aria-hidden="true">✼</span></span>
         </a>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -55,29 +55,27 @@
     <div class="footer-orb footer-orb-1" aria-hidden="true"></div>
     <div class="footer-orb footer-orb-2" aria-hidden="true"></div>
     <div class="footer-wordmark-bg" aria-hidden="true">
-      <span>Opulent</span>
-      <span>Influencers</span>
-      <span>House</span>
+      <span>CREOVA</span>
     </div>
     <div class="container footer-content-wrap">
       <div class="footer-grid">
         <div class="footer-brand-col">
           <div class="footer-brand">
-            <a href="index.html" aria-label="Go to homepage">
-              <img class="footer-main-logo" src="assets/images/logos/Opulent%20influencers%20house%20gold%20%26%20white.png" alt="Opulent Logo" width="200" height="52" loading="lazy" decoding="async" />
+            <a class="creova-logo creova-logo--footer" href="index.html" aria-label="Go to homepage">
+              <span class="creova-logo-text">CREOVA<span class="creova-logo-star" aria-hidden="true">✼</span></span>
             </a>
           </div>
           <p class="footer-note" style="color:#6a6f84;font-size:13px;line-height:1.5;margin-bottom:20px;">
             Digital influencer infrastructure that helps brands and creators scale campaigns.
           </p>
           <div class="footer-socials">
-            <a href="https://www.tiktok.com/@opulentinfluencershouse" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <a href="https://www.tiktok.com/@creova" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
               <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor"><path d="M448,209.9a210.1,210.1,0,0,1-122.8-39.3V349.4A162.6,162.6,0,1,1,185,188.3V278.2a74.6,74.6,0,1,0,52.2,71.2V0l88,0a121.2,121.2,0,0,0,1.9,22.2h0A122.2,122.2,0,0,0,381,102.4a121.4,121.4,0,0,0,67,20.1Z"/></svg>
             </a>
             <a href="https://www.facebook.com/profile.php?id=61585214585761" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <svg viewBox="0 0 320 512" width="16" height="16" fill="currentColor"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
             </a>
-            <a href="https://www.instagram.com/opulentinfluencershouse/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href="https://www.instagram.com/creova/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
             </a>
             <a href="https://snapchat.com/t/r6Pjgsw3" target="_blank" rel="noopener noreferrer" aria-label="Snapchat">
@@ -596,7 +594,7 @@
   // --- API helpers (subscription plans + country list) ---
   const REMOTE_API_BASE_URL =
     window.API_BASE_URL ||
-    'https://opulentinfluencershouse.com/web/api';
+    'https://creova.com/web/api';
   // Use a single CORS-safe base URL for all API calls (browser).
   const API_BASE_URL = `https://corsproxy.io/?${REMOTE_API_BASE_URL}`;
   function getApiToken() {
