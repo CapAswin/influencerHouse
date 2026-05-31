@@ -108,11 +108,11 @@
           </div>
           <div class="contact-item" style="display:flex;gap:10px;align-items:flex-start;">
             <svg width="16" height="16" fill="var(--primary)" viewBox="0 0 512 512" style="margin-top:2px;"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
-            <a href="tel:971556173798" style="color:#8c95a8;font-size:13px;text-decoration:none;">+971 55 617 3798</a>
+            <a href="tel:+971000000000" style="color:#8c95a8;font-size:13px;text-decoration:none;">+971 00 000 0000</a>
           </div>
           <div class="contact-item" style="display:flex;gap:10px;align-items:flex-start;">
             <svg width="16" height="16" fill="var(--primary)" viewBox="0 0 384 512" style="margin-top:2px;flex-shrink:0;"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
-            <span style="color:#8c95a8;font-size:13px;line-height:1.5;">Office # 803 - 8th Floor, White Swan Building, Trade Centre District, Sheikh Zayed Road, Dubai, UAE.</span>
+            <span style="color:#8c95a8;font-size:13px;line-height:1.5;">123 Example Street, Sample City, UAE.</span>
           </div>
         </div>
 
@@ -130,7 +130,7 @@
       <div class="footer-divider"></div>
 
       <div class="footer-base">
-        <div class="footer-copy">Copyright ©2026 Developed by Ulegendary Digital</div>
+        <div class="footer-copy">Copyright ©2026 Developed by CREOVA Digital</div>
         <div class="footer-legal">
           <a href="#">Terms & Conditions</a>
           <a href="#">Privacy Policy</a>
