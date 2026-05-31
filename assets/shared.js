@@ -55,7 +55,7 @@
     <div class="footer-orb footer-orb-1" aria-hidden="true"></div>
     <div class="footer-orb footer-orb-2" aria-hidden="true"></div>
     <div class="footer-wordmark-bg" aria-hidden="true">
-      <span>CREOVA</span>
+      <span class="footer-wordmark-text">CREOVA<span class="creova-logo-star" aria-hidden="true">✼</span></span>
     </div>
     <div class="container footer-content-wrap">
       <div class="footer-grid">
@@ -263,6 +263,8 @@
     const cols = footer.querySelectorAll('.footer-grid > *');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+    const wordmarkText = wordmark ? wordmark.querySelector('.footer-wordmark-text') : null;
+
     let footerScrollRaf = null;
     function onScroll() {
       if (reduced.matches || !wordmark) return;
@@ -272,13 +274,25 @@
         const rect = footer.getBoundingClientRect();
         const vh = window.innerHeight;
         if (rect.top > vh + 120 || rect.bottom < -120) return;
-        const scrolled = vh - rect.top;
+
+        const footerHeight = rect.height;
+        const scrolled = Math.max(0, vh - rect.top);
+        const textHeight = wordmarkText
+          ? wordmarkText.getBoundingClientRect().height
+          : footerHeight * 0.35;
+        const maxTravel = Math.max(0, footerHeight - textHeight * 0.82);
+
+        const viewportWidth = window.innerWidth;
+        const isTabletLaptopRange = viewportWidth <= 1050 && viewportWidth >= 900;
+        const wordmarkParallaxFactor = isTabletLaptopRange ? 0.42 : 0.48;
+        const parallaxOffset = Math.min(scrolled * wordmarkParallaxFactor, maxTravel);
+        const parallaxY = parallaxOffset > 0 ? -parallaxOffset : 0;
+
+        wordmark.style.transform = parallaxY
+          ? `translate3d(0, ${parallaxY}px, 0)`
+          : '';
+
         if (scrolled > 0) {
-          const viewportWidth = window.innerWidth;
-          const isTabletLaptopRange = viewportWidth <= 1050 && viewportWidth >= 900;
-          const wordmarkBaseOffset = isTabletLaptopRange ? -42 : 0;
-          const wordmarkParallaxFactor = isTabletLaptopRange ? 0.32 : 0.38;
-          wordmark.style.transform = `translate3d(0, ${wordmarkBaseOffset + scrolled * wordmarkParallaxFactor}px, 0)`;
           if (orb1) orb1.style.transform = `translate3d(0, ${scrolled * 0.18}px, 0)`;
           if (orb2) orb2.style.transform = `translate3d(0, ${scrolled * -0.12}px, 0)`;
         }
