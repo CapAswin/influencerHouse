@@ -356,6 +356,25 @@ h2 {
   line-height: 1;
 }
 
+.creova-logo-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 40px;
+  object-fit: contain;
+}
+
+.logo.creova-logo .creova-logo-img {
+  max-height: clamp(32px, 4.5vw, 42px);
+}
+
+.creova-logo--footer .creova-logo-img,
+.footer-brand .creova-logo .creova-logo-img,
+.creova-logo-img--footer {
+  max-height: clamp(36px, 3.5vw, 48px);
+  max-width: min(168px, 100%);
+}
+
 .creova-logo-text {
   font-family: "Modak", cursive;
   font-weight: 400;
@@ -2410,6 +2429,10 @@ h1 em {
 
 .signup-logo.creova-logo {
   font-size: clamp(1.45rem, 2.5vw, 1.75rem);
+}
+
+.signup-logo.creova-logo .creova-logo-img {
+  max-height: clamp(30px, 2.5vw, 38px);
 }
 
 .signup-main {
