@@ -5625,12 +5625,12 @@ body.modal-open {
     grid-template-columns: repeat(2, 1fr);
     gap: 40px;
   }
+}
 
-  .testimonials {
+@media (max-width: 1180px) {
+  .testimonial-viewport {
+    overflow: hidden;
     width: 100%;
-    margin-left: 0;
-    min-height: 0;
-    flex-direction: column;
   }
 
   .testimonial-viewport::before,
@@ -5638,19 +5638,69 @@ body.modal-open {
     display: none;
   }
 
+  .testimonials {
+    width: 100%;
+    margin-left: 0;
+    min-height: 0;
+    gap: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
   .quote-card,
   .quote-card.is-active {
+    flex: 0 0 100%;
     width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 0;
     opacity: 1;
-    transform: none;
+    transform: none !important;
     filter: none;
     cursor: default;
+    box-sizing: border-box;
+    padding: 24px 22px;
+  }
+
+  .quote-card[data-pos="left"],
+  .quote-card[data-pos="center"],
+  .quote-card[data-pos="right"] {
+    order: unset;
   }
 
   .testimonials.is-switching .quote-card,
   .testimonials.is-switching .quote-card.is-active {
-    transform: none;
+    transform: none !important;
     opacity: 1;
+    filter: none;
+  }
+
+  .quote-main-copy,
+  .quote-side-copy {
+    max-width: none;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    display: block;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 600px) {
+  .quote-card,
+  .quote-card.is-active {
+    padding: 20px 16px;
+  }
+
+  .quote-mark {
+    font-size: 42px;
+    margin-bottom: 10px;
+  }
+
+  .tc-controls {
+    margin-top: 16px;
+    gap: 10px;
   }
 }
 
@@ -5802,20 +5852,6 @@ body.modal-open {
 
   .blog-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .testimonials {
-    width: 100%;
-    margin-left: 0;
-    gap: 14px;
-    min-height: 360px;
-    flex-direction: row;
-  }
-
-  .quote-card,
-  .quote-card.is-active {
-    width: 33.333%;
-    padding: 20px;
   }
 
   .pricing-wrap {
