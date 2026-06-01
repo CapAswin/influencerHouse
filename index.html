@@ -1158,20 +1158,34 @@ function setBillingCycle(nextCycle) {
           card.dataset.pos =
             i === left ? "left" : i === active ? "center" : "right";
         });
+        applyCompactTransform();
       }
 
       const SWITCH_DURATION = 360;
       const SWITCH_SETTLE = 140;
       let isSwitching = false;
-      const isCompact = () => window.matchMedia("(max-width: 1050px)").matches;
+      const isCompact = () => window.matchMedia("(max-width: 1180px)").matches;
+
+      function getSlideWidth() {
+        const viewport = track.parentElement;
+        return viewport ? viewport.getBoundingClientRect().width : 0;
+      }
+
+      function applyCompactTransform() {
+        if (!isCompact()) {
+          track.style.transform = "";
+          return;
+        }
+        track.style.transform =
+          "translateX(-" + active * getSlideWidth() + "px)";
+      }
 
       function switchTo(index) {
-        if (
-          index === active ||
-          isCompact() ||
-          isSwitching
-        )
+        if (index === active || isSwitching) return;
+        if (isCompact()) {
+          render(index);
           return;
+        }
         isSwitching = true;
         track.classList.add("is-switching");
         window.setTimeout(() => {
@@ -1184,6 +1198,19 @@ function setBillingCycle(nextCycle) {
       }
 
       render(active);
+
+      let resizeTimer;
+      window.addEventListener("resize", function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          if (isCompact()) {
+            applyCompactTransform();
+          } else {
+            track.style.transform = "";
+            render(active);
+          }
+        }, 120);
+      });
 
       /* --- carousel controls --- */
       const dotsWrap = document.getElementById("tcDots");
@@ -1204,10 +1231,9 @@ function setBillingCycle(nextCycle) {
         });
       }
 
-      const origSwitchTo = switchTo;
       function switchToWithDots(index) {
-        origSwitchTo(index);
-        setTimeout(updateDots, SWITCH_DURATION);
+        switchTo(index);
+        setTimeout(updateDots, isCompact() ? 0 : SWITCH_DURATION);
       }
 
       const prevBtn = document.getElementById("tcPrev");
