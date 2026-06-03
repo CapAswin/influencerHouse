@@ -10,20 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # InfinityFree FTP usually opens inside htdocs — do not upload to htdocs/htdocs/
-      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      # Force correct FTP sync to InfinityFree htdocs
+      - name: Deploy to InfinityFree via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+
+          # IMPORTANT: InfinityFree root is htdocs
+          server-dir: /htdocs/
+
+          # Your project root
           local-dir: ./
-          server-dir: ./
+
+          # Prevent junk uploads
           exclude: |
             **/.git*
             **/.github/**
             **/scripts/**
+            node_modules/**
             package.json
+            package-lock.json
             .env
             .env.*
+
+          # FIX: forces full sync if cache issues happen
+          dangerous-clean-slate: true
