@@ -36,13 +36,20 @@
     return '/' + parts.join('');
   }
 
+  function pageFile(slug) {
+    const normalized = normalizeSlug(slug);
+    if (normalized === 'index') return 'index.html';
+    if (normalized === 'signUp') return 'signUp.html';
+    return normalized + '.html';
+  }
+
   function sitePath(slug) {
     const root = getSiteRoot();
     if (!slug || slug === 'index') {
       const home = (root || '') + '/';
       return home.replace(/\/{2,}/g, '/') || '/';
     }
-    return ((root || '') + '/' + slug).replace(/\/{2,}/g, '/');
+    return ((root || '') + '/' + pageFile(slug)).replace(/\/{2,}/g, '/');
   }
 
   function currentPageSlug() {

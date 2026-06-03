@@ -180,7 +180,7 @@
     }
   }
 
-  // Set active nav link (extensionless URLs + optional subdirectory home)
+  // Set active nav link (.html URLs + optional subdirectory home)
   const activeSlug = currentPageSlug();
   document.querySelectorAll('.nav-links a').forEach(a => {
     const href = a.getAttribute('href') || '';
