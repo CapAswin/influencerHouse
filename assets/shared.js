@@ -1,9 +1,29 @@
 (function () {
+  const sitePath =
+    typeof window.sitePath === 'function'
+      ? window.sitePath
+      : function (slug) {
+          if (!slug || slug === 'index') return 'index.html';
+          return slug + '.html';
+        };
+  const currentPageSlug =
+    typeof window.currentPageSlug === 'function'
+      ? window.currentPageSlug
+      : function () {
+          return (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '');
+        };
+  const normalizeSlug =
+    typeof window.normalizeSlug === 'function'
+      ? window.normalizeSlug
+      : function (segment) {
+          return String(segment || 'index').replace(/\.html$/, '');
+        };
+
   const headerHTML = `
   <div class="nav-wrap">
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
-        <a class="logo creova-logo" href="index.html" aria-label="CREOVA">
+        <a class="logo creova-logo" href="${sitePath('index')}" aria-label="CREOVA">
           <img class="creova-logo-img" src="assets/images/logos/logo.png" alt="" width="140" height="40" decoding="async" />
         </a>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
@@ -13,16 +33,16 @@
         </button>
         <div class="nav-panel" aria-label="Primary navigation links">
           <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="for-brands.html">For Brands</a>
-            <a href="for-influencers.html">For Influencers</a>
-            <a href="service.html">Services</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
+            <a href="${sitePath('index')}">Home</a>
+            <a href="${sitePath('about')}">About Us</a>
+            <a href="${sitePath('for-brands')}">For Brands</a>
+            <a href="${sitePath('for-influencers')}">For Influencers</a>
+            <a href="${sitePath('service')}">Services</a>
+            <a href="${sitePath('blog')}">Blog</a>
+            <a href="${sitePath('contact')}">Contact</a>
           </div>
           <div class="nav-actions">
-            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+            <a href="${sitePath('signUp')}" class="btn btn-gold">Sign Up</a>
           </div>
         </div>
       </nav>
@@ -34,16 +54,16 @@
         </button>
         <div class="nav-panel">
           <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="for-brands.html">For Brands</a>
-            <a href="for-influencers.html">For Influencers</a>
-            <a href="service.html">Services</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
+            <a href="${sitePath('index')}">Home</a>
+            <a href="${sitePath('about')}">About Us</a>
+            <a href="${sitePath('for-brands')}">For Brands</a>
+            <a href="${sitePath('for-influencers')}">For Influencers</a>
+            <a href="${sitePath('service')}">Services</a>
+            <a href="${sitePath('blog')}">Blog</a>
+            <a href="${sitePath('contact')}">Contact</a>
           </div>
           <div class="nav-actions">
-            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+            <a href="${sitePath('signUp')}" class="btn btn-gold">Sign Up</a>
           </div>
         </div>
       </div>
@@ -61,7 +81,7 @@
       <div class="footer-grid">
         <div class="footer-brand-col">
           <div class="footer-brand">
-            <a class="creova-logo creova-logo--footer" href="index.html" aria-label="Go to homepage">
+            <a class="creova-logo creova-logo--footer" href="${sitePath('index')}" aria-label="Go to homepage">
               <img class="creova-logo-img creova-logo-img--footer" src="assets/images/logos/footer_logo.png" alt="" width="160" height="48" decoding="async" />
             </a>
           </div>
@@ -89,14 +109,14 @@
         <div class="footer-nav-col">
           <strong>Browse Categories</strong>
           <nav aria-label="Category navigation">
-            <a href="about.html">About Us</a>
-            <a href="for-brands.html">For Brands</a>
-            <a href="for-influencers.html">For Influencers</a>
-            <a href="service.html">Services</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="faq-brands.html">FAQ – Brands</a>
-            <a href="faq-influencers.html">FAQ – Influencers</a>
+            <a href="${sitePath('about')}">About Us</a>
+            <a href="${sitePath('for-brands')}">For Brands</a>
+            <a href="${sitePath('for-influencers')}">For Influencers</a>
+            <a href="${sitePath('service')}">Services</a>
+            <a href="${sitePath('blog')}">Blog</a>
+            <a href="${sitePath('contact')}">Contact Us</a>
+            <a href="${sitePath('faq-brands')}">FAQ – Brands</a>
+            <a href="${sitePath('faq-influencers')}">FAQ – Influencers</a>
           </nav>
         </div>
 
@@ -160,12 +180,13 @@
     }
   }
 
-  // Set active nav link based on current page (handles both .html and clean URLs)
-  const currentFile = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '');
+  // Set active nav link (extensionless URLs + optional subdirectory home)
+  const activeSlug = currentPageSlug();
   document.querySelectorAll('.nav-links a').forEach(a => {
     const href = a.getAttribute('href') || '';
-    const hrefFile = href.replace(/\.html$/, '');
-    a.classList.toggle('active', hrefFile === currentFile);
+    const linkSlug = normalizeSlug(href.split('/').filter(Boolean).pop() || '');
+    const isHomeLink = linkSlug === 'index' && (activeSlug === 'index' || href.endsWith('/'));
+    a.classList.toggle('active', isHomeLink || linkSlug === activeSlug);
   });
 
   (function initStickyNavState() {

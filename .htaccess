@@ -1,3 +1,23 @@
-# Custom 404 page
-ErrorDocument 404 /404.html
+Options -MultiViews
 
+RewriteEngine On
+
+# Preserve Authorization header when present
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Redirect explicit .html URLs to extensionless URLs
+RewriteCond %{THE_REQUEST} \s/+([^?\s]*?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# Serve existing files and directories as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Map extensionless paths to matching .html files
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+
+# Custom 404 (relative to this folder — works in subdirectories)
+ErrorDocument 404 404.html
