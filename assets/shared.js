@@ -130,7 +130,7 @@
       <div class="footer-divider"></div>
 
       <div class="footer-base">
-        <div class="footer-copy">Copyright ©2026 Developed by CREOVA Digital</div>
+        <div class="footer-copy">Copyright ©2026 Developed by CREOVA Digital <span class="footer-version">v${window.APP_VERSION}</span></div>
         <div class="footer-legal">
           <a href="#">Terms & Conditions</a>
           <a href="#">Privacy Policy</a>

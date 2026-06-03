@@ -5582,6 +5582,14 @@ body.modal-open {
   font-size: 13px;
 }
 
+.footer-version {
+  color: #5a6072;
+  font-size: 12px;
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid #2a2f42;
+}
+
 .footer-legal {
   display: flex;
   gap: 30px;
