@@ -6,11 +6,7 @@ RewriteEngine On
 RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-# Redirect explicit .html URLs to extensionless URLs
-RewriteCond %{THE_REQUEST} \s/([^.]+)\.html[\s?] [NC]
-RewriteRule ^ %1 [R=301,L]
-
-# Serve existing files/folders as-is
+# Serve existing files/folders as-is (including .html URLs)
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]

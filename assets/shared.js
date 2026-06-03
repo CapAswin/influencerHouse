@@ -160,10 +160,12 @@
     }
   }
 
-  // Set active nav link based on current page
-  const page = location.pathname.split('/').pop() || 'index.html';
+  // Set active nav link based on current page (handles both .html and clean URLs)
+  const currentFile = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '');
   document.querySelectorAll('.nav-links a').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === page);
+    const href = a.getAttribute('href') || '';
+    const hrefFile = href.replace(/\.html$/, '');
+    a.classList.toggle('active', hrefFile === currentFile);
   });
 
   (function initStickyNavState() {
