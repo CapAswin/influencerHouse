@@ -366,6 +366,8 @@
 
   initFooterAnimations();
 
+  const NEWSLETTER_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJNOA8aD4gq4KjvH-UtfwdKXbBB_-LgUSjuQC0cpVIOpnUVOOsm9S816qYpxbn69bBOg/exec";
+
   function initNewsletterCapture() {
     var footer = document.querySelector('[data-shared-footer="true"]');
     if (!footer) return;
@@ -475,42 +477,36 @@
         return;
       }
 
-      var client = window.API_CLIENT;
-      if (!client || typeof client.submitContact !== 'function') {
-        showSnackbar({
-          type: 'error',
-          message: 'Newsletter API is not available.',
-          actionLabel: 'OK'
-        });
-        return;
-      }
-
       showSnackbar({
-        type: 'info',
-        message: 'Subscribing…',
-        actionLabel: 'Wait',
+        type: "info",
+        message: "Subscribing…",
+        actionLabel: "Wait",
         duration: 1800
       });
 
       try {
-        await client.submitContact({
-          name: 'none',
-          email: email,
-          phone: '00000',
-          subject: 'newsletter subscribe',
-          message: 'newsletter subscribe from footer'
+        await fetch(NEWSLETTER_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({
+            email: email,
+            subject: "newsletter subscribe",
+            message: "newsletter subscribe from footer",
+            submittedAt: new Date().toISOString(),
+          }),
         });
         showSnackbar({
-          type: 'success',
-          message: 'Subscribed.',
-          actionLabel: 'OK'
+          type: "success",
+          message: "Subscribed.",
+          actionLabel: "OK"
         });
-        try { if (emailInput) emailInput.value = ''; } catch (_) {}
+        try { if (emailInput) emailInput.value = ""; } catch (_) {}
       } catch (err) {
         showSnackbar({
-          type: 'error',
-          message: (err && err.message) ? String(err.message) : 'Subscription failed. Please try again.',
-          actionLabel: 'Retry'
+          type: "error",
+          message: (err && err.message) ? String(err.message) : "Subscription failed. Please try again.",
+          actionLabel: "Retry"
         });
       }
     });
