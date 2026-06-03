@@ -1,20 +1,3 @@
-Options -MultiViews
-
-RewriteEngine On
-
-# Ensure Authorization header is preserved (optional; safe default)
-RewriteCond %{HTTP:Authorization} .
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-# Serve existing files/folders as-is (including .html URLs)
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
-# Map extensionless URLs to .html if that file exists
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^ %{REQUEST_URI}.html [L]
-
 # Custom 404 page
 ErrorDocument 404 /404.html
 
