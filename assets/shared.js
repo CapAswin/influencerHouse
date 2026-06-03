@@ -1,4 +1,5 @@
 (function () {
+  function init() {
   const assetRoot =
     (typeof window.getSiteRoot === 'function' ? window.getSiteRoot() : '') + '/assets';
   const asset = (path) =>
@@ -166,7 +167,10 @@
 
   // Inject header early to avoid nav flash/layout shift
   const headerEl = document.getElementById('site-header');
-  if (headerEl) headerEl.outerHTML = headerHTML;
+  if (headerEl) {
+    // outerHTML replaces the node; headerEl is no longer in the DOM after this.
+    headerEl.outerHTML = headerHTML;
+  }
 
   // Inject footer when the browser is idle (below-the-fold, non-critical for first paint)
   const footerEl = document.getElementById('site-footer');
@@ -391,8 +395,6 @@
       syncParallaxNow();
     }
   }
-
-  initFooterAnimations();
 
   function initNewsletterCapture() {
     var footer = document.querySelector('[data-shared-footer="true"]');
@@ -841,4 +843,11 @@
       return apiSendJson('POST', '/contact', payload, { storeKey: 'contact:last' });
     },
   };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
