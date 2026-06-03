@@ -302,20 +302,19 @@
 
       const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJNOA8aD4gq4KjvH-UtfwdKXbBB_-LgUSjuQC0cpVIOpnUVOOsm9S816qYpxbn69bBOg/exec';
 
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        const data = new FormData(form);
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          const data = new FormData(form);
+          const payload = {
+            fullName: (data.get('full-name') || '').trim(),
+            email: (data.get('email') || '').trim(),
+            phone: (data.get('phone') || '').trim(),
+            subject: subjectMap[data.get('subject')] || data.get('subject') || '',
+            message: (data.get('message') || '').trim(),
+            agreement: data.get('contact_agreement') === 'on',
+            submittedAt: new Date().toISOString(),
+          };
 
-        const payload = {
-          fullName: (data.get('full-name') || '').trim(),   
-          email: (data.get('email') || '').trim(),
-          phone: (data.get('phone') || '').trim(),
-          subject: subjectMap[data.get('subject')] || data.get('subject') || '',
-          message: (data.get('message') || '').trim(),
-          agreement: data.get('contact_agreement') === 'on', 
-        };
-
-          payload.submittedAt = new Date().toISOString();
           btn.disabled = true;
           btn.textContent = 'Sending…';
 
@@ -327,28 +326,28 @@
             } catch (_) {
               payload.ipAddress = 'unknown';
             }
-            const res = await fetch(GOOGLE_SCRIPT_URL, {
+            await fetch(GOOGLE_SCRIPT_URL, {
               method: 'POST',
               mode: 'no-cors',
-              headers: { 'Content-Type': 'application/json' },
+              headers: { 'Content-Type': 'text/plain' },
               body: JSON.stringify(payload),
             });
-          btn.textContent = 'Message Sent!';
-          form.reset();
-          showContactSnackbar(
-            'success',
-            'Thanks - your message has been sent. The team will get back to you soon.',
-          );
-        } catch (err) {
-          btn.disabled = false;
-          btn.textContent = 'Submit Now';
-          showContactSnackbar(
-            'error',
-            (err && err.message) ||
-            'Something went wrong while sending your message. Please try again.',
-          );
-        }
-      });
+            btn.textContent = 'Message Sent!';
+            form.reset();
+            showContactSnackbar(
+              'success',
+              'Thanks - your message has been sent. The team will get back to you soon.',
+            );
+          } catch (err) {
+            btn.disabled = false;
+            btn.textContent = 'Submit Now';
+            showContactSnackbar(
+              'error',
+              (err && err.message) ||
+              'Something went wrong while sending your message. Please try again.',
+            );
+          }
+        });
     })();
   </script>
 </body>
