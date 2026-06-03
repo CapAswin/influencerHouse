@@ -1,4 +1,9 @@
 (function () {
+  const assetRoot =
+    (typeof window.getSiteRoot === 'function' ? window.getSiteRoot() : '') + '/assets';
+  const asset = (path) =>
+    (assetRoot + '/' + String(path).replace(/^\/+/, '')).replace(/\/{2,}/g, '/');
+
   const sitePath =
     typeof window.sitePath === 'function'
       ? window.sitePath
@@ -24,7 +29,7 @@
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
         <a class="logo creova-logo" href="${sitePath('index')}" aria-label="CREOVA">
-          <img class="creova-logo-img" src="assets/images/logos/logo.png" alt="" width="140" height="40" decoding="async" />
+          <img class="creova-logo-img" src="${asset('images/logos/logo.png')}" alt="" width="140" height="40" decoding="async" />
         </a>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -82,7 +87,7 @@
         <div class="footer-brand-col">
           <div class="footer-brand">
             <a class="creova-logo creova-logo--footer" href="${sitePath('index')}" aria-label="Go to homepage">
-              <img class="creova-logo-img creova-logo-img--footer" src="assets/images/logos/footer_logo.png" alt="" width="160" height="48" decoding="async" />
+              <img class="creova-logo-img creova-logo-img--footer" src="${asset('images/logos/footer_logo.png')}" alt="" width="160" height="48" decoding="async" />
             </a>
           </div>
           <p class="footer-note" style="color:#6a6f84;font-size:13px;line-height:1.5;margin-bottom:20px;">
