@@ -1,36 +1,10 @@
 (function () {
-  function init() {
-  const assetRoot =
-    (typeof window.getSiteRoot === 'function' ? window.getSiteRoot() : '') + '/assets';
-  const asset = (path) =>
-    (assetRoot + '/' + String(path).replace(/^\/+/, '')).replace(/\/{2,}/g, '/');
-
-  const sitePath =
-    typeof window.sitePath === 'function'
-      ? window.sitePath
-      : function (slug) {
-          if (!slug || slug === 'index') return 'index.html';
-          return slug + '.html';
-        };
-  const currentPageSlug =
-    typeof window.currentPageSlug === 'function'
-      ? window.currentPageSlug
-      : function () {
-          return (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '');
-        };
-  const normalizeSlug =
-    typeof window.normalizeSlug === 'function'
-      ? window.normalizeSlug
-      : function (segment) {
-          return String(segment || 'index').replace(/\.html$/, '');
-        };
-
   const headerHTML = `
   <div class="nav-wrap">
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
-        <a class="logo creova-logo" href="${sitePath('index')}" aria-label="CREOVA">
-          <img class="creova-logo-img" src="${asset('images/logos/logo.png')}" alt="" width="140" height="40" decoding="async" />
+        <a class="logo creova-logo" href="index.html" aria-label="CREOVA">
+          <img class="creova-logo-img" src="assets/images/logos/logo.png" alt="" width="140" height="40" decoding="async" />
         </a>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -39,16 +13,16 @@
         </button>
         <div class="nav-panel" aria-label="Primary navigation links">
           <div class="nav-links">
-            <a href="${sitePath('index')}">Home</a>
-            <a href="${sitePath('about')}">About Us</a>
-            <a href="${sitePath('for-brands')}">For Brands</a>
-            <a href="${sitePath('for-influencers')}">For Influencers</a>
-            <a href="${sitePath('service')}">Services</a>
-            <a href="${sitePath('blog')}">Blog</a>
-            <a href="${sitePath('contact')}">Contact</a>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="for-brands.html">For Brands</a>
+            <a href="for-influencers.html">For Influencers</a>
+            <a href="service.html">Services</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
           </div>
           <div class="nav-actions">
-            <a href="${sitePath('signUp')}" class="btn btn-gold">Sign Up</a>
+            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
           </div>
         </div>
       </nav>
@@ -60,16 +34,16 @@
         </button>
         <div class="nav-panel">
           <div class="nav-links">
-            <a href="${sitePath('index')}">Home</a>
-            <a href="${sitePath('about')}">About Us</a>
-            <a href="${sitePath('for-brands')}">For Brands</a>
-            <a href="${sitePath('for-influencers')}">For Influencers</a>
-            <a href="${sitePath('service')}">Services</a>
-            <a href="${sitePath('blog')}">Blog</a>
-            <a href="${sitePath('contact')}">Contact</a>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="for-brands.html">For Brands</a>
+            <a href="for-influencers.html">For Influencers</a>
+            <a href="service.html">Services</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
           </div>
           <div class="nav-actions">
-            <a href="${sitePath('signUp')}" class="btn btn-gold">Sign Up</a>
+            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
           </div>
         </div>
       </div>
@@ -87,8 +61,8 @@
       <div class="footer-grid">
         <div class="footer-brand-col">
           <div class="footer-brand">
-            <a class="creova-logo creova-logo--footer" href="${sitePath('index')}" aria-label="Go to homepage">
-              <img class="creova-logo-img creova-logo-img--footer" src="${asset('images/logos/footer_logo.png')}" alt="" width="160" height="48" decoding="async" />
+            <a class="creova-logo creova-logo--footer" href="index.html" aria-label="Go to homepage">
+              <img class="creova-logo-img creova-logo-img--footer" src="assets/images/logos/footer_logo.png" alt="" width="160" height="48" decoding="async" />
             </a>
           </div>
           <p class="footer-note" style="color:#6a6f84;font-size:13px;line-height:1.5;margin-bottom:20px;">
@@ -115,14 +89,14 @@
         <div class="footer-nav-col">
           <strong>Browse Categories</strong>
           <nav aria-label="Category navigation">
-            <a href="${sitePath('about')}">About Us</a>
-            <a href="${sitePath('for-brands')}">For Brands</a>
-            <a href="${sitePath('for-influencers')}">For Influencers</a>
-            <a href="${sitePath('service')}">Services</a>
-            <a href="${sitePath('blog')}">Blog</a>
-            <a href="${sitePath('contact')}">Contact Us</a>
-            <a href="${sitePath('faq-brands')}">FAQ – Brands</a>
-            <a href="${sitePath('faq-influencers')}">FAQ – Influencers</a>
+            <a href="about.html">About Us</a>
+            <a href="for-brands.html">For Brands</a>
+            <a href="for-influencers.html">For Influencers</a>
+            <a href="service.html">Services</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="faq-brands.html">FAQ – Brands</a>
+            <a href="faq-influencers.html">FAQ – Influencers</a>
           </nav>
         </div>
 
@@ -167,10 +141,7 @@
 
   // Inject header early to avoid nav flash/layout shift
   const headerEl = document.getElementById('site-header');
-  if (headerEl) {
-    // outerHTML replaces the node; headerEl is no longer in the DOM after this.
-    headerEl.outerHTML = headerHTML;
-  }
+  if (headerEl) headerEl.outerHTML = headerHTML;
 
   // Inject footer when the browser is idle (below-the-fold, non-critical for first paint)
   const footerEl = document.getElementById('site-footer');
@@ -189,13 +160,10 @@
     }
   }
 
-  // Set active nav link (.html URLs + optional subdirectory home)
-  const activeSlug = currentPageSlug();
+  // Set active nav link based on current page
+  const page = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(a => {
-    const href = a.getAttribute('href') || '';
-    const linkSlug = normalizeSlug(href.split('/').filter(Boolean).pop() || '');
-    const isHomeLink = linkSlug === 'index' && (activeSlug === 'index' || href.endsWith('/'));
-    a.classList.toggle('active', isHomeLink || linkSlug === activeSlug);
+    a.classList.toggle('active', a.getAttribute('href') === page);
   });
 
   (function initStickyNavState() {
@@ -395,6 +363,8 @@
       syncParallaxNow();
     }
   }
+
+  initFooterAnimations();
 
   function initNewsletterCapture() {
     var footer = document.querySelector('[data-shared-footer="true"]');
@@ -843,11 +813,4 @@
       return apiSendJson('POST', '/contact', payload, { storeKey: 'contact:last' });
     },
   };
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
 })();

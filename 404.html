@@ -43,20 +43,11 @@
         </p>
 
         <div class="not-found-actions">
-          <a class="btn btn-dark" data-site-href="index" href="/">Take me home</a>
-          <a class="btn btn-gold" data-site-href="about" href="/about.html">About Us</a>
+          <a class="btn btn-dark" href="index.html">Take me home</a>
+          <a class="btn btn-gold" href="about.html">About Us</a>
         </div>
       </section>
     </main>
-    <script src="assets/site-root.js"></script>
-    <script>
-      document.querySelectorAll('[data-site-href]').forEach(function (link) {
-        var slug = link.getAttribute('data-site-href');
-        if (slug && typeof window.sitePath === 'function') {
-          link.href = window.sitePath(slug);
-        }
-      });
-    </script>
   </body>
 </html>
 

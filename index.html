@@ -762,26 +762,15 @@
 
   <script src="assets/vendor/lenis.min.js"></script>
   <script src="assets/env.js"></script>
-  <script src="assets/site-root.js"></script>
   <script src="assets/shared.js"></script>
   <script>
     (function () {
-      function toPageUrl(raw) {
-        var parts = String(raw || '').split('?');
-        var file = parts[0].replace(/\.html$/i, '').replace(/^\/+/, '');
-        var slug = file.toLowerCase() === 'signup' ? 'signUp' : file;
-        var path =
-          typeof window.sitePath === 'function' ? window.sitePath(slug) : parts[0];
-        return parts[1] ? path + '?' + parts[1] : path;
-      }
-
       function navigateTo(url) {
-        var target = toPageUrl(url);
         var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reduced) { window.location.href = target; return; }
+        if (reduced) { window.location.href = url; return; }
         document.documentElement.style.transition = 'opacity 0.38s cubic-bezier(0.4,0,1,1)';
         document.documentElement.style.opacity = '0';
-        setTimeout(function () { window.location.href = target; }, 360);
+        setTimeout(function () { window.location.href = url; }, 360);
       }
 
       const brandBtn = document.getElementById("hero-brand-btn");
