@@ -319,13 +319,6 @@
           btn.textContent = 'Sending…';
 
           try {
-            try {
-              const ipRes = await fetch('https://api.ipify.org?format=json');
-              const ipData = await ipRes.json();
-              payload.ipAddress = ipData.ip;
-            } catch (_) {
-              payload.ipAddress = 'unknown';
-            }
             await fetch(GOOGLE_SCRIPT_URL, {
               method: 'POST',
               mode: 'no-cors',
