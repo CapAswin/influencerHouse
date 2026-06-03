@@ -18,4 +18,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
+          # InfinityFree: upload into htdocs (site root). If FTP already opens inside htdocs, use server-dir: ./
           server-dir: htdocs/

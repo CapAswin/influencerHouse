@@ -1,10 +1,36 @@
 (function () {
+  const NAV_ITEMS = [
+    ['index.html', 'Home'],
+    ['about.html', 'About Us'],
+    ['for-brands.html', 'For Brands'],
+    ['for-influencers.html', 'For Influencers'],
+    ['service.html', 'Services'],
+    ['blog.html', 'Blog'],
+    ['contact.html', 'Contact'],
+  ];
+
+  /** Root-absolute paths so nav works on InfinityFree for both /page and /page.html URLs. */
+  function siteHref(file) {
+    if (!file || file === 'index.html') return '/';
+    return '/' + file;
+  }
+
+  function assetHref(path) {
+    return '/' + String(path || '').replace(/^\//, '');
+  }
+
+  function navLinksHtml() {
+    return NAV_ITEMS.map(function (item) {
+      return '<a href="' + siteHref(item[0]) + '">' + item[1] + '</a>';
+    }).join('\n            ');
+  }
+
   const headerHTML = `
   <div class="nav-wrap">
     <div class="container">
       <nav class="navbar" aria-label="Primary navigation">
-        <a class="logo creova-logo" href="index.html" aria-label="CREOVA">
-          <img class="creova-logo-img" src="assets/images/logos/logo.png" alt="" width="140" height="40" decoding="async" />
+        <a class="logo creova-logo" href="${siteHref('index.html')}" aria-label="CREOVA">
+          <img class="creova-logo-img" src="${assetHref('assets/images/logos/logo.png')}" alt="" width="140" height="40" decoding="async" />
         </a>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open menu">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -13,16 +39,10 @@
         </button>
         <div class="nav-panel" aria-label="Primary navigation links">
           <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="for-brands.html">For Brands</a>
-            <a href="for-influencers.html">For Influencers</a>
-            <a href="service.html">Services</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
+            ${navLinksHtml()}
           </div>
           <div class="nav-actions">
-            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+            <a href="${siteHref('signUp.html')}" class="btn btn-gold">Sign Up</a>
           </div>
         </div>
       </nav>
@@ -34,16 +54,10 @@
         </button>
         <div class="nav-panel">
           <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="for-brands.html">For Brands</a>
-            <a href="for-influencers.html">For Influencers</a>
-            <a href="service.html">Services</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
+            ${navLinksHtml()}
           </div>
           <div class="nav-actions">
-            <a href="signUp.html" class="btn btn-gold">Sign Up</a>
+            <a href="${siteHref('signUp.html')}" class="btn btn-gold">Sign Up</a>
           </div>
         </div>
       </div>
@@ -61,8 +75,8 @@
       <div class="footer-grid">
         <div class="footer-brand-col">
           <div class="footer-brand">
-            <a class="creova-logo creova-logo--footer" href="index.html" aria-label="Go to homepage">
-              <img class="creova-logo-img creova-logo-img--footer" src="assets/images/logos/footer_logo.png" alt="" width="160" height="48" decoding="async" />
+            <a class="creova-logo creova-logo--footer" href="${siteHref('index.html')}" aria-label="Go to homepage">
+              <img class="creova-logo-img creova-logo-img--footer" src="${assetHref('assets/images/logos/footer_logo.png')}" alt="" width="160" height="48" decoding="async" />
             </a>
           </div>
           <p class="footer-note" style="color:#6a6f84;font-size:13px;line-height:1.5;margin-bottom:20px;">
@@ -89,14 +103,14 @@
         <div class="footer-nav-col">
           <strong>Browse Categories</strong>
           <nav aria-label="Category navigation">
-            <a href="about.html">About Us</a>
-            <a href="for-brands.html">For Brands</a>
-            <a href="for-influencers.html">For Influencers</a>
-            <a href="service.html">Services</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="faq-brands.html">FAQ – Brands</a>
-            <a href="faq-influencers.html">FAQ – Influencers</a>
+            <a href="${siteHref('about.html')}">About Us</a>
+            <a href="${siteHref('for-brands.html')}">For Brands</a>
+            <a href="${siteHref('for-influencers.html')}">For Influencers</a>
+            <a href="${siteHref('service.html')}">Services</a>
+            <a href="${siteHref('blog.html')}">Blog</a>
+            <a href="${siteHref('contact.html')}">Contact Us</a>
+            <a href="${siteHref('faq-brands.html')}">FAQ – Brands</a>
+            <a href="${siteHref('faq-influencers.html')}">FAQ – Influencers</a>
           </nav>
         </div>
 
@@ -160,10 +174,30 @@
     }
   }
 
-  // Set active nav link based on current page
-  const page = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === page);
+  function getScrollTop() {
+    const lenis = window.lenis;
+    if (lenis && typeof lenis.scroll === 'number') return lenis.scroll;
+    return window.scrollY || 0;
+  }
+
+  function currentPageFile() {
+    let segment = location.pathname.split('/').pop() || '';
+    if (!segment || segment === 'index' || segment === 'index.html') return 'index.html';
+    if (!segment.includes('.')) return segment + '.html';
+    return segment;
+  }
+
+  function hrefToPageFile(href) {
+    if (!href || href === '/') return 'index.html';
+    const path = href.split('?')[0].split('#')[0];
+    const segment = path.replace(/^\//, '');
+    return segment || 'index.html';
+  }
+
+  // Set active nav link (works with /page and /page.html on production)
+  const activeFile = currentPageFile();
+  document.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.classList.toggle('active', hrefToPageFile(a.getAttribute('href')) === activeFile);
   });
 
   (function initStickyNavState() {
@@ -173,7 +207,7 @@
     let stickyRaf = null;
     function updateStickyState() {
       stickyRaf = null;
-      navWrap.classList.toggle('is-scrolled', window.scrollY > 12);
+      navWrap.classList.toggle('is-scrolled', getScrollTop() > 12);
     }
 
     function onScroll() {
@@ -183,6 +217,11 @@
 
     updateStickyState();
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('lenis:ready', function () {
+      if (window.lenis && typeof window.lenis.on === 'function') {
+        window.lenis.on('scroll', onScroll);
+      }
+    });
   })();
 
   (function initMobileNav() {
@@ -194,36 +233,65 @@
     const panel = dialog.querySelector('.nav-panel');
     if (!panel) return;
 
+    let isOpen = false;
+    let scrollY = 0;
+
     function setOpen(open) {
       const next = Boolean(open);
+      if (next === isOpen) return;
+      isOpen = next;
+
       nav.classList.toggle('nav-is-open', next);
       btn.setAttribute('aria-expanded', next ? 'true' : 'false');
       btn.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
       document.body.classList.toggle('nav-open', next);
+      dialog.classList.toggle('is-visible', next);
 
-      const isDialogOpen = dialog.hasAttribute('open');
-      if (next && !isDialogOpen) {
-        if (typeof dialog.showModal === 'function') dialog.showModal();
-        else dialog.setAttribute('open', '');
-      } else if (!next && isDialogOpen) {
-        if (typeof dialog.close === 'function') dialog.close();
-        else dialog.removeAttribute('open');
+      const lenis = window.lenis;
+      if (next) {
+        scrollY = getScrollTop();
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + scrollY + 'px';
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
+        if (lenis && typeof lenis.stop === 'function') lenis.stop();
+        if (typeof dialog.showModal === 'function') {
+          if (!dialog.open) dialog.showModal();
+        } else {
+          dialog.setAttribute('open', '');
+        }
+      } else {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.width = '';
+        if (lenis && typeof lenis.scrollTo === 'function') {
+          lenis.scrollTo(scrollY, { immediate: true });
+        } else {
+          window.scrollTo(0, scrollY);
+        }
+        if (lenis && typeof lenis.start === 'function') lenis.start();
+        if (typeof dialog.close === 'function') {
+          if (dialog.open) dialog.close();
+        } else {
+          dialog.removeAttribute('open');
+        }
       }
     }
 
     btn.addEventListener('click', function () {
-      setOpen(!dialog.hasAttribute('open'));
+      setOpen(!isOpen);
     });
 
-    if (closeBtn) closeBtn.addEventListener('click', () => setOpen(false));
+    if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
 
-    dialog.addEventListener('click', (e) => {
-      // Close when clicking the backdrop (outside surface)
+    dialog.addEventListener('click', function (e) {
       if (e.target === dialog) setOpen(false);
     });
 
-    dialog.addEventListener('cancel', (e) => {
-      // Keep state in sync with our nav button animation.
+    dialog.addEventListener('cancel', function (e) {
       e.preventDefault();
       setOpen(false);
     });
@@ -541,6 +609,7 @@
       syncTouchLerp: 0.075,
     });
     window.lenis = lenis;
+    window.dispatchEvent(new CustomEvent('lenis:ready'));
 
     function anchorOffset() {
       const nav = document.querySelector('.navbar');

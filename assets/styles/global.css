@@ -295,6 +295,12 @@ h2 {
   background: rgba(10, 15, 30, 0.56);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.nav-dialog.is-visible::backdrop {
+  opacity: 1;
 }
 
 .nav-dialog-surface {
@@ -310,6 +316,23 @@ h2 {
   -webkit-backdrop-filter: blur(14px) saturate(155%);
   padding: 16px 16px 18px;
   position: relative;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.98);
+  transition:
+    opacity 0.28s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-dialog.is-visible .nav-dialog-surface {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-dialog::backdrop,
+  .nav-dialog-surface {
+    transition: none;
+  }
 }
 
 .nav-dialog-close {
