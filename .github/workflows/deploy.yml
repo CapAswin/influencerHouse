@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-infinityfree
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -19,12 +24,21 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
 
           server-dir: /htdocs/
           local-dir: ./
 
+          # Bump this value to force a full re-sync of every file.
+          # (Safe: it never deletes server-only files like app-api/.)
+          state-name: .ftp-deploy-sync-state-v2.json
+          dangerous-clean-slate: false
+          log-level: verbose
+
           exclude: |
             **/.git*
+            **/.git*/**
             **/.github/**
             **/scripts/**
             node_modules/**
