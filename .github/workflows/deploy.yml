@@ -13,7 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Force correct FTP sync to InfinityFree htdocs
       - name: Deploy to InfinityFree via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -21,13 +20,9 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
 
-          # IMPORTANT: InfinityFree root is htdocs
           server-dir: /htdocs/
-
-          # Your project root
           local-dir: ./
 
-          # Prevent junk uploads
           exclude: |
             **/.git*
             **/.github/**
@@ -38,6 +33,3 @@ jobs:
             .env
             .env.*
             app-api/**
-
-          # FIX: forces full sync if cache issues happen
-          dangerous-clean-slate: true
