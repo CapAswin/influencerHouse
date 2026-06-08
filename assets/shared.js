@@ -604,7 +604,7 @@
   // --- API helpers (subscription plans + country list) ---
   const REMOTE_API_BASE_URL =
     window.API_BASE_URL ||
-    'https://creova.com/web/api';
+    'https://creovauae.com/app-api';
   // Use a single CORS-safe base URL for all API calls (browser).
   const API_BASE_URL = `https://corsproxy.io/?${REMOTE_API_BASE_URL}`;
   function getApiToken() {
