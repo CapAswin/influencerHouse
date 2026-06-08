@@ -37,6 +37,7 @@ jobs:
             package-lock.json
             .env
             .env.*
+            app-api/**
 
           # FIX: forces full sync if cache issues happen
           dangerous-clean-slate: true
