@@ -132,8 +132,9 @@
       <div class="footer-base">
         <div class="footer-copy">Copyright ©2026 Developed by CREOVA Digital <span class="footer-version">v${window.APP_VERSION}</span></div>
         <div class="footer-legal">
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Privacy Policy</a>
+          <a href="legal.html#terms-of-use" target="_blank" rel="noopener">Terms & Conditions</a>
+          <a href="legal.html#privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="legal.html" target="_blank" rel="noopener">All Policies</a>
         </div>
       </div>
     </div>

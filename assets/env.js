@@ -1,5 +1,5 @@
 (function (w) {
-  w.APP_VERSION = '1.0.1';
+  w.APP_VERSION = '1.0.2';
   w.API_BASE_URL = w.API_BASE_URL || 'https://creovauae.com/app-api';
   w.CORS_PROXY = w.CORS_PROXY || '';
   w.AUTH_TOKEN = w.AUTH_TOKEN || '';
